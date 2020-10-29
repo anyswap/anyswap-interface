@@ -220,7 +220,7 @@ export default function Swap() {
         })
       })
   }, [tradeToConfirm, priceImpactWithoutFee, showConfirm, swapCallback])
-// }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
+  // }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
