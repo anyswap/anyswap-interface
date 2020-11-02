@@ -56,6 +56,7 @@ class MiniRpcProvider implements AsyncSendable {
     this.batch = []
     this.batchTimeoutId = null
     let response: Response
+    // console.log(batch)
     try {
       response = await fetch(this.url, {
         method: 'POST',
@@ -63,6 +64,7 @@ class MiniRpcProvider implements AsyncSendable {
         body: JSON.stringify(batch.map(item => item.request))
       })
     } catch (error) {
+      // console.log(error)
       batch.forEach(({ reject }) => reject(new Error('Failed to send batch call')))
       return
     }
@@ -120,6 +122,7 @@ class MiniRpcProvider implements AsyncSendable {
     if (method === 'eth_chainId') {
       return `0x${this.chainId.toString(16)}`
     }
+    // console.log(params)
     const promise = new Promise((resolve, reject) => {
       this.batch.push({
         request: {
