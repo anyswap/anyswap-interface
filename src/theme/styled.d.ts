@@ -57,8 +57,8 @@ declare module 'styled-components' {
     grids: Grids
 
     // shadows
-    shadow1: string,
-    shadow2: string,
+    shadow1: string
+    shadow2: string
 
     // media queries
     mediaWidth: {

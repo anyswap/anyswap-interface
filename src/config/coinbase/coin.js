@@ -1,14 +1,13 @@
-
-export const getBaseCoin = (prefix) => {
-  let coinObj = {}
+export const getBaseCoin = prefix => {
+  const coinObj = {}
   prefix = prefix ? prefix : ''
-  coinObj[coinObj['BTC'] = prefix + 'BTC'] = 'BTC'
-  coinObj[coinObj['ETH'] = prefix + 'ETH'] = 'ETH'
-  coinObj[coinObj['USDT'] = prefix + 'USDT'] = 'USDT'
-  coinObj[coinObj['DAI'] = prefix + 'DAI'] = 'DAI'
-  coinObj[coinObj['LTC'] = prefix + 'LTC'] = 'LTC'
-  coinObj[coinObj['XRP'] = prefix + 'XRP'] = 'XRP'
-  coinObj[coinObj['UNI'] = prefix + 'UNI'] = 'UNI'
+  coinObj[(coinObj['BTC'] = prefix + 'BTC')] = 'BTC'
+  coinObj[(coinObj['ETH'] = prefix + 'ETH')] = 'ETH'
+  coinObj[(coinObj['USDT'] = prefix + 'USDT')] = 'USDT'
+  coinObj[(coinObj['DAI'] = prefix + 'DAI')] = 'DAI'
+  coinObj[(coinObj['LTC'] = prefix + 'LTC')] = 'LTC'
+  coinObj[(coinObj['XRP'] = prefix + 'XRP')] = 'XRP'
+  coinObj[(coinObj['UNI'] = prefix + 'UNI')] = 'UNI'
   coinObj['prefix'] = prefix
   // console.log(coinObj)
   return coinObj

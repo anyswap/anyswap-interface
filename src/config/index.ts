@@ -10,14 +10,12 @@ import {
   FSN_TESTNET,
   FSN_TEST_CHAINID,
   FSN_TEST_EXPLORER,
-
   BNB_MAINNET,
   BNB_MAIN_CHAINID,
   BNB_MAIN_EXPLORER,
   BNB_TESTNET,
   BNB_TEST_CHAINID,
   BNB_TEST_EXPLORER,
-
   ETH_MAINNET,
   ETH_MAIN_CHAINID,
   ETH_MAIN_EXPLORER,
@@ -30,7 +28,7 @@ import {
   // FTM_MAIN_EXPLORER,
   FTM_TESTNET,
   FTM_TEST_CHAINID,
-  FTM_TEST_EXPLORER,
+  FTM_TEST_EXPLORER
 } from './coinbase/nodeConfig'
 // import {Config} from './indexs'
 
@@ -42,7 +40,7 @@ const INIT_NODE = 'FSN_MAIN'
 // const INIT_NODE = 'FSN_TEST'
 // const INIT_NODE = 'FTM_MAIN'
 
-function getNode (type: string) {
+function getNode(type: string) {
   switch (type) {
     case 'fusion':
       return 'FSN_MAIN'
@@ -59,15 +57,15 @@ function getNode (type: string) {
   }
 }
 
-function getParams (url: string, param: string) {
-  let str = url.indexOf('?') ? url.split('?')[1] : ''
+function getParams(url: string, param: string) {
+  const str = url.indexOf('?') ? url.split('?')[1] : ''
   let nc = ''
   // console.log(str)
   if (str) {
-    let arr = str.split('&')
+    const arr = str.split('&')
     let value = ''
-    for (let str2 of arr) {
-      let arr2 = str2.split('=')
+    for (const str2 of arr) {
+      const arr2 = str2.split('=')
       if (arr2[0] === param) {
         value = arr2[1]
         break
@@ -80,7 +78,7 @@ function getParams (url: string, param: string) {
       nc = INIT_NODE
     }
   } else {
-    let localStr = localStorage.getItem(ENV_NODE_CONFIG)
+    const localStr = localStorage.getItem(ENV_NODE_CONFIG)
     // console.log(localStr)
     if (localStr) {
       nc = localStr
@@ -94,16 +92,14 @@ function getParams (url: string, param: string) {
 let ENV_CONFIG = getParams(window.location.href, 'network')
 ENV_CONFIG = 'ETH_TEST'
 
+const netArr = ENV_CONFIG.split('_')
 
-let netArr = ENV_CONFIG.split('_')
-
-let useBridge:number = 0
-
+let useBridge = 0
 
 let netConfig = {
   nodeRpc: '',
   reverseSwitch: 0,
-  chainID: 1,
+  chainID: 1
 }
 // let prefix = 'a'
 if (netArr[0] === 'FSN') {
@@ -140,7 +136,7 @@ if (netArr[0] === 'FSN') {
 // /**
 //  * @description 配置以太坊网络节点
 //  */
-let bridge:object = {
+const bridge: object = {
   46688: {
     rpc: FSN_TESTNET,
     chainID: FSN_TEST_CHAINID,
@@ -182,7 +178,7 @@ let bridge:object = {
     chainID: ETH_MAIN_CHAINID,
     lookHash: ETH_MAIN_EXPLORER + '/tx/',
     isOpen: 1
-  },
+  }
 }
 const dirSwitchFn = (type: any) => {
   if (netConfig.reverseSwitch) {
@@ -195,7 +191,7 @@ const dirSwitchFn = (type: any) => {
 }
 // console.log(bridge[useBridge])
 // console.log(Config)
-let serverInfoUrl = 'https://bridgeapi.anyswap.exchange'
+const serverInfoUrl = 'https://bridgeapi.anyswap.exchange'
 // serverInfoUrl = 'https://testbridgeapi.anyswap.exchange'
 export default {
   ...netConfig,

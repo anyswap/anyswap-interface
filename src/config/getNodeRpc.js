@@ -12,7 +12,7 @@ import config from './index'
 
 const BRIDGE_RPC = config.bridge.rpc
 
-export function getNodeRpc (node) {
+export function getNodeRpc(node) {
   switch (node) {
     case 56:
       return BNB_MAINNET
@@ -28,7 +28,7 @@ export function getNodeRpc (node) {
       return ETH_MAINNET
     case 4:
       return ETH_TESTNET
-    default: 
+    default:
       return BRIDGE_RPC
   }
 }
