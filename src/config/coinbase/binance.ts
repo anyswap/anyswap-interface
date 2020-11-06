@@ -1,4 +1,4 @@
-import {chainInfo} from './nodeConfig'
+import { chainInfo } from './nodeConfig'
 
 const NAME_PREFIX = ''
 
@@ -12,7 +12,7 @@ interface CoinObj {
   [key: string]: any
 }
 
-const COIN_BASE ={
+const COIN_BASE = {
   symbol: 'BNB',
   name: 'Binance-BEP20',
   decimals: 18,
@@ -24,13 +24,13 @@ const COIN_BASE ={
   namePrefix: NAME_PREFIX,
   marketsUrl: 'https://markets.anyswap.exchange/?trade=ANY_BNB', // K线图地址
   rewardUrl: 'https://rewardapiv2.anyswap.exchange/accounts/getBSCReward/', // 获取奖励地址
-  rewardRate (arr: any) {
+  rewardRate(arr: any) {
     let totalLq = 0
-    let coinObj: CoinObj = {}
-    for (let obj of arr) {
-      let mt = Number(obj.market) / Math.pow(10, 18)
+    const coinObj: CoinObj = {}
+    for (const obj of arr) {
+      const mt = Number(obj.market) / Math.pow(10, 18)
       // let totalBaseAmount = Number(obj.baseAmount) + Number(obj.tokenAmount) / mt
-      let totalBaseAmount = Number(obj.baseAmount) * 2 /  Math.pow(10, 18)
+      let totalBaseAmount = (Number(obj.baseAmount) * 2) / Math.pow(10, 18)
       if (obj.coin === 'ANY') {
         totalBaseAmount = totalBaseAmount * 2
       }
@@ -42,18 +42,18 @@ const COIN_BASE ={
       }
     }
     // totalLq = totalLq  /  Math.pow(10, 18)
-    for (let obj in coinObj) {
+    for (const obj in coinObj) {
       coinObj[obj].pecent = coinObj[obj].totalBaseAmount / totalLq
       if (obj === 'ANY') {
         coinObj[obj].totalReward = (REWARDS_DAY + REWARDS_ANY_DAY) * coinObj[obj].pecent
         coinObj[obj].poolShare = (DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount) * 2
-        coinObj[obj].accountReward = coinObj[obj].poolShare * coinObj[obj].totalReward / coinObj[obj].market
+        coinObj[obj].accountReward = (coinObj[obj].poolShare * coinObj[obj].totalReward) / coinObj[obj].market
         coinObj[obj].ROIPerDay = coinObj[obj].accountReward / DEPOSIT_AMOUNT
         coinObj[obj].AnnualizedROI = coinObj[obj].ROIPerDay * 100 * 365
       } else {
         coinObj[obj].totalReward = REWARDS_DAY * coinObj[obj].pecent
-        coinObj[obj].poolShare = (DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount)
-        coinObj[obj].accountReward = coinObj[obj].poolShare * coinObj[obj].totalReward / coinObj['ANY'].market
+        coinObj[obj].poolShare = DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount
+        coinObj[obj].accountReward = (coinObj[obj].poolShare * coinObj[obj].totalReward) / coinObj['ANY'].market
         coinObj[obj].ROIPerDay = coinObj[obj].accountReward / DEPOSIT_AMOUNT
         coinObj[obj].AnnualizedROI = coinObj[obj].ROIPerDay * 100 * 365
       }
@@ -98,7 +98,7 @@ const MAIN_CONFIG = {
     '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
     '0xd4cb328a82bdf5f03eb737f37fa6b370aef3e888',
     '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
-    '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+    '0x2170ed0880ac9a755fd29b2688956bd959f933f8'
   ],
   queryToken: '0x7e8b5b722f1a3c5ab2bd8510eaba24dae97565d1' // 查询余额合约
 }
@@ -124,7 +124,7 @@ const TEST_CONFIG = {
   queryToken: '' // 查询余额合约
 }
 
-function getBNBConfig (type: string) {
+function getBNBConfig(type: string) {
   if (type.toLowerCase() === 'main') {
     return MAIN_CONFIG
   }

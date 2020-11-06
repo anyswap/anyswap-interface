@@ -12,7 +12,6 @@ import { ExternalLink } from '../../theme'
 
 import config from '../../config'
 
-
 const HeaderLinks = styled.div`
   width: 100%;
   padding: 1.5625rem 1.5625rem 0.625rem;
@@ -234,7 +233,7 @@ const Link = styled(ExternalLink)`
 `
 
 console.log(config)
-export default function NavList () {
+export default function NavList() {
   // const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
 
@@ -282,16 +281,16 @@ export default function NavList () {
       </HeaderLinks>
       <Tabs>
         <MenuItem id="link" href="https://uniswap.org/">
-          <div className='icon'>
-            <img src={require('../../assets/images/icon/markets.svg')} className='off'/>
-            <img src={require('../../assets/images/icon/markets-purpl.svg')}  className='on'/>
+          <div className="icon">
+            <img src={require('../../assets/images/icon/markets.svg')} className="off" />
+            <img src={require('../../assets/images/icon/markets-purpl.svg')} className="on" />
           </div>
           {t('Markets')}
         </MenuItem>
         <MenuItem id="link" href="https://uniswap.org/">
-          <div className='icon'>
-            <img src={require('../../assets/images/icon/any.svg')} className='off'/>
-            <img src={require('../../assets/images/icon/any-purpl.svg')}  className='on'/>
+          <div className="icon">
+            <img src={require('../../assets/images/icon/any.svg')} className="off" />
+            <img src={require('../../assets/images/icon/any-purpl.svg')} className="on" />
           </div>
           {t('ANYToken')}
         </MenuItem>

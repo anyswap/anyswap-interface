@@ -6,7 +6,6 @@ const BNB_TESTNET = 'https://data-seed-prebsc-1-s1.binance.org:8545'
 const BNB_TEST_CHAINID = 97
 const BNB_TEST_EXPLORER = 'https://explorer.binance.org/smart-testnet'
 
-
 const FSN_MAINNET = 'https://fsnmainnet2.anyswap.exchange'
 const FSN_MAINNET1 = 'https://mainnet.anyswap.exchange'
 const FSN_MAIN_CHAINID = 32659
@@ -33,7 +32,7 @@ interface ChainInfo {
   [key: string]: any
 }
 
-let chainInfo:ChainInfo = {
+const chainInfo: ChainInfo = {
   1: {
     rpc: ETH_MAINNET,
     chainID: ETH_MAIN_CHAINID,
@@ -118,23 +117,12 @@ let chainInfo:ChainInfo = {
     type: 'test',
     label: 'BNB_TEST',
     isSwitch: 1
-  },
+  }
 }
 
-let chainList = {
-  main: [
-    chainInfo['32659'],
-    chainInfo['56'],
-    chainInfo['250'],
-    chainInfo['1'],
-  ],
-  test: [
-    chainInfo['46688'],
-    chainInfo['97'],
-  ]
+const chainList = {
+  main: [chainInfo['32659'], chainInfo['56'], chainInfo['250'], chainInfo['1']],
+  test: [chainInfo['46688'], chainInfo['97']]
 }
 
-export {
-  chainInfo,
-  chainList
-}
+export { chainInfo, chainList }
