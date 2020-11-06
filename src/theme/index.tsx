@@ -49,7 +49,6 @@ export function colors(darkMode: boolean): Colors {
     textNav: darkMode ? '#979dac' : '#062536',
     textColor: darkMode ? '#979dac' : '#031a6e',
     textColorBold: darkMode ? white : '#062536',
-    
 
     // backgrounds / greys
     // bg1: darkMode ? '#212429' : '#FFFFFF',
@@ -137,23 +136,23 @@ export function theme(darkMode: boolean): DefaultTheme {
     `,
     flexC: css`
       display: flex;
-      justify-content:  center;
-      align-items:center;
+      justify-content: center;
+      align-items: center;
     `,
     flexSC: css`
       display: flex;
-      justify-content:  flex-start;
-      align-items:center;
+      justify-content: flex-start;
+      align-items: center;
     `,
     flexEC: css`
       display: flex;
-      justify-content:  flex-end;
-      align-items:center;
+      justify-content: flex-end;
+      align-items: center;
     `,
     flexBC: css`
       display: flex;
-      justify-content:  space-between;
-      align-items:center;
+      justify-content: space-between;
+      align-items: center;
     `
   }
 }

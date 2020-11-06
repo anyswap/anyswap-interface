@@ -38,11 +38,11 @@ const AppWrapper = styled.div`
   // flex-flow: column;
   // align-items: flex-start;
   // overflow-x: hidden;
-  width:100%;
-  height:100%;
-  width:100vw;
-  height:100vh;
-  position:relative;
+  width: 100%;
+  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 `
 
 const HeaderWrapper = styled.div`
@@ -50,43 +50,43 @@ const HeaderWrapper = styled.div`
   width: 100%;
   // justify-content: space-between;
   justify-content: center;
-  box-shadow: ${({theme}) => theme.contentShadow};
-  background: ${({theme}) => theme.contentBg};
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:2;
+  box-shadow: ${({ theme }) => theme.contentShadow};
+  background: ${({ theme }) => theme.contentBg};
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
 `
 
-const NavLeft  = styled.div`
-  position:absolute;
-  top:0;
-  left:0;
-  bottom:0;
+const NavLeft = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
   padding-top: 70px;
-  width:320px;
-  box-shadow: ${({theme}) => theme.contentShadow};
-  background: ${({theme}) => theme.contentBg};
-  overflow:auto;
+  width: 320px;
+  box-shadow: ${({ theme }) => theme.contentShadow};
+  background: ${({ theme }) => theme.contentBg};
+  overflow: auto;
 `
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width:1440px;
+  max-width: 1440px;
   height: 100%;
   height: 100vh;
   padding-top: 70px;
   padding-left: 320px;
-  position:relative;
+  position: relative;
   align-items: center;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 10;
-  margin:auto;
+  margin: auto;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
