@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import AddressClaimModal from '../components/claim/AddressClaimModal'
 import Header from '../components/Header'
+import NavList from '../components/Header/NavList'
 import Polling from '../components/Header/Polling'
 import URLWarning from '../components/Header/URLWarning'
 import Popups from '../components/Popups'
@@ -33,28 +34,59 @@ import Vote from './Vote'
 import VotePage from './Vote/VotePage'
 
 const AppWrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  align-items: flex-start;
-  overflow-x: hidden;
+  // display: flex;
+  // flex-flow: column;
+  // align-items: flex-start;
+  // overflow-x: hidden;
+  width:100%;
+  height:100%;
+  width:100vw;
+  height:100vh;
+  position:relative;
 `
 
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
-  justify-content: space-between;
+  // justify-content: space-between;
+  justify-content: center;
+  box-shadow: ${({theme}) => theme.contentShadow};
+  background: ${({theme}) => theme.contentBg};
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:2;
+`
+
+const NavLeft  = styled.div`
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  padding-top: 70px;
+  width:320px;
+  box-shadow: ${({theme}) => theme.contentShadow};
+  background: ${({theme}) => theme.contentBg};
+  overflow:auto;
 `
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 100px;
+  max-width:1440px;
+  height: 100%;
+  height: 100vh;
+  padding-top: 70px;
+  padding-left: 320px;
+  position:relative;
   align-items: center;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 10;
+  margin:auto;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
@@ -85,6 +117,9 @@ export default function App() {
           <Header />
         </HeaderWrapper>
         <BodyWrapper>
+          <NavLeft>
+            <NavList />
+          </NavLeft>
           <Popups />
           <Polling />
           <TopLevelModals />

@@ -1,9 +1,9 @@
 import { ChainId, TokenAmount } from '@uniswap/sdk'
 import React, { useState } from 'react'
 import { Text } from 'rebass'
-import { NavLink } from 'react-router-dom'
-import { darken } from 'polished'
-import { useTranslation } from 'react-i18next'
+// import { NavLink } from 'react-router-dom'
+// import { darken } from 'polished'
+// import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
@@ -21,7 +21,8 @@ import { YellowCard } from '../Card'
 import Settings from '../Settings'
 import Menu from '../Menu'
 
-import Row, { RowFixed } from '../Row'
+// import Row, { RowFixed } from '../Row'
+import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import ClaimModal from '../claim/ClaimModal'
 import { useToggleSelfClaimModal, useShowClaimPopup } from '../../state/application/hooks'
@@ -42,9 +43,14 @@ const HeaderFrame = styled.div`
   width: 100%;
   top: 0;
   position: relative;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.875rem 1rem;
   z-index: 2;
+  height:70px;
+
+  
+  max-width:1440px;
+  // margin:auth;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     grid-template-columns: 1fr;
     padding: 0 1rem;
@@ -62,6 +68,7 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
   justify-self: flex-end;
+  height: 100%;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     flex-direction: row;
@@ -75,7 +82,7 @@ const HeaderControls = styled.div`
     left: 0px;
     width: 100%;
     z-index: 99;
-    height: 72px;
+    // height: 56px;
     border-radius: 12px 12px 0 0;
     background-color: ${({ theme }) => theme.bg1};
   `};
@@ -98,18 +105,30 @@ const HeaderElementWrap = styled.div`
 `
 
 const HeaderRow = styled(RowFixed)`
+  position:relative;
+  height: 100%;
   ${({ theme }) => theme.mediaWidth.upToMedium`
    width: 100%;
   `};
 `
 
-const HeaderLinks = styled(Row)`
-  justify-content: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem 0 1rem 1rem;
-    justify-content: flex-end;
-`};
-`
+// const HeaderLinks = styled(Row)`
+// const HeaderLinks = styled.div`
+//   // justify-content: center;
+//   position:absolute;
+//   left:0;
+//   top:50px;
+//   height:100vh;
+//   width: 320px;
+//   padding-top: 0;
+//   box-shadow: ${({theme}) => theme.contentShadow};
+//   background: ${({theme}) => theme.contentBg};
+  
+//   ${({ theme }) => theme.mediaWidth.upToMedium`
+//     padding: 1rem 0 1rem 1rem;
+//     justify-content: flex-end;
+// `};
+// `
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
@@ -183,6 +202,7 @@ const Title = styled.a`
   pointer-events: auto;
   justify-self: flex-start;
   margin-right: 12px;
+  height:100%;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     justify-self: center;
   `};
@@ -192,40 +212,50 @@ const Title = styled.a`
 `
 
 const UniIcon = styled.div`
+  height:100%;
+  // padding: 10px 0;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
   }
 `
 
-const activeClassName = 'ACTIVE'
+// const activeClassName = 'ACTIVE'
 
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName
-})`
-  ${({ theme }) => theme.flexRowNoWrap}
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 1rem;
-  width: fit-content;
-  margin: 0 12px;
-  font-weight: 500;
+// const StyledNavLink = styled(NavLink).attrs({
+//   activeClassName
+// })`
+//   ${({ theme }) => theme.flexRowNoWrap}
+//   align-items: left;
+//   outline: none;
+//   cursor: pointer;
+//   text-decoration: none;
 
-  &.${activeClassName} {
-    border-radius: 12px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text1};
-  }
+//   width: 100%;
+//   font-weight: 500;
+//   color: ${({theme}) => theme.textNav};
+//   font-size: 0.875rem;
+//   font-family: 'Manrope';
+//   box-sizing: border-box;
+//   padding: 1rem 0.875rem;
+//   line-height: 1rem;
+//   margin: 6px 0;
+//   height: 48px;
+//   border-radius: 0.5625rem;
+//   position:relative;
+//   white-space:nowrap;
 
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
-  }
-`
+//   &.${activeClassName} {
+//     border-radius: 12px;
+//     font-weight: 600;
+//     color: ${({ theme }) => theme.text1};
+//   }
+
+//   :hover,
+//   :focus {
+//     color: ${({ theme }) => darken(0.1, theme.text1)};
+//   }
+// `
 
 // const StyledExternalLink = styled(ExternalLink).attrs({
 //   activeClassName
@@ -267,7 +297,7 @@ const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [isDark] = useDarkModeManager()
@@ -295,10 +325,10 @@ export default function Header() {
       <HeaderRow>
         <Title href=".">
           <UniIcon>
-            <img height={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img height={'42px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </UniIcon>
         </Title>
-        <HeaderLinks>
+        {/* <HeaderLinks>
           <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
             {t('swap')}
           </StyledNavLink>
@@ -321,10 +351,10 @@ export default function Header() {
           <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
             Vote
           </StyledNavLink>
-          {/* <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
+          <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
             Charts <span style={{ fontSize: '11px' }}>↗</span>
-          </StyledExternalLink> */}
-        </HeaderLinks>
+          </StyledExternalLink>
+        </HeaderLinks> */}
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>

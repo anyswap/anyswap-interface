@@ -12,6 +12,9 @@ export interface Colors {
   text3: Color
   text4: Color
   text5: Color
+  textNav: Color
+  textColor: Color
+  textColorBold: Color
 
   // backgrounds / greys
   bg1: Color
@@ -19,6 +22,12 @@ export interface Colors {
   bg3: Color
   bg4: Color
   bg5: Color
+  contentBg: Color
+  navIconBg: Color
+  navBg: Color
+  navBg2: Color
+  bgColorLinear: Color
+  outLinkIconBg: Color
 
   modalBG: Color
   advancedBG: Color
@@ -59,6 +68,7 @@ declare module 'styled-components' {
     // shadows
     shadow1: string
     shadow2: string
+    contentShadow: string
 
     // media queries
     mediaWidth: {
@@ -71,5 +81,9 @@ declare module 'styled-components' {
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation
     flexRowNoWrap: FlattenSimpleInterpolation
+    flexC: FlattenSimpleInterpolation
+    flexSC: FlattenSimpleInterpolation
+    flexEC: FlattenSimpleInterpolation
+    flexBC: FlattenSimpleInterpolation
   }
 }

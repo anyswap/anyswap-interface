@@ -46,6 +46,10 @@ export function colors(darkMode: boolean): Colors {
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    textNav: darkMode ? '#979dac' : '#062536',
+    textColor: darkMode ? '#979dac' : '#031a6e',
+    textColorBold: darkMode ? white : '#062536',
+    
 
     // backgrounds / greys
     // bg1: darkMode ? '#212429' : '#FFFFFF',
@@ -58,6 +62,12 @@ export function colors(darkMode: boolean): Colors {
     bg3: darkMode ? '#40444F' : '#EDEEF2',
     bg4: darkMode ? '#565A69' : '#CED0D9',
     bg5: darkMode ? '#6C7284' : '#888D9B',
+    contentBg: darkMode ? '#21263e' : white,
+    navIconBg: darkMode ? '#363d5f' : 'rgba(0,0,0,0.05)',
+    navBg: darkMode ? '#21263e' : '#031a6e',
+    navBg2: darkMode ? '#363d5f' : '#031a6e',
+    bgColorLinear: 'linear-gradient(to right, #734ce2 , #606bfb)',
+    outLinkIconBg: darkMode ? '#2b314f' : '#ecf6ff',
 
     // backgrounds
     // bgc1: darkMode ? '#21263e' : '#FFFFFF',
@@ -111,6 +121,7 @@ export function theme(darkMode: boolean): DefaultTheme {
     //shadows
     shadow1: darkMode ? '#000' : '#2F80ED',
     shadow2: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
+    contentShadow: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
 
     // media queries
     mediaWidth: mediaWidthTemplates,
@@ -123,6 +134,26 @@ export function theme(darkMode: boolean): DefaultTheme {
     flexRowNoWrap: css`
       display: flex;
       flex-flow: row nowrap;
+    `,
+    flexC: css`
+      display: flex;
+      justify-content:  center;
+      align-items:center;
+    `,
+    flexSC: css`
+      display: flex;
+      justify-content:  flex-start;
+      align-items:center;
+    `,
+    flexEC: css`
+      display: flex;
+      justify-content:  flex-end;
+      align-items:center;
+    `,
+    flexBC: css`
+      display: flex;
+      justify-content:  space-between;
+      align-items:center;
     `
   }
 }
@@ -242,5 +273,23 @@ body {
       1,
       theme.bg1
     )} 100%)`};
+}
+/* 滚动条凹槽的颜色，还可以设置边框属性 */
+::-webkit-scrollbar-track-piece {
+background-color:#f8f8f8;
+}
+/* 滚动条的宽度 */
+::-webkit-scrollbar {
+width:0px;
+height:0px;
+}
+/* 滚动条的设置 */
+::-webkit-scrollbar-thumb {
+background-color:#dddddd;
+background-clip:padding-box;
+min-height:28px;
+}
+::-webkit-scrollbar-thumb:hover {
+background-color:#bbb;
 }
 `
