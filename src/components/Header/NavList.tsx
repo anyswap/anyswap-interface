@@ -11,6 +11,8 @@ import styled from 'styled-components'
 
 import { ExternalLink } from '../../theme'
 
+import config from '../../config'
+
 
 const HeaderLinks = styled.div`
   width: 100%;
@@ -208,10 +210,10 @@ const Link = styled(ExternalLink)`
   }
 `
 
+console.log(config)
 export default function NavList () {
   // const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
-
 
   return (
     <>
@@ -256,14 +258,14 @@ export default function NavList () {
         </StyledNavLink>
       </HeaderLinks>
       <Tabs>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href={config.marketsUrl}>
           <div className='icon'>
             <img src={require('../../assets/images/icon/markets.svg')} className='off'/>
             <img src={require('../../assets/images/icon/markets-purpl.svg')}  className='on'/>
           </div>
           {t('Markets')}
         </MenuItem>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href={config.marketsUrl}>
           <div className='icon'>
             <img src={require('../../assets/images/icon/any.svg')} className='off'/>
             <img src={require('../../assets/images/icon/any-purpl.svg')}  className='on'/>
