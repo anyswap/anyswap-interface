@@ -17,8 +17,8 @@ const HeaderLinks = styled.div`
   padding: 1.5625rem 1.5625rem 0.625rem;
   border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.06);
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding: 1rem 0 1rem 1rem;
-    justify-content: flex-end;
+    ${({ theme }) => theme.flexBC}
+    padding: 0.5rem 1rem;
   `};
 `
 
@@ -92,6 +92,13 @@ const StyledNavLink = styled(NavLink).attrs({
       }
     }
   }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    ${({ theme }) => theme.flexC};
+    margin:0;
+    .icon {
+      display:none;
+    }
+  `}
 `
 const Tabs = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}
@@ -101,23 +108,12 @@ const Tabs = styled.div`
   padding: 1rem 1.5625rem;
   box-sizing: border-box;
   border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.06);
-  @media screen and (max-width: 960px) {
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
-  }
+  `}
 `
 
 const MenuItem = styled(ExternalLink)`
-  // flex: 1;
-  // padding: 0.5rem 0.5rem;
-  // color: ${({ theme }) => theme.text2};
-  // :hover {
-  //   color: ${({ theme }) => theme.text1};
-  //   cursor: pointer;
-  //   text-decoration: none;
-  // }
-  // > svg {
-  //   margin-right: 8px;
-  // }
   ${({ theme }) => theme.flexSC};
   width:100%;
   height: 2.5rem;
@@ -157,9 +153,9 @@ const MenuItem = styled(ExternalLink)`
 const OutLink = styled.div`
   padding-left: 44px;
   margin-top: 78px;
-  @media screen and (max-width: 960px) {
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
-  }
+  `}
 `
 const CopyRightBox = styled.div`
   font-family: 'Manrope';
@@ -187,15 +183,15 @@ const CopyRightBox = styled.div`
     margin-top: 6px;
     margin-bottom: 0;
   }
-  @media screen and (max-width: 960px) {
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
-  }
+  `}
 `
 const OutLinkImgBox = styled.div`
   ${({ theme }) => theme.flexSC};
-  @media screen and (max-width: 960px) {
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
-  }
+  `}
 `
 const Link = styled(ExternalLink)`
   .icon {
@@ -242,15 +238,15 @@ export default function NavList() {
       <HeaderLinks>
         <StyledNavLink id={`dashboard-nav-link`} to={'/dashboard'}>
           <div className="icon">
-            <img src={require('../../assets/images/icon/application.svg')} className="off" />
-            <img src={require('../../assets/images/icon/application-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/application.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/application-purpl.svg')} className="on" alt="" />
           </div>
           {t('dashboard')}
         </StyledNavLink>
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <div className="icon">
-            <img src={require('../../assets/images/icon/swap.svg')} className="off" />
-            <img src={require('../../assets/images/icon/swap-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/swap.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/swap-purpl.svg')} className="on" alt="" />
           </div>
           {t('swap')}
         </StyledNavLink>
@@ -266,45 +262,45 @@ export default function NavList() {
           }
         >
           <div className="icon">
-            <img src={require('../../assets/images/icon/pool.svg')} className="off" />
-            <img src={require('../../assets/images/icon/pool-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/pool.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/pool-purpl.svg')} className="on" alt="" />
           </div>
           {t('pool')}
         </StyledNavLink>
         <StyledNavLink id={`bridge-nav-link`} to={'/bridge'}>
           <div className="icon">
-            <img src={require('../../assets/images/icon/bridge.svg')} className="off" />
-            <img src={require('../../assets/images/icon/bridge-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/bridge.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/bridge-purpl.svg')} className="on" alt="" />
           </div>
           {t('bridge')}
         </StyledNavLink>
       </HeaderLinks>
       <Tabs>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href={config.marketsUrl}>
           <div className="icon">
-            <img src={require('../../assets/images/icon/markets.svg')} className="off" />
-            <img src={require('../../assets/images/icon/markets-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/markets.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/markets-purpl.svg')} className="on" alt="" />
           </div>
           {t('Markets')}
         </MenuItem>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href="https://vote.anyswap.exchange/">
           <div className="icon">
-            <img src={require('../../assets/images/icon/any.svg')} className="off" />
-            <img src={require('../../assets/images/icon/any-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/any.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/any-purpl.svg')} className="on" alt="" />
           </div>
           {t('ANYToken')}
         </MenuItem>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href="">
           <div className="icon">
-            <img src={require('../../assets/images/icon/network.svg')} className="off" />
-            <img src={require('../../assets/images/icon/network-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/network.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/network-purpl.svg')} className="on" alt="" />
           </div>
           {t('Network')}
         </MenuItem>
-        <MenuItem id="link" href="https://uniswap.org/">
+        <MenuItem id="link" href={config.document}>
           <div className="icon">
-            <img src={require('../../assets/images/icon/documents.svg')} className="off" />
-            <img src={require('../../assets/images/icon/documents-purpl.svg')} className="on" />
+            <img src={require('../../assets/images/icon/documents.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/documents-purpl.svg')} className="on" alt="" />
           </div>
           {t('Documents')}
         </MenuItem>
@@ -313,32 +309,32 @@ export default function NavList() {
         <OutLinkImgBox>
           <Link id="link" href="https://t.me/anyswap">
             <div className="icon">
-              <img src={require('../../assets/images/icon/telegram.svg')} className="off" />
-              <img src={require('../../assets/images/icon/telegram-white.svg')} className="on" />
+              <img src={require('../../assets/images/icon/telegram.svg')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/telegram-white.svg')} className="on" alt="" />
             </div>
           </Link>
           <Link id="link" href="https://medium.com/@anyswap">
             <div className="icon">
-              <img src={require('../../assets/images/icon/medium.svg')} className="off" />
-              <img src={require('../../assets/images/icon/medium-white.svg')} className="on" />
+              <img src={require('../../assets/images/icon/medium.svg')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/medium-white.svg')} className="on" alt="" />
             </div>
           </Link>
           <Link id="link" href="https://twitter.com/AnyswapNetwork">
             <div className="icon">
-              <img src={require('../../assets/images/icon/twitter.svg')} className="off" />
-              <img src={require('../../assets/images/icon/twitter-white.svg')} className="on" />
+              <img src={require('../../assets/images/icon/twitter.svg')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/twitter-white.svg')} className="on" alt="" />
             </div>
           </Link>
           <Link id="link" href="https://github.com/anyswap">
             <div className="icon">
-              <img src={require('../../assets/images/icon/github.png')} className="off" />
-              <img src={require('../../assets/images/icon/github-white.png')} className="on" />
+              <img src={require('../../assets/images/icon/github.png')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/github-white.png')} className="on" alt="" />
             </div>
           </Link>
           <Link id="link" href="https://coinmarketcap.com/exchanges/anyswap">
             <div className="icon">
-              <img src={require('../../assets/images/icon/coinmarketcap.png')} className="off" />
-              <img src={require('../../assets/images/icon/coinmarketcap-white.png')} className="on" />
+              <img src={require('../../assets/images/icon/coinmarketcap.png')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/coinmarketcap-white.png')} className="on" alt="" />
             </div>
           </Link>
         </OutLinkImgBox>

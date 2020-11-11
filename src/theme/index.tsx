@@ -67,6 +67,19 @@ export function colors(darkMode: boolean): Colors {
     navBg2: darkMode ? '#363d5f' : '#031a6e',
     bgColorLinear: 'linear-gradient(to right, #734ce2 , #606bfb)',
     outLinkIconBg: darkMode ? '#2b314f' : '#ecf6ff',
+    bodyBg: darkMode ? '#151a2f' : '#f9fafb',
+
+    selectedBg: darkMode ? '#2b314f' : '#ecf6ff',
+    selectedHoverBg: darkMode ? '#252b49' : '#deefff',
+
+    selectedBorder: darkMode ? '#363d5f' : '#c0d6ea',
+    selectedHoverBorder: darkMode ? '#4a5482' : '#6d9cc6',
+
+    selectedBgNo: darkMode ? '#2b314f' : '#f8f8f9',
+    selectedHoverBgNo: darkMode ? '#252b49' : '#f2f2f2',
+
+    selectedBorderNo: darkMode ? '#363d5f' : '#d9d9e2',
+    selectedHoverBorderNo: darkMode ? '#4a5482' : '#9c9cb0',
 
     // backgrounds
     // bgc1: darkMode ? '#21263e' : '#FFFFFF',
@@ -259,8 +272,10 @@ html {
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
-  color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg2};
+  // color: ${({ theme }) => theme.text1};
+  // background-color: ${({ theme }) => theme.bg2};
+  color: ${({ theme }) => theme.textColor};
+  background-color: ${({ theme }) => theme.bodyBg};
 }
 
 body {

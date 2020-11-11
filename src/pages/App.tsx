@@ -6,7 +6,7 @@ import AddressClaimModal from '../components/claim/AddressClaimModal'
 import Header from '../components/Header'
 import NavList from '../components/Header/NavList'
 import Polling from '../components/Header/Polling'
-import URLWarning from '../components/Header/URLWarning'
+// import URLWarning from '../components/Header/URLWarning'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import { ApplicationModal } from '../state/application/actions'
@@ -69,6 +69,25 @@ const NavLeft = styled.div`
   box-shadow: ${({ theme }) => theme.contentShadow};
   background: ${({ theme }) => theme.contentBg};
   overflow: auto;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    display:none;
+  `}
+`
+const NavBottom = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 0px;
+  width: 100%;
+  box-shadow: ${({ theme }) => theme.contentShadow};
+  background: ${({ theme }) => theme.contentBg};
+  overflow: auto;
+  display:none;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    display:block;
+    z-index: 9;
+  `}
 `
 
 const BodyWrapper = styled.div`
@@ -88,7 +107,7 @@ const BodyWrapper = styled.div`
   z-index: 10;
   margin: auto;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     padding: 16px;
     padding-top: 2rem;
   `};
@@ -112,7 +131,7 @@ export default function App() {
       <Route component={GoogleAnalyticsReporter} />
       <Route component={DarkModeQueryParamReader} />
       <AppWrapper>
-        <URLWarning />
+        {/* <URLWarning /> */}
         <HeaderWrapper>
           <Header />
         </HeaderWrapper>
@@ -151,6 +170,7 @@ export default function App() {
             </Switch>
           </Web3ReactManager>
           <Marginer />
+          <NavBottom><NavList /></NavBottom>
         </BodyWrapper>
       </AppWrapper>
     </Suspense>

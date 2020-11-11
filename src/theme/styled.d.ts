@@ -28,6 +28,19 @@ export interface Colors {
   navBg2: Color
   bgColorLinear: Color
   outLinkIconBg: Color
+  bodyBg: Color
+  
+  selectedBg: Color
+  selectedHoverBg: Color
+
+  selectedBorder: Color
+  selectedHoverBorder: Color
+
+  selectedBgNo: Color
+  selectedHoverBgNo: Color
+
+  selectedBorderNo: Color
+  selectedHoverBorderNo: Color
 
   modalBG: Color
   advancedBG: Color

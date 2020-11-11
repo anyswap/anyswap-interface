@@ -3,7 +3,7 @@ import { chainInfo } from './nodeConfig'
 const NAME_PREFIX = 'ANY'
 
 const ANY_MAIN_TOKEN = '0xAd84341756Bf337f5a0164515b1f6F993D194E1f'
-const ANY_TEST_TOKEN = '0xC20b5E92E1ce63Af6FE537491f75C19016ea5fb4'
+// const ANY_TEST_TOKEN = '0xC20b5E92E1ce63Af6FE537491f75C19016ea5fb4'
 
 const REWARDS_DAY = 33000 / 2
 const DEPOSIT_AMOUNT = 10000
@@ -29,7 +29,7 @@ const COIN_BASE = {
   rewardRate(arr: any) {
     let totalLq = 0
     const coinObj: CoinObj = {}
-    return coinObj
+    // return coinObj
     for (const obj of arr) {
       const mt = Number(obj.market) / Math.pow(10, 18)
       // let totalBaseAmount = Number(obj.baseAmount) + Number(obj.tokenAmount) / mt

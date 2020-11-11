@@ -20,10 +20,10 @@ console.log(ENV_CONFIG)
 
 const netArr = ENV_CONFIG.split('_')
 console.log(netArr)
-interface NetConFig {
+interface ConFig {
   [key: string]: any
 }
-let netConfig: NetConFig = {
+let netConfig: ConFig = {
   nodeRpc: '',
   reverseSwitch: 0,
   chainID: 1,
@@ -39,8 +39,7 @@ if (netArr[0] === 'FSN') {
 
 const serverInfoUrl = 'https://bridgeapi.anyswap.exchange'
 // serverInfoUrl = 'https://testbridgeapi.anyswap.exchange'
-
-export default {
+let config: ConFig = {
   ...netConfig,
   ENV_NODE_CONFIG,
   bridgeAll: chainInfo,
@@ -65,3 +64,4 @@ export default {
     }
   }
 }
+export default config

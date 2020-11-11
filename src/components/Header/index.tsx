@@ -76,9 +76,9 @@ const HeaderControls = styled.div`
     width: 100%;
     max-width: 960px;
     padding: 1rem;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
+    // position: fixed;
+    // bottom: 0px;
+    // left: 0px;
     width: 100%;
     z-index: 99;
     // height: 56px;
