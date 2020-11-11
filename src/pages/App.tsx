@@ -83,7 +83,7 @@ const NavBottom = styled.div`
   box-shadow: ${({ theme }) => theme.contentShadow};
   background: ${({ theme }) => theme.contentBg};
   overflow: auto;
-  display:none;
+  display: none;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     display:block;
     z-index: 9;
@@ -170,7 +170,9 @@ export default function App() {
             </Switch>
           </Web3ReactManager>
           <Marginer />
-          <NavBottom><NavList /></NavBottom>
+          <NavBottom>
+            <NavList />
+          </NavBottom>
         </BodyWrapper>
       </AppWrapper>
     </Suspense>

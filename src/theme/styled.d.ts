@@ -29,7 +29,7 @@ export interface Colors {
   bgColorLinear: Color
   outLinkIconBg: Color
   bodyBg: Color
-  
+
   selectedBg: Color
   selectedHoverBg: Color
 

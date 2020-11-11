@@ -39,7 +39,7 @@ if (netArr[0] === 'FSN') {
 
 const serverInfoUrl = 'https://bridgeapi.anyswap.exchange'
 // serverInfoUrl = 'https://testbridgeapi.anyswap.exchange'
-let config: ConFig = {
+const config: ConFig = {
   ...netConfig,
   ENV_NODE_CONFIG,
   bridgeAll: chainInfo,

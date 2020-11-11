@@ -14,11 +14,11 @@ export const BodyWrapper = styled.div`
 `
 
 const BodyContent = styled.div`
-  position:absolute;
-  top:70px;
-  right:0;
-  bottom:0;
-  left:320px;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: 320px;
   padding: 2.5rem 97px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     overflow:auto;

@@ -115,39 +115,47 @@ const Tabs = styled.div`
 
 const MenuItem = styled(ExternalLink)`
   ${({ theme }) => theme.flexSC};
-  width:100%;
+  width: 100%;
   height: 2.5rem;
   font-size: 0.75rem;
   font-weight: normal;
   color: #96989e;
-  border-bottom:none;
+  border-bottom: none;
   margin: 0;
   padding: 0.0625rem 0.875rem;
   border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.06);
   .icon {
     ${({ theme }) => theme.flexC};
-    width:38px;
-    height:38px;
+    width: 38px;
+    height: 38px;
     margin-right: 1rem;
-    .on{ display:none; }
-    .off{ display:block; }
+    .on {
+      display: none;
+    }
+    .off {
+      display: block;
+    }
   }
   .arrow {
     position: absolute;
     top: 0.875rem;
-    right:1rem;
+    right: 1rem;
   }
   &:hover {
     color: ${({ theme }) => theme.textColor};
     font-weight: 600;
     text-decoration: none;
     .icon {
-      .on{ display:block; }
-      .off{ display:none; }
+      .on {
+        display: block;
+      }
+      .off {
+        display: none;
+      }
     }
   }
-  &:last-child{
-    border:none;
+  &:last-child {
+    border: none;
   }
 `
 const OutLink = styled.div`
