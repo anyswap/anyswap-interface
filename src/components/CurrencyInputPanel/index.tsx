@@ -78,18 +78,18 @@ const ErrorSpanBox = styled.div`
   width: 220px;
   margin-left: 0.625rem;
   @media screen and (max-width: 960px) {
-    display:none;
+    display: none;
   }
 `
 const ErrorSpan = styled.span`
-  display:flex;
+  display: flex;
   align-items: center;
   padding: 1rem 1.25rem;
   font-size: 1rem;
   height: 100%;
   color: ${({ theme }) => theme.textColor};
-  border: 0.0625rem solid ${({theme}) => theme.selectedBorderNo};
-  background-color: ${({theme}) => theme.selectedBgNo};
+  border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
+  background-color: ${({ theme }) => theme.selectedBgNo};
   border-radius: 0.75rem;
   outline: none;
   cursor: pointer;
@@ -97,8 +97,8 @@ const ErrorSpan = styled.span`
 
   :hover {
     cursor: pointer;
-    border: 0.0625rem solid ${({theme}) => theme.selectedHoverBorderNo};
-    background-color: ${({theme}) => theme.selectedHoverBgNo};
+    border: 0.0625rem solid ${({ theme }) => theme.selectedHoverBorderNo};
+    background-color: ${({ theme }) => theme.selectedHoverBgNo};
   }
 `
 
@@ -108,18 +108,18 @@ const ExtraText = styled.div`
   font-stretch: normal;
   font-style: normal;
   letter-spacing: normal;
-  position:relative;
-  color: ${({theme}) => theme.textColorBold};
+  position: relative;
+  color: ${({ theme }) => theme.textColorBold};
   h5 {
     font-weight: normal;
     line-height: 1;
     font-size: 0.75rem;
     margin: 0.25rem 0;
   }
-  p  {
+  p {
     font-size: 0.875rem;
     line-height: 1.43;
-    margin:0;
+    margin: 0;
     font-weight: 800;
   }
 `
@@ -143,10 +143,10 @@ const Aligner = styled.span`
   justify-content: center;
   position: relative;
   padding: 0px 1.625rem 0 51px;
-  width:100%;
-  height:100%;
-  &.pl-0{
-    padding-left:0;
+  width: 100%;
+  height: 100%;
+  &.pl-0 {
+    padding-left: 0;
   }
 `
 
@@ -154,13 +154,13 @@ const TokenLogoBox = styled.div`
   ${({ theme }) => theme.flexC};
   width: 46px;
   height: 46px;
-  background: ${ ({theme}) => theme.white};
-  box-sizing:border-box;
+  background: ${({ theme }) => theme.white};
+  box-sizing: border-box;
   border-radius: 100%;
   margin-right: 1.25rem;
-  position:absolute;
-  top:0.625rem;
-  left:0;
+  position: absolute;
+  top: 0.625rem;
+  left: 0;
 `
 
 const StyledDropDownBox = styled.div`
@@ -217,7 +217,7 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
     font-style: normal;
     line-height: 1;
     letter-spacing: normal;
-    color: ${({theme}) => theme.selectTextColor};
+    color: ${({ theme }) => theme.selectTextColor};
     margin:0 0 2px;
   }
   p {
@@ -228,7 +228,7 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
     font-style: normal;
     line-height: 1;
     letter-spacing: normal;
-    color: ${({theme}) => theme.selectTextColor};
+    color: ${({ theme }) => theme.selectTextColor};
     margin:0;
   }
 
@@ -338,7 +338,7 @@ export default function CurrencyInputPanel({
                 onUserInput={val => {
                   onUserInput(val)
                 }}
-                style={{marginRight: '1.875rem'}}
+                style={{ marginRight: '1.875rem' }}
               />
               {/* {account && currency && showMaxButton && label !== 'To' && (
                 <StyledBalanceMax onClick={onMax}>MAX</StyledBalanceMax>
@@ -358,11 +358,15 @@ export default function CurrencyInputPanel({
               {pair ? (
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
               ) : currency ? (
-                <TokenLogoBox><CurrencyLogo currency={currency} size={'1.625rem'} /></TokenLogoBox>
+                <TokenLogoBox>
+                  <CurrencyLogo currency={currency} size={'1.625rem'} />
+                </TokenLogoBox>
               ) : null}
               {pair ? (
                 <StyledTokenName className="pair-name-container">
-                  <h3>{pair?.token0.symbol}:{pair?.token1.symbol}</h3>
+                  <h3>
+                    {pair?.token0.symbol}:{pair?.token1.symbol}
+                  </h3>
                 </StyledTokenName>
               ) : (
                 <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
@@ -376,22 +380,28 @@ export default function CurrencyInputPanel({
                   <p>{currency && currency.name ? currency.name : ''}</p>
                 </StyledTokenName>
               )}
-              {!disableCurrencySelect && !!currency && <StyledDropDownBox><StyledDropDown selected={!!currency} /></StyledDropDownBox>}
+              {!disableCurrencySelect && !!currency && (
+                <StyledDropDownBox>
+                  <StyledDropDown selected={!!currency} />
+                </StyledDropDownBox>
+              )}
             </Aligner>
           </CurrencySelect>
           <ErrorSpanBox>
-            {
-              !hideBalance && !!currency && selectedCurrencyBalance ? (
-                <ErrorSpan onClick={onMax}>
-                  <ExtraText>
-                    <h5>{t('balance')}</h5>
-                    <p>{!hideBalance && !!currency && selectedCurrencyBalance
-                        ? (customBalanceText ?? '') + selectedCurrencyBalance?.toSignificant(6)
-                        : ' -'} </p>
-                  </ExtraText>
-                </ErrorSpan>
-              ) : ''
-            }
+            {!hideBalance && !!currency && selectedCurrencyBalance ? (
+              <ErrorSpan onClick={onMax}>
+                <ExtraText>
+                  <h5>{t('balance')}</h5>
+                  <p>
+                    {!hideBalance && !!currency && selectedCurrencyBalance
+                      ? (customBalanceText ?? '') + selectedCurrencyBalance?.toSignificant(6)
+                      : ' -'}{' '}
+                  </p>
+                </ExtraText>
+              </ErrorSpan>
+            ) : (
+              ''
+            )}
           </ErrorSpanBox>
         </InputRow>
       </Container>
