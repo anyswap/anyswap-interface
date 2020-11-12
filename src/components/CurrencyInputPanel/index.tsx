@@ -186,7 +186,7 @@ export default function CurrencyInputPanel({
                 >
                   {!hideBalance && !!currency && selectedCurrencyBalance
                     ? (customBalanceText ?? 'Balance: ') + selectedCurrencyBalance?.toSignificant(6)
-                    : ' -'} 
+                    : ' -'}
                 </TYPE.body>
               )}
             </RowBetween>

@@ -264,8 +264,24 @@ export default function Swap() {
         <Title
           title={t('swap')}
           tabList={[
-            {name: t('swap'), onTabClick: (name) => {console.log(name);onChangeRecipient(null)}, iconUrl: require('../../assets/images/icon/swap.svg'), iconActiveUrl: require('../../assets/images/icon/swap-white.svg')},
-            {name: t('send'), onTabClick: (name) => {console.log(name);onChangeRecipient('')}, iconUrl: require('../../assets/images/icon/send.svg'), iconActiveUrl: require('../../assets/images/icon/send-white.svg')},
+            {
+              name: t('swap'),
+              onTabClick: name => {
+                console.log(name)
+                onChangeRecipient(null)
+              },
+              iconUrl: require('../../assets/images/icon/swap.svg'),
+              iconActiveUrl: require('../../assets/images/icon/swap-white.svg')
+            },
+            {
+              name: t('send'),
+              onTabClick: name => {
+                console.log(name)
+                onChangeRecipient('')
+              },
+              iconUrl: require('../../assets/images/icon/send.svg'),
+              iconActiveUrl: require('../../assets/images/icon/send-white.svg')
+            }
           ]}
         ></Title>
         <SwapPoolTabs active={'swap'} />
@@ -286,7 +302,9 @@ export default function Swap() {
 
           <AutoColumn gap={'md'}>
             <CurrencyInputPanel
-              label={independentField === Field.OUTPUT && !showWrap && trade ? (t('input') + ' ' + t('estimated')) : t('input')}
+              label={
+                independentField === Field.OUTPUT && !showWrap && trade ? t('input') + ' ' + t('estimated') : t('input')
+              }
               value={formattedAmounts[Field.INPUT]}
               showMaxButton={!atMaxAmountInput}
               currency={currencies[Field.INPUT]}
@@ -318,7 +336,11 @@ export default function Swap() {
             <CurrencyInputPanel
               value={formattedAmounts[Field.OUTPUT]}
               onUserInput={handleTypeOutput}
-              label={independentField === Field.INPUT && !showWrap && trade ? (t('output') + ' ' + t('estimated')) : t('output')}
+              label={
+                independentField === Field.INPUT && !showWrap && trade
+                  ? t('output') + ' ' + t('estimated')
+                  : t('output')
+              }
               showMaxButton={false}
               currency={currencies[Field.OUTPUT]}
               onCurrencySelect={handleOutputSelect}
