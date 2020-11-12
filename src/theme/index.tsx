@@ -41,7 +41,7 @@ export function colors(darkMode: boolean): Colors {
     black,
 
     // text
-    text1: darkMode ? '#FFFFFF' : '#000000',
+    text1: darkMode ? '#FFFFFF' : '#96989e',
     text2: darkMode ? '#C3C5CB' : '#565A69',
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
@@ -68,6 +68,11 @@ export function colors(darkMode: boolean): Colors {
     bgColorLinear: 'linear-gradient(to right, #734ce2 , #606bfb)',
     outLinkIconBg: darkMode ? '#2b314f' : '#ecf6ff',
     bodyBg: darkMode ? '#151a2f' : '#f9fafb',
+    tabBg: darkMode ? '#2b314f' : white,
+    tabActiveBg: darkMode ? '#6725fc' : 'none',
+    tabColor: darkMode ? white : '#96989e',
+    tabActiveColor: darkMode ? white : '#734be2',
+    tabBdColor: darkMode ? 'none' : '#734be2',
 
     selectedBg: darkMode ? '#2b314f' : '#ecf6ff',
     selectedHoverBg: darkMode ? '#252b49' : '#deefff',
@@ -80,6 +85,8 @@ export function colors(darkMode: boolean): Colors {
 
     selectedBorderNo: darkMode ? '#363d5f' : '#d9d9e2',
     selectedHoverBorderNo: darkMode ? '#4a5482' : '#9c9cb0',
+
+    inputBorder: darkMode ? '#5c677d' : '#062536',
 
     // backgrounds
     // bgc1: darkMode ? '#21263e' : '#FFFFFF',
@@ -232,12 +239,12 @@ export const TYPE = {
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', sans-serif !important;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: 'Inter var', sans-serif;
+    font-family: 'Manrope', sans-serif !important;
   }
 }
 
@@ -249,6 +256,7 @@ body {
 
  a {
    color: ${colors(false).blue1}; 
+   font-family: 'Manrope', sans-serif !important;
  }
 
 * {

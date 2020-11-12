@@ -236,7 +236,7 @@ const Link = styled(ExternalLink)`
   }
 `
 
-console.log(config)
+// console.log(config)
 export default function NavList() {
   // const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()

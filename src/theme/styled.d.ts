@@ -29,6 +29,11 @@ export interface Colors {
   bgColorLinear: Color
   outLinkIconBg: Color
   bodyBg: Color
+  tabBg: Color
+  tabActiveBg: Color
+  tabColor: Color
+  tabActiveColor: Color
+  tabBdColor: Color
 
   selectedBg: Color
   selectedHoverBg: Color
@@ -41,6 +46,8 @@ export interface Colors {
 
   selectedBorderNo: Color
   selectedHoverBorderNo: Color
+
+  inputBorder: Color
 
   modalBG: Color
   advancedBG: Color

@@ -44,9 +44,12 @@ import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
+import { useTranslation } from 'react-i18next'
+import Title from '../../components/Title'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
+  const { t } = useTranslation()
 
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
@@ -194,21 +197,6 @@ export default function Swap() {
     swapCallback()
       .then(hash => {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
-
-        // ReactGA.event({
-        //   category: 'Swap',
-        //   action:
-        //     recipient === null
-        //       ? 'Swap w/o Send'
-        //       : (recipientAddress ?? recipient) === account
-        //       ? 'Swap w/o Send + recipient'
-        //       : 'Swap w/ Send',
-        //   label: [
-        //     trade?.inputAmount?.currency?.symbol,
-        //     trade?.outputAmount?.currency?.symbol,
-        //     getTradeVersion(trade)
-        //   ].join('/')
-        // })
       })
       .catch(error => {
         setSwapState({
@@ -273,6 +261,13 @@ export default function Swap() {
         onConfirm={handleConfirmTokenWarning}
       />
       <AppBody>
+        <Title
+          title={t('swap')}
+          tabList={[
+            {name: t('swap'), onTabClick: (name) => {console.log(name);onChangeRecipient(null)}, iconUrl: require('../../assets/images/icon/swap.svg'), iconActiveUrl: require('../../assets/images/icon/swap-white.svg')},
+            {name: t('send'), onTabClick: (name) => {console.log(name);onChangeRecipient('')}, iconUrl: require('../../assets/images/icon/send.svg'), iconActiveUrl: require('../../assets/images/icon/send-white.svg')},
+          ]}
+        ></Title>
         <SwapPoolTabs active={'swap'} />
         <Wrapper id="swap-page">
           <ConfirmSwapModal
@@ -291,7 +286,7 @@ export default function Swap() {
 
           <AutoColumn gap={'md'}>
             <CurrencyInputPanel
-              label={independentField === Field.OUTPUT && !showWrap && trade ? 'From (estimated)' : 'From'}
+              label={independentField === Field.OUTPUT && !showWrap && trade ? (t('input') + ' ' + t('estimated')) : t('input')}
               value={formattedAmounts[Field.INPUT]}
               showMaxButton={!atMaxAmountInput}
               currency={currencies[Field.INPUT]}
@@ -323,7 +318,7 @@ export default function Swap() {
             <CurrencyInputPanel
               value={formattedAmounts[Field.OUTPUT]}
               onUserInput={handleTypeOutput}
-              label={independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : 'To'}
+              label={independentField === Field.INPUT && !showWrap && trade ? (t('output') + ' ' + t('estimated')) : t('output')}
               showMaxButton={false}
               currency={currencies[Field.OUTPUT]}
               onCurrencySelect={handleOutputSelect}
@@ -337,9 +332,9 @@ export default function Swap() {
                   <ArrowWrapper clickable={false}>
                     <ArrowDown size="16" color={theme.text2} />
                   </ArrowWrapper>
-                  <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
+                  {/* <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
                     - Remove send
-                  </LinkStyledButton>
+                  </LinkStyledButton> */}
                 </AutoRow>
                 <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
               </>

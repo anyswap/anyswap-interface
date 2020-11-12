@@ -80,10 +80,15 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
 
 const Container = styled.div<{ hideInput: boolean }>`
   // border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
-  border: 1px solid ${({ theme }) => theme.bg2};
+  // border: 1px solid ${({ theme }) => theme.bg2};
   background-color: ${({ theme }) => theme.contentBg};
   box-shadow: 0 0.25rem 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
   border-radius: 0.5625rem;
+  border: 1px solid rgb (255, 92, 177);
+  padding: 1.25rem 2.5rem;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    padding: 1rem 1.5625rem;
+  `}
 `
 
 const StyledTokenName = styled.span<{ active?: boolean }>`
@@ -181,7 +186,7 @@ export default function CurrencyInputPanel({
                 >
                   {!hideBalance && !!currency && selectedCurrencyBalance
                     ? (customBalanceText ?? 'Balance: ') + selectedCurrencyBalance?.toSignificant(6)
-                    : ' -'}
+                    : ' -'} 
                 </TYPE.body>
               )}
             </RowBetween>

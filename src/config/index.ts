@@ -16,10 +16,10 @@ getIdCode()
 
 const ENV_CONFIG = getNetwork(ENV_NODE_CONFIG, INIT_NODE)
 // ENV_CONFIG = 'FTM_MAIN'
-console.log(ENV_CONFIG)
+// console.log(ENV_CONFIG)
 
 const netArr = ENV_CONFIG.split('_')
-console.log(netArr)
+// console.log(netArr)
 interface ConFig {
   [key: string]: any
 }
