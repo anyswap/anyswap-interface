@@ -9,11 +9,16 @@ import { Button as RebassButton, ButtonProps } from 'rebass/styled-components'
 const Base = styled(RebassButton)<{
   padding?: string
   width?: string
+  height?: string
+  maxWidth?: string
   borderRadius?: string
   altDisabledStyle?: boolean
 }>`
-  padding: ${({ padding }) => (padding ? padding : '18px')};
+  padding: ${({ padding }) => (padding ? padding : '1rem')};
   width: ${({ width }) => (width ? width : '100%')};
+  height: ${({ height }) => (height ? height : '54px')};
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '320px')};
+
   font-weight: 500;
   text-align: center;
   border-radius: 12px;
@@ -42,15 +47,13 @@ export const ButtonPrimary = styled(Base)`
   background-color: ${({ theme }) => theme.primary1};
   color: white;
   &:focus {
-    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.primary1)};
-    background-color: ${({ theme }) => darken(0.05, theme.primary1)};
+    opacity: 0.05;
   }
   &:hover {
-    background-color: ${({ theme }) => darken(0.05, theme.primary1)};
+    opacity: 0.05;
   }
   &:active {
-    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.primary1)};
-    background-color: ${({ theme }) => darken(0.1, theme.primary1)};
+    opacity: 0.1;
   }
   &:disabled {
     background-color: ${({ theme, altDisabledStyle }) => (altDisabledStyle ? theme.primary1 : theme.bg3)};

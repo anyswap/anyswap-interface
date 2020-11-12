@@ -30,6 +30,7 @@ export const SectionBreak = styled.div`
 `
 
 export const BottomGrouping = styled.div`
+  ${({ theme }) => theme.flexC}
   margin-top: 1rem;
 `
 

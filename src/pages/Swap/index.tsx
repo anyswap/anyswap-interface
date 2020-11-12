@@ -38,7 +38,8 @@ import {
   useSwapState
 } from '../../state/swap/hooks'
 import { useExpertModeManager, useUserSlippageTolerance } from '../../state/user/hooks'
-import { LinkStyledButton, TYPE } from '../../theme'
+// import { LinkStyledButton, TYPE } from '../../theme'
+import { TYPE } from '../../theme'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
@@ -46,6 +47,7 @@ import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
 import { useTranslation } from 'react-i18next'
 import Title from '../../components/Title'
+import SwapIcon from '../../components/SwapIcon'
 
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -314,7 +316,14 @@ export default function Swap() {
               otherCurrency={currencies[Field.OUTPUT]}
               id="swap-currency-input"
             />
-            <AutoColumn justify="space-between">
+            <SwapIcon
+              onClick={() => {
+                setApprovalSubmitted(false) // reset 2 step UI for approvals
+                onSwitchTokens()
+              }}
+              iconUrl={require('../../assets/images/icon/revert.svg')}
+            ></SwapIcon>
+            {/* <AutoColumn justify="space-between">
               <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
                 <ArrowWrapper clickable>
                   <ArrowDown
@@ -332,7 +341,7 @@ export default function Swap() {
                   </LinkStyledButton>
                 ) : null}
               </AutoRow>
-            </AutoColumn>
+            </AutoColumn> */}
             <CurrencyInputPanel
               value={formattedAmounts[Field.OUTPUT]}
               onUserInput={handleTypeOutput}

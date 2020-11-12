@@ -53,6 +53,8 @@ export interface Colors {
 
   arrowBg: Color
 
+  swapBg: Color
+
   modalBG: Color
   advancedBG: Color
 
