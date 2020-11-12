@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const TitleBox = styled.div`
-  ${({theme}) => theme.flexBC}
+  ${({ theme }) => theme.flexBC}
   margin-bottom:1rem;
 `
 const TitleTxt = styled.div`
@@ -11,16 +11,16 @@ const TitleTxt = styled.div`
   font-size: 24px;
   font-weight: 800;
   color: ${({ theme }) => theme.textColorBold};
-  white-space:nowrap;
+  white-space: nowrap;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     display:none;
   `}
 `
 const TabLinkBox = styled.ul`
-  ${({theme}) => theme.flexSC}
+  ${({ theme }) => theme.flexSC}
   list-style: none;
   margin: 0;
-  padding:0;
+  padding: 0;
   li {
     ${({ theme }) => theme.flexC}
     height: 38px;
@@ -34,23 +34,23 @@ const TabLinkBox = styled.ul`
     border-top: 0.0625rem solid rgba(0, 0, 0, 0.04);
     border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.04);
     border-left: 0.0625rem solid rgba(0, 0, 0, 0.04);
-    cursor:pointer;
+    cursor: pointer;
     text-decoration: none;
     padding: 0 0.625rem;
     background: ${({ theme }) => theme.tabBg};
-    white-space:nowrap;
+    white-space: nowrap;
 
     .icon {
       ${({ theme }) => theme.flexC}
       width: 28px;
       height: 28px;
-      background:#f5f5f5;
-      border-radius:100%;
-      margin-right:0.625rem;
+      background: #f5f5f5;
+      border-radius: 100%;
+      margin-right: 0.625rem;
       padding: 6px;
       img {
-        display:block;
-        width:100%;
+        display: block;
+        width: 100%;
       }
     }
     &:first-child {
@@ -80,43 +80,42 @@ const TabLinkBox = styled.ul`
     }
     @media screen and (max-width: 960px) {
       .icon {
-        display:none;
+        display: none;
       }
     }
   }
 `
 interface TabList {
-  name: string,
-  onTabClick: (val:any) => void,
-  iconUrl: string,
-  iconActiveUrl: string,
+  name: string
+  onTabClick: (val: any) => void
+  iconUrl: string
+  iconActiveUrl: string
 }
 interface Title {
-  title?: string,
-  tabList:Array<TabList>
+  title?: string
+  tabList: Array<TabList>
 }
 
-export default function Title ({
-  title,
-  tabList = []
-}: Title) {
+export default function Title({ title, tabList = [] }: Title) {
   const [tabIndex, setTabIndex] = useState(0)
   const [tabName, setTabName] = useState('')
-  function tabListView () {
+  function tabListView() {
     return (
       <>
         <TabLinkBox>
           {tabList.map((item, index) => {
             return (
-              <li key={index} className={tabIndex === index ? 'active' : ''} onClick={() => {
-                setTabIndex(index)
-                setTabName(item.name)
-                item.onTabClick(item.name)
-              }}>
-                <div className='icon'>
-                  {
-                    tabIndex === index ? <img alt={''} src={item.iconActiveUrl}/> : <img alt={''} src={item.iconUrl}/>
-                  }
+              <li
+                key={index}
+                className={tabIndex === index ? 'active' : ''}
+                onClick={() => {
+                  setTabIndex(index)
+                  setTabName(item.name)
+                  item.onTabClick(item.name)
+                }}
+              >
+                <div className="icon">
+                  {tabIndex === index ? <img alt={''} src={item.iconActiveUrl} /> : <img alt={''} src={item.iconUrl} />}
                 </div>
                 {item.name}
               </li>
