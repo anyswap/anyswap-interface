@@ -11,21 +11,22 @@ const SwapIconBox = styled.div`
   object-fit: contain;
   border-radius: 6px;
   margin: 0px auto;
-  cursor:pointer;
-  background: ${({ theme }) => theme.swapBg}
+  cursor: pointer;
+  background: ${({ theme }) => theme.swapBg};
 `
 
 interface SwapIcon {
-  iconUrl: string,
+  iconUrl: string
   onClick: () => void
 }
-export default function SwapIcon({
-  iconUrl,
-  onClick
-}: SwapIcon) {
+export default function SwapIcon({ iconUrl, onClick }: SwapIcon) {
   return (
-    <SwapIconBox onClick={() => {onClick()}}>
-      <img src={iconUrl} alt=''/>
+    <SwapIconBox
+      onClick={() => {
+        onClick()
+      }}
+    >
+      <img src={iconUrl} alt="" />
     </SwapIconBox>
   )
 }
