@@ -49,6 +49,10 @@ export interface Colors {
 
   inputBorder: Color
 
+  selectTextColor: Color
+
+  arrowBg: Color
+
   modalBG: Color
   advancedBG: Color
 

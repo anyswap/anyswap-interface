@@ -88,6 +88,10 @@ export function colors(darkMode: boolean): Colors {
 
     inputBorder: darkMode ? '#5c677d' : '#062536',
 
+    selectTextColor: darkMode ? white : '#031a6e',
+
+    arrowBg: darkMode ? '#21263e' : white,
+
     // backgrounds
     // bgc1: darkMode ? '#21263e' : '#FFFFFF',
 
