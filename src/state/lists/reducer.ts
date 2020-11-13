@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { getVersionUpgrade, VersionUpgrade } from '@uniswap/token-lists'
+// import { getVersionUpgrade, VersionUpgrade } from '@uniswap/token-lists'
 import { TokenList } from '@uniswap/token-lists/dist/types'
 import { DEFAULT_LIST_OF_LISTS, DEFAULT_TOKEN_LIST_URL } from '../../constants/lists'
 import { updateVersion } from '../global/actions'
@@ -40,9 +40,10 @@ const initialState: ListsState = {
   },
   selectedListUrl: DEFAULT_TOKEN_LIST_URL
 }
-
-export default createReducer(initialState, builder =>
-  builder
+// console.log(initialState)
+export default createReducer(initialState, builder =>{
+  console.log(builder)
+  return builder
     .addCase(fetchTokenList.pending, (state, { payload: { requestId, url } }) => {
       state.byUrl[url] = {
         current: null,
@@ -53,38 +54,49 @@ export default createReducer(initialState, builder =>
       }
     })
     .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
-      const current = state.byUrl[url]?.current
-      const loadingRequestId = state.byUrl[url]?.loadingRequestId
-
-      // no-op if update does nothing
-      if (current) {
-        const upgradeType = getVersionUpgrade(current.version, tokenList.version)
-        if (upgradeType === VersionUpgrade.NONE) return
-        if (loadingRequestId === null || loadingRequestId === requestId) {
-          state.byUrl[url] = {
-            ...state.byUrl[url],
-            loadingRequestId: null,
-            error: null,
-            current: current,
-            pendingUpdate: tokenList
-          }
-        }
-      } else {
-        state.byUrl[url] = {
-          ...state.byUrl[url],
-          loadingRequestId: null,
-          error: null,
-          current: tokenList,
-          pendingUpdate: null
-        }
+      // const current = state.byUrl[url]?.current
+      state.byUrl[url] = {
+        ...state.byUrl[url],
+        loadingRequestId: requestId,
+        error: null,
+        current: tokenList,
+        pendingUpdate: null
       }
+      // const loadingRequestId = state.byUrl[url]?.loadingRequestId
+      // 如果更新不执行任何操作，则不执行任何操作
+      // if (current) {
+        // const upgradeType = getVersionUpgrade(current.version, tokenList.version)
+        // console.log(current)
+        // console.log(current.version)
+        // console.log(tokenList)
+        // console.log(VersionUpgrade)
+        // console.log(state.byUrl[url])
+      //   if (upgradeType === VersionUpgrade.NONE) return
+      //   if (loadingRequestId === null || loadingRequestId === requestId) {
+      //     state.byUrl[url] = {
+      //       ...state.byUrl[url],
+      //       loadingRequestId: null,
+      //       error: null,
+      //       current: current,
+      //       pendingUpdate: tokenList
+      //     }
+      //   }
+      // } else {
+      //   state.byUrl[url] = {
+      //     ...state.byUrl[url],
+      //     loadingRequestId: null,
+      //     error: null,
+      //     current: tokenList,
+      //     pendingUpdate: null
+      //   }
+      // }
     })
     .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
       if (state.byUrl[url]?.loadingRequestId !== requestId) {
-        // no-op since it's not the latest request
+        // 没有行动，因为这不是最新的请求
         return
       }
-
+      
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
@@ -95,7 +107,7 @@ export default createReducer(initialState, builder =>
     })
     .addCase(selectList, (state, { payload: url }) => {
       state.selectedListUrl = url
-      // automatically adds list
+      // 自动添加列表
       if (!state.byUrl[url]) {
         state.byUrl[url] = NEW_LIST_STATE
       }
@@ -157,4 +169,5 @@ export default createReducer(initialState, builder =>
         }
       }
     })
+  }
 )

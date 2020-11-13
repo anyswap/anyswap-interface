@@ -36,7 +36,7 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.ROPSTEN]: {},
   [ChainId.GÖRLI]: {},
   [ChainId.MAINNET]: {},
-  [ChainId.FSNTEST]: {}
+  // [ChainId.FSNTEST]: {}
 }
 
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
@@ -46,6 +46,9 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
   const result = listCache?.get(list)
   if (result) return result
 
+  console.log(listCache)
+  console.log(result)
+  console.log(list)
   const map = list.tokens.reduce<TokenAddressMap>(
     (tokenMap, tokenInfo) => {
       const tags: TagInfo[] =
@@ -73,7 +76,9 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
 
 export function useTokenList(url: string | undefined): TokenAddressMap {
   const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
+  // console.log(lists)
   return useMemo(() => {
+    
     if (!url) return EMPTY_LIST
     const current = lists[url]?.current
     if (!current) return EMPTY_LIST
