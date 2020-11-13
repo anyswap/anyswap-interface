@@ -35,7 +35,7 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.RINKEBY]: {},
   [ChainId.ROPSTEN]: {},
   [ChainId.GÖRLI]: {},
-  [ChainId.MAINNET]: {},
+  [ChainId.MAINNET]: {}
   // [ChainId.FSNTEST]: {}
 }
 
@@ -78,7 +78,6 @@ export function useTokenList(url: string | undefined): TokenAddressMap {
   const lists = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
   // console.log(lists)
   return useMemo(() => {
-    
     if (!url) return EMPTY_LIST
     const current = lists[url]?.current
     if (!current) return EMPTY_LIST
