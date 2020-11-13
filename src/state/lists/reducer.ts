@@ -41,7 +41,7 @@ const initialState: ListsState = {
   selectedListUrl: DEFAULT_TOKEN_LIST_URL
 }
 // console.log(initialState)
-export default createReducer(initialState, builder =>{
+export default createReducer(initialState, builder => {
   console.log(builder)
   return builder
     .addCase(fetchTokenList.pending, (state, { payload: { requestId, url } }) => {
@@ -65,12 +65,12 @@ export default createReducer(initialState, builder =>{
       // const loadingRequestId = state.byUrl[url]?.loadingRequestId
       // 如果更新不执行任何操作，则不执行任何操作
       // if (current) {
-        // const upgradeType = getVersionUpgrade(current.version, tokenList.version)
-        // console.log(current)
-        // console.log(current.version)
-        // console.log(tokenList)
-        // console.log(VersionUpgrade)
-        // console.log(state.byUrl[url])
+      // const upgradeType = getVersionUpgrade(current.version, tokenList.version)
+      // console.log(current)
+      // console.log(current.version)
+      // console.log(tokenList)
+      // console.log(VersionUpgrade)
+      // console.log(state.byUrl[url])
       //   if (upgradeType === VersionUpgrade.NONE) return
       //   if (loadingRequestId === null || loadingRequestId === requestId) {
       //     state.byUrl[url] = {
@@ -96,7 +96,7 @@ export default createReducer(initialState, builder =>{
         // 没有行动，因为这不是最新的请求
         return
       }
-      
+
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
@@ -169,5 +169,4 @@ export default createReducer(initialState, builder =>{
         }
       }
     })
-  }
-)
+})

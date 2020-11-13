@@ -2,7 +2,7 @@
 export const DEFAULT_TOKEN_LIST_URL = 'http://127.0.0.1:8106/tokenList'
 
 export const DEFAULT_LIST_OF_LISTS: string[] = [
-  DEFAULT_TOKEN_LIST_URL,
+  DEFAULT_TOKEN_LIST_URL
   // 't2crtokens.eth', // kleros
   // 'tokens.1inch.eth', // 1inch
   // 'synths.snx.eth',
