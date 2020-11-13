@@ -21,8 +21,6 @@ const InputRow = styled.div<{ selected: boolean }>`
 `
 
 const CurrencySelect = styled.button<{ selected: boolean }>`
-
-
   align-items: center;
   color: ${({ selected, theme }) => (selected ? theme.textColor : '#031a6e')};
   font-size: ${({ selected, theme }) => (selected ? '1rem' : '12px')};
