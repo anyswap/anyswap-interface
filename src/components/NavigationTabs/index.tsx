@@ -90,13 +90,7 @@ export function AddRemoveTabs({ adding, creating }: { adding: boolean; creating:
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>{creating ? t('CreatePair') : adding ? t('AddLiquidity') : t('RemoveLiquidity')}</ActiveText>
-        <QuestionHelper
-          text={
-            adding
-              ? t('AddRemoveTabsTip1')
-              : t('AddRemoveTabsTip2')
-          }
-        />
+        <QuestionHelper text={adding ? t('AddRemoveTabsTip1') : t('AddRemoveTabsTip2')} />
       </RowBetween>
     </Tabs>
   )

@@ -123,9 +123,7 @@ export default function Pool() {
                 <TYPE.white fontWeight={600}>{t('LiquidityProviderPewards')}</TYPE.white>
               </RowBetween>
               <RowBetween>
-                <TYPE.white fontSize={14}>
-                  {t('LiquidityProviderPewardsTip')}
-                </TYPE.white>
+                <TYPE.white fontSize={14}>{t('LiquidityProviderPewardsTip')}</TYPE.white>
               </RowBetween>
               <ExternalLink
                 style={{ color: 'white', textDecoration: 'underline' }}

@@ -7,7 +7,7 @@ import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import { WrappedTokenInfo } from '../../state/lists/hooks'
 import Logo from '../Logo'
 
-const getTokenLogoURL = (address: any) =>{
+const getTokenLogoURL = (address: any) => {
   // console.log(address)
   try {
     return require('../../assets/images/coin/' + address + '.svg')
@@ -54,7 +54,7 @@ export default function CurrencyLogo({
     if (currency instanceof Token && currency) {
       if (currency instanceof WrappedTokenInfo) {
         // return [...uriLocations, getTokenLogoURL(currency.address)]
-        return [ getTokenLogoURL(currency.symbol)]
+        return [getTokenLogoURL(currency.symbol)]
       }
 
       // return [getTokenLogoURL(currency.address)]
@@ -62,7 +62,7 @@ export default function CurrencyLogo({
     }
     return []
   }, [currency])
-// }, [currency, uriLocations])
+  // }, [currency, uriLocations])
 
   if (currency === ETHER) {
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} />
