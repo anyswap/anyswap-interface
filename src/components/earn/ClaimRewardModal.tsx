@@ -11,6 +11,7 @@ import { SubmittedView, LoadingView } from '../ModalViews'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useActiveWeb3React } from '../../hooks'
+import { useTranslation } from 'react-i18next'
 
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
@@ -25,6 +26,7 @@ interface StakingModalProps {
 
 export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: StakingModalProps) {
   const { account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   // monitor call to help UI loading state
   const addTransaction = useTransactionAdder()
@@ -59,10 +61,10 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
 
   let error: string | undefined
   if (!account) {
-    error = 'Connect Wallet'
+    error = t('ConnectWallet')
   }
   if (!stakingInfo?.stakedAmount) {
-    error = error ?? 'Enter an amount'
+    error = error ?? t('enterAmount')
   }
 
   return (

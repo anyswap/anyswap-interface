@@ -67,32 +67,34 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
 }
 
 export function FindPoolTabs() {
+  const { t } = useTranslation()
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
         <HistoryLink to="/pool">
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>Import Pool</ActiveText>
-        <QuestionHelper text={"Use this tool to find pairs that don't automatically appear in the interface."} />
+        <ActiveText>{t('ImportPool')}</ActiveText>
+        <QuestionHelper text={t('ImportPoolTip')} />
       </RowBetween>
     </Tabs>
   )
 }
 
 export function AddRemoveTabs({ adding, creating }: { adding: boolean; creating: boolean }) {
+  const { t } = useTranslation()
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
         <HistoryLink to="/pool">
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>{creating ? 'Create a pair' : adding ? 'Add Liquidity' : 'Remove Liquidity'}</ActiveText>
+        <ActiveText>{creating ? t('CreatePair') : adding ? t('AddLiquidity') : t('RemoveLiquidity')}</ActiveText>
         <QuestionHelper
           text={
             adding
-              ? 'When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.'
-              : 'Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.'
+              ? t('AddRemoveTabsTip1')
+              : t('AddRemoveTabsTip2')
           }
         />
       </RowBetween>

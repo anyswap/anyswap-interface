@@ -13,6 +13,7 @@ import { useV1ExchangeContract } from './useContract'
 import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
 import { Version } from './useToggledVersion'
+import { useTranslation } from 'react-i18next'
 
 export enum SwapCallbackState {
   INVALID,
@@ -112,6 +113,7 @@ export function useSwapCallback(
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
@@ -126,7 +128,7 @@ export function useSwapCallback(
     }
     if (!recipient) {
       if (recipientAddressOrName !== null) {
-        return { state: SwapCallbackState.INVALID, callback: null, error: 'Invalid recipient' }
+        return { state: SwapCallbackState.INVALID, callback: null, error: t('InvalidRecipient') }
       } else {
         return { state: SwapCallbackState.LOADING, callback: null, error: null }
       }
@@ -240,5 +242,5 @@ export function useSwapCallback(
       },
       error: null
     }
-  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction, t])
 }

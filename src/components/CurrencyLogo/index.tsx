@@ -3,12 +3,24 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
-import useHttpLocations from '../../hooks/useHttpLocations'
+// import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/hooks'
 import Logo from '../Logo'
 
-const getTokenLogoURL = (address: string) =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+const getTokenLogoURL = (address: any) =>{
+  // console.log(address)
+  try {
+    return require('../../assets/images/coin/' + address + '.svg')
+  } catch (error) {
+    try {
+      return require('../../assets/images/coin/' + address + '.png')
+    } catch (error) {
+      return ''
+      // return require('../../assets/images/question.svg')
+    }
+  }
+  // return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+}
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
@@ -35,20 +47,22 @@ export default function CurrencyLogo({
   size?: string
   style?: React.CSSProperties
 }) {
-  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
+  // const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
 
   const srcs: string[] = useMemo(() => {
     if (currency === ETHER) return []
-
-    if (currency instanceof Token) {
+    if (currency instanceof Token && currency) {
       if (currency instanceof WrappedTokenInfo) {
-        return [...uriLocations, getTokenLogoURL(currency.address)]
+        // return [...uriLocations, getTokenLogoURL(currency.address)]
+        return [ getTokenLogoURL(currency.symbol)]
       }
 
-      return [getTokenLogoURL(currency.address)]
+      // return [getTokenLogoURL(currency.address)]
+      return [getTokenLogoURL(currency.symbol)]
     }
     return []
-  }, [currency, uriLocations])
+  }, [currency])
+// }, [currency, uriLocations])
 
   if (currency === ETHER) {
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} />

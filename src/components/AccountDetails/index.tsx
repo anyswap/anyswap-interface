@@ -21,6 +21,7 @@ import Identicon from '../Identicon'
 import { ButtonSecondary } from '../Button'
 import { ExternalLink as LinkIcon } from 'react-feather'
 import { ExternalLink, LinkStyledButton, TYPE } from '../../theme'
+import { useTranslation } from 'react-i18next'
 
 const HeaderRow = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
@@ -227,6 +228,7 @@ export default function AccountDetails({
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
+  const { t } = useTranslation()
   const dispatch = useDispatch<AppDispatch>()
 
   function formatConnectorName() {
@@ -295,7 +297,7 @@ export default function AccountDetails({
         <CloseIcon onClick={toggleWalletModal}>
           <CloseColor />
         </CloseIcon>
-        <HeaderRow>Account</HeaderRow>
+        <HeaderRow>{t('Account')}</HeaderRow>
         <AccountSection>
           <YourAccount>
             <InfoCard>
