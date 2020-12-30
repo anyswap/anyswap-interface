@@ -11,11 +11,10 @@ import { useActiveWeb3React } from './index'
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const { chainId } = useActiveWeb3React()
   const bases: Token[] = chainId ? BASES_TO_CHECK_TRADES_AGAINST[chainId] : []
-  
+
   const [tokenA, tokenB] = chainId
-  ? [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)]
-  : [undefined, undefined]
-  
+    ? [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)]
+    : [undefined, undefined]
 
   const basePairs: [Token, Token][] = useMemo(
     () =>
@@ -60,7 +59,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   )
 
   const allPairs = usePairs(allPairCombinations)
-  
+
   // 只传递有效对、非重复对
   return useMemo(
     () =>
