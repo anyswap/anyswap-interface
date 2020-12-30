@@ -19,6 +19,9 @@ export const LightCard = styled(Card)`
 `
 
 export const GreyCard = styled(Card)`
+  padding: 1rem;
+  height: 54px;
+  max-width: 320px;
   background-color: ${({ theme }) => theme.bg3};
 `
 

@@ -1,6 +1,7 @@
 import getFSNConfig from './coinbase/fusion'
 import getBNBConfig from './coinbase/binance'
 import getFTMConfig from './coinbase/fantom'
+import getETHConfig from './coinbase/ethereum'
 
 import { getNetwork, getIdCode } from './getUrlParams'
 import { chainInfo } from './coinbase/nodeConfig'
@@ -9,8 +10,9 @@ const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
 // const INIT_NODE = 'FSN_MAIN'
 // const INIT_NODE = 'BNB_MAIN'
 // const INIT_NODE = 'BNB_TEST'
-const INIT_NODE = 'FSN_TEST'
+// const INIT_NODE = 'FSN_TEST'
 // const INIT_NODE = 'FTM_MAIN'
+const INIT_NODE = 'ETH_TEST'
 
 getIdCode()
 
@@ -35,6 +37,8 @@ if (netArr[0] === 'FSN') {
   netConfig = getBNBConfig(netArr[1])
 } else if (netArr[0] === 'FTM') {
   netConfig = getFTMConfig(netArr[1])
+} else if (netArr[0] === 'ETH') {
+  netConfig = getETHConfig(netArr[1])
 }
 
 const serverInfoUrl = 'https://bridgeapi.anyswap.exchange'

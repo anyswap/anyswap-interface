@@ -91,8 +91,10 @@ export default function Pool() {
     account ?? undefined,
     liquidityTokens
   )
+  console.log(tokenPairsWithLiquidityTokens)
+  console.log(liquidityTokens)
 
-  // fetch the reserves for all V2 pools in which the user has a balance
+  // 获取用户有余额的所有V2池的保留
   const liquidityTokensWithBalances = useMemo(
     () =>
       tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>

@@ -42,7 +42,7 @@ const initialState: ListsState = {
 }
 // console.log(initialState)
 export default createReducer(initialState, builder => {
-  console.log(builder)
+  // console.log(builder)
   return builder
     .addCase(fetchTokenList.pending, (state, { payload: { requestId, url } }) => {
       state.byUrl[url] = {

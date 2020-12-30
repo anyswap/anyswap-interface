@@ -19,6 +19,7 @@ import useToggledVersion from '../../hooks/useToggledVersion'
 import { useUserSlippageTolerance } from '../user/hooks'
 import { computeSlippageAdjustedAmounts } from '../../utils/prices'
 import { useTranslation } from 'react-i18next'
+import config from '../../config'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>(state => state.swap)
@@ -76,6 +77,7 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
   }
   try {
     const typedValueParsed = parseUnits(value, currency.decimals).toString()
+    console.log(typedValueParsed)
     if (typedValueParsed !== '0') {
       return currency instanceof Token
         ? new TokenAmount(currency, JSBI.BigInt(typedValueParsed))
@@ -92,7 +94,7 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
 const BAD_RECIPIENT_ADDRESSES: string[] = [
   '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // v2 factory
   '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
-  '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D' // v2 router 02
+  config.router // v2 router 02
 ]
 
 /**
@@ -141,12 +143,17 @@ export function useDerivedSwapInfo(): {
 
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
-
+  // console.log(typedValue)
+  // console.log(inputCurrency)
+  // console.log(parsedAmount)
   const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
   const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
-
+  // console.log(isExactIn)
+  // console.log(v2Trade)
+  // console.log(parsedAmount)
+  // console.log(outputCurrency)
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1]

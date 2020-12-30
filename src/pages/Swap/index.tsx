@@ -49,6 +49,8 @@ import { useTranslation } from 'react-i18next'
 import Title from '../../components/Title'
 import SwapIcon from '../../components/SwapIcon'
 
+import {getPairAddress} from '../../utils/tools/getPairAddress'
+getPairAddress()
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
@@ -102,6 +104,9 @@ export default function Swap() {
     [Version.v1]: v1Trade,
     [Version.v2]: v2Trade
   }
+  // console.log(showWrap)
+  // console.log(toggledVersion)
+  // console.log(tradesByVersion[toggledVersion])
   const trade = showWrap ? undefined : tradesByVersion[toggledVersion]
   const defaultTrade = showWrap ? undefined : tradesByVersion[DEFAULT_VERSION]
 
@@ -160,7 +165,7 @@ export default function Swap() {
       ? parsedAmounts[independentField]?.toExact() ?? ''
       : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
   }
-
+  // console.log(trade)
   const route = trade?.route
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))

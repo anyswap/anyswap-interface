@@ -4,8 +4,11 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 // import { fortmatic, injected, portis, walletconnect, walletlink } from '../connectors'
 import { injected } from '../connectors'
 
+import config from '../config'
+
 // export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-export const ROUTER_ADDRESS = '0x9a463c2d1f63b76b2a1fe8e0df8a8ae84a06e7ac'
+// export const ROUTER_ADDRESS = '0x9a463c2d1f63b76b2a1fe8e0df8a8ae84a06e7ac'
+export const ROUTER_ADDRESS = config.router
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
