@@ -8,7 +8,7 @@ import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 // import {getPairAddress} from '../utils/tools/getPairAddress'
-// import {usePairAddress} from '../hooks/getPairAddress'
+import {usePairAddress} from '../hooks/getPairAddress'
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
 
@@ -31,39 +31,40 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     [chainId, currencies]
   )
   // console.log(tokens)
-  // const paObj = useMemo(
-  //   () =>
-  //     tokens.map(([tokenA, tokenB]) => {
-  //       // console.log(tokenA?.address)
-  //       // console.log(tokenB?.address)
-  //       return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : undefined
-  //     }),
-  //   [tokens]
-  // )
-  // const pa = usePairAddress(paObj)
-  // const results = useMultipleContractSingleData(pa, PAIR_INTERFACE, 'getReserves')
-  // console.log(paObj)
-  // console.log(pa)
-  // console.log(results)
-
-  const pairAddresses = useMemo(
+  const paObj = useMemo(
     () =>
       tokens.map(([tokenA, tokenB]) => {
         // console.log(tokenA?.address)
         // console.log(tokenB?.address)
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
-        // return tokenA && tokenB && !tokenA.equals(tokenB) ? pa : undefined
+        return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : undefined
       }),
     [tokens]
   )
+  const pa = usePairAddress(paObj)
+  const results = useMultipleContractSingleData(pa, PAIR_INTERFACE, 'getReserves')
+  console.log(paObj)
+  // console.log(pa)
+  // console.log(results)
+
+  // const pairAddresses = useMemo(
+  //   () =>
+  //     tokens.map(([tokenA, tokenB]) => {
+  //       // console.log(tokenA?.address)
+  //       // console.log(tokenB?.address)
+  //       return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
+  //       // return tokenA && tokenB && !tokenA.equals(tokenB) ? pa : undefined
+  //     }),
+  //   [tokens]
+  // )
   // console.log(pairAddresses)
-  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  // const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
   // console.log(results)
 
   return useMemo(() => {
+    console.log(tokens)
     console.log(results)
     return results.map((result, i) => {
-      console.log(tokens)
+      // console.log(tokens)
       const { result: reserves, loading } = result
       const tokenA = tokens[i][0]
       const tokenB = tokens[i][1]
@@ -81,6 +82,6 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 }
 
 export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {
-  // console.log(usePairs([[tokenA, tokenB]])[0])
+  console.log(usePairs([[tokenA, tokenB]])[0])
   return usePairs([[tokenA, tokenB]])[0]
 }

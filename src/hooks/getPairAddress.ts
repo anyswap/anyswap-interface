@@ -13,7 +13,7 @@ export function usePairAddress(paObj: any) {
   const [PairAddress, setPairAddress] = useState<any>([])
   // console.log(paObj)
   useEffect(() => {
-    if (paObj && paObj.length > 0) {
+    if (paObj && paObj.length > 0 && paObj[0] !== undefined) {
       const batch = new web3Fn.BatchRequest()
       for (const obj of paObj) {
         // console.log(obj)
@@ -35,12 +35,14 @@ export function usePairAddress(paObj: any) {
           if (arr.length > 0) {
             setPairAddress(arr)
           } else {
-            setPairAddress([undefined])
+            setPairAddress([])
           }
         }
       })
-    } else {
+    } else if (paObj && paObj.length > 0 && paObj[0] === undefined) {
       setPairAddress([undefined])
+    } else {
+      setPairAddress([])
     }
   }, [paObj])
   return PairAddress
