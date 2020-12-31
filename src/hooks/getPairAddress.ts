@@ -11,14 +11,18 @@ factoryContract.options.address = fa
 // export async function getPairAddress (tokenA: Token, tokenB: Token) {
 export function usePairAddress (paObj:any) {
   const [PairAddress, setPairAddress] = useState<any>([])
-
+  // console.log(paObj)
   useEffect(() => {
     if (paObj && paObj.length > 0) {
       const batch = new web3Fn.BatchRequest()
       for (let obj of paObj) {
-        console.log(obj)
-        const gpData = factoryContract.methods.getPair(obj?.tokenA?.address, obj?.tokenB?.address).encodeABI()
-        batch.add(web3Fn.eth.call.request({data: gpData, to: fa}, 'latest'))
+        // console.log(obj)
+        let tokenA = obj?.tokenA?.address
+        let tokenB = obj?.tokenB?.address
+        if (tokenA && tokenB) {
+          const gpData = factoryContract.methods.getPair(tokenA, tokenB).encodeABI()
+          batch.add(web3Fn.eth.call.request({data: gpData, to: fa}, 'latest'))
+        }
       }
       batch.requestManager.sendBatch(batch.requests, (err:any, res:any) => {
         if (!err && res) {
@@ -28,9 +32,15 @@ export function usePairAddress (paObj:any) {
               arr.push(obj.result.replace('0x000000000000000000000000', '0x'))
             }
           }
-          setPairAddress(arr)
+          if (arr.length > 0) {
+            setPairAddress(arr)
+          } else {
+            setPairAddress([undefined])
+          }
         }
       })
+    } else {
+      setPairAddress([undefined])
     }
   }, [paObj])
   return PairAddress
