@@ -8,7 +8,7 @@ import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 // import {getPairAddress} from '../utils/tools/getPairAddress'
-import {usePairAddress} from '../hooks/getPairAddress'
+import { usePairAddress } from '../hooks/getPairAddress'
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
 
@@ -36,7 +36,7 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       tokens.map(([tokenA, tokenB]) => {
         // console.log(tokenA?.address)
         // console.log(tokenB?.address)
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : undefined
+        return tokenA && tokenB && !tokenA.equals(tokenB) ? { tokenA, tokenB } : undefined
       }),
     [tokens]
   )
