@@ -7,6 +7,9 @@ import { useActiveWeb3React } from '../hooks'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
+// import {getPairAddress} from '../utils/tools/getPairAddress'
+import {usePairAddress} from '../hooks/getPairAddress'
+
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
 
 export enum PairState {
@@ -27,16 +30,33 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       ]),
     [chainId, currencies]
   )
-
-  const pairAddresses = useMemo(
-    () =>
-      tokens.map(([tokenA, tokenB]) => {
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
-      }),
-    [tokens]
-  )
-
-  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+//       console.log(tokens)
+const paObj = useMemo(
+  () =>
+    tokens.map(([tokenA, tokenB]) => {
+      // console.log(tokenA?.address)
+      // console.log(tokenB?.address)
+      return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : {tokenA: '', tokenB: ''}
+      // return tokenA && tokenB && !tokenA.equals(tokenB) ? getPairAddress(tokenA?.address, tokenB?.address) : undefined
+    }),
+  [tokens]
+)
+  const pa = usePairAddress(paObj)
+  // console.log(paObj)
+  console.log(pa)
+  // const pairAddresses = useMemo(
+  //   () =>
+  //     tokens.map(([tokenA, tokenB]) => {
+  //       // console.log(tokenA?.address)
+  //       // console.log(tokenB?.address)
+  //       return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
+  //       // return tokenA && tokenB && !tokenA.equals(tokenB) ? pa : undefined
+  //     }),
+  //   [tokens]
+  // )
+  //     console.log(pairAddresses)
+  // const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  const results = useMultipleContractSingleData(pa, PAIR_INTERFACE, 'getReserves')
 
   return useMemo(() => {
     return results.map((result, i) => {

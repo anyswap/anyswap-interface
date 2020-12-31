@@ -49,8 +49,8 @@ import { useTranslation } from 'react-i18next'
 import Title from '../../components/Title'
 import SwapIcon from '../../components/SwapIcon'
 
-import { getPairAddress } from '../../utils/tools/getPairAddress'
-getPairAddress()
+// import {getPairAddress} from '../../utils/tools/getPairAddress'
+// getPairAddress()
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
