@@ -1,16 +1,22 @@
 import { TokenAmount, Pair, Currency } from '@uniswap/sdk'
-import { useMemo } from 'react'
+// import { useEffect, useMemo, useState } from 'react'
+import {  useCallback, useMemo, useEffect } from 'react'
+// import {  useMemo } from 'react'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { Interface } from '@ethersproject/abi'
 import { useActiveWeb3React } from '../hooks'
-
+// import v2Factory from '../constants/abis/v2_factory.json'
+// import { useMultipleContractSingleData, useSingleContractMultipleData } from '../state/multicall/hooks'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
-// import {getPairAddress} from '../utils/tools/getPairAddress'
-import {usePairAddress} from '../hooks/getPairAddress'
+// import {useV2FactoryContract} from '../hooks/useContract'
+
+import {getPairsAddress} from '../utils/tools/getPairAddress'
+// import {usePairAddress} from '../hooks/getPairAddress'
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
+// const PAIR_INTERFACE2 = new Interface(v2Factory)
 
 export enum PairState {
   LOADING,
@@ -18,10 +24,11 @@ export enum PairState {
   EXISTS,
   INVALID
 }
-
+// let onlyOne:any = []
 export function usePairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
   const { chainId } = useActiveWeb3React()
 
+  
   const tokens = useMemo(
     () =>
       currencies.map(([currencyA, currencyB]) => [
@@ -30,39 +37,61 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       ]),
     [chainId, currencies]
   )
-  // console.log(tokens)
-  const paObj = useMemo(
+  // const [paList, setPaList] = useState<any>(tokens && tokens.length > 0?[undefined] : [])
+
+  const paArr: any[] = useMemo(
     () =>
       tokens.map(([tokenA, tokenB]) => {
-        // console.log(tokenA?.address)
-        // console.log(tokenB?.address)
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : undefined
+        // return tokenA && tokenB && !tokenA.equals(tokenB) ? (tokenA?.address, tokenB?.address) : []
+        // return tokenA && tokenB && !tokenA.equals(tokenB) ? [tokenA?.address, tokenB?.address] : ''
+        return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : ''
       }),
     [tokens]
   )
-  const pa = usePairAddress(paObj)
-  const results = useMultipleContractSingleData(pa, PAIR_INTERFACE, 'getReserves')
-  console.log(paObj)
+  // // const getPa = useMemo(() => {
+  const getPa = useCallback(() => {
+    getPairsAddress(paArr).then((res:any):any => {
+      console.log(res)
+      if (res && res.length > 0) {
+        // setPaList([res[0]?.pairAddress])
+      }
+    })
+  }, [paArr])
+  useEffect(() => {
+    getPa()
+  }, [paArr, getPa])
+
+  // const pa = usePairAddress(tokens)
+  // const pa = usePairAddress(paArr)
+  // console.log(PAIR_INTERFACE2)
+  // console.log(paArr)
+  // console.log(tokens)
+  // const results = useMultipleContractSingleData(paList, PAIR_INTERFACE, 'getReserves')
+  // const v2Factory = useV2FactoryContract('0x5C487A8a1915655bB9863d59D2519c01C1A427d7', false)
+  // const resultPair = useSingleContractMultipleData(v2Factory, 'getPair', paArr.map(address => [address]))
+  // console.log(chainId)
+  console.log(currencies)
   // console.log(pa)
+  // console.log(resultPair)
+  // console.log(onlyOne)
   // console.log(results)
 
-  // const pairAddresses = useMemo(
-  //   () =>
-  //     tokens.map(([tokenA, tokenB]) => {
-  //       // console.log(tokenA?.address)
-  //       // console.log(tokenB?.address)
-  //       return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
-  //       // return tokenA && tokenB && !tokenA.equals(tokenB) ? pa : undefined
-  //     }),
-  //   [tokens]
-  // )
-  // console.log(pairAddresses)
-  // const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  const pairAddresses = useMemo(
+    () =>
+      tokens.map(([tokenA, tokenB]) => {
+        return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
+      }),
+    [tokens]
+  )
+  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+
   // console.log(results)
+  // console.log(tokens)
+  // console.log(paArr)
 
   return useMemo(() => {
-    console.log(tokens)
-    console.log(results)
+    // console.log(tokens)
+    // console.log(results)
     return results.map((result, i) => {
       // console.log(tokens)
       const { result: reserves, loading } = result
@@ -82,6 +111,6 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 }
 
 export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {
-  console.log(usePairs([[tokenA, tokenB]])[0])
+  // console.log(usePairs([[tokenA, tokenB]])[0])
   return usePairs([[tokenA, tokenB]])[0]
 }

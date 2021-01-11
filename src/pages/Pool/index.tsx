@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { Pair } from '@uniswap/sdk'
 import { Link } from 'react-router-dom'
@@ -16,10 +16,14 @@ import { AutoColumn } from '../../components/Column'
 
 import { useActiveWeb3React } from '../../hooks'
 import { usePairs } from '../../data/Reserves'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+// import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import { useTrackedTokenPairs } from '../../state/user/hooks'
 import { Dots } from '../../components/swap/styleds'
 import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
 import { useTranslation } from 'react-i18next'
+
+import {getPairsAddress} from '../../utils/tools/getPairAddress'
+import { Token } from '@uniswap/sdk'
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -72,7 +76,10 @@ const EmptyProposals = styled.div`
   justify-content: center;
   align-items: center;
 `
-
+interface TPWLT {
+  liquidityToken: Token,
+  tokens: [Token, Token]
+}
 export default function Pool() {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
@@ -80,10 +87,34 @@ export default function Pool() {
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
-  const tokenPairsWithLiquidityTokens = useMemo(
-    () => trackedTokenPairs.map(tokens => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
-    [trackedTokenPairs]
-  )
+  // const tokenPairsWithLiquidityTokens = useMemo(
+  //   () => trackedTokenPairs.map(tokens => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
+  //   [trackedTokenPairs]
+  // )
+  const [tokenPairsWithLiquidityTokens, setTokenPairsWithLiquidityTokens] = useState<Array<TPWLT>>([])
+  const getGokenPairsWithLiquidityTokens = useCallback(() => {
+    getPairsAddress(trackedTokenPairs).then((res:any) => {
+      console.log(trackedTokenPairs)
+      console.log(res)
+      if (res && res.length > 0) {
+
+        let arr = []
+        for (let obj of res) {
+          if (obj.pairAddress) {
+            arr.push({
+              liquidityToken: new Token(obj.chainId, obj.pairAddress, 18, 'UNI-V2', 'Uniswap V2'),
+              tokens: obj.tokens
+            })
+          }
+        }
+        console.log(arr)
+        setTokenPairsWithLiquidityTokens(arr)
+      }
+    })
+  }, [trackedTokenPairs])
+  useEffect(() => {
+    getGokenPairsWithLiquidityTokens()
+  }, [getGokenPairsWithLiquidityTokens])
   const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map(tpwlt => tpwlt.liquidityToken), [
     tokenPairsWithLiquidityTokens
   ])
@@ -92,7 +123,7 @@ export default function Pool() {
     liquidityTokens
   )
   // console.log(tokenPairsWithLiquidityTokens)
-  // console.log(liquidityTokens)
+  // console.log(trackedTokenPairs)
 
   // 获取用户有余额的所有V2池的保留
   const liquidityTokensWithBalances = useMemo(
@@ -102,8 +133,14 @@ export default function Pool() {
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances]
   )
-
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  // console.log(tokenPairsWithLiquidityTokens)
+  // console.log(v2PairsBalances)
+  // console.log(liquidityTokensWithBalances)
+  const tokenArr = useMemo(() => 
+    liquidityTokensWithBalances.map(({ tokens }) => tokens)
+  , [liquidityTokensWithBalances])
+  // const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const v2Pairs = usePairs(tokenArr)
   const v2IsLoading =
     fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some(V2Pair => !V2Pair)
 

@@ -15,10 +15,14 @@ import {
   SerializedToken,
   updateUserDarkMode,
   updateUserDeadline,
+  // updatePairAddress,
   updateUserExpertMode,
   updateUserSlippageTolerance,
   toggleURLWarning
 } from './actions'
+
+// import {getPairAddress} from '../../utils/tools/getPairAddress'
+// import {usePairAddress} from '../../hooks/getPairAddress'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -178,7 +182,47 @@ export function useURLWarningToggle(): () => void {
 export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
   // console.log(tokenA)
   // console.log(tokenB)
+  // const [pairAddress, setPairAddress] = useState('')
+  // useEffect(() => {
+  //   getPairAddress([{tokenA, tokenB}]).then((res:any) => {
+  //     console.log(res)
+  //     setPairAddress(res)
+  //   })
+  // }, [])
   return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'UNI-V2', 'Uniswap V2')
+  // return new Token(tokenA.chainId, pairAddress, 18, 'UNI-V2', 'Uniswap V2')
+  // const dispatch = useDispatch<AppDispatch>()
+  // const pairAddress = useSelector<AppState, AppState['user']['pairAddress']>(state => {
+  //   return state.user.pairAddress
+  // })
+
+  // const setUserDeadline = useCallback(
+  //   (pairAddress: number) => {
+  //     dispatch(updatePairAddress({ pairAddress }))
+  //   },
+  //   [dispatch]
+  // )
+  // useCallback(
+  //   () => {
+  //     getPairAddress([{tokenA, tokenB}]).then((res:any) => {
+  //       console.log(res)
+  //       dispatch(updatePairAddress({ pairAddress:res }))
+  //     }) 
+  //   }),
+  //   [tokenA, tokenB, dispatch]
+  // )
+
+
+
+  // useEffect(() => {
+  //   getPairAddress([{tokenA, tokenB}]).then((res:any) => {
+  //     console.log(res)
+  //     dispatch(updatePairAddress({ pairAddress:res }))
+  //   })
+  // }, [tokenA, tokenB])
+  // const pairAddress = usePairAddress([{tokenA, tokenB}])
+
+  // return new Token(tokenA.chainId, pairAddress, 18, 'UNI-V2', 'Uniswap V2')
 }
 
 /**
@@ -187,11 +231,16 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
 export function useTrackedTokenPairs(): [Token, Token][] {
   const { chainId } = useActiveWeb3React()
   const tokens = useAllTokens()
-
   // pinned pairs
   const pinnedPairs = useMemo(() => (chainId ? PINNED_PAIRS[chainId] ?? [] : []), [chainId])
+  // if (chainId) {
+  //   console.log(tokens)
+  //   console.log(PINNED_PAIRS)
+  //   console.log(chainId)
+  //   console.log(PINNED_PAIRS[chainId])
+  // }
 
-  // pairs for every token against every base
+  // 对每个令牌对每个基进行配对
   const generatedPairs: [Token, Token][] = useMemo(
     () =>
       chainId

@@ -25,7 +25,7 @@ export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589
 export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
 export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 18, 'WBTC', 'Wrapped BTC')
 
-// TODO this is only approximate, it's actually based on blocks
+// TODO这只是一个近似值，它实际上是基于块的
 export const PROPOSAL_LENGTH_IN_DAYS = 7
 
 // muticall 地址
@@ -50,7 +50,7 @@ export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [TIMELOCK_ADDRESS]: 'Timelock'
 }
 
-// TODO: specify merkle distributor for mainnet
+// TODO:为mainnet指定merkle分发服务器
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: '0x090D4613473dEE047c3f2706764f49E0821D256e'
 }
@@ -64,15 +64,14 @@ const WETH_ONLY: ChainTokenList = {
   // [ChainId.FSNTEST]: [WETH[ChainId.FSNTEST]]
 }
 
-// used to construct intermediary pairs for trading
+// 用于构造用于交易的中介对
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT, COMP, MKR]
 }
 
 /**
- * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
- * tokens.
+ * 一些令牌只能通过某些对进行交换，因此我们覆盖了这些令牌所考虑的基的列表。
  */
 export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
   [ChainId.MAINNET]: {
@@ -80,13 +79,13 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
   }
 }
 
-// used for display in the default list when adding liquidity
+// 用于添加流动性时在默认列表中显示
 export const SUGGESTED_BASES: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]
 }
 
-// used to construct the list of all pairs we consider by default in the frontend
+// 用于构建我们在前端默认考虑的所有对的列表
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]
@@ -191,15 +190,15 @@ export const BIG_INT_ZERO = JSBI.BigInt(0)
 // one basis point
 export const ONE_BIPS = new Percent(JSBI.BigInt(1), JSBI.BigInt(10000))
 export const BIPS_BASE = JSBI.BigInt(10000)
-// used for warning states
+// 用于警告状态
 export const ALLOWED_PRICE_IMPACT_LOW: Percent = new Percent(JSBI.BigInt(100), BIPS_BASE) // 1%
 export const ALLOWED_PRICE_IMPACT_MEDIUM: Percent = new Percent(JSBI.BigInt(300), BIPS_BASE) // 3%
 export const ALLOWED_PRICE_IMPACT_HIGH: Percent = new Percent(JSBI.BigInt(500), BIPS_BASE) // 5%
-// if the price slippage exceeds this number, force the user to type 'confirm' to execute
+// 如果价格下滑超过此数字，则强制用户键入“confirm”以执行
 export const PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: Percent = new Percent(JSBI.BigInt(1000), BIPS_BASE) // 10%
-// for non expert mode disable swaps above this
+// 对于非专家模式，禁用上述交换
 export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(1500), BIPS_BASE) // 15%
 
-// used to ensure the user doesn't send so much ETH so they end up with <.01
+// 用于确保用户不会发送太多的ETH，从而最终得到<0.01
 export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
 export const BETTER_TRADE_LINK_THRESHOLD = new Percent(JSBI.BigInt(75), JSBI.BigInt(10000))

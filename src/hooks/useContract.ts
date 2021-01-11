@@ -20,6 +20,7 @@ import UNISOCKS_ABI from '../constants/abis/unisocks.json'
 import WETH_ABI from '../constants/abis/weth.json'
 import { MULTICALL_ABI, MULTICALL_NETWORKS } from '../constants/multicall'
 import { V1_EXCHANGE_ABI, V1_FACTORY_ABI, V1_FACTORY_ADDRESSES } from '../constants/v1'
+import v2Factory from '../constants/abis/v2_factory.json'
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './index'
 
@@ -53,6 +54,10 @@ export function useV1ExchangeContract(address?: string, withSignerIfPossible?: b
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useV2FactoryContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, v2Factory, withSignerIfPossible)
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean): Contract | null {

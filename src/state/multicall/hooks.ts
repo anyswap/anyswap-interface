@@ -196,6 +196,7 @@ export function useMultipleContractSingleData(
   options?: ListenerOptions
 ): CallState[] {
   const fragment = useMemo(() => contractInterface.getFunction(methodName), [contractInterface, methodName])
+  // console.log(fragment)
   const callData: string | undefined = useMemo(
     () =>
       fragment && isValidMethodArgs(callInputs)
@@ -220,7 +221,14 @@ export function useMultipleContractSingleData(
   )
 
   const results = useCallsData(calls, options)
-
+  // if (methodName === 'balanceOf') {
+  // if (methodName === 'getReserves') {
+  //   console.log(methodName)
+  //   console.log(addresses)
+  //   console.log(calls)
+  //   console.log(options)
+  //   console.log(results)
+  // }
   const latestBlockNumber = useBlockNumber()
 
   return useMemo(() => {
