@@ -207,12 +207,10 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
   //     getPairAddress([{tokenA, tokenB}]).then((res:any) => {
   //       console.log(res)
   //       dispatch(updatePairAddress({ pairAddress:res }))
-  //     }) 
+  //     })
   //   }),
   //   [tokenA, tokenB, dispatch]
   // )
-
-
 
   // useEffect(() => {
   //   getPairAddress([{tokenA, tokenB}]).then((res:any) => {

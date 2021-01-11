@@ -10,7 +10,7 @@ const fa = '0x5C487A8a1915655bB9863d59D2519c01C1A427d7'
 factoryContract.options.address = fa
 
 // export function usePairAddress(paArr: any) {
-  
+
 // }
 
 // export async function getPairAddress (tokenA: Token, tokenB: Token) {
@@ -56,15 +56,14 @@ factoryContract.options.address = fa
 //   return PairAddress
 // }
 
-
 export function usePairAddress(tokens: any) {
-  const [PairAddress, setPairAddress] = useState<any>(tokens && tokens.length > 0?[undefined] : [])
+  const [PairAddress, setPairAddress] = useState<any>(tokens && tokens.length > 0 ? [undefined] : [])
   // console.log(paArr)
   useEffect(() => {
-    let paArr = tokens.map(([tokenA, tokenB]: any) => {
+    const paArr = tokens.map(([tokenA, tokenB]: any) => {
       // console.log(tokenA?.address)
       // console.log(tokenB?.address)
-      return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : undefined
+      return tokenA && tokenB && !tokenA.equals(tokenB) ? { tokenA, tokenB } : undefined
     })
     if (paArr && paArr.length > 0 && paArr[0] !== undefined) {
       // console.log(1)

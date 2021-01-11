@@ -1,4 +1,3 @@
-
 import v2Factory from '../../constants/abis/v2_factory.json'
 import { getContract, web3Fn } from './web3Utils'
 // import { Token } from '@uniswap/sdk'
@@ -20,7 +19,7 @@ export function getPairsAddress(paArr: any) {
           tokenA = obj?.tokenA
           tokenB = obj?.tokenB
         } else {
-          [tokenA, tokenB] = obj
+          ;[tokenA, tokenB] = obj
         }
         if (tokenA && tokenB) {
           const gpData = factoryContract.methods.getPair(tokenA?.address, tokenB?.address).encodeABI()
@@ -32,19 +31,23 @@ export function getPairsAddress(paArr: any) {
           const arr = []
           // console.log(res)
           for (let i = 0, len = res.length; i < len; i++) {
-            let obj = res[i]
+            const obj = res[i]
             // console.log(parseFloat(obj.result))
-            if (obj && obj.result && obj.result !== "0x0000000000000000000000000000000000000000000000000000000000000000") {
+            if (
+              obj &&
+              obj.result &&
+              obj.result !== '0x0000000000000000000000000000000000000000000000000000000000000000'
+            ) {
               arr.push({
                 ...paArr[i][0],
                 pairAddress: obj.result.replace('0x000000000000000000000000', '0x'),
-                tokens:paArr[i]
+                tokens: paArr[i]
               })
             } else {
               arr.push({
                 ...paArr[i][0],
                 pairAddress: '',
-                tokens:paArr[i]
+                tokens: paArr[i]
               })
             }
           }
@@ -66,9 +69,9 @@ export function getPairsAddress(paArr: any) {
   })
 }
 
-export function getPairAddress(tokenA:any, tokenB:any) {
+export function getPairAddress(tokenA: any, tokenB: any) {
   return new Promise(resolve => {
-    factoryContract.methods.getPair(tokenA, tokenB).call((err:any, res:any) => {
+    factoryContract.methods.getPair(tokenA, tokenB).call((err: any, res: any) => {
       if (!err) {
         resolve(res)
       }

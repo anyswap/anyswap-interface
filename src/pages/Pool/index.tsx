@@ -22,7 +22,7 @@ import { Dots } from '../../components/swap/styleds'
 import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
 import { useTranslation } from 'react-i18next'
 
-import {getPairsAddress} from '../../utils/tools/getPairAddress'
+import { getPairsAddress } from '../../utils/tools/getPairAddress'
 import { Token } from '@uniswap/sdk'
 
 const PageWrapper = styled(AutoColumn)`
@@ -77,7 +77,7 @@ const EmptyProposals = styled.div`
   align-items: center;
 `
 interface TPWLT {
-  liquidityToken: Token,
+  liquidityToken: Token
   tokens: [Token, Token]
 }
 export default function Pool() {
@@ -93,13 +93,12 @@ export default function Pool() {
   // )
   const [tokenPairsWithLiquidityTokens, setTokenPairsWithLiquidityTokens] = useState<Array<TPWLT>>([])
   const getGokenPairsWithLiquidityTokens = useCallback(() => {
-    getPairsAddress(trackedTokenPairs).then((res:any) => {
+    getPairsAddress(trackedTokenPairs).then((res: any) => {
       console.log(trackedTokenPairs)
       console.log(res)
       if (res && res.length > 0) {
-
-        let arr = []
-        for (let obj of res) {
+        const arr = []
+        for (const obj of res) {
           if (obj.pairAddress) {
             arr.push({
               liquidityToken: new Token(obj.chainId, obj.pairAddress, 18, 'UNI-V2', 'Uniswap V2'),
@@ -136,9 +135,7 @@ export default function Pool() {
   // console.log(tokenPairsWithLiquidityTokens)
   // console.log(v2PairsBalances)
   // console.log(liquidityTokensWithBalances)
-  const tokenArr = useMemo(() => 
-    liquidityTokensWithBalances.map(({ tokens }) => tokens)
-  , [liquidityTokensWithBalances])
+  const tokenArr = useMemo(() => liquidityTokensWithBalances.map(({ tokens }) => tokens), [liquidityTokensWithBalances])
   // const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
   const v2Pairs = usePairs(tokenArr)
   const v2IsLoading =

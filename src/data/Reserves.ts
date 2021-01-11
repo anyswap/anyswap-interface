@@ -1,6 +1,6 @@
 import { TokenAmount, Pair, Currency } from '@uniswap/sdk'
 // import { useEffect, useMemo, useState } from 'react'
-import {  useCallback, useMemo, useEffect } from 'react'
+import { useCallback, useMemo, useEffect } from 'react'
 // import {  useMemo } from 'react'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { Interface } from '@ethersproject/abi'
@@ -12,7 +12,7 @@ import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 // import {useV2FactoryContract} from '../hooks/useContract'
 
-import {getPairsAddress} from '../utils/tools/getPairAddress'
+import { getPairsAddress } from '../utils/tools/getPairAddress'
 // import {usePairAddress} from '../hooks/getPairAddress'
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
@@ -28,7 +28,6 @@ export enum PairState {
 export function usePairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
   const { chainId } = useActiveWeb3React()
 
-  
   const tokens = useMemo(
     () =>
       currencies.map(([currencyA, currencyB]) => [
@@ -44,13 +43,13 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
       tokens.map(([tokenA, tokenB]) => {
         // return tokenA && tokenB && !tokenA.equals(tokenB) ? (tokenA?.address, tokenB?.address) : []
         // return tokenA && tokenB && !tokenA.equals(tokenB) ? [tokenA?.address, tokenB?.address] : ''
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : ''
+        return tokenA && tokenB && !tokenA.equals(tokenB) ? { tokenA, tokenB } : ''
       }),
     [tokens]
   )
   // // const getPa = useMemo(() => {
   const getPa = useCallback(() => {
-    getPairsAddress(paArr).then((res:any):any => {
+    getPairsAddress(paArr).then((res: any): any => {
       console.log(res)
       if (res && res.length > 0) {
         // setPaList([res[0]?.pairAddress])
