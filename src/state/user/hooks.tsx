@@ -265,7 +265,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 
   // pairs saved by users
   const savedSerializedPairs = useSelector<AppState, AppState['user']['pairs']>(({ user: { pairs } }) => pairs)
-          console.log(savedSerializedPairs)
+  console.log(savedSerializedPairs)
   const userPairs: [Token, Token][] = useMemo(() => {
     if (!chainId || !savedSerializedPairs) return []
     const forChain = savedSerializedPairs[chainId]

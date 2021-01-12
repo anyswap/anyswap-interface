@@ -4,15 +4,15 @@ import styled from 'styled-components'
 const Image = styled.img<{ size?: any }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
-  max-width:100%;
-  max-height:100%;
+  max-width: 100%;
+  max-height: 100%;
   background-color: white;
   border-radius: ${({ size }) => size};
 `
 
 const initPath = require('../../assets/images/question.svg')
 
-function getSourcePath (symbol:any) {
+function getSourcePath(symbol: any) {
   let path = ''
   try {
     path = require('../../assets/images/coin/source/' + symbol + '.svg')
@@ -25,7 +25,7 @@ function getSourcePath (symbol:any) {
   }
   return path
 }
-function getAnyPath (symbol:any) {
+function getAnyPath(symbol: any) {
   let path = ''
   try {
     path = require('../../assets/images/coin/any/' + symbol + '.svg')
@@ -40,16 +40,15 @@ function getAnyPath (symbol:any) {
 }
 
 export default function TokenLogo({
-    symbol,
-    size = '1rem',
-    isAny = true,
-    ...rest
-  }: {
-    symbol:any,
-    size:any,
-    isAny?:any,
-  }
-) {
+  symbol,
+  size = '1rem',
+  isAny = true,
+  ...rest
+}: {
+  symbol: any
+  size: any
+  isAny?: any
+}) {
   let path = ''
   // console.log(symbol)
   if (symbol) {
@@ -60,17 +59,14 @@ export default function TokenLogo({
       } else if (symbol.indexOf('any') !== -1) {
         path = getAnyPath(symbol)
       } else {
-        if (
-          symbol.lastIndexOf('B') === (symbol.length - 1)
-          && symbol.indexOf('BNB') === -1
-        ) {
+        if (symbol.lastIndexOf('B') === symbol.length - 1 && symbol.indexOf('BNB') === -1) {
           symbol = symbol.substr(0, symbol.lastIndexOf('B'))
         } else if (
-          symbol.indexOf('HUSD') === -1
-          && symbol.indexOf('HT') === -1
-          && symbol.indexOf('HTC') === -1
-          && symbol.indexOf('Hi') === -1
-          && symbol.indexOf('H') === 0
+          symbol.indexOf('HUSD') === -1 &&
+          symbol.indexOf('HT') === -1 &&
+          symbol.indexOf('HTC') === -1 &&
+          symbol.indexOf('Hi') === -1 &&
+          symbol.indexOf('H') === 0
         ) {
           symbol = symbol.substr(1)
         }
@@ -83,13 +79,6 @@ export default function TokenLogo({
   } else {
     path = initPath
   }
-  
-  return (
-    <Image
-      {...rest}
-      alt={symbol}
-      src={path}
-      size={size}
-    />
-  )
+
+  return <Image {...rest} alt={symbol} src={path} size={size} />
 }

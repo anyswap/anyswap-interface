@@ -1,7 +1,7 @@
 // import {
 //   JSBI
 // } from '@uniswap/sdk'
-import React, { useEffect, useMemo, useState }  from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
@@ -22,49 +22,49 @@ import { ReactComponent as Dropdown } from '../../assets/images/dropdown-blue.sv
 
 const MyBalanceBox = styled.div`
   width: 100%;
-  
+
   border-radius: 0.5625rem;
   box-shadow: 0.4375rem 0.125rem 1.625rem 0 rgba(0, 0, 0, 0.06);
   background-color: ${({ theme }) => theme.contentBg};
   padding: 1rem 2.5rem;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   @media screen and (max-width: 960px) {
     padding: 1rem 1rem;
   }
 `
 
 const TitleAndSearchBox = styled.div`
-  ${({theme}) => theme.flexBC};
-  margin-bottom:1.5625rem;
+  ${({ theme }) => theme.flexBC};
+  margin-bottom: 1.5625rem;
   font-family: 'Manrope';
   h3 {
     font-size: 1rem;
     font-weight: bold;
     line-height: 1.5;
-    color: ${({theme}) => theme.textColorBold};
-    margin:0 1.25rem 0 0;
-    white-space:nowrap;
+    color: ${({ theme }) => theme.textColorBold};
+    margin: 0 1.25rem 0 0;
+    white-space: nowrap;
   }
 `
 const SearchBox = styled.div`
   width: 100%;
   max-width: 296px;
   height: 2.5rem;
-  
+
   border-radius: 0.5625rem;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.04);
   border: solid 0.0625rem rgba(0, 0, 0, 0.1);
   // background-color: #ffffff;
   padding-left: 2.5rem;
-  position:relative;
+  position: relative;
 
   .icon {
-    ${({theme}) => theme.flexC};
-    width:2.5rem;
-    height:2.5rem;
-    position:absolute;
-    top:0;
-    left:0;
+    ${({ theme }) => theme.flexC};
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
     cursor: pointer;
   }
 `
@@ -72,7 +72,7 @@ const SearchBox = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   height: 100%;
-  color: ${({theme}) => theme.textColorBold};
+  color: ${({ theme }) => theme.textColorBold};
   position: relative;
   font-weight: 500;
   outline: none;
@@ -106,21 +106,20 @@ const SearchInput = styled.input`
   }
 `
 
-const MyBalanceTokenBox  = styled.div`
-width:100%;
-height: 230px;
-overflow-y:hidden;
-overflow-x:auto;
-&.showMore {
-  height:auto;
-  overflow:auto;
-}
+const MyBalanceTokenBox = styled.div`
+  width: 100%;
+  height: 230px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  &.showMore {
+    height: auto;
+    overflow: auto;
+  }
 `
 
 const DBTables = styled.table`
-  
   min-width: 100%;
-  table-layer:fixed;
+  table-layer: fixed;
   // border-spacing:0px 10px;
 `
 const DBThead = styled.thead`
@@ -142,18 +141,18 @@ const DBTh = styled.th`
   color: ${({ theme }) => theme.textColorBold};
   background-color: ${({ theme }) => theme.contentBg};
   padding: 12px 8px;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 0.875rem;
   font-weight: bold;
   line-height: 1.5;
-  &.r{
-    text-align:right;
+  &.r {
+    text-align: right;
   }
-  &.l{
-    text-align:left;
+  &.l {
+    text-align: left;
   }
-  &.c{
-    text-align:center;
+  &.c {
+    text-align: center;
   }
 `
 const DBTbody = styled.tbody`
@@ -175,33 +174,33 @@ const DBTbody = styled.tbody`
 const DBTd = styled.td`
   background-color: ${({ theme }) => theme.contentBg};
   padding: 12px 8px;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 0.875rem;
   font-weight: bold;
   line-height: 1.5;
   color: ${({ theme }) => theme.textColorBold};
-  &.r{
-    text-align:right;
+  &.r {
+    text-align: right;
   }
-  &.l{
-    text-align:left;
+  &.l {
+    text-align: left;
   }
-  &.c{
-    text-align:center;
+  &.c {
+    text-align: center;
   }
   p {
-    margin:0;
+    margin: 0;
     &.lr {
-      ${({theme}) => theme.flexBC};
+      ${({ theme }) => theme.flexBC};
     }
     &.textR {
-      ${({theme}) => theme.flexEC};
+      ${({ theme }) => theme.flexEC};
     }
   }
 `
 
-const TokenTableCoinBox  = styled.div`
-${({theme}) => theme.flexSC};
+const TokenTableCoinBox = styled.div`
+  ${({ theme }) => theme.flexSC};
   // border-right: 0.0625rem  solid rgba(0, 0, 0, 0.1);
   padding: 0 0px;
   // min-width: 160px;
@@ -212,14 +211,14 @@ ${({theme}) => theme.flexSC};
   }
 `
 const TokenTableLogo = styled.div`
-${({theme}) => theme.flexC};
+  ${({ theme }) => theme.flexC};
   width: 36px;
   height: 36px;
-  
+
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.04);
   border: solid 0.0625rem rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
-  border-radius:100%;
+  border-radius: 100%;
   padding: 0.3125rem;
   margin-right: 1.25rem;
   @media screen and (max-width: 960px) {
@@ -228,82 +227,81 @@ ${({theme}) => theme.flexC};
   }
 `
 
-const TokenNameBox  = styled.div`
-font-family: 'Manrope';
+const TokenNameBox = styled.div`
+  font-family: 'Manrope';
   h3 {
-    margin:0;
+    margin: 0;
     font-size: 1rem;
     font-weight: 800;
     line-height: 1.25;
     color: ${({ theme }) => theme.textColorBold};
-    white-space:nowrap;
+    white-space: nowrap;
   }
   p {
     margin: 0.125rem 0 0;
     font-size: 0.75rem;
     font-weight: normal;
-    white-space:nowrap;
+    white-space: nowrap;
     line-height: 1;
     color: ${({ theme }) => theme.textColorBold};
   }
 `
-const TokenActionBtn  = styled(NavLink)`
-  ${({theme}) => theme.flexC};
+const TokenActionBtn = styled(NavLink)`
+  ${({ theme }) => theme.flexC};
   font-family: 'Manrope';
   width: 88px;
   height: 38px;
-  
+
   border-radius: 0.5625rem;
-  background: ${({theme}) => theme.selectedBg};
+  background: ${({ theme }) => theme.selectedBg};
   margin-right: 0.125rem;
-  
+
   font-size: 0.75rem;
   font-weight: 500;
-  
-  
+
   line-height: 1;
-  
-  color: ${({theme}) => theme.textColorBold};
+
+  color: ${({ theme }) => theme.textColorBold};
   box-shadow: none;
-  padding:0;
+  padding: 0;
   text-decoration: none;
-  &:hover,&:focus,&:active {
-    background:${({theme}) => theme.selectedBg};
+  &:hover,
+  &:focus,
+  &:active {
+    background: ${({ theme }) => theme.selectedBg};
   }
 `
 const TokenActionBtnSwap = styled(TokenActionBtn)`
-margin-right:0.125rem;
+  margin-right: 0.125rem;
 `
 const MoreBtnBox = styled.div`
-${({theme}) => theme.flexC};
-font-family: 'Manrope';
+  ${({ theme }) => theme.flexC};
+  font-family: 'Manrope';
   width: 110px;
   height: 34px;
-  
+
   border-radius: 6px;
-  
-  
+
   font-size: 0.75rem;
   font-weight: 500;
-  
-  
+
   line-height: 1.17;
-  
+
   color: #734be2;
   margin: 1.25rem auto 0;
-  cursor:pointer;
+  cursor: pointer;
 `
-const WrappedDropup = ({...rest }) => <Dropup {...rest} />
+const WrappedDropup = ({ ...rest }) => <Dropup {...rest} />
 const ColoredDropup = styled(WrappedDropup)`
-margin-right: 0.625rem;
+  margin-right: 0.625rem;
   path {
     stroke: ${({ theme }) => theme.selectedBg};
   }
 `
 
-const WrappedDropdown = ({...rest }) => <Dropdown {...rest} />
+const WrappedDropdown = ({ ...rest }) => <Dropdown {...rest} />
 const ColoredDropdown = styled(WrappedDropdown)`
-margin-right: 0.625rem;
+  margin-right: 0.625rem;
   path {
     stroke: ${({ theme }) => theme.selectedBg};
   }
@@ -320,7 +318,7 @@ margin-right: 0.625rem;
 //   white-space: nowrap;
 // `
 
-export default function DashboardDtil () {
+export default function DashboardDtil() {
   const { account } = useActiveWeb3React()
   // const selectedTokenList = useSelectedTokenList()
   // const allTokens = useAllTokenBalances()
@@ -329,25 +327,21 @@ export default function DashboardDtil () {
   const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
   const balances = useAllTokenBalances()
 
-  const [searchBalance, setSearchBalance] =  useState('')
-  const [searchPool, setSearchPool] =  useState('')
-  const [showMore, setShowMore] =  useState(false)
+  const [searchBalance, setSearchBalance] = useState('')
+  const [searchPool, setSearchPool] = useState('')
+  const [showMore, setShowMore] = useState(false)
 
-  const tokenList = useMemo(
-    () => {
-      let list:Array<any> = []
-      Object.keys(balances).some(tokenAddress => {
-        list.push(balances[tokenAddress])
-      })
-      return list
-    },
-    [balances]
-  )
+  const tokenList = useMemo(() => {
+    const list: Array<any> = []
+    Object.keys(balances).some(tokenAddress => {
+      list.push(balances[tokenAddress])
+    })
+    return list
+  }, [balances])
   // const comparator = useMemo(() => getTokenComparator(balances ?? {}), [balances])
   // const tokenComparator = useTokenComparator(false)
   console.log(tokenList)
   useEffect(() => {
-
     console.log(searchPool)
     console.log(allTokensArray)
     setSearchBalance('')
@@ -356,16 +350,16 @@ export default function DashboardDtil () {
     // console.log(t)
   }, [account])
 
-  function searchBox (type:number) {
+  function searchBox(type: number) {
     return (
       <>
         <SearchBox>
-          <div className='icon'>
+          <div className="icon">
             <img src={SearchIcon} alt={''} />
           </div>
           <SearchInput
             placeholder={t('searchToken')}
-            onChange={(e:any) => {
+            onChange={(e: any) => {
               if (type === 1) {
                 setSearchBalance(e.target.value)
               } else {
@@ -381,53 +375,59 @@ export default function DashboardDtil () {
   return (
     <>
       <AppBody>
-        <Title
-          title={t('swap')}
-        ></Title>
+        <Title title={t('swap')}></Title>
         <MyBalanceBox>
           <TitleAndSearchBox>
             <h3>{t('myBalance')}</h3>
             {searchBox(1)}
           </TitleAndSearchBox>
           <MyBalanceTokenBox className={showMore ? 'showMore' : ''}>
-
             <DBTables>
               <DBThead>
                 <tr>
-                  <DBTh className='c'>{t('Coins')}</DBTh>
-                  <DBTh className='l'>{t('price')}</DBTh>
-                  <DBTh className='r'>{t('balances')}</DBTh>
-                  <DBTh className='r'>{t('lr')}</DBTh>
-                  <DBTh className='r'>{t('TotalBalance')}</DBTh>
-                  <DBTh className='c'>{t('Action')}</DBTh>
+                  <DBTh className="c">{t('Coins')}</DBTh>
+                  <DBTh className="l">{t('price')}</DBTh>
+                  <DBTh className="r">{t('balances')}</DBTh>
+                  <DBTh className="r">{t('lr')}</DBTh>
+                  <DBTh className="r">{t('TotalBalance')}</DBTh>
+                  <DBTh className="c">{t('Action')}</DBTh>
                 </tr>
               </DBThead>
               <DBTbody>
-                {
-                  tokenList.length > 0 ? tokenList.map((item, index) => {
+                {tokenList.length > 0 ? (
+                  tokenList.map((item, index) => {
                     if (
-                      !searchBalance
-                      || (item?.token?.name && item?.token?.name.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1)
-                      || (item?.token?.symbol && item?.token?.symbol.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1)
-                      || (item?.token?.address && item?.token?.address.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1)
+                      !searchBalance ||
+                      (item?.token?.name &&
+                        item?.token?.name.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1) ||
+                      (item?.token?.symbol &&
+                        item?.token?.symbol.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1) ||
+                      (item?.token?.address &&
+                        item?.token?.address.toLowerCase().indexOf(searchBalance.toLowerCase()) !== -1)
                     ) {
                       return (
                         <tr key={index}>
                           <DBTd>
                             <TokenTableCoinBox>
-                              <TokenTableLogo><TokenLogo symbol={item?.token?.symbol} size={'1.625rem'} ></TokenLogo></TokenTableLogo>
+                              <TokenTableLogo>
+                                <TokenLogo symbol={item?.token?.symbol} size={'1.625rem'}></TokenLogo>
+                              </TokenTableLogo>
                               <TokenNameBox>
                                 <h3>{item?.token?.symbol}</h3>
                                 <p>{item?.token?.name}</p>
                               </TokenNameBox>
                             </TokenTableCoinBox>
                           </DBTd>
-                          <DBTd className='l'>$ 0.00</DBTd>
-                          <DBTd className='r'>{item.toSignificant(4)}</DBTd>
-                          <DBTd className='r'>0.00</DBTd>
-                          <DBTd className='r'>0.00</DBTd>
-                          <DBTd className='c'>
-                            <span style={{display:"inline-block"}}><TokenActionBtnSwap to={'/swap?outputCurrency=' + item?.token?.address}>{t('swap')}</TokenActionBtnSwap></span>
+                          <DBTd className="l">$ 0.00</DBTd>
+                          <DBTd className="r">{item.toSignificant(4)}</DBTd>
+                          <DBTd className="r">0.00</DBTd>
+                          <DBTd className="r">0.00</DBTd>
+                          <DBTd className="c">
+                            <span style={{ display: 'inline-block' }}>
+                              <TokenActionBtnSwap to={'/swap?outputCurrency=' + item?.token?.address}>
+                                {t('swap')}
+                              </TokenActionBtnSwap>
+                            </span>
                           </DBTd>
                           {/* {
                             poolObj[item.symbol] ? (
@@ -497,42 +497,47 @@ export default function DashboardDtil () {
                         </tr>
                       )
                     } else {
-                      return (<tr key={index} style={{display:'none'}}>
-                      <DBTd className='c'>$-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      </tr>)
+                      return (
+                        <tr key={index} style={{ display: 'none' }}>
+                          <DBTd className="c">$-</DBTd>
+                          <DBTd className="c">-</DBTd>
+                          <DBTd className="c">-</DBTd>
+                          <DBTd className="c">-</DBTd>
+                          <DBTd className="c">-</DBTd>
+                          <DBTd className="c">-</DBTd>
+                        </tr>
+                      )
                     }
-                  }) : (<tr key={0}>
-                      <DBTd className='c'>$-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd>
-                      <DBTd className='c'>-</DBTd></tr>)
-                }
+                  })
+                ) : (
+                  <tr key={0}>
+                    <DBTd className="c">$-</DBTd>
+                    <DBTd className="c">-</DBTd>
+                    <DBTd className="c">-</DBTd>
+                    <DBTd className="c">-</DBTd>
+                    <DBTd className="c">-</DBTd>
+                    <DBTd className="c">-</DBTd>
+                  </tr>
+                )}
               </DBTbody>
             </DBTables>
           </MyBalanceTokenBox>
-          <MoreBtnBox onClick={() => {
-            setShowMore(!showMore)
-          }}>
-            {
-              showMore ? (
-                <>
-                  <ColoredDropup></ColoredDropup>
-                  {t('pichUp')}
-                </>
-              ) : (
-                <>
-                  <ColoredDropdown></ColoredDropdown>
-                  {t('showMore')}
-                </>
-              )
-            }
+          <MoreBtnBox
+            onClick={() => {
+              setShowMore(!showMore)
+            }}
+          >
+            {showMore ? (
+              <>
+                <ColoredDropup></ColoredDropup>
+                {t('pichUp')}
+              </>
+            ) : (
+              <>
+                <ColoredDropdown></ColoredDropdown>
+                {t('showMore')}
+              </>
+            )}
           </MoreBtnBox>
         </MyBalanceBox>
       </AppBody>

@@ -14,7 +14,6 @@ import { AutoColumn } from '../Column'
 import { AlertTriangle } from 'react-feather'
 import { ButtonError } from '../Button'
 
-
 const Wrapper = styled.div<{ error: boolean }>`
   background: ${({ theme }) => transparentize(0.6, theme.bg3)};
   padding: 0.75rem;
@@ -106,18 +105,9 @@ export default function TokenWarningModal({
             <StyledWarningIcon />
             <TYPE.main color={'red2'}>{t('TokenImported')}</TYPE.main>
           </AutoRow>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML = { 
-            {__html: t('TokenImportedTip')}
-          }>
-          </TYPE.body>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML = { 
-            {__html: t('TokenImportedTip1')}
-          }>
-          </TYPE.body>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML = { 
-            {__html: t('TokenImportedTip2')}
-          }>
-          </TYPE.body>
+          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip') }}></TYPE.body>
+          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip1') }}></TYPE.body>
+          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip2') }}></TYPE.body>
           {tokens.map(token => {
             return <TokenWarningCard key={token.address} token={token} />
           })}

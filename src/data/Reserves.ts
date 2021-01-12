@@ -1,6 +1,6 @@
 import { TokenAmount, Pair, Currency } from '@uniswap/sdk'
 // import { useEffect, useMemo, useState } from 'react'
-import {  useCallback, useMemo, useEffect, useState } from 'react'
+import { useCallback, useMemo, useEffect, useState } from 'react'
 // import {  useMemo } from 'react'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { Interface } from '@ethersproject/abi'
@@ -37,10 +37,10 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     [chainId, currencies]
   )
   const getPa = useCallback(() => {
-    let paArr = tokens.map(([tokenA, tokenB]) => {
-      return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : ''
+    const paArr = tokens.map(([tokenA, tokenB]) => {
+      return tokenA && tokenB && !tokenA.equals(tokenB) ? { tokenA, tokenB } : ''
     })
-    getPairsAddress(paArr).then((res:any):any => {
+    getPairsAddress(paArr).then((res: any): any => {
       console.log(res)
     })
   }, [tokens])
@@ -86,7 +86,7 @@ export function usePairs1(currencies: [Currency | undefined, Currency | undefine
       ]),
     [chainId, currencies]
   )
-  const [paList, setPaList] = useState<any>(tokens && tokens.length > 0?[undefined] : [])
+  const [paList, setPaList] = useState<any>(tokens && tokens.length > 0 ? [undefined] : [])
 
   // // const getPa = useMemo(() => {
   const getPa = useCallback(() => {
@@ -124,7 +124,6 @@ export function usePairs1(currencies: [Currency | undefined, Currency | undefine
 export function usePairs2(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
   const { chainId } = useActiveWeb3React()
 
-  
   const tokens = useMemo(
     () =>
       currencies.map(([currencyA, currencyB]) => [
@@ -133,15 +132,15 @@ export function usePairs2(currencies: [Currency | undefined, Currency | undefine
       ]),
     [chainId, currencies]
   )
-  const [paList, setPaList] = useState<any>(tokens && tokens.length > 0?[undefined] : [])
+  const [paList, setPaList] = useState<any>(tokens && tokens.length > 0 ? [undefined] : [])
   const [rsList, setRsList] = useState<Array<[PairState, Pair | null]>>([[PairState.LOADING, null]])
 
   // // const getPa = useMemo(() => {
   const getPa = useCallback(() => {
-    let paArr = tokens.map(([tokenA, tokenB]) => {
-      return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : ''
+    const paArr = tokens.map(([tokenA, tokenB]) => {
+      return tokenA && tokenB && !tokenA.equals(tokenB) ? { tokenA, tokenB } : ''
     })
-    getPairsAddress(paArr).then((res:any):any => {
+    getPairsAddress(paArr).then((res: any): any => {
       console.log(res)
       if (res && res.length > 0) {
         setPaList([res[0]?.pairAddress])
@@ -152,11 +151,10 @@ export function usePairs2(currencies: [Currency | undefined, Currency | undefine
     getPa()
   }, [getPa])
 
-  
   const results = useMultipleContractSingleData(paList, PAIR_INTERFACE, 'getReserves')
 
   useEffect(() => {
-    const rs1:Array<[PairState, Pair | null]> =  results.map((result, i) => {
+    const rs1: Array<[PairState, Pair | null]> = results.map((result, i) => {
       // console.log(tokens)
       const { result: reserves, loading } = result
       const tokenA = tokens[i][0]
