@@ -93,7 +93,7 @@ interface TabList {
 }
 interface Title {
   title?: string
-  tabList: Array<TabList>
+  tabList?: Array<TabList>
 }
 
 export default function Title({ title, tabList = [] }: Title) {

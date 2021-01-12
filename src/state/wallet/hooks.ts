@@ -62,6 +62,7 @@ export function useTokenBalancesWithLoadingIndicator(
   // console.log(tokens)
   // console.log(validatedTokenAddresses)
   const balances = useMultipleContractSingleData(validatedTokenAddresses, ERC20_INTERFACE, 'balanceOf', [address])
+    // console.log(balances)
 
   const anyLoading: boolean = useMemo(() => balances.some(callState => callState.loading), [balances])
 
@@ -75,6 +76,7 @@ export function useTokenBalancesWithLoadingIndicator(
               if (amount) {
                 memo[token.address] = new TokenAmount(token, amount)
               }
+              // console.log(memo)
               return memo
             }, {})
           : {},
@@ -131,6 +133,8 @@ export function useAllTokenBalances(): { [tokenAddress: string]: TokenAmount | u
   const { account } = useActiveWeb3React()
   const allTokens = useAllTokens()
   const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
+  // console.log(account)
+  // console.log(allTokensArray)
   const balances = useTokenBalances(account ?? undefined, allTokensArray)
   return balances ?? {}
 }

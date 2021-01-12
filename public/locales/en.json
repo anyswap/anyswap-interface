@@ -132,5 +132,23 @@
   "CommonBasesTip": "These tokens are commonly paired with other tokens.",
   "InitialPrices": "Initial prices",
   "Prices": "Prices",
-  "andPoolShare": "and pool share"
+  "andPoolShare": "and pool share",
+  "TotalBalance": "Total Balance",
+  "Action": "Action",
+  "lr": "Liquidity",
+  "balances": "Balance",
+  "price": "Price",
+  "Coins": "Coins",
+  "myBalance": "My Balance",
+  "searchToken": "Search by token name, symbol or address",
+  "showMore": "Show More",
+  "pichUp": "Pack up",
+
+  "TokenImported": "Token imported",
+  "TokenImportedTip": "Anyone can create an ERC20 token on Ethereum with <em>any</em> name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.",
+  "TokenImportedTip1": "This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research when interacting with arbitrary ERC20 tokens.",
+  "TokenImportedTip2": "If you purchase an arbitrary token, <strong>you may be unable to sell it back.</strong>",
+
+  "IUnderstand": "I understand",
+  "Continue": "Continue"
 }

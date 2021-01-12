@@ -132,5 +132,23 @@
   "CommonBasesTip": "这些令牌通常与其他令牌配对。",
   "InitialPrices": "无效的价格",
   "Prices": "价格",
-  "andPoolShare": " 和矿池分配"
+  "andPoolShare": " 和矿池分配",
+  "TotalBalance": "总资产",
+  "Action": "操作",
+  "lr": "流动性",
+  "balances": "余额",
+  "price": "价格",
+  "Coins": "币种",
+  "myBalance": "账户余额",
+  "searchToken": "搜索合约、币种、地址",
+  "showMore": "展开",
+  "pichUp": "收起",
+
+  "TokenImported": "导入合约",
+  "TokenImportedTip": "任何人都可以在以太坊上用<em>任何</em>名称创建ERC20令牌，包括创建现有令牌的假版本和声称代表没有令牌的项目的令牌。",
+  "TokenImportedTip1": "此接口可以通过令牌地址加载任意令牌。在与任意ERC20令牌交互时，请格外小心并进行研究。",
+  "TokenImportedTip2": "如果您购买任意代币, <strong>您可能无法将其卖出。</strong>",
+
+  "IUnderstand": "同意",
+  "Continue": "继续"
 }
