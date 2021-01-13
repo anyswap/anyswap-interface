@@ -9,10 +9,12 @@ import { useTotalSupply } from '../../data/TotalSupply'
 
 import { useActiveWeb3React } from '../../hooks'
 import { useTokenBalance } from '../../state/wallet/hooks'
-import { ExternalLink, TYPE } from '../../theme'
+// import { ExternalLink, TYPE } from '../../theme'
+import { TYPE } from '../../theme'
 import { currencyId } from '../../utils/currencyId'
 import { unwrappedToken } from '../../utils/wrappedCurrency'
-import { ButtonPrimary, ButtonSecondary, ButtonEmpty } from '../Button'
+// import { ButtonPrimary, ButtonSecondary, ButtonEmpty } from '../Button'
+import { ButtonPrimary, ButtonEmpty } from '../Button'
 import { transparentize } from 'polished'
 import { CardNoise } from '../earn/styled'
 
@@ -20,10 +22,13 @@ import { useColor } from '../../hooks/useColor'
 
 import Card, { GreyCard, LightCard } from '../Card'
 import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
-import DoubleCurrencyLogo from '../DoubleLogo'
+// import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
+
+import TokenLogo from '../TokenLogo'
+
+import config from '../../config'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -91,9 +96,11 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             </FixedHeightRow>
             <FixedHeightRow onClick={() => setShowMore(!showMore)}>
               <RowFixed>
-                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
+                {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
+                <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px"></TokenLogo>
+                <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 <Text fontWeight={500} fontSize={20}>
-                  {currency0.symbol}/{currency1.symbol}
+                  {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}/{currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}
                 </Text>
               </RowFixed>
               <RowFixed>
@@ -113,7 +120,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency0.symbol}:
+                  {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}:
                 </Text>
                 {token0Deposited ? (
                   <RowFixed>
@@ -127,7 +134,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency1.symbol}:
+                  {currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}:
                 </Text>
                 {token1Deposited ? (
                   <RowFixed>
@@ -193,7 +200,10 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
       <AutoColumn gap="12px">
         <FixedHeightRow>
           <RowFixed>
-            <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
+            {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
+            
+            <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px"></TokenLogo>
+            <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
             <Text fontWeight={500} fontSize={20}>
               {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${currency0.symbol}/${currency1.symbol}`}
             </Text>
@@ -235,7 +245,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency0.symbol}:
+                  Pooled {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}:
                 </Text>
               </RowFixed>
               {token0Deposited ? (
@@ -243,7 +253,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token0Deposited?.toSignificant(6)}
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency0} />
+                  <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'
@@ -253,7 +263,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency1.symbol}:
+                  Pooled {currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}:
                 </Text>
               </RowFixed>
               {token1Deposited ? (
@@ -261,7 +271,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token1Deposited?.toSignificant(6)}
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency1} />
+                  <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'
@@ -277,14 +287,14 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               </Text>
             </FixedHeightRow>
 
-            <ButtonSecondary padding="8px" borderRadius="8px">
+            {/* <ButtonSecondary padding="8px" borderRadius="8px">
               <ExternalLink
                 style={{ width: '100%', textAlign: 'center' }}
                 href={`https://uniswap.info/account/${account}`}
               >
                 View accrued fees and analytics<span style={{ fontSize: '11px' }}>↗</span>
               </ExternalLink>
-            </ButtonSecondary>
+            </ButtonSecondary> */}
             <RowBetween marginTop="10px">
               <ButtonPrimary
                 padding="8px"

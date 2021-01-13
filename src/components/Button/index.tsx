@@ -70,7 +70,8 @@ export const ButtonPrimary = styled(Base)`
 export const ButtonLight = styled(Base)`
   // background-color: ${({ theme }) => theme.primary5};
   background: linear-gradient(to bottom, #5f6bfb , #724de4);
-  color: ${({ theme }) => theme.primaryText1};
+  // color: ${({ theme }) => theme.primaryText1};
+  color: white;
   font-size: 16px;
   font-weight: 500;
   // &:focus {
@@ -108,7 +109,8 @@ export const ButtonLight = styled(Base)`
 export const ButtonGray = styled(Base)`
   // background-color: ${({ theme }) => theme.bg3};
   background: linear-gradient(to bottom, #5f6bfb , #724de4);
-  color: ${({ theme }) => theme.text2};
+  // color: ${({ theme }) => theme.text2};
+  color: white;
   font-size: 16px;
   font-weight: 500;
   // &:focus {
@@ -135,7 +137,8 @@ export const ButtonGray = styled(Base)`
 
 export const ButtonSecondary = styled(Base)`
   // border: 1px solid ${({ theme }) => theme.primary4};
-  color: ${({ theme }) => theme.primary1};
+  // color: ${({ theme }) => theme.primary1};
+  color: white;
   // background-color: transparent;
   background: linear-gradient(to bottom, #5f6bfb , #724de4);
   font-size: 16px;
@@ -207,7 +210,8 @@ export const ButtonOutlined = styled(Base)`
   // border: 1px solid ${({ theme }) => theme.bg2};
   // background-color: transparent;
   background: linear-gradient(to bottom, #5f6bfb , #724de4);
-  color: ${({ theme }) => theme.text1};
+  // color: ${({ theme }) => theme.text1};
+  color: white;
 
   // &:focus {
   //   box-shadow: 0 0 0 1px ${({ theme }) => theme.bg4};
@@ -236,7 +240,8 @@ export const ButtonOutlined = styled(Base)`
 export const ButtonEmpty = styled(Base)`
   // background-color: transparent;
   background: linear-gradient(to bottom, #5f6bfb, #724de4);
-  color: ${({ theme }) => theme.primary1};
+  // color: ${({ theme }) => theme.primary1};
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -290,7 +295,8 @@ export const ButtonWhite = styled(Base)`
 const ButtonConfirmedStyle = styled(Base)`
   // background-color: ${({ theme }) => lighten(0.5, theme.green1)};
   background: linear-gradient(to bottom, #5f6bfb , #724de4);
-  color: ${({ theme }) => theme.green1};
+  // color: ${({ theme }) => theme.green1};
+  color: white;
   // border: 1px solid ${({ theme }) => theme.green1};
 
   &:disabled {

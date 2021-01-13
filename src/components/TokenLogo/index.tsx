@@ -43,10 +43,12 @@ export default function TokenLogo({
   symbol,
   size = '1rem',
   isAny = true,
+  style,
   ...rest
 }: {
   symbol: any
   size?: any
+  style?: React.CSSProperties
   isAny?: any
 }) {
   let path = ''
@@ -80,5 +82,5 @@ export default function TokenLogo({
     path = initPath
   }
 
-  return <Image {...rest} alt={symbol} src={path} size={size} />
+  return <Image {...rest} alt={symbol} src={path} size={size} style={style} />
 }

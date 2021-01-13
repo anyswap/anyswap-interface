@@ -87,6 +87,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
   const token = currency0 === ETHER ? token1 : token0
   const WETH = currency0 === ETHER ? token0 : token1
   const backgroundColor = useColor(token)
+  console.log(backgroundColor)
 
   const totalSupplyOfStakingToken = useTotalSupply(stakingInfo.stakedAmount.token)
   const [, stakingTokenPair] = usePair(...stakingInfo.tokens)
