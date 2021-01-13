@@ -14,6 +14,8 @@ import { AutoColumn } from '../Column'
 import { AlertTriangle } from 'react-feather'
 import { ButtonError } from '../Button'
 
+import config from '../../config'
+
 const Wrapper = styled.div<{ error: boolean }>`
   background: ${({ theme }) => transparentize(0.6, theme.bg3)};
   padding: 0.75rem;
@@ -75,7 +77,7 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
           </TYPE.main>
           {chainId && (
             <ExternalLink style={{ fontWeight: 400 }} href={getEtherscanLink(chainId, token.address, 'token')}>
-              <TYPE.blue title={token.address}>{shortenAddress(token.address)} (View on Etherscan)</TYPE.blue>
+              <TYPE.blue title={token.address}>{shortenAddress(token.address)} (View on {config.name})</TYPE.blue>
             </ExternalLink>
           )}
         </AutoColumn>

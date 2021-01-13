@@ -46,7 +46,7 @@ export default function TokenLogo({
   ...rest
 }: {
   symbol: any
-  size: any
+  size?: any
   isAny?: any
 }) {
   let path = ''

@@ -1,9 +1,10 @@
 import v2Factory from '../../constants/abis/v2_factory.json'
 import { getContract, web3Fn } from './web3Utils'
+import config from '../../config'
 // import { Token } from '@uniswap/sdk'
 // import { getCreate2Address } from '@ethersproject/address'
 const factoryContract = getContract(v2Factory)
-const fa = '0x5C487A8a1915655bB9863d59D2519c01C1A427d7'
+const fa = config.factoryToken
 factoryContract.options.address = fa
 
 // export async function getPairAddress (tokenA: Token, tokenB: Token) {

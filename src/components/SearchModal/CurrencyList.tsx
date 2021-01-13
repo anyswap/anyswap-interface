@@ -11,11 +11,14 @@ import { LinkStyledButton, TYPE } from '../../theme'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
 import Column from '../Column'
 import { RowFixed } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
+// import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
 import Loader from '../Loader'
 import { isTokenOnList } from '../../utils'
+
+import config from '../../config'
 
 function currencyKey(currency: Currency): string {
   return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
@@ -102,7 +105,7 @@ function CurrencyRow({
 
   const removeToken = useRemoveUserAddedToken()
   const addToken = useAddUserToken()
-
+  // console.log(currency)
   // only show add or remove buttons if not on selected list
   return (
     <MenuItem
@@ -112,10 +115,11 @@ function CurrencyRow({
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size={'24px'} />
+      {/* <CurrencyLogo currency={currency} size={'24px'} /> */}
+      <TokenLogo symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol} size={'24px'} />
       <Column>
-        <Text title={currency.name} fontWeight={500}>
-          {currency.symbol}
+        <Text title={currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name} fontWeight={500}>
+          {currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
         </Text>
         <FadedSpan>
           {!isOnSelectedList && customAdded ? (

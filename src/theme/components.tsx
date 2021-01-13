@@ -14,17 +14,20 @@ export const Button = styled.button.attrs<{ warning: boolean }, { backgroundColo
   font-size: 1rem;
   border: none;
   outline: none;
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  // background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: linear-gradient(to bottom, #5f6bfb , #724de4);
   color: ${({ theme }) => theme.white};
   width: 100%;
 
   :hover,
   :focus {
-    background-color: ${({ backgroundColor }) => darken(0.05, backgroundColor)};
+    // background-color: ${({ backgroundColor }) => darken(0.05, backgroundColor)};
+    background-color: linear-gradient(to bottom, #5f6bfb , #724de4);
   }
 
   :active {
-    background-color: ${({ backgroundColor }) => darken(0.1, backgroundColor)};
+    // background-color: ${({ backgroundColor }) => darken(0.1, backgroundColor)};
+    background-color: linear-gradient(to bottom, #5f6bfb , #724de4);
   }
 
   :disabled {

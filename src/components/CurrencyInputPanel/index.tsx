@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components'
 import { darken } from 'polished'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween } from '../Row'
 import { TYPE } from '../../theme'
@@ -14,6 +14,10 @@ import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 import { useActiveWeb3React } from '../../hooks'
 import { useTranslation } from 'react-i18next'
 import { transparentize } from 'polished'
+
+import config from '../../config'
+
+
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
@@ -284,7 +288,7 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-
+  // console.log(currency)
   return (
     <InputPanel id={id}>
       <Container hideInput={hideInput}>
@@ -340,7 +344,7 @@ export default function CurrencyInputPanel({
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
               ) : currency ? (
                 <TokenLogoBox>
-                  <CurrencyLogo currency={currency} size={'1.625rem'} />
+                  <TokenLogo symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol} size={'1.625rem'} />
                 </TokenLogoBox>
               ) : null}
               {pair ? (
@@ -356,9 +360,10 @@ export default function CurrencyInputPanel({
                       ? currency.symbol.slice(0, 4) +
                         '...' +
                         currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                      : currency?.symbol) || t('selectToken')}
+                      : (currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol)) || t('selectToken')}
                   </h3>
-                  <p>{currency && currency.name ? currency.name : ''}</p>
+                  {/* <p>{currency && currency.name ? currency.name : ''}</p> */}
+                  <p>{currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name}</p>
                 </StyledTokenName>
               )}
               {!disableCurrencySelect && !!currency && (

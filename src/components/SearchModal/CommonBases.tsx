@@ -7,8 +7,9 @@ import { SUGGESTED_BASES } from '../../constants'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
 import { useTranslation } from 'react-i18next'
+
+import TokenLogo from '../TokenLogo'
 
 import config from '../../config'
 
@@ -55,7 +56,7 @@ export default function CommonBases({
           }}
           disable={selectedCurrency === ETHER}
         >
-          <CurrencyLogo currency={ETHER} style={{ marginRight: 8 }} />
+          <TokenLogo symbol={config.symbol}></TokenLogo>
           <Text fontWeight={500} fontSize={16}>
             {config.symbol}
           </Text>
@@ -64,7 +65,7 @@ export default function CommonBases({
           const selected = selectedCurrency instanceof Token && selectedCurrency.address === token.address
           return (
             <BaseWrapper onClick={() => !selected && onSelect(token)} disable={selected} key={token.address}>
-              <CurrencyLogo currency={token} style={{ marginRight: 8 }} />
+              <TokenLogo symbol={token.symbol}></TokenLogo>
               <Text fontWeight={500} fontSize={16}>
                 {token.symbol}
               </Text>

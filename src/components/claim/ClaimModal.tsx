@@ -20,6 +20,8 @@ import { Break, CardBGImage, CardBGImageSmaller, CardNoise, CardSection, DataCar
 import Modal from '../Modal'
 import { RowBetween } from '../Row'
 
+import config from '../../config'
+
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
 `
@@ -196,7 +198,7 @@ export default function ClaimModal() {
             )}
             {attempting && claimSubmitted && !claimConfirmed && chainId && claimTxn?.hash && (
               <ExternalLink href={getEtherscanLink(chainId, claimTxn?.hash, 'transaction')} style={{ zIndex: 99 }}>
-                View transaction on Etherscan
+                View transaction on {config.name}
               </ExternalLink>
             )}
           </AutoColumn>

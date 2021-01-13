@@ -20,6 +20,8 @@ import { useIsTransactionPending } from '../../state/transactions/hooks'
 import { TokenAmount } from '@uniswap/sdk'
 import { getEtherscanLink, shortenAddress } from '../../utils'
 
+import config from '../../config'
+
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
 `
@@ -182,7 +184,7 @@ export default function AddressClaimModal({ isOpen, onDismiss }: { isOpen: boole
             )}
             {attempting && hash && !claimConfirmed && chainId && hash && (
               <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')} style={{ zIndex: 99 }}>
-                View transaction on Etherscan
+                View transaction on {config.name}
               </ExternalLink>
             )}
           </AutoColumn>

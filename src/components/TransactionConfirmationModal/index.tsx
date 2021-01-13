@@ -14,6 +14,8 @@ import Circle from '../../assets/images/blue-loader.svg'
 import { getEtherscanLink } from '../../utils'
 import { useActiveWeb3React } from '../../hooks'
 
+import config from '../../config'
+
 const Wrapper = styled.div`
   width: 100%;
 `
@@ -88,7 +90,7 @@ function TransactionSubmittedContent({
           {chainId && hash && (
             <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')}>
               <Text fontWeight={500} fontSize={14} color={theme.primary1}>
-                View on Etherscan
+                View on {config.name}
               </Text>
             </ExternalLink>
           )}

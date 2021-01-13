@@ -137,7 +137,8 @@ const TEST_CONFIG = {
     symbol: 'HUSD',
     decimals: 8
   },
-  router: '0x269083f1696557f3ef7a53864c9abdb6cbccbe09'
+  router: '0x2721b8e2A0f0939a289d4379e85fFf59F9226420',
+  factoryToken: '0x1D2D9EeEf55CFD2affe959d62e7842dD924Dad93'
 }
 
 function getHTConfig(type: string) {
