@@ -20,7 +20,6 @@ getIdCode()
 
 const ENV_CONFIG = getNetwork(ENV_NODE_CONFIG, INIT_NODE)
 
-
 const netArr = ENV_CONFIG.split('_')
 // console.log(netArr)
 interface ConFig {

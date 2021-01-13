@@ -327,21 +327,18 @@ export default function DashboardDtil() {
   // const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
   const balances = useAllTokenBalances()
 
-  const [searchBalance, setSearchBalance] =  useState('')
-  const [searchPool, setSearchPool] =  useState('')
-  const [showMore, setShowMore] =  useState(false)
+  const [searchBalance, setSearchBalance] = useState('')
+  const [searchPool, setSearchPool] = useState('')
+  const [showMore, setShowMore] = useState(false)
 
-  const tokenList = useMemo(
-    () => {
-      let list:Array<any> = []
-      for (let tokenAddress in balances) {
-        list.push(balances[tokenAddress])
-      }
-      console.log(account)
-      return list
-    },
-    [balances, account]
-  )
+  const tokenList = useMemo(() => {
+    const list: Array<any> = []
+    for (const tokenAddress in balances) {
+      list.push(balances[tokenAddress])
+    }
+    console.log(account)
+    return list
+  }, [balances, account])
   // const comparator = useMemo(() => getTokenComparator(balances ?? {}), [balances])
   // const tokenComparator = useTokenComparator(false)
   // console.log(tokenList)

@@ -235,7 +235,7 @@ export const ButtonOutlined = styled(Base)`
 
 export const ButtonEmpty = styled(Base)`
   // background-color: transparent;
-  background: linear-gradient(to bottom, #5f6bfb , #724de4);
+  background: linear-gradient(to bottom, #5f6bfb, #724de4);
   color: ${({ theme }) => theme.primary1};
   display: flex;
   justify-content: center;

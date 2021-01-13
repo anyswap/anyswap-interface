@@ -1,4 +1,4 @@
-import {chainInfo} from './nodeConfig'
+import { chainInfo } from './nodeConfig'
 
 const NAME_PREFIX = 'ANY'
 
@@ -13,12 +13,12 @@ const CHAIN_TEST_INFO = chainInfo['256']
 interface CoinObj {
   [key: string]: any
 }
-const COIN_BASE ={
+const COIN_BASE = {
   symbol: 'HT', // 符号
   name: 'Huobi', // 代币名
   decimals: 18, // 小数位
   networkName: 'HT', // 网络名称
-  reverseSwitch: 0,  // 是否反向禁用,
+  reverseSwitch: 0, // 是否反向禁用,
   suffix: '', // 后缀
   prefix: 'a',
   keepDec: 6, // 保留小数位
@@ -27,11 +27,11 @@ const COIN_BASE ={
   rewardUrl: 'https://rewardapiv2.anyswap.exchange/accounts/getReward/', // 获取奖励地址
   rewardRate(arr: any) {
     let totalLq = 0
-    let coinObj: CoinObj = {}
-    for (let obj of arr) {
-      let mt = Number(obj.market) / Math.pow(10, 18)
+    const coinObj: CoinObj = {}
+    for (const obj of arr) {
+      const mt = Number(obj.market) / Math.pow(10, 18)
       // let totalBaseAmount = Number(obj.baseAmount) + Number(obj.tokenAmount) / mt
-      let totalBaseAmount = Number(obj.baseAmount) * 2 /  Math.pow(10, 18)
+      let totalBaseAmount = (Number(obj.baseAmount) * 2) / Math.pow(10, 18)
       if (obj.coin === 'ANY') {
         totalBaseAmount = totalBaseAmount * 2
       }
@@ -43,17 +43,17 @@ const COIN_BASE ={
       }
     }
     // totalLq = totalLq  /  Math.pow(10, 18)
-    for (let obj in coinObj) {
+    for (const obj in coinObj) {
       coinObj[obj].pecent = coinObj[obj].totalBaseAmount / totalLq
       coinObj[obj].totalReward = REWARDS_DAY * coinObj[obj].pecent
       if (obj === 'ANY') {
         coinObj[obj].poolShare = (DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount) * 2
-        coinObj[obj].accountReward = coinObj[obj].poolShare * coinObj[obj].totalReward / coinObj[obj].market
+        coinObj[obj].accountReward = (coinObj[obj].poolShare * coinObj[obj].totalReward) / coinObj[obj].market
         coinObj[obj].ROIPerDay = coinObj[obj].accountReward / DEPOSIT_AMOUNT
         coinObj[obj].AnnualizedROI = coinObj[obj].ROIPerDay * 100 * 365
       } else {
-        coinObj[obj].poolShare = (DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount)
-        coinObj[obj].accountReward = coinObj[obj].poolShare * coinObj[obj].totalReward / coinObj['ANY'].market
+        coinObj[obj].poolShare = DEPOSIT_AMOUNT / coinObj[obj].totalBaseAmount
+        coinObj[obj].accountReward = (coinObj[obj].poolShare * coinObj[obj].totalReward) / coinObj['ANY'].market
         coinObj[obj].ROIPerDay = coinObj[obj].accountReward / DEPOSIT_AMOUNT
         coinObj[obj].AnnualizedROI = coinObj[obj].ROIPerDay * 100 * 365
       }
@@ -76,17 +76,19 @@ const MAIN_CONFIG = {
   initBridge: '0xc8f62c36e2b92fe60e68c14eb783293dc5bf2ae0', // 跨链桥默认合约
   explorerUrl: CHAIN_MAIN_INFO.explorer, // 浏览器地址
   document: 'https://anyswap-faq.readthedocs.io/en/latest/index.html', // 文档地址
-  btc: { // btc配置
-    lookHash: 'https://www.blockchain.com/btc/tx/', // 
-    queryTxns: 'https://sochain.com/api/v2/get_tx_received/BTC/', // 
-    queryHashStatus: 'https://sochain.com/api/v2/get_confidence/BTC/', // 
-    initAddr: '1EirLGdwhgGXH8DTd5PVLoi7x6izkbYijS',  // 
+  btc: {
+    // btc配置
+    lookHash: 'https://www.blockchain.com/btc/tx/', //
+    queryTxns: 'https://sochain.com/api/v2/get_tx_received/BTC/', //
+    queryHashStatus: 'https://sochain.com/api/v2/get_confidence/BTC/', //
+    initAddr: '1EirLGdwhgGXH8DTd5PVLoi7x6izkbYijS' //
   },
-  ltc: { // ltc配置
-    lookHash: 'https://blockchair.com/litecoin/transaction/', // 
-    queryTxns: 'https://sochain.com/api/v2/get_tx_received/LTC/', // 
-    queryHashStatus: 'https://sochain.com/api/v2/get_confidence/LTC/', // 
-    initAddr: '',  // 
+  ltc: {
+    // ltc配置
+    lookHash: 'https://blockchair.com/litecoin/transaction/', //
+    queryTxns: 'https://sochain.com/api/v2/get_tx_received/LTC/', //
+    queryHashStatus: 'https://sochain.com/api/v2/get_confidence/LTC/', //
+    initAddr: '' //
   },
   isOpenRewards: 0, // 是否打开奖励数据
   isChangeDashboard: 0, // 是否改变资产顺序
@@ -124,9 +126,7 @@ const TEST_CONFIG = {
     queryHashStatus: 'https://sochain.com/api/v2/get_confidence/BTCTEST/',
     initAddr: ''
   },
-  ltc: {
-
-  },
+  ltc: {},
   isOpenRewards: 0,
   isChangeDashboard: 0,
   noSupportBridge: [COIN_BASE.symbol, ANY_TEST_TOKEN],

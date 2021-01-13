@@ -80,7 +80,7 @@ export default function AddLiquidity({
     error
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
-  
+
   const isValid = !error
 
   // modal and loading
