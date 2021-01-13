@@ -28,6 +28,14 @@ const FTM_MAINNET = 'https://rpc.fantom.network'
 const FTM_MAIN_CHAINID = 250
 const FTM_MAIN_EXPLORER = 'https://explorer.fantom.network'
 
+const HT_MAINNET = 'https://http-mainnet.hecochain.com'
+const HT_MAIN_CHAINID = 128
+const HT_MAIN_EXPLORER = 'https://scan.hecochain.com'
+
+const HT_TESTNET = 'https://http-testnet.hecochain.com'
+const HT_TEST_CHAINID = 256
+const HT_TEST_EXPLORER = 'https://scan-testnet.hecochain.com'
+
 interface ChainInfo {
   [key: string]: any
 }
@@ -38,6 +46,7 @@ const chainInfo: ChainInfo = {
     chainID: ETH_MAIN_CHAINID,
     lookHash: ETH_MAIN_EXPLORER + '/tx/',
     lookAddr: ETH_MAIN_EXPLORER + '/address/',
+    lookBlock: ETH_MAIN_EXPLORER + '/block/',
     explorer: ETH_MAIN_EXPLORER,
     symbol: 'ETH',
     name: 'Ethereum',
@@ -50,6 +59,7 @@ const chainInfo: ChainInfo = {
     chainID: ETH_TEST_CHAINID,
     lookHash: ETH_TEST_EXPLORER + '/tx/',
     lookAddr: ETH_TEST_EXPLORER + '/address/',
+    lookBlock: ETH_TEST_EXPLORER + '/block/',
     explorer: ETH_TEST_EXPLORER,
     symbol: 'ETH',
     name: 'Ethereum',
@@ -62,6 +72,7 @@ const chainInfo: ChainInfo = {
     chainID: BNB_MAIN_CHAINID,
     lookHash: BNB_MAIN_EXPLORER + '/tx/',
     lookAddr: BNB_MAIN_EXPLORER + '/address/',
+    lookBlock: BNB_MAIN_EXPLORER + '/block/',
     explorer: BNB_MAIN_EXPLORER,
     symbol: 'BNB',
     name: 'BSC',
@@ -74,6 +85,7 @@ const chainInfo: ChainInfo = {
     chainID: BNB_TEST_CHAINID,
     lookHash: BNB_TEST_EXPLORER + '/tx/',
     lookAddr: BNB_TEST_EXPLORER + '/address/',
+    lookBlock: BNB_TEST_EXPLORER + '/block/',
     explorer: BNB_TEST_EXPLORER,
     symbol: 'BNB',
     name: 'BSC',
@@ -81,11 +93,38 @@ const chainInfo: ChainInfo = {
     label: 'BNB_TEST',
     isSwitch: 1
   },
+  128: {
+    rpc: HT_MAINNET,
+    chainID: HT_MAIN_CHAINID,
+    lookHash: HT_MAIN_EXPLORER + '/tx/',
+    lookAddr: HT_MAIN_EXPLORER + '/address/',
+    lookBlock: HT_MAIN_EXPLORER + '/block/',
+    explorer: HT_MAIN_EXPLORER,
+    symbol: 'HT',
+    name: 'Huobi',
+    type: 'main',
+    label: 'HT_MAIN',
+    isSwitch: 1
+  },
+  256: {
+    rpc: HT_TESTNET,
+    chainID: HT_TEST_CHAINID,
+    lookHash: HT_TEST_EXPLORER + '/tx/',
+    lookAddr: HT_TEST_EXPLORER + '/address/',
+    lookBlock: HT_TEST_EXPLORER + '/block/',
+    explorer: HT_TEST_EXPLORER,
+    symbol: 'HT',
+    name: 'Huobi',
+    type: 'test',
+    label: 'HT_TEST',
+    isSwitch: 1
+  },
   250: {
     rpc: FTM_MAINNET,
     chainID: FTM_MAIN_CHAINID,
     lookHash: FTM_MAIN_EXPLORER + '/transactions/',
     lookAddr: FTM_MAIN_EXPLORER + '/address/',
+    lookBlock: FTM_MAIN_EXPLORER + '/block/',
     explorer: FTM_MAIN_EXPLORER,
     symbol: 'FTM',
     name: 'Fantom',
@@ -99,6 +138,7 @@ const chainInfo: ChainInfo = {
     chainID: FSN_MAIN_CHAINID,
     lookHash: FSN_MAIN_EXPLORER + '/transaction/',
     lookAddr: FSN_MAIN_EXPLORER + '/address/',
+    lookBlock: FSN_MAIN_EXPLORER + '/block/',
     explorer: FSN_MAIN_EXPLORER,
     symbol: 'FSN',
     name: 'Fusion',
@@ -111,6 +151,7 @@ const chainInfo: ChainInfo = {
     chainID: FSN_TEST_CHAINID,
     lookHash: FSN_TEST_EXPLORER + '/transaction/',
     lookAddr: FSN_TEST_EXPLORER + '/address/',
+    lookBlock: FSN_TEST_EXPLORER + '/block/',
     explorer: FSN_TEST_EXPLORER,
     symbol: 'FSN',
     name: 'Fusion',

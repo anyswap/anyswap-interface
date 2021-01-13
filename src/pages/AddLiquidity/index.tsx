@@ -39,6 +39,8 @@ import { currencyId } from '../../utils/currencyId'
 import { PoolPriceBar } from './PoolPriceBar'
 import { useTranslation } from 'react-i18next'
 
+import config from '../../config'
+
 export default function AddLiquidity({
   match: {
     params: { currencyIdA, currencyIdB }
@@ -288,7 +290,7 @@ export default function AddLiquidity({
           history.push(`/add/${newCurrencyIdB}`)
         }
       } else {
-        history.push(`/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}`)
+        history.push(`/add/${currencyIdA ? currencyIdA : config.symbol}/${newCurrencyIdB}`)
       }
     },
     [currencyIdA, history, currencyIdB]

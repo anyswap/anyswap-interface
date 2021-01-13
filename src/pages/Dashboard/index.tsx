@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useActiveWeb3React } from '../../hooks'
 import { useAllTokenBalances } from '../../state/wallet/hooks'
-import { useAllTokens } from '../../hooks/Tokens'
+// import { useAllTokens } from '../../hooks/Tokens'
 // import { useSelectedTokenList } from '../../state/lists/hooks'
 // import { useTokenComparator } from '../../components/SearchModal/sorting'
 
@@ -323,32 +323,37 @@ export default function DashboardDtil() {
   // const selectedTokenList = useSelectedTokenList()
   // const allTokens = useAllTokenBalances()
   const { t } = useTranslation()
-  const allTokens = useAllTokens()
-  const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
+  // const allTokens = useAllTokens()
+  // const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
   const balances = useAllTokenBalances()
 
-  const [searchBalance, setSearchBalance] = useState('')
-  const [searchPool, setSearchPool] = useState('')
-  const [showMore, setShowMore] = useState(false)
+  const [searchBalance, setSearchBalance] =  useState('')
+  const [searchPool, setSearchPool] =  useState('')
+  const [showMore, setShowMore] =  useState(false)
 
-  const tokenList = useMemo(() => {
-    const list: Array<any> = []
-    Object.keys(balances).some(tokenAddress => {
-      list.push(balances[tokenAddress])
-    })
-    return list
-  }, [balances])
+  const tokenList = useMemo(
+    () => {
+      let list:Array<any> = []
+      for (let tokenAddress in balances) {
+        list.push(balances[tokenAddress])
+      }
+      console.log(account)
+      return list
+    },
+    [balances, account]
+  )
   // const comparator = useMemo(() => getTokenComparator(balances ?? {}), [balances])
   // const tokenComparator = useTokenComparator(false)
-  console.log(tokenList)
+  // console.log(tokenList)
+  // console.log(balances)
   useEffect(() => {
     console.log(searchPool)
-    console.log(allTokensArray)
-    setSearchBalance('')
-    setSearchPool('')
+    // console.log(allTokensArray)
+    // setSearchBalance('')
+    // setSearchPool('')
     // console.log(tokenComparator)
     // console.log(t)
-  }, [account])
+  }, [searchPool])
 
   function searchBox(type: number) {
     return (

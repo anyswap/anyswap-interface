@@ -9,6 +9,8 @@ import { isAddress } from '../utils'
 import { useActiveWeb3React } from './index'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 
+import config from '../config'
+
 export function useAllTokens(): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
@@ -102,7 +104,8 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
 }
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
-  const isETH = currencyId?.toUpperCase() === 'ETH'
+  // const isETH = currencyId?.toUpperCase() === 'ETH'
+  const isETH = currencyId?.toUpperCase() === config.symbol
   const token = useToken(isETH ? undefined : currencyId)
   return isETH ? ETHER : token
 }

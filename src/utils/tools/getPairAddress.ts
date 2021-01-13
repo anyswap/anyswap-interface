@@ -36,7 +36,8 @@ export function getPairsAddress(paArr: any) {
             if (
               obj &&
               obj.result &&
-              obj.result !== '0x0000000000000000000000000000000000000000000000000000000000000000'
+              obj.result !== '0x0000000000000000000000000000000000000000000000000000000000000000' &&
+              obj.result !== '0x'
             ) {
               arr.push({
                 ...paArr[i][0],

@@ -44,6 +44,8 @@ import { useUserSlippageTolerance } from '../../state/user/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useTranslation } from 'react-i18next'
 
+import config from '../../config'
+
 export default function RemoveLiquidity({
   history,
   match: {
@@ -574,10 +576,10 @@ export default function RemoveLiquidity({
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink
                             to={`/remove/${
-                              currencyA && currencyEquals(currencyA, WETH[chainId]) ? 'ETH' : currencyIdA
-                            }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? 'ETH' : currencyIdB}`}
+                              currencyA && currencyEquals(currencyA, WETH[chainId]) ? config.symbol : currencyIdA
+                            }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? config.symbol : currencyIdB}`}
                           >
-                            Receive ETH
+                            Receive {config.symbol}
                           </StyledInternalLink>
                         ) : null}
                       </RowBetween>

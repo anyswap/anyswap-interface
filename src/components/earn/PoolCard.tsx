@@ -15,6 +15,8 @@ import { useTotalSupply } from '../../data/TotalSupply'
 import { usePair } from '../../data/Reserves'
 import useUSDCPrice from '../../utils/useUSDCPrice'
 
+import config from '../../config'
+
 const StatContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -134,7 +136,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
           <TYPE.white>
             {valueOfTotalStakedAmountInUSDC
               ? `$${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}`
-              : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH`}
+              : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ` + config.symbol}
           </TYPE.white>
         </RowBetween>
         <RowBetween>

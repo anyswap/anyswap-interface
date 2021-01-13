@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
-import { Pair } from '@uniswap/sdk'
+import { Pair, Token } from '@uniswap/sdk'
 import { Link } from 'react-router-dom'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 
@@ -23,7 +23,8 @@ import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/
 import { useTranslation } from 'react-i18next'
 
 import { getPairsAddress } from '../../utils/tools/getPairAddress'
-import { Token } from '@uniswap/sdk'
+
+import config from '../../config'
 
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
@@ -183,10 +184,10 @@ export default function Pool() {
                 </TYPE.mediumHeader>
               </HideSmall>
               <ButtonRow>
-                <ResponsiveButtonSecondary as={Link} padding="6px 8px" to="/create/ETH">
+                <ResponsiveButtonSecondary as={Link} padding="6px 8px" to={"/create/" + config.symbol}>
                   {t('CreatePair')}
                 </ResponsiveButtonSecondary>
-                <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 8px" to="/add/ETH">
+                <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 8px" to={"/add/" + config.symbol}>
                   <Text fontWeight={500} fontSize={16}>
                     {t('AddLiquidity')}
                   </Text>

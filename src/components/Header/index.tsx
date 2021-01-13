@@ -1,4 +1,4 @@
-import { ChainId, TokenAmount } from '@uniswap/sdk'
+import { TokenAmount } from '@uniswap/sdk'
 import React, { useState } from 'react'
 import { Text } from 'rebass'
 // import { NavLink } from 'react-router-dom'
@@ -32,6 +32,8 @@ import { Dots } from '../swap/styleds'
 import Modal from '../Modal'
 import UniBalanceContent from './UniBalanceContent'
 import usePrevious from '../../hooks/usePrevious'
+
+import config from '../../config'
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -287,12 +289,6 @@ const UniIcon = styled.div`
 // `}
 // `
 
-const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
-  [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.ROPSTEN]: 'Ropsten',
-  [ChainId.GÖRLI]: 'Görli',
-  [ChainId.KOVAN]: 'Kovan'
-}
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
@@ -358,8 +354,8 @@ export default function Header() {
       <HeaderControls>
         <HeaderElement>
           <HideSmall>
-            {chainId && NETWORK_LABELS[chainId] && (
-              <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
+            {chainId && (
+              <NetworkCard title={config.name}>{config.name}</NetworkCard>
             )}
           </HideSmall>
           {availableClaim && !showClaimPopup && (
@@ -401,7 +397,7 @@ export default function Header() {
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(4)} ETH
+                {userEthBalance?.toSignificant(4)} {config.symbol}
               </BalanceText>
             ) : null}
             <Web3Status />

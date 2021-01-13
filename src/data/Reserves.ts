@@ -90,6 +90,9 @@ export function usePairs1(currencies: [Currency | undefined, Currency | undefine
 
   // // const getPa = useMemo(() => {
   const getPa = useCallback(() => {
+    let paArr = tokens.map(([tokenA, tokenB]) => {
+      return tokenA && tokenB && !tokenA.equals(tokenB) ? {tokenA, tokenB} : ''
+    })
     getPairsAddress(paArr).then((res: any): any => {
       console.log(res)
       if (res && res.length > 0) {
@@ -172,8 +175,8 @@ export function usePairs2(currencies: [Currency | undefined, Currency | undefine
     console.log(rs1)
     // return rs1
     setRsList(rs1)
-  }, [results])
-  // }, [results, tokens])
+  // }, [results])
+  }, [results, tokens])
 
   return rsList
 }

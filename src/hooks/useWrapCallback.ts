@@ -6,6 +6,8 @@ import { useCurrencyBalance } from '../state/wallet/hooks'
 import { useActiveWeb3React } from './index'
 import { useWETHContract } from './useContract'
 
+import config from '../config'
+
 export enum WrapType {
   NOT_APPLICABLE,
   WRAP,
@@ -44,13 +46,13 @@ export default function useWrapCallback(
             ? async () => {
                 try {
                   const txReceipt = await wethContract.deposit({ value: `0x${inputAmount.raw.toString(16)}` })
-                  addTransaction(txReceipt, { summary: `Wrap ${inputAmount.toSignificant(6)} ETH to WETH` })
+                  addTransaction(txReceipt, { summary: `Wrap ${inputAmount.toSignificant(6)} ${config.symbol} to WETH` })
                 } catch (error) {
                   console.error('Could not deposit', error)
                 }
               }
             : undefined,
-        inputError: sufficientBalance ? undefined : 'Insufficient ETH balance'
+        inputError: sufficientBalance ? undefined : `Insufficient ${config.symbol} balance`
       }
     } else if (currencyEquals(WETH[chainId], inputCurrency) && outputCurrency === ETHER) {
       return {
@@ -60,7 +62,7 @@ export default function useWrapCallback(
             ? async () => {
                 try {
                   const txReceipt = await wethContract.withdraw(`0x${inputAmount.raw.toString(16)}`)
-                  addTransaction(txReceipt, { summary: `Unwrap ${inputAmount.toSignificant(6)} WETH to ETH` })
+                  addTransaction(txReceipt, { summary: `Unwrap ${inputAmount.toSignificant(6)} WETH to ${config.symbol}` })
                 } catch (error) {
                   console.error('Could not withdraw', error)
                 }

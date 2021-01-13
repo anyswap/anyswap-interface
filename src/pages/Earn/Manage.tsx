@@ -30,6 +30,8 @@ import usePrevious from '../../hooks/usePrevious'
 import useUSDCPrice from '../../utils/useUSDCPrice'
 import { BIG_INT_ZERO } from '../../constants'
 
+import config from '../../config'
+
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
   width: 100%;
@@ -169,7 +171,7 @@ export default function Manage({
             <TYPE.body fontSize={24} fontWeight={500}>
               {valueOfTotalStakedAmountInUSDC
                 ? `$${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}`
-                : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH`}
+                : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ${config.symbol}`}
             </TYPE.body>
           </AutoColumn>
         </PoolData>
