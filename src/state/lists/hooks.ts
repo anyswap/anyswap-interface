@@ -37,7 +37,7 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.GÖRLI]: {},
   [ChainId.MAINNET]: {},
   [ChainId.HTTEST]: {},
-  [ChainId.HTMAIN]: {},
+  [ChainId.HTMAIN]: {}
   // [ChainId.FSNTEST]: {}
 }
 

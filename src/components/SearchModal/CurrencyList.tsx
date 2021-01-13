@@ -116,9 +116,15 @@ function CurrencyRow({
       selected={otherSelected}
     >
       {/* <CurrencyLogo currency={currency} size={'24px'} /> */}
-      <TokenLogo symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol} size={'24px'} />
+      <TokenLogo
+        symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
+        size={'24px'}
+      />
       <Column>
-        <Text title={currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name} fontWeight={500}>
+        <Text
+          title={currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name}
+          fontWeight={500}
+        >
           {currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
         </Text>
         <FadedSpan>

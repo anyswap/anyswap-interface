@@ -17,7 +17,6 @@ import { transparentize } from 'polished'
 
 import config from '../../config'
 
-
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
@@ -344,7 +343,10 @@ export default function CurrencyInputPanel({
                 <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
               ) : currency ? (
                 <TokenLogoBox>
-                  <TokenLogo symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol} size={'1.625rem'} />
+                  <TokenLogo
+                    symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
+                    size={'1.625rem'}
+                  />
                 </TokenLogoBox>
               ) : null}
               {pair ? (
@@ -360,7 +362,9 @@ export default function CurrencyInputPanel({
                       ? currency.symbol.slice(0, 4) +
                         '...' +
                         currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                      : (currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol)) || t('selectToken')}
+                      : currency && currency.symbol && currency.symbol === 'ETH'
+                      ? config.symbol
+                      : currency?.symbol) || t('selectToken')}
                   </h3>
                   {/* <p>{currency && currency.name ? currency.name : ''}</p> */}
                   <p>{currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name}</p>

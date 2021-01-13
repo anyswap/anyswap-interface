@@ -10,7 +10,7 @@ const V1_FACTORY_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.GÖRLI]: '0x6Ce570d02D73d4c384b46135E87f8C592A8c86dA',
   [ChainId.KOVAN]: '0xD3E51Ef092B2845f10401a0159B2B96e8B6c3D30',
   [ChainId.HTTEST]: '',
-  [ChainId.HTMAIN]: '',
+  [ChainId.HTMAIN]: ''
   // [ChainId.FSNTEST]: '0xD3E51Ef092B2845f10401a0159B2B96e8B6c3D30'
 }
 

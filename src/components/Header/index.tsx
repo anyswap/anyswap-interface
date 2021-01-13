@@ -289,7 +289,6 @@ const UniIcon = styled.div`
 // `}
 // `
 
-
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
   // const { t } = useTranslation()
@@ -353,11 +352,7 @@ export default function Header() {
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
-          <HideSmall>
-            {chainId && (
-              <NetworkCard title={config.name}>{config.name}</NetworkCard>
-            )}
-          </HideSmall>
+          <HideSmall>{chainId && <NetworkCard title={config.name}>{config.name}</NetworkCard>}</HideSmall>
           {availableClaim && !showClaimPopup && (
             <UNIWrapper onClick={toggleClaimModal}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>

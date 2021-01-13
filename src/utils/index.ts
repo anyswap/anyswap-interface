@@ -38,20 +38,20 @@ export function getEtherscanLink(
 
   switch (type) {
     case 'transaction': {
-      let url = config.bridgeAll[chainId].lookHash + data
+      const url = config.bridgeAll[chainId].lookHash + data
       return url
     }
     case 'token': {
-      let url = config.bridgeAll[chainId].lookAddr + data
+      const url = config.bridgeAll[chainId].lookAddr + data
       return url
     }
     case 'block': {
-      let url = config.bridgeAll[chainId].lookBlock + data
+      const url = config.bridgeAll[chainId].lookBlock + data
       return url
     }
     case 'address':
     default: {
-      let url = config.bridgeAll[chainId].lookAddr + data
+      const url = config.bridgeAll[chainId].lookAddr + data
       return url
     }
   }

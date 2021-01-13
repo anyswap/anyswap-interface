@@ -77,7 +77,9 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
           </TYPE.main>
           {chainId && (
             <ExternalLink style={{ fontWeight: 400 }} href={getEtherscanLink(chainId, token.address, 'token')}>
-              <TYPE.blue title={token.address}>{shortenAddress(token.address)} (View on {config.name})</TYPE.blue>
+              <TYPE.blue title={token.address}>
+                {shortenAddress(token.address)} (View on {config.name})
+              </TYPE.blue>
             </ExternalLink>
           )}
         </AutoColumn>

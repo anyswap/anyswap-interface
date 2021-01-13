@@ -49,7 +49,11 @@ export default function useUSDCPrice(currency?: Currency): Price | undefined {
 
     // all other tokens
     // first try the usdc pair
-    if (usdcPairState === PairState.EXISTS && usdcPair && usdcPair.reserveOf(BASEUSD).greaterThan(ethPairETHUSDCValue)) {
+    if (
+      usdcPairState === PairState.EXISTS &&
+      usdcPair &&
+      usdcPair.reserveOf(BASEUSD).greaterThan(ethPairETHUSDCValue)
+    ) {
       const price = usdcPair.priceOf(wrapped)
       return new Price(currency, BASEUSD, price.denominator, price.numerator)
     }
