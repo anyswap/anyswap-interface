@@ -97,10 +97,10 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             <FixedHeightRow onClick={() => setShowMore(!showMore)}>
               <RowFixed>
                 {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
-                <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px"></TokenLogo>
-                <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
+                <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 <Text fontWeight={500} fontSize={20}>
-                  {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}/{currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}
+                  {config.getBaseCoin(currency0.symbol)}/{config.getBaseCoin(currency1.symbol)}
                 </Text>
               </RowFixed>
               <RowFixed>
@@ -120,7 +120,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}:
+                  {config.getBaseCoin(currency0.symbol)}:
                 </Text>
                 {token0Deposited ? (
                   <RowFixed>
@@ -134,7 +134,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}:
+                  {config.getBaseCoin(currency1.symbol)}:
                 </Text>
                 {token1Deposited ? (
                   <RowFixed>
@@ -202,10 +202,10 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
           <RowFixed>
             {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
             
-            <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px"></TokenLogo>
-            <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+            <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
+            <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
             <Text fontWeight={500} fontSize={20}>
-              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${currency0.symbol}/${currency1.symbol}`}
+              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
             </Text>
           </RowFixed>
 
@@ -245,7 +245,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency0.symbol === 'ETH' ? config.symbol : currency0.symbol}:
+                  Pooled {config.getBaseCoin(currency0.symbol)}:
                 </Text>
               </RowFixed>
               {token0Deposited ? (
@@ -253,7 +253,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token0Deposited?.toSignificant(6)}
                   </Text>
-                  <TokenLogo symbol={currency0.symbol === 'ETH' ? config.symbol : currency0.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                  <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'
@@ -263,7 +263,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency1.symbol === 'ETH' ? config.symbol : currency1.symbol}:
+                  Pooled {config.getBaseCoin(currency1.symbol)}:
                 </Text>
               </RowFixed>
               {token1Deposited ? (
@@ -271,7 +271,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token1Deposited?.toSignificant(6)}
                   </Text>
-                  <TokenLogo symbol={currency1.symbol === 'ETH' ? config.symbol : currency1.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                  <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'

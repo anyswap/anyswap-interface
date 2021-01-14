@@ -18,6 +18,8 @@ import { AutoRow, RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
 
+import config from '../../config'
+
 export default function SwapModalFooter({
   trade,
   onConfirm,
@@ -81,8 +83,8 @@ export default function SwapModalFooter({
             </TYPE.black>
             <TYPE.black fontSize={14} marginLeft={'4px'}>
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? trade.outputAmount.currency.symbol
-                : trade.inputAmount.currency.symbol}
+                ? (config.getBaseCoin(trade.outputAmount.currency.symbol))
+                : (config.getBaseCoin(trade.inputAmount.currency.symbol))}
             </TYPE.black>
           </RowFixed>
         </RowBetween>

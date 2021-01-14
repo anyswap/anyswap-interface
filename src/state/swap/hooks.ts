@@ -77,7 +77,7 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
   }
   try {
     const typedValueParsed = parseUnits(value, currency.decimals).toString()
-    console.log(typedValueParsed)
+    // console.log(typedValueParsed)
     if (typedValueParsed !== '0') {
       return currency instanceof Token
         ? new TokenAmount(currency, JSBI.BigInt(typedValueParsed))

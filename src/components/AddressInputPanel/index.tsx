@@ -31,7 +31,7 @@ const ContainerRow = styled.div<{ error: boolean }>`
 
 const InputContainer = styled.div`
   flex: 1;
-  padding: 1rem;
+  padding: 1.25rem 2.5rem;
 `
 
 const Input = styled.input<{ error?: boolean }>`
@@ -47,6 +47,8 @@ const Input = styled.input<{ error?: boolean }>`
   text-overflow: ellipsis;
   font-weight: 500;
   width: 100%;
+  height: 70px;
+  border-bottom: 0.0625rem solid ${({ theme }) => theme.inputBorder};
   ::placeholder {
     color: ${({ theme }) => theme.text4};
   }
@@ -116,7 +118,7 @@ export default function AddressInputPanel({
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              placeholder="Wallet Address or ENS name"
+              placeholder="Wallet Address"
               error={error}
               pattern="^(0x[a-fA-F0-9]{40})$"
               onChange={handleInput}

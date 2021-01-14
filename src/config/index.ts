@@ -68,6 +68,17 @@ const config: ConFig = {
       if (type) return 0
       else return 1
     }
+  },
+  getBaseCoin (value:any, type: number) {
+    if (value && value === 'BASECURRENCY') {
+      if (type) {
+        return netConfig.name
+      } else {
+        return netConfig.symbol
+      }
+    } else {
+      return value
+    }
   }
 }
 export default config

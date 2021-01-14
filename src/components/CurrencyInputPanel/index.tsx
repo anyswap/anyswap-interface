@@ -344,7 +344,7 @@ export default function CurrencyInputPanel({
               ) : currency ? (
                 <TokenLogoBox>
                   <TokenLogo
-                    symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
+                    symbol={currency && currency.symbol ? config.getBaseCoin(currency?.symbol) : currency?.symbol}
                     size={'1.625rem'}
                   />
                 </TokenLogoBox>
@@ -362,12 +362,12 @@ export default function CurrencyInputPanel({
                       ? currency.symbol.slice(0, 4) +
                         '...' +
                         currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                      : currency && currency.symbol && currency.symbol === 'ETH'
-                      ? config.symbol
+                      : currency && currency.symbol
+                      ? config.getBaseCoin(currency?.symbol)
                       : currency?.symbol) || t('selectToken')}
                   </h3>
                   {/* <p>{currency && currency.name ? currency.name : ''}</p> */}
-                  <p>{currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name}</p>
+                  <p>{currency && currency.symbol ? config.getBaseCoin(currency?.name, 1) : currency?.name}</p>
                 </StyledTokenName>
               )}
               {!disableCurrencySelect && !!currency && (

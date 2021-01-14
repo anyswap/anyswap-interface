@@ -110,6 +110,7 @@ export function useCurrency(currencyId: string | undefined): Currency | null | u
   // const isETH = currencyId?.toUpperCase() === 'ETH'
   // console.log(currencyId)
   const isETH = currencyId?.toUpperCase() === config.symbol
+  // console.log(isETH)
   const token = useToken(isETH ? undefined : currencyId)
   return isETH ? ETHER : token
 }

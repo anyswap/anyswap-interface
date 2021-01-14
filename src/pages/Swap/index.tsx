@@ -364,7 +364,7 @@ export default function Swap() {
 
             {recipient !== null && !showWrap ? (
               <>
-                <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
+                <AutoRow justify="center" style={{ padding: '0 1rem' }}>
                   <ArrowWrapper clickable={false}>
                     <ArrowDown size="16" color={theme.text2} />
                   </ArrowWrapper>
@@ -505,8 +505,8 @@ export default function Swap() {
             ) : null}
           </BottomGrouping>
         </Wrapper>
+        <AdvancedSwapDetailsDropdown trade={trade} />
       </AppBody>
-      <AdvancedSwapDetailsDropdown trade={trade} />
     </>
   )
 }

@@ -117,15 +117,15 @@ function CurrencyRow({
     >
       {/* <CurrencyLogo currency={currency} size={'24px'} /> */}
       <TokenLogo
-        symbol={currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
+        symbol={currency && currency.symbol ? config.getBaseCoin(currency.symbol) : currency?.symbol}
         size={'24px'}
       />
       <Column>
         <Text
-          title={currency && currency.symbol && currency.symbol === 'ETH' ? config.name : currency?.name}
+          title={currency && currency.symbol ? config.getBaseCoin(currency?.name, 1) : currency?.name}
           fontWeight={500}
         >
-          {currency && currency.symbol && currency.symbol === 'ETH' ? config.symbol : currency?.symbol}
+          {currency && currency.symbol ? config.getBaseCoin(currency.symbol) : currency?.symbol}
         </Text>
         <FadedSpan>
           {!isOnSelectedList && customAdded ? (
