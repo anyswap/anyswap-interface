@@ -4,7 +4,10 @@ interface ConFig {
 
 let netConfig:ConFig = {
   name: 'Huobi',
-  symbol: 'HT'
+  symbol: 'HT',
+  nodeRpc: 'https://http-testnet.hecochain.com',
+  chainID: 256,
+  tokenListUrl: 'http://127.0.0.1:8106/tokenList'
 }
 
 const config: ConFig = {

@@ -1,4 +1,5 @@
-import { ChainId, TokenAmount } from '@uniswap/sdk'
+// import { ChainId, TokenAmount } from '@uniswap/sdk'
+import { ChainId } from '@uniswap/sdk'
 import React, { useState } from 'react'
 import { Text } from 'rebass'
 import { NavLink } from 'react-router-dom'
@@ -11,15 +12,16 @@ import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
-import { useETHBalances, useAggregateUniBalance } from '../../state/wallet/hooks'
+// import { useETHBalances, useAggregateUniBalance } from '../../state/wallet/hooks'
+import { useETHBalances } from '../../state/wallet/hooks'
 import { CardNoise } from '../earn/styled'
-import { CountUp } from 'use-count-up'
+// import { CountUp } from 'use-count-up'
 // import { TYPE, ExternalLink } from '../../theme'
 import { TYPE } from '../../theme'
 
 import { YellowCard } from '../Card'
 import Settings from '../Settings'
-import Menu from '../Menu'
+// import Menu from '../Menu'
 
 import Row, { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
@@ -30,7 +32,7 @@ import { useUserHasSubmittedClaim } from '../../state/transactions/hooks'
 import { Dots } from '../swap/styleds'
 import Modal from '../Modal'
 import UniBalanceContent from './UniBalanceContent'
-import usePrevious from '../../hooks/usePrevious'
+// import usePrevious from '../../hooks/usePrevious'
 import config from '../../config'
 
 const HeaderFrame = styled.div`
@@ -279,13 +281,13 @@ export default function Header() {
 
   const { claimTxn } = useUserHasSubmittedClaim(account ?? undefined)
 
-  const aggregateBalance: TokenAmount | undefined = useAggregateUniBalance()
+  // const aggregateBalance: TokenAmount | undefined = useAggregateUniBalance()
 
   const [showUniBalanceModal, setShowUniBalanceModal] = useState(false)
   const showClaimPopup = useShowClaimPopup()
 
-  const countUpValue = aggregateBalance?.toFixed(0) ?? '0'
-  const countUpValuePrevious = usePrevious(countUpValue) ?? '0'
+  // const countUpValue = aggregateBalance?.toFixed(0) ?? '0'
+  // const countUpValuePrevious = usePrevious(countUpValue) ?? '0'
 
   return (
     <HeaderFrame>
@@ -316,12 +318,12 @@ export default function Header() {
           >
             {t('pool')}
           </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
+          {/* <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
             UNI
           </StyledNavLink>
           <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
             Vote
-          </StyledNavLink>
+          </StyledNavLink> */}
           {/* <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
             Charts <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink> */}
@@ -344,7 +346,7 @@ export default function Header() {
               <CardNoise />
             </UNIWrapper>
           )}
-          {!availableClaim && aggregateBalance && (
+          {/* {!availableClaim && aggregateBalance && (
             <UNIWrapper onClick={() => setShowUniBalanceModal(true)}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 {account && (
@@ -369,7 +371,7 @@ export default function Header() {
               </UNIAmount>
               <CardNoise />
             </UNIWrapper>
-          )}
+          )} */}
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
@@ -381,7 +383,7 @@ export default function Header() {
         </HeaderElement>
         <HeaderElementWrap>
           <Settings />
-          <Menu />
+          {/* <Menu /> */}
         </HeaderElementWrap>
       </HeaderControls>
     </HeaderFrame>
