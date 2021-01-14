@@ -18,7 +18,7 @@ import { MinimalPositionCard } from '../../components/PositionCard'
 import Row, { RowBetween, RowFixed } from '../../components/Row'
 
 import Slider from '../../components/Slider'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import { ROUTER_ADDRESS } from '../../constants'
 import { useActiveWeb3React } from '../../hooks'
 import { useCurrency } from '../../hooks/Tokens'
@@ -348,7 +348,7 @@ export default function RemoveLiquidity({
             {parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
           </Text>
           <RowFixed gap="4px">
-            <CurrencyLogo currency={currencyA} size={'24px'} />
+            <TokenLogo symbol={config.getBaseCoin(currencyA?.symbol)} size={'24px'}></TokenLogo>
             <Text fontSize={24} fontWeight={500} style={{ marginLeft: '10px' }}>
               {config.getBaseCoin(currencyA?.symbol)}
             </Text>
@@ -362,7 +362,7 @@ export default function RemoveLiquidity({
             {parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
           </Text>
           <RowFixed gap="4px">
-            <CurrencyLogo currency={currencyB} size={'24px'} />
+            <TokenLogo symbol={config.getBaseCoin(currencyB?.symbol)} size={'24px'}></TokenLogo>
             <Text fontSize={24} fontWeight={500} style={{ marginLeft: '10px' }}>
               {config.getBaseCoin(currencyB?.symbol)}
             </Text>
@@ -544,7 +544,7 @@ export default function RemoveLiquidity({
                         {formattedAmounts[Field.CURRENCY_A] || '-'}
                       </Text>
                       <RowFixed>
-                        <CurrencyLogo currency={currencyA} style={{ marginRight: '12px' }} />
+                        <TokenLogo symbol={config.getBaseCoin(currencyA?.symbol)} style={{ marginRight: '12px' }}></TokenLogo>
                         <Text fontSize={24} fontWeight={500} id="remove-liquidity-tokena-symbol">
                           {config.getBaseCoin(currencyA?.symbol)}
                         </Text>
@@ -555,7 +555,7 @@ export default function RemoveLiquidity({
                         {formattedAmounts[Field.CURRENCY_B] || '-'}
                       </Text>
                       <RowFixed>
-                        <CurrencyLogo currency={currencyB} style={{ marginRight: '12px' }} />
+                        <TokenLogo symbol={config.getBaseCoin(currencyB?.symbol)} style={{ marginRight: '12px' }}></TokenLogo>
                         <Text fontSize={24} fontWeight={500} id="remove-liquidity-tokenb-symbol">
                           {config.getBaseCoin(currencyB?.symbol)}
                         </Text>

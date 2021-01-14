@@ -7,7 +7,7 @@ import { Text } from 'rebass'
 import { ButtonConfirmed } from '../../components/Button'
 import { LightCard, PinkCard, YellowCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import FormattedCurrencyAmount from '../../components/FormattedCurrencyAmount'
 import QuestionHelper from '../../components/QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from '../../components/Row'
@@ -52,7 +52,7 @@ export function V1LiquidityInfo({
   return (
     <>
       <AutoRow style={{ justifyContent: 'flex-start', width: 'fit-content' }}>
-        <CurrencyLogo size="24px" currency={token} />
+        <TokenLogo symbol={config.getBaseCoin(token.symbol)} size="24px"></TokenLogo>
         <div style={{ marginLeft: '.75rem' }}>
           <TYPE.mediumHeader>
             {<FormattedCurrencyAmount currencyAmount={liquidityTokenAmount} />}{' '}
@@ -69,7 +69,7 @@ export function V1LiquidityInfo({
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
             {tokenWorth.toSignificant(4)}
           </Text>
-          <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={token} />
+          <TokenLogo symbol={config.getBaseCoin(token.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
         </RowFixed>
       </RowBetween>
       <RowBetween mb="1rem">
@@ -80,7 +80,7 @@ export function V1LiquidityInfo({
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
             <FormattedCurrencyAmount currencyAmount={ethWorth} />
           </Text>
-          <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={Currency.ETHER} />
+          <TokenLogo symbol={config.getBaseCoin(Currency.ETHER.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
         </RowFixed>
       </RowBetween>
     </>

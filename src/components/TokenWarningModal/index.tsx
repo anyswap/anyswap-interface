@@ -6,7 +6,7 @@ import { useActiveWeb3React } from '../../hooks'
 import { useAllTokens } from '../../hooks/Tokens'
 import { ExternalLink, TYPE } from '../../theme'
 import { getEtherscanLink, shortenAddress } from '../../utils'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import Modal from '../Modal'
 import { AutoRow, RowBetween } from '../Row'
 import { AutoColumn } from '../Column'
@@ -65,7 +65,7 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
     <Wrapper error={duplicateNameOrSymbol}>
       <AutoRow gap="6px">
         <AutoColumn gap="24px">
-          <CurrencyLogo currency={token} size={'16px'} />
+          <TokenLogo symbol={token.symbol} size={'16px'}></TokenLogo>
           <div> </div>
         </AutoColumn>
         <AutoColumn gap="10px" justify="flex-start">

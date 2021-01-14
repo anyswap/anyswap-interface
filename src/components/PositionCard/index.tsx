@@ -22,7 +22,7 @@ import { useColor } from '../../hooks/useColor'
 
 import Card, { GreyCard, LightCard } from '../Card'
 import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
@@ -247,7 +247,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token0Deposited?.toSignificant(6)}
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency0} />
+                  <TokenLogo symbol={currency0?.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'
@@ -265,7 +265,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token1Deposited?.toSignificant(6)}
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency1} />
+                  <TokenLogo symbol={currency1?.symbol} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'

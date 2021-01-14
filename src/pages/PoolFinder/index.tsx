@@ -5,7 +5,7 @@ import { Text } from 'rebass'
 import { ButtonDropdownLight } from '../../components/Button'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import { FindPoolTabs } from '../../components/NavigationTabs'
 import { MinimalPositionCard } from '../../components/PositionCard'
 import Row from '../../components/Row'
@@ -90,7 +90,7 @@ export default function PoolFinder() {
         >
           {currency0 ? (
             <Row>
-              <CurrencyLogo currency={currency0} />
+              <TokenLogo symbol={config.getBaseCoin(currency0.symbol)}></TokenLogo>
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
                 {config.getBaseCoin(currency0.symbol)}
               </Text>
@@ -114,7 +114,7 @@ export default function PoolFinder() {
         >
           {currency1 ? (
             <Row>
-              <CurrencyLogo currency={currency1} />
+              <TokenLogo symbol={config.getBaseCoin(currency1.symbol)}></TokenLogo>
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
                 {config.getBaseCoin(currency1.symbol)}
               </Text>

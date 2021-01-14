@@ -3,7 +3,7 @@ import React from 'react'
 import { Text } from 'rebass'
 import { ButtonPrimary } from '../../components/Button'
 import { RowBetween, RowFixed } from '../../components/Row'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import { Field } from '../../state/mint/actions'
 import { TYPE } from '../../theme'
 
@@ -29,14 +29,14 @@ export function ConfirmAddModalBottom({
       <RowBetween>
         <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} Deposited</TYPE.body>
         <RowFixed>
-          <CurrencyLogo currency={currencies[Field.CURRENCY_A]} style={{ marginRight: '8px' }} />
+          <TokenLogo symbol={config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} style={{ marginRight: '8px' }}></TokenLogo>
           <TYPE.body>{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</TYPE.body>
         </RowFixed>
       </RowBetween>
       <RowBetween>
         <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} Deposited</TYPE.body>
         <RowFixed>
-          <CurrencyLogo currency={currencies[Field.CURRENCY_B]} style={{ marginRight: '8px' }} />
+          <TokenLogo symbol={config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} style={{ marginRight: '8px' }}></TokenLogo>
           <TYPE.body>{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</TYPE.body>
         </RowFixed>
       </RowBetween>

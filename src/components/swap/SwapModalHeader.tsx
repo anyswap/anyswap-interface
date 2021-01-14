@@ -9,7 +9,7 @@ import { ButtonPrimary } from '../Button'
 import { isAddress, shortenAddress } from '../../utils'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { TruncatedText, SwapShowAcceptChanges } from './styleds'
 
@@ -41,7 +41,7 @@ export default function SwapModalHeader({
     <AutoColumn gap={'md'} style={{ marginTop: '20px' }}>
       <RowBetween align="flex-end">
         <RowFixed gap={'0px'}>
-          <CurrencyLogo currency={trade.inputAmount.currency} size={'24px'} style={{ marginRight: '12px' }} />
+          <TokenLogo symbol={config.getBaseCoin(trade.inputAmount.currency.symbol)} size={'24px'} style={{ marginRight: '12px' }}></TokenLogo>
           <TruncatedText
             fontSize={24}
             fontWeight={500}
@@ -61,7 +61,7 @@ export default function SwapModalHeader({
       </RowFixed>
       <RowBetween align="flex-end">
         <RowFixed gap={'0px'}>
-          <CurrencyLogo currency={trade.outputAmount.currency} size={'24px'} style={{ marginRight: '12px' }} />
+          <TokenLogo symbol={config.getBaseCoin(trade.outputAmount.currency.symbol)} size={'24px'} style={{ marginRight: '12px' }}></TokenLogo>
           <TruncatedText
             fontSize={24}
             fontWeight={500}

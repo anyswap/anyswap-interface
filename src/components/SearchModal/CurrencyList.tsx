@@ -11,7 +11,7 @@ import { LinkStyledButton, TYPE } from '../../theme'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
 import Column from '../Column'
 import { RowFixed } from '../Row'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
 import Loader from '../Loader'
@@ -114,7 +114,7 @@ function CurrencyRow({
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size={'24px'} />
+      <TokenLogo symbol={currency.symbol} size={'24px'}></TokenLogo>
       <Column>
         <Text title={currency.name} fontWeight={500}>
           {config.getBaseCoin(currency.symbol)}
