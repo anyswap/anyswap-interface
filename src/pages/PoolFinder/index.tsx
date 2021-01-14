@@ -20,6 +20,8 @@ import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
 import { useTranslation } from 'react-i18next'
 
+import config from '../../config'
+
 enum Fields {
   TOKEN0 = 0,
   TOKEN1 = 1
@@ -90,7 +92,7 @@ export default function PoolFinder() {
             <Row>
               <CurrencyLogo currency={currency0} />
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-                {currency0.symbol}
+                {config.getBaseCoin(currency0.symbol)}
               </Text>
             </Row>
           ) : (
@@ -114,7 +116,7 @@ export default function PoolFinder() {
             <Row>
               <CurrencyLogo currency={currency1} />
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-                {currency1.symbol}
+                {config.getBaseCoin(currency1.symbol)}
               </Text>
             </Row>
           ) : (

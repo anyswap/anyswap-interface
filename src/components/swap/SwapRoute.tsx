@@ -6,6 +6,8 @@ import { ThemeContext } from 'styled-components'
 import { TYPE } from '../../theme'
 import CurrencyLogo from '../CurrencyLogo'
 
+import config from '../../config'
+
 export default memo(function SwapRoute({ trade }: { trade: Trade }) {
   const theme = useContext(ThemeContext)
   return (
@@ -26,7 +28,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade }) {
             <Flex my="0.5rem" alignItems="center" style={{ flexShrink: 0 }}>
               <CurrencyLogo currency={token} size="1.5rem" />
               <TYPE.black fontSize={14} color={theme.text1} ml="0.5rem">
-                {token.symbol}
+                {config.getBaseCoin(token.symbol)}
               </TYPE.black>
             </Flex>
             {isLastItem ? null : <ChevronRight color={theme.text2} />}

@@ -11,6 +11,8 @@ import { ButtonSecondary } from '../Button'
 import { AutoColumn } from '../Column'
 import { AutoRow } from '../Row'
 
+import config from '../../config'
+
 export default function ListUpdatePopup({
   popKey,
   listUrl,
@@ -68,7 +70,7 @@ export default function ListUpdatePopup({
                   <li>
                     {tokensAdded.map((token, i) => (
                       <React.Fragment key={`${token.chainId}-${token.address}`}>
-                        <strong title={token.address}>{token.symbol}</strong>
+                        <strong title={token.address}>{config.getBaseCoin(token.symbol)}</strong>
                         {i === tokensAdded.length - 1 ? null : ', '}
                       </React.Fragment>
                     ))}{' '}
@@ -79,7 +81,7 @@ export default function ListUpdatePopup({
                   <li>
                     {tokensRemoved.map((token, i) => (
                       <React.Fragment key={`${token.chainId}-${token.address}`}>
-                        <strong title={token.address}>{token.symbol}</strong>
+                        <strong title={token.address}>{config.getBaseCoin(token.symbol)}</strong>
                         {i === tokensRemoved.length - 1 ? null : ', '}
                       </React.Fragment>
                     ))}{' '}

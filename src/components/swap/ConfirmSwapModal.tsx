@@ -7,6 +7,8 @@ import TransactionConfirmationModal, {
 import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
+import config from '../../config'
+
 /**
  * Returns true if the trade requires a confirmation of details before we can submit it
  * @param tradeA trade A
@@ -78,8 +80,8 @@ export default function ConfirmSwapModal({
 
   // text to show while loading
   const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
-    trade?.inputAmount?.currency?.symbol
-  } for ${trade?.outputAmount?.toSignificant(6)} ${trade?.outputAmount?.currency?.symbol}`
+    config.getBaseCoin(trade?.inputAmount?.currency?.symbol)
+  } for ${trade?.outputAmount?.toSignificant(6)} ${config.getBaseCoin(trade?.outputAmount?.currency?.symbol)}`
 
   const confirmationContent = useCallback(
     () =>

@@ -20,6 +20,8 @@ import SearchIcon from '../../assets/images/icon/search.svg'
 import { ReactComponent as Dropup } from '../../assets/images/dropup-blue.svg'
 import { ReactComponent as Dropdown } from '../../assets/images/dropdown-blue.svg'
 
+import config from '../../config'
+
 const MyBalanceBox = styled.div`
   width: 100%;
 
@@ -412,11 +414,11 @@ export default function DashboardDtil() {
                           <DBTd>
                             <TokenTableCoinBox>
                               <TokenTableLogo>
-                                <TokenLogo symbol={item?.token?.symbol} size={'1.625rem'}></TokenLogo>
+                                <TokenLogo symbol={config.getBaseCoin(item?.token?.symbol)} size={'1.625rem'}></TokenLogo>
                               </TokenTableLogo>
                               <TokenNameBox>
-                                <h3>{item?.token?.symbol}</h3>
-                                <p>{item?.token?.name}</p>
+                                <h3>{config.getBaseCoin(item?.token?.symbol)}</h3>
+                                <p>{config.getBaseCoin(item?.token?.name, 1)}</p>
                               </TokenNameBox>
                             </TokenTableCoinBox>
                           </DBTd>

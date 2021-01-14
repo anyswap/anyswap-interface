@@ -13,6 +13,8 @@ import { useTokenContract } from './useContract'
 import { useActiveWeb3React } from './index'
 import { Version } from './useToggledVersion'
 
+import config from '../config'
+
 export enum ApprovalState {
   UNKNOWN,
   NOT_APPROVED,
@@ -86,7 +88,7 @@ export function useApproveCallback(
       })
       .then((response: TransactionResponse) => {
         addTransaction(response, {
-          summary: 'Approve ' + amountToApprove.currency.symbol,
+          summary: 'Approve ' + config.getBaseCoin(amountToApprove.currency.symbol),
           approval: { tokenAddress: token.address, spender: spender }
         })
       })

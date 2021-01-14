@@ -56,14 +56,14 @@ export function V1LiquidityInfo({
         <div style={{ marginLeft: '.75rem' }}>
           <TYPE.mediumHeader>
             {<FormattedCurrencyAmount currencyAmount={liquidityTokenAmount} />}{' '}
-            {chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/{config.symbol}
+            {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}/{config.symbol}
           </TYPE.mediumHeader>
         </div>
       </AutoRow>
 
       <RowBetween my="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}:
+          Pooled {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
@@ -170,7 +170,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
         // })
 
         addTransaction(response, {
-          summary: `Migrate ${token.symbol} liquidity to V2`
+          summary: `Migrate ${config.getBaseCoin(token.symbol)} liquidity to V2`
         })
         setPendingMigrationHash(response.hash)
       })
@@ -208,26 +208,26 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             <RowBetween>
               <TYPE.body>V1 Price:</TYPE.body>
               <TYPE.black>
-                {v1SpotPrice?.toSignificant(6)} {token.symbol}/{config.symbol}
+                {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
             </RowBetween>
             <RowBetween>
               <div />
               <TYPE.black>
-                {v1SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{token.symbol}
+                {v1SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{config.getBaseCoin(token.symbol)}
               </TYPE.black>
             </RowBetween>
 
             <RowBetween>
               <TYPE.body>V2 Price:</TYPE.body>
               <TYPE.black>
-                {v2SpotPrice?.toSignificant(6)} {token.symbol}/{config.symbol}
+                {v2SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
             </RowBetween>
             <RowBetween>
               <div />
               <TYPE.black>
-                {v2SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{token.symbol}
+                {v2SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{config.getBaseCoin(token.symbol)}
               </TYPE.black>
             </RowBetween>
 
@@ -250,13 +250,13 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             <RowBetween>
               <TYPE.body>V1 Price:</TYPE.body>
               <TYPE.black>
-                {v1SpotPrice?.toSignificant(6)} {token.symbol}/{config.symbol}
+                {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
             </RowBetween>
             <RowBetween>
               <div />
               <TYPE.black>
-                {v1SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{token.symbol}
+                {v1SpotPrice?.invert()?.toSignificant(6)} {config.symbol}/{config.getBaseCoin(token.symbol)}
               </TYPE.black>
             </RowBetween>
           </AutoColumn>
@@ -305,7 +305,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${token.symbol}/${config.symbol} liquidity will become Uniswap V2 ${token.symbol}/${config.symbol} liquidity.`}
+        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become Uniswap V2 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -328,7 +328,7 @@ export default function MigrateV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${token.symbol}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${config.getBaseCoin(token.symbol)}`, 'Uniswap V1')
         : undefined,
     [chainId, validatedAddress, token]
   )

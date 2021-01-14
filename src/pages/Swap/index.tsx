@@ -49,6 +49,8 @@ import { useTranslation } from 'react-i18next'
 import Title from '../../components/Title'
 import SwapIcon from '../../components/SwapIcon'
 
+import config from '../../config'
+
 // import {getPairAddress} from '../../utils/tools/getPairAddress'
 // getPairAddress()
 export default function Swap() {
@@ -433,7 +435,7 @@ export default function Swap() {
                   ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
                     'Approved'
                   ) : (
-                    'Approve ' + currencies[Field.INPUT]?.symbol
+                    'Approve ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
                   )}
                 </ButtonConfirmed>
                 <ButtonError

@@ -352,7 +352,7 @@ export default function CurrencyInputPanel({
               {pair ? (
                 <StyledTokenName className="pair-name-container">
                   <h3>
-                    {pair?.token0.symbol}:{pair?.token1.symbol}
+                    {config.getBaseCoin(pair?.token0.symbol)}:{config.getBaseCoin(pair?.token1.symbol)}
                   </h3>
                 </StyledTokenName>
               ) : (
