@@ -19,6 +19,8 @@ import useToggledVersion from '../../hooks/useToggledVersion'
 import { useUserSlippageTolerance } from '../user/hooks'
 import { computeSlippageAdjustedAmounts } from '../../utils/prices'
 
+import config from '../../config'
+
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>(state => state.swap)
 }
@@ -35,7 +37,7 @@ export function useSwapActionHandlers(): {
       dispatch(
         selectCurrency({
           field,
-          currencyId: currency instanceof Token ? currency.address : currency === ETHER ? 'ETH' : ''
+          currencyId: currency instanceof Token ? currency.address : currency === ETHER ? config.symbol : ''
         })
       )
     },
@@ -204,7 +206,7 @@ export function useDerivedSwapInfo(): {
   ]
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
-    inputError = 'Insufficient ' + amountIn.currency.symbol + ' balance'
+    inputError = 'Insufficient ' + config.getBaseCoin(amountIn.currency.symbol) + ' balance'
   }
 
   return {
@@ -221,10 +223,10 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
   if (typeof urlParam === 'string') {
     const valid = isAddress(urlParam)
     if (valid) return valid
-    if (urlParam.toUpperCase() === 'ETH') return 'ETH'
-    if (valid === false) return 'ETH'
+    if (urlParam.toUpperCase() === config.symbol) return config.symbol
+    if (valid === false) return config.symbol
   }
-  return 'ETH' ?? ''
+  return config.symbol ?? ''
 }
 
 function parseTokenAmountURLParameter(urlParam: any): string {

@@ -45,6 +45,8 @@ import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
 
+import config from '../../config'
+
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
 
@@ -402,7 +404,7 @@ export default function Swap() {
                   ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
                     'Approved'
                   ) : (
-                    'Approve ' + currencies[Field.INPUT]?.symbol
+                    'Approve ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
                   )}
                 </ButtonConfirmed>
                 <ButtonError

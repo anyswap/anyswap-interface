@@ -4,6 +4,8 @@ import { ALLOWED_PRICE_IMPACT_HIGH, ALLOWED_PRICE_IMPACT_LOW, ALLOWED_PRICE_IMPA
 import { Field } from '../state/swap/actions'
 import { basisPointsToPercent } from './index'
 
+import config from '../config'
+
 const BASE_FEE = new Percent(JSBI.BigInt(30), JSBI.BigInt(10000))
 const ONE_HUNDRED_PERCENT = new Percent(JSBI.BigInt(10000), JSBI.BigInt(10000))
 const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
@@ -67,10 +69,10 @@ export function formatExecutionPrice(trade?: Trade, inverted?: boolean): string 
     return ''
   }
   return inverted
-    ? `${trade.executionPrice.invert().toSignificant(6)} ${trade.inputAmount.currency.symbol} / ${
-        trade.outputAmount.currency.symbol
+    ? `${trade.executionPrice.invert().toSignificant(6)} ${config.getBaseCoin(trade.inputAmount.currency.symbol)} / ${
+      config.getBaseCoin(trade.outputAmount.currency.symbol)
       }`
-    : `${trade.executionPrice.toSignificant(6)} ${trade.outputAmount.currency.symbol} / ${
-        trade.inputAmount.currency.symbol
+    : `${trade.executionPrice.toSignificant(6)} ${config.getBaseCoin(trade.outputAmount.currency.symbol)} / ${
+      config.getBaseCoin(trade.inputAmount.currency.symbol)
       }`
 }

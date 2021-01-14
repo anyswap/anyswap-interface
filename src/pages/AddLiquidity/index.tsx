@@ -38,6 +38,8 @@ import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { currencyId } from '../../utils/currencyId'
 import { PoolPriceBar } from './PoolPriceBar'
 
+import config from '../../config'
+
 export default function AddLiquidity({
   match: {
     params: { currencyIdA, currencyIdB }
@@ -182,11 +184,11 @@ export default function AddLiquidity({
               'Add ' +
               parsedAmounts[Field.CURRENCY_A]?.toSignificant(3) +
               ' ' +
-              currencies[Field.CURRENCY_A]?.symbol +
+              config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) +
               ' and ' +
               parsedAmounts[Field.CURRENCY_B]?.toSignificant(3) +
               ' ' +
-              currencies[Field.CURRENCY_B]?.symbol
+              config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
           })
 
           setTxHash(response.hash)
@@ -213,7 +215,7 @@ export default function AddLiquidity({
         <LightCard mt="20px" borderRadius="20px">
           <RowFlat>
             <Text fontSize="48px" fontWeight={500} lineHeight="42px" marginRight={10}>
-              {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol}
+              {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}
             </Text>
             <DoubleCurrencyLogo
               currency0={currencies[Field.CURRENCY_A]}
@@ -237,7 +239,7 @@ export default function AddLiquidity({
         </RowFlat>
         <Row>
           <Text fontSize="24px">
-            {currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol + ' Pool Tokens'}
+            {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) + ' Pool Tokens'}
           </Text>
         </Row>
         <TYPE.italic fontSize={12} textAlign="left" padding={'8px 0 0 0 '}>
@@ -262,8 +264,8 @@ export default function AddLiquidity({
   }
 
   const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
-    currencies[Field.CURRENCY_A]?.symbol
-  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${currencies[Field.CURRENCY_B]?.symbol}`
+    config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
+  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}`
 
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
@@ -286,7 +288,7 @@ export default function AddLiquidity({
           history.push(`/add/${newCurrencyIdB}`)
         }
       } else {
-        history.push(`/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}`)
+        history.push(`/add/${currencyIdA ? currencyIdA : config.symbol}/${newCurrencyIdB}`)
       }
     },
     [currencyIdA, history, currencyIdB]
@@ -406,9 +408,9 @@ export default function AddLiquidity({
                           width={approvalB !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalA === ApprovalState.PENDING ? (
-                            <Dots>Approving {currencies[Field.CURRENCY_A]?.symbol}</Dots>
+                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + currencies[Field.CURRENCY_A]?.symbol
+                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}
@@ -419,9 +421,9 @@ export default function AddLiquidity({
                           width={approvalA !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalB === ApprovalState.PENDING ? (
-                            <Dots>Approving {currencies[Field.CURRENCY_B]?.symbol}</Dots>
+                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + currencies[Field.CURRENCY_B]?.symbol
+                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}

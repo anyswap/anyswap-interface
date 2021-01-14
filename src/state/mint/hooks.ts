@@ -11,6 +11,8 @@ import { tryParseAmount } from '../swap/hooks'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
 
+import config from '../../config'
+
 const ZERO = JSBI.BigInt(0)
 
 export function useMintState(): AppState['mint'] {
@@ -146,11 +148,11 @@ export function useDerivedMintInfo(
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
   if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    error = 'Insufficient ' + currencies[Field.CURRENCY_A]?.symbol + ' balance'
+    error = 'Insufficient ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + ' balance'
   }
 
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
-    error = 'Insufficient ' + currencies[Field.CURRENCY_B]?.symbol + ' balance'
+    error = 'Insufficient ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) + ' balance'
   }
 
   return {

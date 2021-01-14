@@ -17,6 +17,8 @@ import { FadedSpan, MenuItem } from './styleds'
 import Loader from '../Loader'
 import { isTokenOnList } from '../../utils'
 
+import config from '../../config'
+
 function currencyKey(currency: Currency): string {
   return currency instanceof Token ? currency.address : currency === ETHER ? 'ETHER' : ''
 }
@@ -115,7 +117,7 @@ function CurrencyRow({
       <CurrencyLogo currency={currency} size={'24px'} />
       <Column>
         <Text title={currency.name} fontWeight={500}>
-          {currency.symbol}
+          {config.getBaseCoin(currency.symbol)}
         </Text>
         <FadedSpan>
           {!isOnSelectedList && customAdded ? (

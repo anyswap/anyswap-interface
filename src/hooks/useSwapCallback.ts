@@ -14,6 +14,8 @@ import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
 import { Version } from './useToggledVersion'
 
+import config from '../config'
+
 export enum SwapCallbackState {
   INVALID,
   LOADING,
@@ -208,7 +210,7 @@ export function useSwapCallback(
             const inputAmount = trade.inputAmount.toSignificant(3)
             const outputAmount = trade.outputAmount.toSignificant(3)
 
-            const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
+            const base = `Swap ${inputAmount} ${config.getBaseCoin(inputSymbol)} for ${outputAmount} ${config.getBaseCoin(outputSymbol)}`
             const withRecipient =
               recipient === account
                 ? base

@@ -24,6 +24,8 @@ import { Dots } from '../../components/swap/styleds'
 import { Contract } from '@ethersproject/contracts'
 import { useTotalSupply } from '../../data/TotalSupply'
 
+import config from '../../config'
+
 const WEI_DENOM = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(18))
 const ZERO = JSBI.BigInt(0)
 const ONE = JSBI.BigInt(1)
@@ -78,7 +80,7 @@ function V1PairRemoval({
         // })
 
         addTransaction(response, {
-          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/ETH V1 liquidity`
+          summary: `Remove ${chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}/${config.symbol} V1 liquidity`
         })
         setPendingRemovalHash(response.hash)
       })
@@ -118,8 +120,8 @@ function V1PairRemoval({
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
         {`Your Uniswap V1 ${
-          chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol
-        }/ETH liquidity will be redeemed for underlying assets.`}
+          chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)
+        }/${config.symbol} liquidity will be redeemed for underlying assets.`}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -140,7 +142,7 @@ export default function RemoveV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${token.symbol}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${config.getBaseCoin(token.symbol)}`, 'Uniswap V1')
         : undefined,
     [chainId, validatedAddress, token]
   )

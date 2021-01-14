@@ -25,6 +25,8 @@ import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
 
+import config from '../../config'
+
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
 `
@@ -93,7 +95,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               <RowFixed>
                 <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
                 <Text fontWeight={500} fontSize={20}>
-                  {currency0.symbol}/{currency1.symbol}
+                  {config.getBaseCoin(currency0.symbol)}/{config.getBaseCoin(currency1.symbol)}
                 </Text>
               </RowFixed>
               <RowFixed>
@@ -113,7 +115,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency0.symbol}:
+                  {config.getBaseCoin(currency0.symbol)}:
                 </Text>
                 {token0Deposited ? (
                   <RowFixed>
@@ -127,7 +129,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               </FixedHeightRow>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  {currency1.symbol}:
+                  {config.getBaseCoin(currency1.symbol)}:
                 </Text>
                 {token1Deposited ? (
                   <RowFixed>
@@ -195,7 +197,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
           <RowFixed>
             <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
             <Text fontWeight={500} fontSize={20}>
-              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${currency0.symbol}/${currency1.symbol}`}
+              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
             </Text>
           </RowFixed>
 
@@ -235,7 +237,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency0.symbol}:
+                  Pooled {config.getBaseCoin(currency0.symbol)}:
                 </Text>
               </RowFixed>
               {token0Deposited ? (
@@ -253,7 +255,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {currency1.symbol}:
+                  Pooled {config.getBaseCoin(currency1.symbol)}:
                 </Text>
               </RowFixed>
               {token1Deposited ? (

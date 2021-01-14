@@ -13,6 +13,8 @@ import { AutoColumn } from '../Column'
 import { AlertTriangle } from 'react-feather'
 import { ButtonError } from '../Button'
 
+import config from '../../config'
+
 const Wrapper = styled.div<{ error: boolean }>`
   background: ${({ theme }) => transparentize(0.6, theme.bg3)};
   padding: 0.75rem;
@@ -69,8 +71,8 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
         <AutoColumn gap="10px" justify="flex-start">
           <TYPE.main>
             {token && token.name && token.symbol && token.name !== token.symbol
-              ? `${token.name} (${token.symbol})`
-              : token.name || token.symbol}{' '}
+              ? `${config.getBaseCoin(token.name,1)} (${config.getBaseCoin(token.symbol)})`
+              : config.getBaseCoin(token.name,1) || config.getBaseCoin(token.symbol)}{' '}
           </TYPE.main>
           {chainId && (
             <ExternalLink style={{ fontWeight: 400 }} href={getEtherscanLink(chainId, token.address, 'token')}>

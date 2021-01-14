@@ -30,6 +30,8 @@ import usePrevious from '../../hooks/usePrevious'
 import useUSDCPrice from '../../utils/useUSDCPrice'
 import { BIG_INT_ZERO } from '../../constants'
 
+import config from '../../config'
+
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
   width: 100%;
@@ -157,7 +159,7 @@ export default function Manage({
     <PageWrapper gap="lg" justify="center">
       <RowBetween style={{ gap: '24px' }}>
         <TYPE.mediumHeader style={{ margin: 0 }}>
-          {currencyA?.symbol}-{currencyB?.symbol} Liquidity Mining
+          {config.getBaseCoin(currencyA?.symbol)}-{config.getBaseCoin(currencyB?.symbol)} Liquidity Mining
         </TYPE.mediumHeader>
         <DoubleCurrencyLogo currency0={currencyA ?? undefined} currency1={currencyB ?? undefined} size={24} />
       </RowBetween>
@@ -169,7 +171,7 @@ export default function Manage({
             <TYPE.body fontSize={24} fontWeight={500}>
               {valueOfTotalStakedAmountInUSDC
                 ? `$${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}`
-                : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH`}
+                : `${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ${config.symbol}`}
             </TYPE.body>
           </AutoColumn>
         </PoolData>
@@ -197,7 +199,7 @@ export default function Manage({
               </RowBetween>
               <RowBetween style={{ marginBottom: '1rem' }}>
                 <TYPE.white fontSize={14}>
-                  {`UNI-V2 LP tokens are required. Once you've added liquidity to the ${currencyA?.symbol}-${currencyB?.symbol} pool you can stake your liquidity tokens on this page.`}
+                  {`UNI-V2 LP tokens are required. Once you've added liquidity to the ${config.getBaseCoin(currencyA?.symbol)}-${config.getBaseCoin(currencyB?.symbol)} pool you can stake your liquidity tokens on this page.`}
                 </TYPE.white>
               </RowBetween>
               <ButtonPrimary
@@ -207,7 +209,7 @@ export default function Manage({
                 as={Link}
                 to={`/add/${currencyA && currencyId(currencyA)}/${currencyB && currencyId(currencyB)}`}
               >
-                {`Add ${currencyA?.symbol}-${currencyB?.symbol} liquidity`}
+                {`Add ${config.getBaseCoin(currencyA?.symbol)}-${config.getBaseCoin(currencyB?.symbol)} liquidity`}
               </ButtonPrimary>
             </AutoColumn>
           </CardSection>
@@ -252,7 +254,7 @@ export default function Manage({
                     {stakingInfo?.stakedAmount?.toSignificant(6) ?? '-'}
                   </TYPE.white>
                   <TYPE.white>
-                    UNI-V2 {currencyA?.symbol}-{currencyB?.symbol}
+                    UNI-V2 {config.getBaseCoin(currencyA?.symbol)}-{config.getBaseCoin(currencyB?.symbol)}
                   </TYPE.white>
                 </RowBetween>
               </AutoColumn>

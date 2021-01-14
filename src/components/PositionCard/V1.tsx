@@ -11,6 +11,8 @@ import DoubleCurrencyLogo from '../DoubleLogo'
 import { useActiveWeb3React } from '../../hooks'
 import { ThemeContext } from 'styled-components'
 
+import config from '../../config'
+
 interface PositionCardProps extends RouteComponentProps<{}> {
   token: Token
   V1LiquidityBalance: TokenAmount
@@ -28,7 +30,7 @@ function V1PositionCard({ token, V1LiquidityBalance }: PositionCardProps) {
           <RowFixed>
             <DoubleCurrencyLogo currency0={token} margin={true} size={20} />
             <Text fontWeight={500} fontSize={20} style={{ marginLeft: '' }}>
-              {`${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/ETH`}
+              {`${chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}/${config.symbol}`}
             </Text>
             <Text
               fontSize={12}
