@@ -216,7 +216,7 @@ export default function RemoveLiquidity({
     if (!tokenA || !tokenB) throw new Error('could not wrap')
 
     let methodNames: string[], args: Array<string | string[] | number | boolean>
-    // we have approval, use normal remove liquidity
+    // 我们得到许可，使用正常的流动性
     if (approval === ApprovalState.APPROVED) {
       // removeLiquidityETH
       if (oneCurrencyIsETH) {
@@ -244,7 +244,7 @@ export default function RemoveLiquidity({
         ]
       }
     }
-    // we have a signataure, use permit versions of remove liquidity
+    // 我们有一个签名，使用许可证的版本
     else if (signatureData !== null) {
       // removeLiquidityETHWithPermit
       if (oneCurrencyIsETH) {
@@ -297,7 +297,9 @@ export default function RemoveLiquidity({
     const indexOfSuccessfulEstimation = safeGasEstimates.findIndex(safeGasEstimate =>
       BigNumber.isBigNumber(safeGasEstimate)
     )
-
+      console.log(signatureData)
+      console.log(router)
+      console.log(indexOfSuccessfulEstimation)
     // all estimations failed...
     if (indexOfSuccessfulEstimation === -1) {
       console.error('This transaction would fail. Please contact support.')
@@ -569,7 +571,7 @@ export default function RemoveLiquidity({
                               currencyB === ETHER ? WETH[chainId].address : currencyIdB
                             }`}
                           >
-                            Receive WETH
+                            Receive W{config.symbol}
                           </StyledInternalLink>
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink

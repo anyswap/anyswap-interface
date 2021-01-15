@@ -55,6 +55,7 @@ export default function TokenLogo({
 }) {
   let path = ''
   symbol = config.getBaseCoin(symbol)
+  symbol = symbol === 'W' + config.symbol ? symbol.substr(1) : symbol
   // console.log(symbol)
   if (symbol) {
     if (isAny) {

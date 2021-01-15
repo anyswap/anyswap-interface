@@ -24,6 +24,8 @@ const config: ConFig = {
       } else {
         return netConfig.symbol
       }
+    } else if (value && value === 'WETH') {
+      return 'W' + netConfig.symbol
     } else {
       return value
     }

@@ -56,14 +56,14 @@ export function V1LiquidityInfo({
         <div style={{ marginLeft: '.75rem' }}>
           <TYPE.mediumHeader>
             {<FormattedCurrencyAmount currencyAmount={liquidityTokenAmount} />}{' '}
-            {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}/{config.symbol}
+            {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}/{config.symbol}
           </TYPE.mediumHeader>
         </div>
       </AutoRow>
 
       <RowBetween my="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}:
+          Pooled {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
@@ -356,7 +356,7 @@ export default function MigrateV1Exchange({
         ) : validatedAddress && chainId && token?.equals(WETH[chainId]) ? (
           <>
             <TYPE.body my={9} style={{ fontWeight: 400 }}>
-              Because Uniswap V2 uses WETH under the hood, your Uniswap V1 WETH/{config.symbol} liquidity cannot be migrated. You
+              Because Uniswap V2 uses {('W' + config.symbol)} under the hood, your Uniswap V1 {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
               may want to remove your liquidity instead.
             </TYPE.body>
 

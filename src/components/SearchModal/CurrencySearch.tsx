@@ -163,7 +163,6 @@ export function CurrencySearch({
         {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
         )}
-        {/* <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} /> */}
         <RowBetween>
           <Text fontSize={14} fontWeight={500}>
             Token Name
