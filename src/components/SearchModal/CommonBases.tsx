@@ -36,6 +36,7 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
+  console.log(SUGGESTED_BASES)
   return (
     <AutoColumn gap="md">
       <AutoRow>

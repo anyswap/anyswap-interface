@@ -25,6 +25,8 @@ import { useTokenComparator } from './sorting'
 import { PaddedColumn, SearchInput, Separator } from './styleds'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
+import config from '../../config'
+
 interface CurrencySearchProps {
   isOpen: boolean
   onDismiss: () => void
@@ -69,7 +71,7 @@ export function CurrencySearch({
 
   const showETH: boolean = useMemo(() => {
     const s = searchQuery.toLowerCase().trim()
-    return s === '' || s === 'e' || s === 'et' || s === 'eth'
+    return s === '' || config.symbol.toLowerCase().indexOf(s) !== -1
   }, [searchQuery])
 
   const tokenComparator = useTokenComparator(invertSearchOrder)
@@ -161,6 +163,7 @@ export function CurrencySearch({
         {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
         )}
+        {/* <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} /> */}
         <RowBetween>
           <Text fontSize={14} fontWeight={500}>
             Token Name
