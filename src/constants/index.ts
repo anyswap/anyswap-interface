@@ -4,7 +4,9 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 // import { fortmatic, injected, portis, walletconnect, walletlink } from '../connectors'
 import { injected } from '../connectors'
 
-export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
+import config from '../config'
+
+export const ROUTER_ADDRESS = config.router
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -45,7 +47,7 @@ export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [TIMELOCK_ADDRESS]: 'Timelock'
 }
 
-// TODO: specify merkle distributor for mainnet
+// TODO:指定主服务器的标记分发服务器
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: '0x090D4613473dEE047c3f2706764f49E0821D256e'
 }

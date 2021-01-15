@@ -48,13 +48,13 @@ const HeaderFrame = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1rem;
   z-index: 2;
+  height: 70px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     grid-template-columns: 1fr;
     padding: 0 1rem;
     width: calc(100%);
     position: relative;
   `};
-
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
         padding: 0.5rem 1rem;
   `}
@@ -102,6 +102,7 @@ const HeaderElementWrap = styled.div`
 
 const HeaderRow = styled(RowFixed)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
+  height: 100%;
    width: 100%;
   `};
 `
@@ -186,6 +187,7 @@ const Title = styled.a`
   pointer-events: auto;
   justify-self: flex-start;
   margin-right: 12px;
+  height: 100%;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     justify-self: center;
   `};
@@ -195,9 +197,16 @@ const Title = styled.a`
 `
 
 const UniIcon = styled.div`
+  ${({ theme }) => theme.flexRowNoWrap};
+  height: 100%;
+  // padding: 10px 0;
   transition: transform 0.3s ease;
   :hover {
     transform: rotate(-5deg);
+  }
+  img {
+    height: auto;
+    width: auto;
   }
 `
 

@@ -8,7 +8,7 @@ import FullPositionCard from '../../components/PositionCard'
 // import { useUserHasLiquidityInAllTokens } from '../../data/V1'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 // import { StyledInternalLink, ExternalLink, TYPE, HideSmall } from '../../theme'
-import { TYPE, HideSmall } from '../../theme'
+import { StyledInternalLink, TYPE, HideSmall } from '../../theme'
 import { Text } from 'rebass'
 import Card from '../../components/Card'
 import { RowBetween, RowFixed } from '../../components/Row'
@@ -197,14 +197,18 @@ export default function Pool() {
               </EmptyProposals>
             )}
 
-            {/* <AutoColumn justify={'center'} gap="md">
+            <AutoColumn justify={'center'} gap="md">
               <Text textAlign="center" fontSize={14} style={{ padding: '.5rem 0 .5rem 0' }}>
-                {hasV1Liquidity ? 'Uniswap V1 liquidity found!' : "Don't see a pool you joined?"}{' '}
+                {/* {hasV1Liquidity ? 'Uniswap V1 liquidity found!' : "Don't see a pool you joined?"}{' '}
                 <StyledInternalLink id="import-pool-link" to={hasV1Liquidity ? '/migrate/v1' : '/find'}>
                   {hasV1Liquidity ? 'Migrate now.' : 'Import it.'}
+                </StyledInternalLink> */}
+                Don't see a pool you joined?
+                <StyledInternalLink id="import-pool-link" to={'/find'}>
+                  Import it.
                 </StyledInternalLink>
               </Text>
-            </AutoColumn> */}
+            </AutoColumn>
           </AutoColumn>
         </AutoColumn>
       </PageWrapper>
