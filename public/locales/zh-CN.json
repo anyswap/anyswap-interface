@@ -87,5 +87,12 @@
   "forAtLeast": "交易至少 ",
   "brokenToken": "所选令牌与Anyswap V1不兼容。增加流动性将导致资金锁定。",
   "toleranceExplanation": "降低这个限制可以降低你的先发制人的风险。然而，这使得你的交易更有可能由于正常的价格变动而失败。",
-  "tokenSearchPlaceholder": "搜索名称或粘贴地址"
+  "tokenSearchPlaceholder": "搜索名称或粘贴地址",
+  "EnterAnAmount": "输入数量",
+  "ConnectWallet": "打开钱包",
+  "EnterRecipient": "输入接收地址 ",
+  "InvalidRecipient": "接收地址无效",
+  "YourLiquidity": "你的流动性",
+  "CreatePair": "创建交易对",
+  "AddLiquidity": "增加流动性"
 }

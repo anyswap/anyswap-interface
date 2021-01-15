@@ -1,6 +1,7 @@
 import React, { useContext, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { Pair } from '@uniswap/sdk'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 
@@ -79,6 +80,7 @@ const EmptyProposals = styled.div`
 export default function Pool() {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
@@ -147,16 +149,16 @@ export default function Pool() {
             <TitleRow style={{ marginTop: '1rem' }} padding={'0'}>
               <HideSmall>
                 <TYPE.mediumHeader style={{ marginTop: '0.5rem', justifySelf: 'flex-start' }}>
-                  Your liquidity
+                  {t('YourLiquidity')}
                 </TYPE.mediumHeader>
               </HideSmall>
               <ButtonRow>
                 <ResponsiveButtonSecondary as={Link} padding="6px 8px" to={"/create/" + config.symbol}>
-                  Create a pair
+                  {t('CreatePair')}
                 </ResponsiveButtonSecondary>
                 <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 8px" to={"/add/" + config.symbol}>
                   <Text fontWeight={500} fontSize={16}>
-                    Add Liquidity
+                    {t('AddLiquidity')}
                   </Text>
                 </ResponsiveButtonPrimary>
               </ButtonRow>
