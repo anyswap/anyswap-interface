@@ -19,6 +19,8 @@ import { Dots } from '../../components/swap/styleds'
 import { useAddUserToken } from '../../state/user/hooks'
 import { isTokenOnList } from '../../utils'
 
+import config from '../../config'
+
 export default function MigrateV1() {
   const theme = useContext(ThemeContext)
   const { account, chainId } = useActiveWeb3React()
@@ -73,7 +75,7 @@ export default function MigrateV1() {
           <BackArrow to="/pool" />
           <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Migrate your liquidity tokens from Uniswap V1 to Uniswap V2." />
+            <QuestionHelper text={`Migrate your liquidity tokens from Uniswap V1 to ${config.appName}.`} />
           </div>
         </AutoRow>
 

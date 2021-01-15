@@ -201,7 +201,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {!isFirstLiquidityProvider && largePriceDifference ? (
         <YellowCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            It{"'"}s best to deposit liquidity into Uniswap V2 at a price you believe is correct. If the V2 price seems
+            It{"'"}s best to deposit liquidity into {config.appName} at a price you believe is correct. If the V2 price seems
             incorrect, you can either make a swap to move the price or wait for someone else to do so.
           </TYPE.body>
           <AutoColumn gap="8px">
@@ -242,7 +242,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {isFirstLiquidityProvider && (
         <PinkCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            You are the first liquidity provider for this pair on Uniswap V2. Your liquidity will be migrated at the
+            You are the first liquidity provider for this pair on {config.appName}. Your liquidity will be migrated at the
             current V1 price. Your transaction cost also includes the gas to create the pool.
           </TYPE.body>
 
@@ -305,7 +305,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become Uniswap V2 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
+        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become ${config.appName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -347,7 +347,7 @@ export default function MigrateV1Exchange({
           <BackArrow to="/migrate/v1" />
           <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Migrate your liquidity tokens from Uniswap V1 to Uniswap V2." />
+            <QuestionHelper text={`Migrate your liquidity tokens from Uniswap V1 to ${config.appName}.`} />
           </div>
         </AutoRow>
 
@@ -356,7 +356,7 @@ export default function MigrateV1Exchange({
         ) : validatedAddress && chainId && token?.equals(WETH[chainId]) ? (
           <>
             <TYPE.body my={9} style={{ fontWeight: 400 }}>
-              Because Uniswap V2 uses {('W' + config.symbol)} under the hood, your Uniswap V1 {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
+              Because {config.appName} uses {('W' + config.symbol)} under the hood, your Uniswap V1 {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
               may want to remove your liquidity instead.
             </TYPE.body>
 

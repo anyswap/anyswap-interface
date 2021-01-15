@@ -124,7 +124,7 @@ export default function RemoveLiquidity({
       { name: 'verifyingContract', type: 'address' }
     ]
     const domain = {
-      name: 'Uniswap V2',
+      name: config.appName,
       version: '1',
       chainId: chainId,
       verifyingContract: pair.liquidityToken.address
@@ -157,8 +157,11 @@ export default function RemoveLiquidity({
       .send('eth_signTypedData_v4', [account, data])
       .then(splitSignature)
       .then(signature => {
+        // console.log(signature)
+        // let v = Number(config.chainID) * 2 + 35 + signature.v - 27
         setSignatureData({
           v: signature.v,
+          // v: v,
           r: signature.r,
           s: signature.s,
           deadline: deadline.toNumber()
@@ -297,9 +300,9 @@ export default function RemoveLiquidity({
     const indexOfSuccessfulEstimation = safeGasEstimates.findIndex(safeGasEstimate =>
       BigNumber.isBigNumber(safeGasEstimate)
     )
-      console.log(signatureData)
-      console.log(router)
-      console.log(indexOfSuccessfulEstimation)
+      // console.log(signatureData)
+      // console.log(router)
+      // console.log(indexOfSuccessfulEstimation)
     // all estimations failed...
     if (indexOfSuccessfulEstimation === -1) {
       console.error('This transaction would fail. Please contact support.')
