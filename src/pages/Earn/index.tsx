@@ -10,6 +10,8 @@ import { Countdown } from './Countdown'
 import Loader from '../../components/Loader'
 import { useActiveWeb3React } from '../../hooks'
 
+import config from '../../config'
+
 const PageWrapper = styled(AutoColumn)`
   max-width: 640px;
   width: 100%;
@@ -54,7 +56,7 @@ export default function Earn() {
               </RowBetween>
               <RowBetween>
                 <TYPE.white fontSize={14}>
-                  Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token.
+                  Deposit your Liquidity Provider tokens to receive {config.baseCurrency}, the Uniswap protocol governance token.
                 </TYPE.white>
               </RowBetween>{' '}
               <ExternalLink
@@ -62,7 +64,7 @@ export default function Earn() {
                 href="https://uniswap.org/blog/uni/"
                 target="_blank"
               >
-                <TYPE.white fontSize={14}>Read more about UNI</TYPE.white>
+                <TYPE.white fontSize={14}>Read more about {config.baseCurrency}</TYPE.white>
               </ExternalLink>
             </AutoColumn>
           </CardSection>

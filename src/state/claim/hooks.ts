@@ -8,6 +8,8 @@ import { useSingleCallResult } from '../multicall/hooks'
 import { calculateGasMargin, isAddress } from '../../utils'
 import { useTransactionAdder } from '../transactions/hooks'
 
+import config from '../../config'
+
 interface UserClaimData {
   index: number
   amount: string
@@ -112,7 +114,7 @@ export function useClaimCallback(
         .claim(...args, { value: null, gasLimit: calculateGasMargin(estimatedGasLimit) })
         .then((response: TransactionResponse) => {
           addTransaction(response, {
-            summary: `Claimed ${unClaimedAmount?.toSignificant(4)} UNI`,
+            summary: `Claimed ${unClaimedAmount?.toSignificant(4)} ${config.baseCurrency}`,
             claim: { recipient: account }
           })
           return response.hash

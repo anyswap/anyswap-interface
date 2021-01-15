@@ -11,6 +11,8 @@ import { useTransactionAdder } from '../transactions/hooks'
 import { useState, useEffect, useCallback } from 'react'
 import { abi as GOV_ABI } from '@uniswap/governance/build/GovernorAlpha.json'
 
+import config from '../../config'
+
 interface ProposalDetail {
   target: string
   functionSig: string
@@ -186,7 +188,7 @@ export function useDelegateCallback(): (delegatee: string | undefined) => undefi
     (delegatee: string | undefined) => {
       if (!library || !chainId || !account || !isAddress(delegatee ?? '')) return undefined
       const args = [delegatee]
-      if (!uniContract) throw new Error('No UNI Contract!')
+      if (!uniContract) throw new Error(`No ${config.baseCurrency} Contract!`)
       return uniContract.estimateGas.delegate(...args, {}).then(estimatedGasLimit => {
         return uniContract
           .delegate(...args, { value: null, gasLimit: calculateGasMargin(estimatedGasLimit) })

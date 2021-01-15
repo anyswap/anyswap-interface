@@ -18,6 +18,8 @@ import { TYPE } from '../../theme'
 import { AutoColumn } from '../Column'
 import { CardBGImage, CardNoise } from '../earn/styled'
 
+import config from '../../config'
+
 const StyledClaimPopup = styled(AutoColumn)`
   background: radial-gradient(76.02% 75.41% at 1.84% 0%, #2483fe 0%, #021d43 100%);
   border-radius: 20px;
@@ -86,13 +88,13 @@ export default function ClaimPopup() {
           <AutoColumn style={{ padding: '2rem 0', zIndex: 10 }} justify="center">
             <UniToken width="48px" src={tokenLogo} />{' '}
             <TYPE.white style={{ marginTop: '1rem' }} fontSize={36} fontWeight={600}>
-              {unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} UNI
+              {unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')} {config.baseCurrency}
             </TYPE.white>
             <TYPE.white style={{ paddingTop: '1.25rem', textAlign: 'center' }} fontWeight={600} color="white">
               <span role="img" aria-label="party">
                 🎉
               </span>{' '}
-              UNI has arrived{' '}
+              {config.baseCurrency} has arrived{' '}
               <span role="img" aria-label="party">
                 🎉
               </span>
@@ -103,7 +105,7 @@ export default function ClaimPopup() {
           </AutoColumn>
           <AutoColumn style={{ zIndex: 10 }} justify="center">
             <ButtonPrimary padding="8px" borderRadius="8px" width={'fit-content'} onClick={toggleSelfClaimModal}>
-              Claim your UNI tokens
+              Claim your {config.baseCurrency} tokens
             </ButtonPrimary>
           </AutoColumn>
         </StyledClaimPopup>

@@ -3,9 +3,11 @@ interface ConFig {
 }
 let explorerUrl = 'https://scan-testnet.hecochain.com'
 let netConfig:ConFig = {
+  oldAppName: 'Anyswap V1',
   appName: 'Anyswap V2',
   name: 'Huobi',
   symbol: 'HT',
+  baseCurrency: 'ANY',
   nodeRpc: 'https://http-testnet.hecochain.com',
   chainID: 256,
   tokenListUrl: 'http://192.168.50.229:8106/tokenList',

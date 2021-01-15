@@ -305,7 +305,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become ${config.appName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
+        {`Your ${config.oldAppName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become ${config.appName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -328,7 +328,7 @@ export default function MigrateV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${config.getBaseCoin(token.symbol)}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `${config.baseCurrency}-V1-${config.getBaseCoin(token.symbol)}`, config.oldAppName)
         : undefined,
     [chainId, validatedAddress, token]
   )
@@ -347,7 +347,7 @@ export default function MigrateV1Exchange({
           <BackArrow to="/migrate/v1" />
           <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text={`Migrate your liquidity tokens from Uniswap V1 to ${config.appName}.`} />
+            <QuestionHelper text={`Migrate your liquidity tokens from ${config.oldAppName} to ${config.appName}.`} />
           </div>
         </AutoRow>
 
@@ -356,7 +356,7 @@ export default function MigrateV1Exchange({
         ) : validatedAddress && chainId && token?.equals(WETH[chainId]) ? (
           <>
             <TYPE.body my={9} style={{ fontWeight: 400 }}>
-              Because {config.appName} uses {('W' + config.symbol)} under the hood, your Uniswap V1 {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
+              Because {config.appName} uses {('W' + config.symbol)} under the hood, your {config.oldAppName} {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
               may want to remove your liquidity instead.
             </TYPE.body>
 

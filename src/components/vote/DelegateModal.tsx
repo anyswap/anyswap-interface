@@ -16,6 +16,8 @@ import { useTokenBalance } from '../../state/wallet/hooks'
 import { UNI } from '../../constants'
 import { LoadingView, SubmittedView } from '../ModalViews'
 
+import config from '../../config'
+
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
   padding: 24px;
@@ -96,7 +98,7 @@ export default function DelegateModal({ isOpen, onDismiss, title }: VoteModalPro
               <TYPE.mediumHeader fontWeight={500}>{title}</TYPE.mediumHeader>
               <StyledClosed stroke="black" onClick={wrappedOndismiss} />
             </RowBetween>
-            <TYPE.body>Earned UNI tokens represent voting shares in Uniswap governance.</TYPE.body>
+            <TYPE.body>Earned {config.baseCurrency} tokens represent voting shares in Uniswap governance.</TYPE.body>
             <TYPE.body>
               You can either vote on each proposal yourself or delegate your votes to a third party.
             </TYPE.body>

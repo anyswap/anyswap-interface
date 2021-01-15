@@ -119,7 +119,7 @@ function V1PairRemoval({
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${
+        {`Your ${config.oldAppName} ${
           chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)
         }/${config.symbol} liquidity will be redeemed for underlying assets.`}
       </TYPE.darkGray>
@@ -142,7 +142,7 @@ export default function RemoveV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${config.getBaseCoin(token.symbol)}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `${config.baseCurrency}-V1-${config.getBaseCoin(token.symbol)}`, config.oldAppName)
         : undefined,
     [chainId, validatedAddress, token]
   )
@@ -161,7 +161,7 @@ export default function RemoveV1Exchange({
           <BackArrow to="/migrate/v1" />
           <TYPE.mediumHeader>Remove V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Remove your Uniswap V1 liquidity tokens." />
+            <QuestionHelper text={`Remove your ${config.oldAppName} liquidity tokens.`} />
           </div>
         </AutoRow>
 
