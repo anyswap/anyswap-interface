@@ -11,6 +11,8 @@ import Circle from '../../assets/images/blue-loader.svg'
 import { getEtherscanLink } from '../../utils'
 import { ExternalLink } from '../../theme/components'
 
+import config from '../../config'
+
 const ConfirmOrLoadingWrapper = styled.div`
   width: 100%;
   padding: 24px;
@@ -63,7 +65,7 @@ export function SubmittedView({
         {children}
         {chainId && hash && (
           <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')} style={{ marginLeft: '4px' }}>
-            <TYPE.subHeader>View transaction on Etherscan</TYPE.subHeader>
+            <TYPE.subHeader>View transaction on {config.name}</TYPE.subHeader>
           </ExternalLink>
         )}
       </AutoColumn>

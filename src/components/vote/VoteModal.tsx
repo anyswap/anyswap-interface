@@ -14,6 +14,8 @@ import { getEtherscanLink } from '../../utils'
 import { ExternalLink } from '../../theme/components'
 import { TokenAmount } from '@uniswap/sdk'
 
+import config from '../../config'
+
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
   padding: 24px;
@@ -133,7 +135,7 @@ export default function VoteModal({ isOpen, onDismiss, proposalId, support }: Vo
             </AutoColumn>
             {chainId && (
               <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')} style={{ marginLeft: '4px' }}>
-                <TYPE.subHeader>View transaction on Etherscan</TYPE.subHeader>
+                <TYPE.subHeader>View transaction on {config.name}</TYPE.subHeader>
               </ExternalLink>
             )}
           </AutoColumn>

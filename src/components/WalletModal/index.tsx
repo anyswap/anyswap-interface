@@ -19,6 +19,8 @@ import Modal from '../Modal'
 import Option from './Option'
 import PendingView from './PendingView'
 
+import config from '../../config'
+
 const CloseIcon = styled.div`
   position: absolute;
   right: 1rem;
@@ -298,7 +300,7 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate Ethereum network.</h5>
+              <h5>Please connect to the appropriate {config.name} network.</h5>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
