@@ -99,6 +99,7 @@ export function useSelectedListInfo(): { current: TokenList | null; pending: Tok
   const selectedUrl = useSelectedListUrl()
   const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
   const list = selectedUrl ? listsByUrl[selectedUrl] : undefined
+  console.log(listsByUrl)
   return {
     current: list?.current ?? null,
     pending: list?.pendingUpdate ?? null,

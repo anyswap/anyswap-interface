@@ -8,6 +8,8 @@ import { ROUTER_ADDRESS } from '../constants'
 import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@uniswap/sdk'
 import { TokenAddressMap } from '../state/lists/hooks'
 
+import config from '../config'
+
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
   try {
@@ -17,36 +19,40 @@ export function isAddress(value: any): string | false {
   }
 }
 
-const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
-  1: '',
-  3: 'ropsten.',
-  4: 'rinkeby.',
-  5: 'goerli.',
-  42: 'kovan.',
-  128: 'huobi.',
-  256: 'huobi.',
-}
+// const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
+//   1: '',
+//   3: 'ropsten.',
+//   4: 'rinkeby.',
+//   5: 'goerli.',
+//   42: 'kovan.',
+//   128: 'huobi.',
+//   256: 'huobi.',
+// }
 
 export function getEtherscanLink(
   chainId: ChainId,
   data: string,
   type: 'transaction' | 'token' | 'address' | 'block'
 ): string {
-  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}etherscan.io`
+  // const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}etherscan.io`
 
   switch (type) {
     case 'transaction': {
-      return `${prefix}/tx/${data}`
+      const url = config.lookHash + data
+      return url
     }
     case 'token': {
-      return `${prefix}/token/${data}`
+      const url = config.lookAddr + data
+      return url
     }
     case 'block': {
-      return `${prefix}/block/${data}`
+      const url = config.lookBlock + data
+      return url
     }
     case 'address':
     default: {
-      return `${prefix}/address/${data}`
+      const url = config.lookAddr + data
+      return url
     }
   }
 }
