@@ -27,7 +27,7 @@ import { useETHBalances, useTokenBalance } from '../../state/wallet/hooks'
 import { BackArrow, ExternalLink, TYPE } from '../../theme'
 import { getEtherscanLink, isAddress } from '../../utils'
 import { BodyWrapper } from '../AppBody'
-import { EmptyState } from './EmptyState'
+// import { EmptyState } from './EmptyState'
 
 import config from '../../config'
 
@@ -379,7 +379,8 @@ export default function MigrateV1Exchange({
         ) : userLiquidityBalance && token ? (
           <V1PairMigration liquidityTokenAmount={userLiquidityBalance} token={token} />
         ) : (
-          <EmptyState message="Loading..." />
+          // <EmptyState message="Loading..." />
+          t('Loading')
         )}
       </AutoColumn>
     </BodyWrapper>

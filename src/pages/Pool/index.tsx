@@ -19,7 +19,7 @@ import { AutoColumn } from '../../components/Column'
 import { useActiveWeb3React } from '../../hooks'
 import { usePairs } from '../../data/Reserves'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import { Dots } from '../../components/swap/styleds'
+// import { Dots } from '../../components/swap/styleds'
 // import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
 
 
@@ -75,6 +75,10 @@ const EmptyProposals = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`
+
+const LoadingBox = styled.div`
+color:#999;
 `
 
 export default function Pool() {
@@ -172,9 +176,10 @@ export default function Pool() {
               </Card>
             ) : v2IsLoading ? (
               <EmptyProposals>
-                <TYPE.body color={theme.text3} textAlign="center">
+                {/* <TYPE.body color={theme.text3} textAlign="center">
                   <Dots>Loading</Dots>
-                </TYPE.body>
+                </TYPE.body> */}
+                <LoadingBox>{t('Loading')}</LoadingBox>
               </EmptyProposals>
             ) : allV2PairsWithLiquidity?.length > 0 ? (
               <>

@@ -26,7 +26,7 @@ import { AutoColumn } from '../Column'
 import TokenLogo from '../TokenLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
-import { Dots } from '../swap/styleds'
+// import { Dots } from '../swap/styleds'
 
 import config from '../../config'
 
@@ -201,7 +201,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
           <RowFixed>
             <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
             <Text fontWeight={500} fontSize={20}>
-              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
+              {!currency0 || !currency1 ? t('Loading') : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
             </Text>
           </RowFixed>
 

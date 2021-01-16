@@ -217,5 +217,9 @@
   "WrongNetwork": "Wrong Network",
   "ErrorConnecting": "Error connecting",
   "To": "To",
-  "ToEstimated": "To (estimated)"
+  "ToEstimated": "To (estimated)",
+  "Loading": "Loading",
+  "WalletAddress": "Wallet Address",
+  "On": "On",
+  "Off": "Off"
 }

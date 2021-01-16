@@ -18,7 +18,7 @@ import { useTokenBalance } from '../../state/wallet/hooks'
 import { StyledInternalLink } from '../../theme'
 import { currencyId } from '../../utils/currencyId'
 import AppBody from '../AppBody'
-import { Dots } from '../Pool/styleds'
+// import { Dots } from '../Pool/styleds'
 
 import config from '../../config'
 
@@ -173,14 +173,15 @@ export default function PoolFinder() {
               </AutoColumn>
             </LightCard>
           ) : pairState === PairState.LOADING ? (
-            <LightCard padding="45px 10px">
-              <AutoColumn gap="sm" justify="center">
-                <Text textAlign="center">
-                  Loading
-                  <Dots />
-                </Text>
-              </AutoColumn>
-            </LightCard>
+            t('Loading')
+            // <LightCard padding="45px 10px">
+            //   <AutoColumn gap="sm" justify="center">
+            //     <Text textAlign="center">
+            //       Loading
+            //       <Dots />
+            //     </Text>
+            //   </AutoColumn>
+            // </LightCard>
           ) : null
         ) : (
           prerequisiteMessage

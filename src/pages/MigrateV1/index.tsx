@@ -1,6 +1,7 @@
 import { JSBI, Token } from '@uniswap/sdk'
 import React, { useCallback, useContext, useMemo, useState, useEffect } from 'react'
 import { ThemeContext } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { AutoColumn } from '../../components/Column'
 import { AutoRow } from '../../components/Row'
 import { SearchInput } from '../../components/SearchModal/styleds'
@@ -24,6 +25,7 @@ import config from '../../config'
 export default function MigrateV1() {
   const theme = useContext(ThemeContext)
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const [tokenSearch, setTokenSearch] = useState<string>('')
   const handleTokenSearchChange = useCallback(e => setTokenSearch(e.target.value), [setTokenSearch])
@@ -44,7 +46,7 @@ export default function MigrateV1() {
   const V1Exchanges = useAllTokenV1Exchanges()
   const V1LiquidityTokens: Token[] = useMemo(() => {
     return chainId
-      ? Object.keys(V1Exchanges).map(exchangeAddress => new Token(chainId, exchangeAddress, 18, config.baseCurrency + '-V1', config.oldAppName))
+      ? Object.keys(V1Exchanges).map(exchangeAddress => new Token(chainId, exchangeAddress, 18, 'UNI-V1', 'Uniswap V1'))
       : []
   }, [chainId, V1Exchanges])
   const [V1LiquidityBalances, V1LiquidityBalancesLoading] = useTokenBalancesWithLoadingIndicator(
@@ -79,10 +81,9 @@ export default function MigrateV1() {
           </div>
         </AutoRow>
 
-        <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-          For each pool shown below, click migrate to remove your liquidity from {config.oldAppName} and deposit it into Uniswap
-          V2.
-        </TYPE.body>
+        {/* <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
+          For each pool shown below, click migrate to remove your liquidity from {config.oldAppName} and deposit it into {config.appName} V2.
+        </TYPE.body> */}
 
         {!account ? (
           <LightCard padding="40px">
@@ -93,7 +94,7 @@ export default function MigrateV1() {
         ) : isLoading ? (
           <LightCard padding="40px">
             <TYPE.body color={theme.text3} textAlign="center">
-              <Dots>Loading</Dots>
+              <Dots>{t('Loading')}</Dots>
             </TYPE.body>
           </LightCard>
         ) : (
