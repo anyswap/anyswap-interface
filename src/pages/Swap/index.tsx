@@ -320,7 +320,7 @@ export default function Swap() {
                 </ArrowWrapper>
                 {recipient === null && !showWrap && isExpertMode ? (
                   <LinkStyledButton id="add-recipient-button" onClick={() => onChangeRecipient('')}>
-                    + Add a send (optional)
+                    + {t('AddSend')}
                   </LinkStyledButton>
                 ) : null}
               </AutoRow>
@@ -343,7 +343,7 @@ export default function Swap() {
                     <ArrowDown size="16" color={theme.text2} />
                   </ArrowWrapper>
                   <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
-                    - Remove send
+                    - {t('RemoveSend')}
                   </LinkStyledButton>
                 </AutoRow>
                 <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
@@ -402,12 +402,12 @@ export default function Swap() {
                 >
                   {approval === ApprovalState.PENDING ? (
                     <AutoRow gap="6px" justify="center">
-                      Approving <Loader stroke="white" />
+                      {t('Approving')} <Loader stroke="white" />
                     </AutoRow>
                   ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
-                    'Approved'
+                    t('Approved')
                   ) : (
-                    'Approve ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
+                    t('Approve') + ' ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
                   )}
                 </ButtonConfirmed>
                 <ButtonError

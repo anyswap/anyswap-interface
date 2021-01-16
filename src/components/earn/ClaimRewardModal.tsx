@@ -89,7 +89,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
             </AutoColumn>
           )}
           <TYPE.subHeader style={{ textAlign: 'center' }}>
-            When you claim without withdrawing your liquidity remains in the mining pool.
+            {t('tip1')}
           </TYPE.subHeader>
           <ButtonError disabled={!!error} error={!!error && !!stakingInfo?.stakedAmount} onClick={onClaimReward}>
             {error ?? 'Claim'}

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import Modal from '../Modal'
@@ -46,6 +47,7 @@ interface StakingModalProps {
 
 export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiquidityUnstaked }: StakingModalProps) {
   const { account, chainId, library } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   // track and parse user input
   const [typedValue, setTypedValue] = useState('')
@@ -199,7 +201,7 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
       {!attempting && !hash && (
         <ContentWrapper gap="lg">
           <RowBetween>
-            <TYPE.mediumHeader>Deposit</TYPE.mediumHeader>
+            <TYPE.mediumHeader>{t('deposit')}</TYPE.mediumHeader>
             <CloseIcon onClick={wrappedOnDismiss} />
           </RowBetween>
           <CurrencyInputPanel
@@ -233,14 +235,14 @@ export default function StakingModal({ isOpen, onDismiss, stakingInfo, userLiqui
               confirmed={approval === ApprovalState.APPROVED || signatureData !== null}
               disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
             >
-              Approve
+              {t('Approve')}
             </ButtonConfirmed>
             <ButtonError
               disabled={!!error || (signatureData === null && approval !== ApprovalState.APPROVED)}
               error={!!error && !!parsedAmount}
               onClick={onStake}
             >
-              {error ?? 'Deposit'}
+              {error ?? t('deposit')}
             </ButtonError>
           </RowBetween>
           <ProgressCircles steps={[approval === ApprovalState.APPROVED || signatureData !== null]} disabled={true} />

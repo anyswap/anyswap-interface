@@ -1,5 +1,6 @@
 import { Currency, ETHER, JSBI, TokenAmount } from '@uniswap/sdk'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus } from 'react-feather'
 import { Text } from 'rebass'
 import { ButtonDropdownLight } from '../../components/Button'
@@ -28,6 +29,7 @@ enum Fields {
 
 export default function PoolFinder() {
   const { account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1)
@@ -166,7 +168,7 @@ export default function PoolFinder() {
             <LightCard padding="45px 10px">
               <AutoColumn gap="sm" justify="center">
                 <Text textAlign="center" fontWeight={500}>
-                  Invalid pair.
+                 {t('InvalidPair')}
                 </Text>
               </AutoColumn>
             </LightCard>

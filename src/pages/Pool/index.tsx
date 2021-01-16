@@ -167,7 +167,7 @@ export default function Pool() {
             {!account ? (
               <Card padding="40px">
                 <TYPE.body color={theme.text3} textAlign="center">
-                  Connect to a wallet to view your liquidity.
+                  {t('ConnectWalletViewLiquidity')}
                 </TYPE.body>
               </Card>
             ) : v2IsLoading ? (
@@ -205,9 +205,9 @@ export default function Pool() {
                 <StyledInternalLink id="import-pool-link" to={hasV1Liquidity ? '/migrate/v1' : '/find'}>
                   {hasV1Liquidity ? 'Migrate now.' : 'Import it.'}
                 </StyledInternalLink> */}
-                Don't see a pool you joined?
+                {t('DoNotSeeYouPool')}
                 <StyledInternalLink id="import-pool-link" to={'/find'}>
-                  Import it.
+                  {t('ImportIt')}
                 </StyledInternalLink>
               </Text>
             </AutoColumn>

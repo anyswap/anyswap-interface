@@ -503,14 +503,14 @@ export default function RemoveLiquidity({
             <LightCard>
               <AutoColumn gap="20px">
                 <RowBetween>
-                  <Text fontWeight={500}>Amount</Text>
+                  <Text fontWeight={500}>{t('Amount')}</Text>
                   <ClickableText
                     fontWeight={500}
                     onClick={() => {
                       setShowDetailed(!showDetailed)
                     }}
                   >
-                    {showDetailed ? 'Simple' : 'Detailed'}
+                    {showDetailed ? t('Simple') : t('Detailed')}
                   </ClickableText>
                 </RowBetween>
                 <Row style={{ alignItems: 'flex-end' }}>
@@ -576,7 +576,7 @@ export default function RemoveLiquidity({
                               currencyB === ETHER ? WETH[chainId].address : currencyIdB
                             }`}
                           >
-                            Receive W{config.symbol}
+                            {t('Receive')} W{config.symbol}
                           </StyledInternalLink>
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink
@@ -584,7 +584,7 @@ export default function RemoveLiquidity({
                               currencyA && currencyEquals(currencyA, WETH[chainId]) ? config.symbol : currencyIdA
                             }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? config.symbol : currencyIdB}`}
                           >
-                            Receive {config.symbol}
+                            {t('Receive')} {config.symbol}
                           </StyledInternalLink>
                         ) : null}
                       </RowBetween>
@@ -668,11 +668,11 @@ export default function RemoveLiquidity({
                     fontSize={16}
                   >
                     {approval === ApprovalState.PENDING ? (
-                      <Dots>Approving</Dots>
+                      <Dots>{t('Approving')}</Dots>
                     ) : approval === ApprovalState.APPROVED || signatureData !== null ? (
-                      'Approved'
+                      t('Approved')
                     ) : (
-                      'Approve'
+                      t('Approve')
                     )}
                   </ButtonConfirmed>
                   <ButtonError
@@ -683,7 +683,7 @@ export default function RemoveLiquidity({
                     error={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
                   >
                     <Text fontSize={16} fontWeight={500}>
-                      {error || 'Remove'}
+                      {error || t('Remove')}
                     </Text>
                   </ButtonError>
                 </RowBetween>

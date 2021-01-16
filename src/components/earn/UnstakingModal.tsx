@@ -95,7 +95,7 @@ export default function UnstakingModal({ isOpen, onDismiss, stakingInfo }: Staki
             </AutoColumn>
           )}
           <TYPE.subHeader style={{ textAlign: 'center' }}>
-            When you withdraw, your {config.baseCurrency} is claimed and your liquidity is removed from the mining pool.
+            {t('tip2', {baseCurrency: config.baseCurrency})}
           </TYPE.subHeader>
           <ButtonError disabled={!!error} error={!!error && !!stakingInfo?.stakedAmount} onClick={onWithdraw}>
             {error ?? 'Withdraw & Claim'}

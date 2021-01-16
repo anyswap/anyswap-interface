@@ -1,5 +1,6 @@
 import { ChainId, TokenAmount } from '@uniswap/sdk'
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { X } from 'react-feather'
 import styled from 'styled-components'
 import tokenLogo from '../../assets/images/token-logo.png'
@@ -44,6 +45,7 @@ const StyledClose = styled(X)`
  */
 export default function UniBalanceContent({ setShowUniBalanceModal }: { setShowUniBalanceModal: any }) {
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
   const uni = chainId ? UNI[chainId] : undefined
 
   const total = useAggregateUniBalance()
@@ -85,7 +87,7 @@ export default function UniBalanceContent({ setShowUniBalanceModal }: { setShowU
               </AutoColumn>
               <AutoColumn gap="md">
                 <RowBetween>
-                  <TYPE.white color="white">Balance:</TYPE.white>
+                  <TYPE.white color="white">{t('balanceTxt')}:</TYPE.white>
                   <TYPE.white color="white">{uniBalance?.toFixed(2, { groupSeparator: ',' })}</TYPE.white>
                 </RowBetween>
                 <RowBetween>

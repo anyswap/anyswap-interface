@@ -88,12 +88,12 @@ export function AddRemoveTabs({ adding, creating }: { adding: boolean; creating:
         <HistoryLink to="/pool">
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>{creating ? t('CreatePair') : adding ? t('AddLiquidity') : 'Remove Liquidity'}</ActiveText>
+        <ActiveText>{creating ? t('CreatePair') : adding ? t('AddLiquidity') : t('RemoveLiquidity')}</ActiveText>
         <QuestionHelper
           text={
             adding
-              ? 'When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.'
-              : 'Removing pool tokens converts your position back into underlying tokens at the current rate, proportional to your share of the pool. Accrued fees are included in the amounts you receive.'
+              ? t('tip3')
+              : t('tip4')
           }
         />
       </RowBetween>

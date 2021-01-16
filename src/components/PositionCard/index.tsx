@@ -1,5 +1,6 @@
 import { JSBI, Pair, Percent } from '@uniswap/sdk'
 import { darken } from 'polished'
+import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
@@ -55,6 +56,7 @@ interface PositionCardProps {
 
 export function MinimalPositionCard({ pair, showUnwrapped = false, border }: PositionCardProps) {
   const { account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
   const currency1 = showUnwrapped ? pair.token1 : unwrappedToken(pair.token1)
@@ -89,7 +91,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             <FixedHeightRow>
               <RowFixed>
                 <Text fontWeight={500} fontSize={16}>
-                  Your position
+                  {t('YourPosition')}
                 </Text>
               </RowFixed>
             </FixedHeightRow>
@@ -109,7 +111,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             <AutoColumn gap="4px">
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  Your pool share:
+                  {t('YourPoolShare')}:
                 </Text>
                 <Text fontSize={16} fontWeight={500}>
                   {poolTokenPercentage ? poolTokenPercentage.toFixed(6) + '%' : '-'}
@@ -163,6 +165,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
 
 export default function FullPositionCard({ pair, border }: PositionCardProps) {
   const { account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const currency0 = unwrappedToken(pair.token0)
   const currency1 = unwrappedToken(pair.token1)
@@ -213,12 +216,12 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
               {showMore ? (
                 <>
                   {' '}
-                  Manage
+                  {t('Manage')}
                   <ChevronUp size="20" style={{ marginLeft: '10px' }} />
                 </>
               ) : (
                 <>
-                  Manage
+                  {t('Manage')}
                   <ChevronDown size="20" style={{ marginLeft: '10px' }} />
                 </>
               )}
@@ -230,7 +233,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
           <AutoColumn gap="8px">
             <FixedHeightRow>
               <Text fontSize={16} fontWeight={500}>
-                Your pool tokens:
+                {t('YourPoolTokens')}:
               </Text>
               <Text fontSize={16} fontWeight={500}>
                 {userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}
@@ -239,7 +242,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {config.getBaseCoin(currency0.symbol)}:
+                  {t('Pooled')} {config.getBaseCoin(currency0.symbol)}:
                 </Text>
               </RowFixed>
               {token0Deposited ? (
@@ -257,7 +260,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
             <FixedHeightRow>
               <RowFixed>
                 <Text fontSize={16} fontWeight={500}>
-                  Pooled {config.getBaseCoin(currency1.symbol)}:
+                  {t('Pooled')} {config.getBaseCoin(currency1.symbol)}:
                 </Text>
               </RowFixed>
               {token1Deposited ? (
@@ -274,7 +277,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
 
             <FixedHeightRow>
               <Text fontSize={16} fontWeight={500}>
-                Your pool share:
+                {t('YourPoolShare')}:
               </Text>
               <Text fontSize={16} fontWeight={500}>
                 {poolTokenPercentage ? poolTokenPercentage.toFixed(2) + '%' : '-'}
@@ -297,7 +300,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                 to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
                 width="48%"
               >
-                Add
+                {t('Add')}
               </ButtonPrimary>
               <ButtonPrimary
                 padding="8px"
@@ -306,7 +309,7 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                 width="48%"
                 to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}
               >
-                Remove
+                {t('Remove')}
               </ButtonPrimary>
             </RowBetween>
           </AutoColumn>

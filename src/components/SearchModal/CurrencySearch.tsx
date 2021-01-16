@@ -147,7 +147,7 @@ export function CurrencySearch({
         <RowBetween>
           <Text fontWeight={500} fontSize={16}>
             {t('selectToken')}
-            <QuestionHelper text="Find a token by searching for its name or symbol or by pasting its address below." />
+            <QuestionHelper text={t('tip6')} />
           </Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>
@@ -165,7 +165,7 @@ export function CurrencySearch({
         )}
         <RowBetween>
           <Text fontSize={14} fontWeight={500}>
-            Token Name
+            {t('TokenName')}
           </Text>
           <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder(iso => !iso)} />
         </RowBetween>

@@ -2,6 +2,7 @@ import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { AddressZero } from '@ethersproject/constants'
 import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Token, TokenAmount, WETH } from '@uniswap/sdk'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Redirect, RouteComponentProps } from 'react-router'
 import { Text } from 'rebass'
 import { ButtonConfirmed } from '../../components/Button'
@@ -48,6 +49,7 @@ export function V1LiquidityInfo({
   ethWorth: CurrencyAmount
 }) {
   const { chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   return (
     <>
@@ -63,7 +65,7 @@ export function V1LiquidityInfo({
 
       <RowBetween my="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}:
+          {t('Pooled')} {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
@@ -74,7 +76,7 @@ export function V1LiquidityInfo({
       </RowBetween>
       <RowBetween mb="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {config.symbol}:
+          {t('Pooled')} {config.symbol}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
@@ -89,6 +91,7 @@ export function V1LiquidityInfo({
 
 function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount: TokenAmount; token: Token }) {
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
   const totalSupply = useTotalSupply(liquidityTokenAmount.token)
   const exchangeETHBalance = useETHBalances([liquidityTokenAmount.token.address])?.[liquidityTokenAmount.token.address]
   const exchangeTokenBalance = useTokenBalance(liquidityTokenAmount.token.address, token)
@@ -279,11 +282,11 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
               onClick={approve}
             >
               {approval === ApprovalState.PENDING ? (
-                <Dots>Approving</Dots>
+                <Dots>{t('Approving')}</Dots>
               ) : approval === ApprovalState.APPROVED ? (
-                'Approved'
+                t('Approved')
               ) : (
-                'Approve'
+                t('Approve')
               )}
             </ButtonConfirmed>
           </AutoColumn>
@@ -319,6 +322,7 @@ export default function MigrateV1Exchange({
 }: RouteComponentProps<{ address: string }>) {
   const validatedAddress = isAddress(address)
   const { chainId, account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const exchangeContract = useV1ExchangeContract(validatedAddress ? validatedAddress : undefined)
   const tokenAddress = useSingleCallResult(exchangeContract, 'tokenAddress', undefined, NEVER_RELOAD)?.result?.[0]
@@ -365,7 +369,7 @@ export default function MigrateV1Exchange({
                 history.push(`/remove/v1/${validatedAddress}`)
               }}
             >
-              Remove
+              {t('Remove')}
             </ButtonConfirmed>
           </>
         ) : userLiquidityBalance && token ? (

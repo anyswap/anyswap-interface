@@ -50,7 +50,6 @@ export default function AddLiquidity({
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
   const { t } = useTranslation()
-
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
 
@@ -334,13 +333,13 @@ export default function AddLiquidity({
                   <BlueCard>
                     <AutoColumn gap="10px">
                       <TYPE.link fontWeight={600} color={'primaryText1'}>
-                        You are the first liquidity provider.
+                        {t('YouFirstLiquidity')}
                       </TYPE.link>
                       <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        The ratio of tokens you add will set the price of this pool.
+                        {t('firstAddPoolTip')}
                       </TYPE.link>
                       <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        Once you are happy with the rate click supply to review.
+                        {t('firstAddPoolTip1')}
                       </TYPE.link>
                     </AutoColumn>
                   </BlueCard>
@@ -378,7 +377,7 @@ export default function AddLiquidity({
                 <LightCard padding="0px" borderRadius={'20px'}>
                   <RowBetween padding="1rem">
                     <TYPE.subHeader fontWeight={500} fontSize={14}>
-                      {noLiquidity ? 'Initial prices' : 'Prices'} and pool share
+                      {noLiquidity ? t('InitialPrices') : t('Prices')} {t('andPoolShare')}
                     </TYPE.subHeader>
                   </RowBetween>{' '}
                   <LightCard padding="1rem" borderRadius={'20px'}>
@@ -410,9 +409,9 @@ export default function AddLiquidity({
                           width={approvalB !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalA === ApprovalState.PENDING ? (
-                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}</Dots>
+                            <Dots>{t('Approving')} {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
+                            t('Approve') + ' ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}
@@ -423,9 +422,9 @@ export default function AddLiquidity({
                           width={approvalA !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalB === ApprovalState.PENDING ? (
-                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}</Dots>
+                            <Dots>{t('Approving')} {config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
+                            t('Approve') + ' ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}

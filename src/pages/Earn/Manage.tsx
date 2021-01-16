@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { AutoColumn } from '../../components/Column'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { JSBI, TokenAmount, ETHER } from '@uniswap/sdk'
 import { RouteComponentProps } from 'react-router-dom'
@@ -95,6 +96,7 @@ export default function Manage({
   }
 }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   // get currencies and pair
   const [currencyA, currencyB] = [useCurrency(currencyIdA), useCurrency(currencyIdB)]
@@ -308,13 +310,13 @@ export default function Manage({
           <span role="img" aria-label="wizard-icon" style={{ marginRight: '8px' }}>
             ⭐️
           </span>
-          When you withdraw, the contract will automagically claim {config.baseCurrency} on your behalf!
+          {t('tip5', {baseCurrency: config.baseCurrency})}
         </TYPE.main>
 
         {!showAddLiquidityButton && (
           <DataRow style={{ marginBottom: '1rem' }}>
             <ButtonPrimary padding="8px" borderRadius="8px" width="160px" onClick={handleDepositClick}>
-              {stakingInfo?.stakedAmount?.greaterThan(JSBI.BigInt(0)) ? 'Deposit' : `Deposit ${config.baseCurrency}-V2 LP Tokens`}
+              {stakingInfo?.stakedAmount?.greaterThan(JSBI.BigInt(0)) ? t('deposit') : `Deposit ${config.baseCurrency}-V2 LP Tokens`}
             </ButtonPrimary>
 
             {stakingInfo?.stakedAmount?.greaterThan(JSBI.BigInt(0)) && (

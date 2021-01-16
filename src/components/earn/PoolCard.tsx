@@ -2,6 +2,7 @@ import React from 'react'
 import { AutoColumn } from '../Column'
 import { RowBetween } from '../Row'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { TYPE, StyledInternalLink } from '../../theme'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { ETHER, JSBI, TokenAmount } from '@uniswap/sdk'
@@ -78,6 +79,8 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
   const token0 = stakingInfo.tokens[0]
   const token1 = stakingInfo.tokens[1]
 
+  const { t } = useTranslation()
+
   const currency0 = unwrappedToken(token0)
   const currency1 = unwrappedToken(token1)
 
@@ -125,7 +128,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
 
         <StyledInternalLink to={`/uni/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ width: '100%' }}>
           <ButtonPrimary padding="8px" borderRadius="8px">
-            {isStaking ? 'Manage' : 'Deposit'}
+            {isStaking ? t('Manage') : t('deposit')}
           </ButtonPrimary>
         </StyledInternalLink>
       </TopSection>
