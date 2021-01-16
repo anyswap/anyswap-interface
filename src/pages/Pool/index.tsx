@@ -194,7 +194,7 @@ export default function Pool() {
             ) : (
               <EmptyProposals>
                 <TYPE.body color={theme.text3} textAlign="center">
-                  No liquidity found.
+                  {t('NoLiquidityFound')}
                 </TYPE.body>
               </EmptyProposals>
             )}

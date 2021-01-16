@@ -1,5 +1,6 @@
 import { ChainId } from '@uniswap/sdk'
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import styled, { ThemeContext } from 'styled-components'
 import Modal from '../Modal'
 import { ExternalLink } from '../../theme'
@@ -34,6 +35,7 @@ const ConfirmedIcon = styled(ColumnCenter)`
 `
 
 function ConfirmationPendingContent({ onDismiss, pendingText }: { onDismiss: () => void; pendingText: string }) {
+  const { t } = useTranslation()
   return (
     <Wrapper>
       <Section>
@@ -46,7 +48,7 @@ function ConfirmationPendingContent({ onDismiss, pendingText }: { onDismiss: () 
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify={'center'}>
           <Text fontWeight={500} fontSize={20}>
-            Waiting For Confirmation
+            {t('WaitingForConfirmation')}
           </Text>
           <AutoColumn gap="12px" justify={'center'}>
             <Text fontWeight={600} fontSize={14} color="" textAlign="center">
@@ -54,7 +56,7 @@ function ConfirmationPendingContent({ onDismiss, pendingText }: { onDismiss: () 
             </Text>
           </AutoColumn>
           <Text fontSize={12} color="#565A69" textAlign="center">
-            Confirm this transaction in your wallet
+            {t('tip18')}
           </Text>
         </AutoColumn>
       </Section>
@@ -72,6 +74,7 @@ function TransactionSubmittedContent({
   chainId: ChainId
 }) {
   const theme = useContext(ThemeContext)
+  const { t } = useTranslation()
 
   return (
     <Wrapper>
@@ -85,18 +88,18 @@ function TransactionSubmittedContent({
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify={'center'}>
           <Text fontWeight={500} fontSize={20}>
-            Transaction Submitted
+            {t('TransactionSubmitted')}
           </Text>
           {chainId && hash && (
             <ExternalLink href={getEtherscanLink(chainId, hash, 'transaction')}>
               <Text fontWeight={500} fontSize={14} color={theme.primary1}>
-                View on {config.name}
+              {t('ViewOn')} {config.name}
               </Text>
             </ExternalLink>
           )}
           <ButtonPrimary onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
             <Text fontWeight={500} fontSize={20}>
-              Close
+              {t('Close')}
             </Text>
           </ButtonPrimary>
         </AutoColumn>
