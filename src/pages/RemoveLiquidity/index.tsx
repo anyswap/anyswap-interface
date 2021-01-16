@@ -377,8 +377,7 @@ export default function RemoveLiquidity({
         </RowBetween>
 
         <TYPE.italic fontSize={12} color={theme.text2} textAlign="left" padding={'12px 0 0 0'}>
-          {`Output is estimated. If the price changes by more than ${allowedSlippage /
-            100}% your transaction will revert.`}
+          {t('tip30', {allowedslipage: allowedSlippage / 100})}
         </TYPE.italic>
       </AutoColumn>
     )
@@ -402,7 +401,7 @@ export default function RemoveLiquidity({
           <>
             <RowBetween>
               <Text color={theme.text2} fontWeight={500} fontSize={16}>
-                Price
+              {t('Price')}
               </Text>
               <Text fontWeight={500} fontSize={16} color={theme.text1}>
                 1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
@@ -418,7 +417,7 @@ export default function RemoveLiquidity({
         )}
         <ButtonPrimary disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)} onClick={onRemove}>
           <Text fontWeight={500} fontSize={20}>
-            Confirm
+            {t('Confirm')}
           </Text>
         </ButtonPrimary>
       </>
@@ -641,7 +640,7 @@ export default function RemoveLiquidity({
             {pair && (
               <div style={{ padding: '10px 20px' }}>
                 <RowBetween>
-                  Price:
+                {t('Price')}:
                   <div>
                     1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
                   </div>

@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-// import { Route, Switch } from 'react-router-dom'
+// import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 // import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import AddressClaimModal from '../components/claim/AddressClaimModal'
@@ -78,7 +78,7 @@ function TopLevelModals() {
 export default function App() {
   return (
     <Suspense fallback={null}>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
       <Suspense fallback={null}>
         {/* <Route component={GoogleAnalyticsReporter} /> */}
         {/* <Route component={DarkModeQueryParamReader} /> */}
@@ -147,7 +147,7 @@ export default function App() {
           </BodyWrapper>
         </AppWrapper>
         </Suspense>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </Suspense>
   )
 }

@@ -1,5 +1,6 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { useTranslation } from 'react-i18next'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -128,6 +129,8 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
+
+  const { t } = useTranslation()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -297,12 +300,12 @@ export default function WalletModal({
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
           </CloseIcon>
-          <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
+          <HeaderRow>{error instanceof UnsupportedChainIdError ? t('WrongNetwork') : t('ErrorConnecting')}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate {config.name} network.</h5>
+              <h5>{t('tip37', {name:config.name})}</h5>
             ) : (
-              'Error connecting. Try refreshing the page.'
+              t('tip36')
             )}
           </ContentWrapper>
         </UpperSection>
@@ -332,12 +335,12 @@ export default function WalletModal({
                 setWalletView(WALLET_VIEWS.ACCOUNT)
               }}
             >
-              Back
+              {t('Back')}
             </HoverText>
           </HeaderRow>
         ) : (
           <HeaderRow>
-            <HoverText>Connect to a wallet</HoverText>
+            <HoverText>{t('ConnectToWallet')}</HoverText>
           </HeaderRow>
         )}
         <ContentWrapper>
@@ -353,8 +356,8 @@ export default function WalletModal({
           )}
           {walletView !== WALLET_VIEWS.PENDING && (
             <Blurb>
-              <span>New to Ethereum? &nbsp;</span>{' '}
-              <ExternalLink href="https://ethereum.org/wallets/">Learn more about wallets</ExternalLink>
+              <span>{t('NewToEthereum')} &nbsp;</span>{' '}
+              <ExternalLink href="https://ethereum.org/wallets/">{t('tip35')}</ExternalLink>
             </Blurb>
           )}
         </ContentWrapper>

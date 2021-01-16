@@ -67,14 +67,15 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
 }
 
 export function FindPoolTabs() {
+  const { t } = useTranslation()
   return (
     <Tabs>
       <RowBetween style={{ padding: '1rem' }}>
         <HistoryLink to="/pool">
           <StyledArrowLeft />
         </HistoryLink>
-        <ActiveText>Import Pool</ActiveText>
-        <QuestionHelper text={"Use this tool to find pairs that don't automatically appear in the interface."} />
+        <ActiveText>{t('ImportPool')}</ActiveText>
+        <QuestionHelper text={t('tip31')} />
       </RowBetween>
     </Tabs>
   )

@@ -75,7 +75,7 @@ export default function PoolFinder() {
   const prerequisiteMessage = (
     <LightCard padding="45px 10px">
       <Text textAlign="center">
-        {!account ? 'Connect to a wallet to find pools' : 'Select a token to find your liquidity.'}
+        {!account ? t('tip33') : t('tip34')}
       </Text>
     </LightCard>
   )
@@ -99,7 +99,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              Select a Token
+              {t('selectToken')}
             </Text>
           )}
         </ButtonDropdownLight>
@@ -123,7 +123,7 @@ export default function PoolFinder() {
             </Row>
           ) : (
             <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
-              Select a Token
+              {t('selectToken')}
             </Text>
           )}
         </ButtonDropdownLight>
@@ -133,10 +133,10 @@ export default function PoolFinder() {
             style={{ justifyItems: 'center', backgroundColor: '', padding: '12px 0px', borderRadius: '12px' }}
           >
             <Text textAlign="center" fontWeight={500}>
-              Pool Found!
+              {t('PoolFound')}
             </Text>
             <StyledInternalLink to={`/pool`}>
-              <Text textAlign="center">Manage this pool.</Text>
+              <Text textAlign="center">{t('ManageThisPool')}</Text>
             </StyledInternalLink>
           </ColumnCenter>
         )}
@@ -148,9 +148,9 @@ export default function PoolFinder() {
             ) : (
               <LightCard padding="45px 10px">
                 <AutoColumn gap="sm" justify="center">
-                  <Text textAlign="center">You don’t have liquidity in this pool yet.</Text>
+                  <Text textAlign="center">{t('tip32')}</Text>
                   <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                    <Text textAlign="center">Add liquidity.</Text>
+                    <Text textAlign="center">{t('AddLiquidity')}</Text>
                   </StyledInternalLink>
                 </AutoColumn>
               </LightCard>
@@ -158,9 +158,9 @@ export default function PoolFinder() {
           ) : validPairNoLiquidity ? (
             <LightCard padding="45px 10px">
               <AutoColumn gap="sm" justify="center">
-                <Text textAlign="center">No pool found.</Text>
+                <Text textAlign="center">{t('NoPoolFound')}</Text>
                 <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
-                  Create pool.
+                  {t('CreatePool')}
                 </StyledInternalLink>
               </AutoColumn>
             </LightCard>

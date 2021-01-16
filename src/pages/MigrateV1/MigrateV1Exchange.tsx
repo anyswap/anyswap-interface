@@ -191,11 +191,10 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
   return (
     <AutoColumn gap="20px">
       <TYPE.body my={9} style={{ fontWeight: 400 }}>
-        This tool will safely migrate your V1 liquidity to V2 with minimal price risk. The process is completely
-        trustless thanks to the{' '}
+        {t('tip23')}{' '}
         {chainId && (
           <ExternalLink href={getEtherscanLink(chainId, MIGRATOR_ADDRESS, 'address')}>
-            <TYPE.blue display="inline">Uniswap migration contract↗</TYPE.blue>
+            <TYPE.blue display="inline">{config.name} {t('migrationContract')}↗</TYPE.blue>
           </ExternalLink>
         )}
         .
@@ -204,12 +203,11 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {!isFirstLiquidityProvider && largePriceDifference ? (
         <YellowCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            It{"'"}s best to deposit liquidity into {config.appName} at a price you believe is correct. If the V2 price seems
-            incorrect, you can either make a swap to move the price or wait for someone else to do so.
+            {t('tip24', {appName: config.appName})}
           </TYPE.body>
           <AutoColumn gap="8px">
             <RowBetween>
-              <TYPE.body>V1 Price:</TYPE.body>
+              <TYPE.body>V1 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -222,7 +220,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             </RowBetween>
 
             <RowBetween>
-              <TYPE.body>V2 Price:</TYPE.body>
+              <TYPE.body>V2 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v2SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -235,7 +233,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             </RowBetween>
 
             <RowBetween>
-              <TYPE.body color="inherit">Price Difference:</TYPE.body>
+              <TYPE.body color="inherit">{t('PriceDifference')}:</TYPE.body>
               <TYPE.black color="inherit">{priceDifferenceAbs?.toSignificant(4)}%</TYPE.black>
             </RowBetween>
           </AutoColumn>
@@ -245,13 +243,12 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {isFirstLiquidityProvider && (
         <PinkCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            You are the first liquidity provider for this pair on {config.appName}. Your liquidity will be migrated at the
-            current V1 price. Your transaction cost also includes the gas to create the pool.
+          {t('tip25', {appName: config.appName})}
           </TYPE.body>
 
           <AutoColumn gap="8px">
             <RowBetween>
-              <TYPE.body>V1 Price:</TYPE.body>
+              <TYPE.body>V1 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -302,13 +299,16 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
               }
               onClick={migrate}
             >
-              {isSuccessfullyMigrated ? 'Success' : isMigrationPending ? <Dots>Migrating</Dots> : 'Migrate'}
+              {isSuccessfullyMigrated ? 'Success' : isMigrationPending ? <Dots>{t('Migrating')}</Dots> : t('Migrate')}
             </ButtonConfirmed>
           </AutoColumn>
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your ${config.oldAppName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become ${config.appName} ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
+        {t('tip28', {
+          oldApp: config.oldAppName + ' ' + config.getBaseCoin(token.symbol) + '/' + config.symbol,
+          nowApp: config.appName + ' ' + config.getBaseCoin(token.symbol) + '/' + config.symbol
+        })}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -349,19 +349,23 @@ export default function MigrateV1Exchange({
       <AutoColumn gap="16px">
         <AutoRow style={{ alignItems: 'center', justifyContent: 'space-between' }} gap="8px">
           <BackArrow to="/migrate/v1" />
-          <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
+          <TYPE.mediumHeader>{t('MigrateV1Liquidity')}</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text={`Migrate your liquidity tokens from ${config.oldAppName} to ${config.appName}.`} />
+            <QuestionHelper text={t('tip27', {oldAppName: config.oldAppName, appName: config.appName})} />
           </div>
         </AutoRow>
 
         {!account ? (
-          <TYPE.largeHeader>You must connect an account.</TYPE.largeHeader>
+          <TYPE.largeHeader>{t('tip26')}</TYPE.largeHeader>
         ) : validatedAddress && chainId && token?.equals(WETH[chainId]) ? (
           <>
             <TYPE.body my={9} style={{ fontWeight: 400 }}>
-              Because {config.appName} uses {('W' + config.symbol)} under the hood, your {config.oldAppName} {('W' + config.symbol)}/{config.symbol} liquidity cannot be migrated. You
-              may want to remove your liquidity instead.
+              {t('tip29', {
+                appName: config.appName,
+                symbol: 'W' + config.symbol,
+                symbol1: config.symbol,
+                oldAppName: config.oldAppName
+              })}
             </TYPE.body>
 
             <ButtonConfirmed
