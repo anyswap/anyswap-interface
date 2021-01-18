@@ -39,13 +39,13 @@ export default function CurrencySearchModal({
     [onDismiss, onCurrencySelect]
   )
 
-  const handleClickChangeList = useCallback(() => {
-    // ReactGA.event({
-    //   category: 'Lists',
-    //   action: 'Change Lists'
-    // })
-    setListView(true)
-  }, [])
+  // const handleClickChangeList = useCallback(() => {
+  //   // ReactGA.event({
+  //   //   category: 'Lists',
+  //   //   action: 'Change Lists'
+  //   // })
+  //   setListView(true)
+  // }, [])
   const handleClickBack = useCallback(() => {
     // ReactGA.event({
     //   category: 'Lists',
@@ -63,7 +63,7 @@ export default function CurrencySearchModal({
           isOpen={isOpen}
           onDismiss={onDismiss}
           onCurrencySelect={handleCurrencySelect}
-          onChangeList={handleClickChangeList}
+          // onChangeList={handleClickChangeList}
           selectedCurrency={selectedCurrency}
           otherSelectedCurrency={otherSelectedCurrency}
           showCommonBases={showCommonBases}

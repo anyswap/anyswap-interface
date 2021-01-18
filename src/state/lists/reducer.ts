@@ -54,7 +54,8 @@ export default createReducer(initialState, builder =>
         error: null
       }
     })
-    .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
+    // .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
+    .addCase(fetchTokenList.fulfilled, (state, { payload: { tokenList, url } }) => {
       // const current = state.byUrl[url]?.current
       // const loadingRequestId = state.byUrl[url]?.loadingRequestId
 
@@ -83,8 +84,21 @@ export default createReducer(initialState, builder =>
       // console.log(tokenList)
       // console.log(config.tokenList)
       
-      if (tokenList && tokenList.tokens) {
-        tokenList.tokens.unshift(...config.tokenList)
+      if (tokenList && tokenList.tokens && tokenList.tokens.length > 0) {
+        // tokenList.tokens.unshift(...config.tokenList.tokens)
+        const tlArr:Array<string> = []
+        for (const obj of tokenList.tokens) {
+          if (!tlArr.includes(obj.address)) {
+            tlArr.push(obj.address)
+          }
+        }
+        for (const obj of config.tokenList.tokens) {
+          if (!tlArr.includes(obj.address)) {
+            tokenList.tokens.unshift(obj)
+          }
+        }
+      } else {
+        tokenList = config.tokenList
       }
       state.byUrl[url] = {
         ...state.byUrl[url],
@@ -96,7 +110,6 @@ export default createReducer(initialState, builder =>
     })
     .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
       // console.log(state.byUrl[url]?.loadingRequestId)
-      // console.log(requestId)
       if (state.byUrl[url]?.loadingRequestId !== requestId) {
         // no-op since it's not the latest request
         return
@@ -106,7 +119,7 @@ export default createReducer(initialState, builder =>
         ...state.byUrl[url],
         loadingRequestId: null,
         error: errorMessage,
-        current: null,
+        current: config.tokenList,
         pendingUpdate: null
       }
     })

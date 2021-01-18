@@ -40,6 +40,7 @@ export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> 
           return tokenList
         })
         .catch(error => {
+          console.log(error)
           console.debug(`Failed to get list at url ${listUrl}`, error)
           dispatch(fetchTokenList.rejected({ url: listUrl, requestId, errorMessage: error.message }))
           throw error

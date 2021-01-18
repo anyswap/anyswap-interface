@@ -149,6 +149,10 @@
   "tip36": "Error connecting. Try refreshing the page.",
   "tip37": "Please connect to the appropriate {{name}} network.",
   "tip38": "By adding liquidity you will earn 0.3% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.",
+  "tip39": "Routing through these tokens resulted in the best price for your trade.",
+  "tip40": "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.",
+  "tip41": "The difference between the market price and estimated price due to trade size.",
+  "tip42": "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.",
   "Remove": "Remove",
   "RemoveLiquidity": "Remove Liquidity",
   "Approve": "Approve",
@@ -222,5 +226,6 @@
   "WalletAddress": "Wallet Address",
   "On": "On",
   "Off": "Off",
-  "MAX": "MAX"
+  "MAX": "MAX",
+  "Route": "Route"
 }
