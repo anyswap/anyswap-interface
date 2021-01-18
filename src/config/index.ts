@@ -1,3 +1,5 @@
+import httest from './tokens/httest.json'
+
 interface ConFig {
   [key: string]: any
 }
@@ -17,6 +19,7 @@ const netConfig:ConFig = {
   lookHash: explorerUrl + '/tx/',
   lookAddr: explorerUrl + '/address/',
   lookBlock: explorerUrl + '/block/',
+  tokenList: httest
 }
 
 const config: ConFig = {

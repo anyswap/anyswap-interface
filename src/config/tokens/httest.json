@@ -1,0 +1,9 @@
+[
+  {
+    "address": "0x2987e112b86cce93357c10bd1be07fe64e6fc01f",
+    "chainId": 256,
+    "decimals": 18,
+    "name": "TEST",
+    "symbol": "TEST"
+  }
+]

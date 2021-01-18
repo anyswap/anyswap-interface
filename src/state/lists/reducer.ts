@@ -5,6 +5,8 @@ import { DEFAULT_LIST_OF_LISTS, DEFAULT_TOKEN_LIST_URL } from '../../constants/l
 import { updateVersion } from '../global/actions'
 import { acceptListUpdate, addList, fetchTokenList, removeList, selectList } from './actions'
 
+import config from '../../config'
+
 export interface ListsState {
   readonly byUrl: {
     readonly [url: string]: {
@@ -79,6 +81,11 @@ export default createReducer(initialState, builder =>
       //   }
       // }
       // console.log(tokenList)
+      // console.log(config.tokenList)
+      
+      if (tokenList && tokenList.tokens) {
+        tokenList.tokens.unshift(...config.tokenList)
+      }
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
