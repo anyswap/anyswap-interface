@@ -221,5 +221,6 @@
   "Loading": "Loading",
   "WalletAddress": "Wallet Address",
   "On": "On",
-  "Off": "Off"
+  "Off": "Off",
+  "MAX": "MAX"
 }
