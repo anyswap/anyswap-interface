@@ -162,6 +162,7 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
+
   // console.log(showCommonBases)
   return (
     <InputPanel id={id}>

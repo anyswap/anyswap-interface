@@ -227,5 +227,6 @@
   "On": "On",
   "Off": "Off",
   "MAX": "MAX",
-  "Route": "Route"
+  "Route": "Route",
+  "Output": "Output"
 }
