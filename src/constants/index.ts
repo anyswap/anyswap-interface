@@ -62,15 +62,14 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.HTMAIN]: [WETH[ChainId.HTMAIN]]
 }
 
-// used to construct intermediary pairs for trading
+// 用于构造用于交易的中介对
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT, COMP, MKR]
 }
 
 /**
- * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
- * tokens.
+ * 一些令牌只能通过某些对进行交换，因此我们覆盖了这些令牌所考虑的基的列表。
  */
 export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
   [ChainId.MAINNET]: {
@@ -78,13 +77,13 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
   }
 }
 
-// used for display in the default list when adding liquidity
+// 用于添加流动性时在默认列表中显示
 export const SUGGESTED_BASES: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]
 }
 
-// used to construct the list of all pairs we consider by default in the frontend
+// 用于构建我们在前端默认考虑的所有对的列表
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
   [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]

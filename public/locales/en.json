@@ -153,6 +153,12 @@
   "tip40": "Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.",
   "tip41": "The difference between the market price and estimated price due to trade size.",
   "tip42": "A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive.",
+  "tip43": " or the transaction will revert.",
+  "tip44": "Output is estimated. You will receive at least ",
+  "tip45": "Input is estimated. You will sell at most ",
+  "tip46": "Output will be sent to",
+  "tip47": "This swap has a price impact of at least {{params}}%. Please type the word 'confirm' to continue with this swap.",
+  "tip48": "This swap has a price impact of at least {{params}}%. Please confirm that you would like to continue with this swap.",
   "Remove": "Remove",
   "RemoveLiquidity": "Remove Liquidity",
   "Approve": "Approve",
@@ -228,5 +234,7 @@
   "Off": "Off",
   "MAX": "MAX",
   "Route": "Route",
-  "Output": "Output"
+  "Output": "Output",
+  "Accept": "Accept",
+  "PriceUpdated": "Price Updated"
 }
