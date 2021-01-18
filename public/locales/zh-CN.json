@@ -215,7 +215,7 @@
   "Unwrap": "不覆盖",
   "PriceImpactHigh": "价格影响大",
   "PriceImpactTooHigh": "价格影响太大",
-  "Anyway": "至少",
+  "Anyway": "",
   "ImportPool": "导入矿池",
   "PoolFound": "发现矿池！",
   "ManageThisPool": "管理这个矿池。",
