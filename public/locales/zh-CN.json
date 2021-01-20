@@ -236,5 +236,7 @@
   "Route": "路由",
   "Output": "输出",
   "Accept": "接受",
-  "PriceUpdated": "价格已更新"
+  "PriceUpdated": "价格已更新",
+  "Pending": "待定",
+  "Error": "错误"
 }

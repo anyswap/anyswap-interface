@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import config from '../../config'
 
+import initPath from '../../assets/images/question.svg'
+
 const Image = styled.img<{ size?: any }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
@@ -12,7 +14,7 @@ const Image = styled.img<{ size?: any }>`
   border-radius: ${({ size }) => size};
 `
 
-const initPath = require('../../assets/images/question.svg')
+// const initPath = require('../../assets/images/question.svg')
 
 function getSourcePath(symbol: any) {
   let path = ''
@@ -56,6 +58,7 @@ export default function TokenLogo({
   let path = ''
   symbol = config.getBaseCoin(symbol)
   symbol = symbol === 'W' + config.symbol ? symbol.substr(1) : symbol
+  // symbol = symbol === 'WHT' ? 'HT' : symbol
   // console.log(symbol)
   if (symbol) {
     if (isAny) {
@@ -74,7 +77,13 @@ export default function TokenLogo({
           symbol.indexOf('Hi') === -1 &&
           symbol.indexOf('H') === 0
         ) {
-          symbol = symbol.substr(1)
+          if (symbol === 'HPT') {
+            symbol = 'HT'
+          } else {
+            symbol = symbol.substr(1)
+          }
+        } else if (symbol === 'WHT') {
+          symbol = 'HT'
         }
         path = getSourcePath(symbol)
       }

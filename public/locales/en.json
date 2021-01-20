@@ -236,5 +236,7 @@
   "Route": "Route",
   "Output": "Output",
   "Accept": "Accept",
-  "PriceUpdated": "Price Updated"
+  "PriceUpdated": "Price Updated",
+  "Pending": "Pending",
+  "Error": "Error"
 }

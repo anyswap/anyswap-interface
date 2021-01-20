@@ -100,6 +100,7 @@ export default createReducer(initialState, builder =>
       } else {
         tokenList = config.tokenList
       }
+      // console.log(tokenList)
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
@@ -108,17 +109,26 @@ export default createReducer(initialState, builder =>
         pendingUpdate: null
       }
     })
-    .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
+    // .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
+    .addCase(fetchTokenList.rejected, (state, { payload: { url } }) => {
       // console.log(state.byUrl[url]?.loadingRequestId)
-      if (state.byUrl[url]?.loadingRequestId !== requestId) {
-        // no-op since it's not the latest request
-        return
-      }
-
+      // console.log(requestId)
+      // if (state.byUrl[url]?.loadingRequestId !== requestId) {
+      //   // no-op since it's not the latest request
+      //   return
+      // }
+      // console.log(123)
+      // state.byUrl[url] = {
+      //   ...state.byUrl[url],
+      //   loadingRequestId: null,
+      //   error: errorMessage,
+      //   current: config.tokenList,
+      //   pendingUpdate: null
+      // }
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
-        error: errorMessage,
+        error: null,
         current: config.tokenList,
         pendingUpdate: null
       }

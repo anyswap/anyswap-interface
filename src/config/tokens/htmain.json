@@ -5,13 +5,6 @@
   "timestamp": "2020-08-25T01:40:34.305Z",
   "tokens": [
     {
-      "address": "0x538cee985e930557d16c383783ca957fa90b63b3",
-      "chainId": 128,
-      "decimals": 18,
-      "name": "ANY",
-      "symbol": "ANY"
-    },
-    {
       "address": "0x66a79d23e58475d2738179ca52cd0b41d73f0bea",
       "chainId": 128,
       "decimals": 18,
@@ -28,7 +21,7 @@
     {
       "address": "0x0298c2b32eae4da002a15f36fdf7615bea3da047",
       "chainId": 128,
-      "decimals": 18,
+      "decimals": 8,
       "name": "Heco-Peg HUSD",
       "symbol": "HUSD"
     },
@@ -80,6 +73,27 @@
       "decimals": 18,
       "name": "HTCToken",
       "symbol": "HTC"
+    },
+    {
+      "address": "0xe499ef4616993730ced0f31fa2703b92b50bb536",
+      "chainId": 128,
+      "decimals": 18,
+      "name": "Heco-Peg HPT",
+      "symbol": "HPT"
+    },
+    {
+      "address": "0xa71edc38d189767582c38a3145b5873052c3e47a",
+      "chainId": 128,
+      "decimals": 18,
+      "name": "Heco-Peg USDTHECO",
+      "symbol": "USDT"
+    },
+    {
+      "address": "0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f",
+      "chainId": 128,
+      "decimals": 18,
+      "name": "WHT",
+      "symbol": "WHT"
     }
   ],
   "version": {"major": 1, "minor": 0, "patch": 0}

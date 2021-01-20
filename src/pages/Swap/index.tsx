@@ -199,21 +199,6 @@ export default function Swap() {
     swapCallback()
       .then(hash => {
         setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
-
-        // ReactGA.event({
-        //   category: 'Swap',
-        //   action:
-        //     recipient === null
-        //       ? 'Swap w/o Send'
-        //       : (recipientAddress ?? recipient) === account
-        //       ? 'Swap w/o Send + recipient'
-        //       : 'Swap w/ Send',
-        //   label: [
-        //     trade?.inputAmount?.currency?.symbol,
-        //     trade?.outputAmount?.currency?.symbol,
-        //     getTradeVersion(trade)
-        //   ].join('/')
-        // })
       })
       .catch(error => {
         setSwapState({
@@ -269,7 +254,8 @@ export default function Swap() {
   const handleOutputSelect = useCallback(outputCurrency => onCurrencySelection(Field.OUTPUT, outputCurrency), [
     onCurrencySelection
   ])
-
+  // console.log(currencies)
+  // console.log(Field.OUTPUT)
   return (
     <>
       <TokenWarningModal

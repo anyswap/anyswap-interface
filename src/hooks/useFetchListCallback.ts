@@ -10,6 +10,8 @@ import getTokenList from '../utils/getTokenList'
 import resolveENSContentHash from '../utils/resolveENSContentHash'
 import { useActiveWeb3React } from './index'
 
+import config from '../config'
+
 export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> {
   const { chainId, library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
@@ -36,14 +38,17 @@ export function useFetchListCallback(): (listUrl: string) => Promise<TokenList> 
       dispatch(fetchTokenList.pending({ requestId, url: listUrl }))
       return getTokenList(listUrl, ensResolver)
         .then(tokenList => {
+          console.log(tokenList)
           dispatch(fetchTokenList.fulfilled({ url: listUrl, tokenList, requestId }))
           return tokenList
         })
         .catch(error => {
           console.log(error)
           console.debug(`Failed to get list at url ${listUrl}`, error)
-          dispatch(fetchTokenList.rejected({ url: listUrl, requestId, errorMessage: error.message }))
-          throw error
+          // dispatch(fetchTokenList.rejected({ url: listUrl, requestId, errorMessage: error.message }))
+          // throw error
+          dispatch(fetchTokenList.fulfilled({ url: listUrl, tokenList: config.tokenList, requestId }))
+          return config.tokenList
         })
     },
     [dispatch, ensResolver]
