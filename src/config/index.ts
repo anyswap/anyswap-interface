@@ -25,7 +25,8 @@ let netConfig:ConFig = {
   lookAddr: explorerUrl + '/address/',
   lookBlock: explorerUrl + '/block/',
   tokenList: httest,
-  initToken: '0x3b2c595173831bc4ceea2406fe49577bdb95d90a'
+  initToken: '0x3b2c595173831bc4ceea2406fe49577bdb95d90a',
+  multicalToken: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29'
 }
 
 if (ENV === 'main') {
@@ -36,7 +37,7 @@ if (ENV === 'main') {
     name: 'Huobi',
     symbol: 'HT',
     baseCurrency: 'ANY',
-    nodeRpc: 'https://http-mainnet.hecochain.com',
+    nodeRpc: 'https://http-mainnet-node1.hecochain.com',
     chainID: 128,
     // tokenListUrl: '',
     tokenListUrl: 'https://list.smpcwallet.com/tokenList/128',
@@ -45,7 +46,8 @@ if (ENV === 'main') {
     lookAddr: explorerUrl + '/address/',
     lookBlock: explorerUrl + '/block/',
     tokenList: htmain,
-    initToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e'
+    initToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e',
+    multicalToken: '0xbff74da37df72695b1d7e8185edd47fd0771ee3a'
   }
 }
 

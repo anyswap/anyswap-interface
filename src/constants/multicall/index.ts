@@ -1,5 +1,6 @@
 import { ChainId } from '@uniswap/sdk'
 import MULTICALL_ABI from './abi.json'
+import config from '../../config'
 
 const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441',
@@ -7,8 +8,8 @@ const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {
   [ChainId.KOVAN]: '0x2cc8688C5f75E365aaEEb4ea8D6a480405A48D2A',
   [ChainId.RINKEBY]: '0x42Ad527de7d4e9d9d011aC45B31D8551f8Fe9821',
   [ChainId.GÖRLI]: '0x77dCa2C955b15e9dE4dbBCf1246B4B85b651e50e',
-  [ChainId.HTTEST]: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29',
-  [ChainId.HTMAIN]: '0xbff74da37df72695b1d7e8185edd47fd0771ee3a'
+  [ChainId.HTTEST]: config.multicalToken,
+  [ChainId.HTMAIN]: config.multicalToken
 }
 
 export { MULTICALL_ABI, MULTICALL_NETWORKS }

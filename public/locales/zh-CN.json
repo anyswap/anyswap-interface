@@ -109,7 +109,7 @@
   "RemoveSend": "删除收款地址",
   "YouFirstLiquidity": "你是第一个流动性提供者。",
   "firstAddPoolTip": "您添加的代币比率将设置此池的价格。",
-  "firstAddPoolTip1": "一旦您对价格满意，请单击“供应”进行查看。",
+  "firstAddPoolTip1": "一旦您对价格满意，请单击“添加”进行查看。",
   "InvalidPair": "无效交易对",
   "tip1": "当您在未提取流动资金的情况下领取奖励时，您的流动资金将留在采矿池中。",
   "tip2": "当你退出时，你的{{baseCurrency}}将被收回，你的流动性将从流动性池中移除。",
@@ -211,8 +211,8 @@
   "Migrate": "迁移",
   "MigrateV1Liquidity": "迁移V1流动性",
   "Confirm": "确认",
-  "Wrap": "覆盖",
-  "Unwrap": "不覆盖",
+  "Wrap": "兑换",
+  "Unwrap": "兑换",
   "PriceImpactHigh": "价格影响大",
   "PriceImpactTooHigh": "价格影响太大",
   "Anyway": "",
@@ -238,5 +238,11 @@
   "Accept": "接受",
   "PriceUpdated": "价格已更新",
   "Pending": "待定",
-  "Error": "错误"
+  "Error": "错误",
+  "Supply": "添加",
+  "ConfirmSupply": "确认添加",
+  "CreatePoolSupply": "创建或添加流动性",
+  "ShareOfPool": "矿池份额",
+  "Rates": "比率",
+  "Deposited": "充值"
 }

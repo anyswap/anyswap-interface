@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount, Fraction, Percent } from '@uniswap/sdk'
 import React from 'react'
 import { Text } from 'rebass'
+import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from '../../components/Button'
 import { RowBetween, RowFixed } from '../../components/Row'
 import TokenLogo from '../../components/TokenLogo'
@@ -24,24 +25,25 @@ export function ConfirmAddModalBottom({
   poolTokenPercentage?: Percent
   onAdd: () => void
 }) {
+  const { t } = useTranslation()
   return (
     <>
       <RowBetween>
-        <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} Deposited</TYPE.body>
+        <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} {t('Deposited')}</TYPE.body>
         <RowFixed>
           <TokenLogo symbol={config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} style={{ marginRight: '8px' }}></TokenLogo>
           <TYPE.body>{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</TYPE.body>
         </RowFixed>
       </RowBetween>
       <RowBetween>
-        <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} Deposited</TYPE.body>
+        <TYPE.body>{config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} {t('Deposited')}</TYPE.body>
         <RowFixed>
           <TokenLogo symbol={config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} style={{ marginRight: '8px' }}></TokenLogo>
           <TYPE.body>{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</TYPE.body>
         </RowFixed>
       </RowBetween>
       <RowBetween>
-        <TYPE.body>Rates</TYPE.body>
+        <TYPE.body>{t('Rates')}</TYPE.body>
         <TYPE.body>
           {`1 ${config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} = ${price?.toSignificant(4)} ${
             config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
@@ -56,12 +58,12 @@ export function ConfirmAddModalBottom({
         </TYPE.body>
       </RowBetween>
       <RowBetween>
-        <TYPE.body>Share of Pool:</TYPE.body>
+        <TYPE.body>{t('ShareOfPool')}:</TYPE.body>
         <TYPE.body>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</TYPE.body>
       </RowBetween>
       <ButtonPrimary style={{ margin: '20px 0 0 0' }} onClick={onAdd}>
         <Text fontWeight={500} fontSize={20}>
-          {noLiquidity ? 'Create Pool & Supply' : 'Confirm Supply'}
+          {noLiquidity ? t('CreatePoolSupply') : t('ConfirmSupply')}
         </Text>
       </ButtonPrimary>
     </>

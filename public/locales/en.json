@@ -238,5 +238,11 @@
   "Accept": "Accept",
   "PriceUpdated": "Price Updated",
   "Pending": "Pending",
-  "Error": "Error"
+  "Error": "Error",
+  "Supply": "Supply",
+  "ConfirmSupply": "Confirm Supply",
+  "CreatePoolSupply": "Create Pool & Supply",
+  "ShareOfPool": "Share of Pool",
+  "Rates": "Rates",
+  "Deposited": "Deposited"
 }
