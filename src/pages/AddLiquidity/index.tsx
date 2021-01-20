@@ -47,12 +47,12 @@ export default function AddLiquidity({
   },
   history
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  currencyIdB = currencyIdB ? currencyIdB : config.initToken
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
   const { t } = useTranslation()
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
-  // console.log(i18n)
   // console.log(t('tip1'))
   const oneCurrencyIsWETH = Boolean(
     chainId &&
