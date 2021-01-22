@@ -113,6 +113,9 @@ const HeaderLinks = styled(Row)`
     padding: 1rem 0 1rem 1rem;
     justify-content: flex-end;
 `};
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding: 1rem 0 1rem 0.1rem;
+  `};
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
@@ -198,15 +201,19 @@ const Title = styled.a`
 
 const UniIcon = styled.div`
   ${({ theme }) => theme.flexRowNoWrap};
+  align-items:center;
   height: 100%;
   // padding: 10px 0;
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
+  // transition: transform 0.3s ease;
+  // :hover {
+  //   transform: rotate(-5deg);
+  // }
   img {
-    height: auto;
+    height: 40px;
     width: auto;
+    ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      max-height: 30px;
+    `};
   }
 `
 
@@ -232,7 +239,9 @@ const StyledNavLink = styled(NavLink).attrs({
     font-weight: 600;
     color: ${({ theme }) => theme.text1};
   }
-
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin: 0 5px;
+  `};
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.1, theme.text1)};
@@ -305,9 +314,9 @@ export default function Header() {
         <UniBalanceContent setShowUniBalanceModal={setShowUniBalanceModal} />
       </Modal>
       <HeaderRow>
-        <Title href=".">
+        <Title href="https://htswap.io/" target="__blank">
           <UniIcon>
-            <img width={'24px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img src={isDark ? LogoDark : Logo} alt="logo" />
           </UniIcon>
         </Title>
         <HeaderLinks>

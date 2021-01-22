@@ -40,7 +40,7 @@ if (ENV === 'main') {
     nodeRpc: 'https://http-mainnet-node1.hecochain.com',
     chainID: 128,
     // tokenListUrl: '',
-    tokenListUrl: 'https://list.smpcwallet.com/tokenList/128',
+    tokenListUrl: 'https://list.htswap.io/tokenList/128',
     router: '0x77e0e26de17be1ea2df87269475431e0e17dc74f',
     lookHash: explorerUrl + '/tx/',
     lookAddr: explorerUrl + '/address/',
