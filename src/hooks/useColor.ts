@@ -4,7 +4,8 @@ import Vibrant from 'node-vibrant'
 import { hex } from 'wcag-contrast'
 import { Token, ChainId } from '@uniswap/sdk'
 
-const initPath = require('../assets/images/question.svg')
+// const initPath = require('../assets/images/question.svg')
+import initPath from '../assets/images/question.svg'
 
 async function getColorFromToken(token: Token): Promise<string | null> {
   if (token.chainId === ChainId.RINKEBY && token.address === '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735') {

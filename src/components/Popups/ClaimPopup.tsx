@@ -75,7 +75,6 @@ export default function ClaimPopup() {
       toggleShowClaimPopup()
     }
     // the toggleShowClaimPopup function changes every time the popup changes, so this will cause an infinite loop.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userHasAvailableclaim])
 
   return (

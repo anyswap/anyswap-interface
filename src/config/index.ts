@@ -5,7 +5,7 @@ interface ConFig {
   [key: string]: any
 }
 
-const ENV = 1 ? 'main' : 'test'
+const ENV = 0 ? 'main' : 'test'
 
 let explorerUrl = 'https://scan-testnet.hecochain.com'
 let netConfig:ConFig = {
@@ -17,8 +17,8 @@ let netConfig:ConFig = {
   nodeRpc: 'https://http-testnet.hecochain.com',
   chainID: 256,
   // tokenListUrl: 'http://192.168.50.229:8110/tokenList/256',
-  tokenListUrl: '',
-  // tokenListUrl: 'https://list.smpcwallet.com/tokenList/256',
+  // tokenListUrl: '',
+  tokenListUrl: 'https://list.smpcwallet.com/tokenList/256',
   // router: '0x2721b8e2A0f0939a289d4379e85fFf59F9226420',
   router: '0x479ab92bf721de918f01d455e90540149dbfd9da',
   lookHash: explorerUrl + '/tx/',
