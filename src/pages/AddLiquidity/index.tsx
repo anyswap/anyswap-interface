@@ -217,7 +217,9 @@ export default function AddLiquidity({
         <LightCard mt="20px" borderRadius="20px">
           <RowFlat>
             <Text fontSize="48px" fontWeight={500} lineHeight="42px" marginRight={10}>
-              {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}
+              {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) +
+                '/' +
+                config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}
             </Text>
             <DoubleCurrencyLogo
               currency0={currencies[Field.CURRENCY_A]}
@@ -241,7 +243,10 @@ export default function AddLiquidity({
         </RowFlat>
         <Row>
           <Text fontSize="24px">
-            {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) + ' Pool Tokens'}
+            {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) +
+              '/' +
+              config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) +
+              ' Pool Tokens'}
           </Text>
         </Row>
         <TYPE.italic fontSize={12} textAlign="left" padding={'8px 0 0 0 '}>
@@ -265,9 +270,11 @@ export default function AddLiquidity({
     )
   }
 
-  const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
-    config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
-  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}`
+  const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${config.getBaseCoin(
+    currencies[Field.CURRENCY_A]?.symbol
+  )} and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(
+    currencies[Field.CURRENCY_B]?.symbol
+  )}`
 
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
@@ -446,13 +453,12 @@ export default function AddLiquidity({
             )}
           </AutoColumn>
         </Wrapper>
-      {pair && !noLiquidity && pairState !== PairState.INVALID ? (
-        <AutoColumn style={{ minWidth: '20rem', width: '100%',  marginTop: '1rem' }}>
-          <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
-        </AutoColumn>
-      ) : null}
+        {pair && !noLiquidity && pairState !== PairState.INVALID ? (
+          <AutoColumn style={{ minWidth: '20rem', width: '100%', marginTop: '1rem' }}>
+            <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
+          </AutoColumn>
+        ) : null}
       </AppBody>
-
     </>
   )
 }

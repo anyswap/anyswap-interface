@@ -98,7 +98,11 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
               <RowFixed>
                 {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
                 <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
-                <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                <TokenLogo
+                  symbol={config.getBaseCoin(currency1.symbol)}
+                  size="20px"
+                  style={{ marginLeft: '8px' }}
+                ></TokenLogo>
                 <Text fontWeight={500} fontSize={20}>
                   {config.getBaseCoin(currency0.symbol)}/{config.getBaseCoin(currency1.symbol)}
                 </Text>
@@ -201,11 +205,19 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
         <FixedHeightRow>
           <RowFixed>
             {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
-            
+
             <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
-            <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+            <TokenLogo
+              symbol={config.getBaseCoin(currency1.symbol)}
+              size="20px"
+              style={{ marginLeft: '8px' }}
+            ></TokenLogo>
             <Text fontWeight={500} fontSize={20}>
-              {!currency0 || !currency1 ? <Dots>Loading</Dots> : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
+              {!currency0 || !currency1 ? (
+                <Dots>Loading</Dots>
+              ) : (
+                `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`
+              )}
             </Text>
           </RowFixed>
 
@@ -253,7 +265,11 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token0Deposited?.toSignificant(6)}
                   </Text>
-                  <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                  <TokenLogo
+                    symbol={config.getBaseCoin(currency0.symbol)}
+                    size="20px"
+                    style={{ marginLeft: '8px' }}
+                  ></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'
@@ -271,7 +287,11 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
                   <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
                     {token1Deposited?.toSignificant(6)}
                   </Text>
-                  <TokenLogo symbol={config.getBaseCoin(currency1.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
+                  <TokenLogo
+                    symbol={config.getBaseCoin(currency1.symbol)}
+                    size="20px"
+                    style={{ marginLeft: '8px' }}
+                  ></TokenLogo>
                 </RowFixed>
               ) : (
                 '-'

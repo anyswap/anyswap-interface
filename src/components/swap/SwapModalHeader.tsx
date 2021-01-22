@@ -103,7 +103,8 @@ export default function SwapModalHeader({
           <TYPE.italic textAlign="left" style={{ width: '100%' }}>
             {`Output is estimated. You will receive at least `}
             <b>
-              {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)} {config.getBaseCoin(trade.outputAmount.currency.symbol)}
+              {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)}{' '}
+              {config.getBaseCoin(trade.outputAmount.currency.symbol)}
             </b>
             {' or the transaction will revert.'}
           </TYPE.italic>
@@ -111,7 +112,8 @@ export default function SwapModalHeader({
           <TYPE.italic textAlign="left" style={{ width: '100%' }}>
             {`Input is estimated. You will sell at most `}
             <b>
-              {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)} {config.getBaseCoin(trade.inputAmount.currency.symbol)}
+              {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)}{' '}
+              {config.getBaseCoin(trade.inputAmount.currency.symbol)}
             </b>
             {' or the transaction will revert.'}
           </TYPE.italic>

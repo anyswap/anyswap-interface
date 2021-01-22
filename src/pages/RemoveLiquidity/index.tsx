@@ -400,13 +400,15 @@ export default function RemoveLiquidity({
                 Price
               </Text>
               <Text fontWeight={500} fontSize={16} color={theme.text1}>
-                1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
+                1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
+                {config.getBaseCoin(currencyB?.symbol)}
               </Text>
             </RowBetween>
             <RowBetween>
               <div />
               <Text fontWeight={500} fontSize={16} color={theme.text1}>
-                1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {config.getBaseCoin(currencyA?.symbol)}
+                1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
+                {config.getBaseCoin(currencyA?.symbol)}
               </Text>
             </RowBetween>
           </>
@@ -420,9 +422,9 @@ export default function RemoveLiquidity({
     )
   }
 
-  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
-    config.getBaseCoin(currencyA?.symbol)
-  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencyB?.symbol)}`
+  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${config.getBaseCoin(
+    currencyA?.symbol
+  )} and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencyB?.symbol)}`
 
   const liquidityPercentChangeCallback = useCallback(
     (value: number) => {
@@ -638,13 +640,15 @@ export default function RemoveLiquidity({
                 <RowBetween>
                   Price:
                   <div>
-                    1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
+                    1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
+                    {config.getBaseCoin(currencyB?.symbol)}
                   </div>
                 </RowBetween>
                 <RowBetween>
                   <div />
                   <div>
-                    1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {config.getBaseCoin(currencyA?.symbol)}
+                    1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
+                    {config.getBaseCoin(currencyA?.symbol)}
                   </div>
                 </RowBetween>
               </div>
@@ -692,7 +696,6 @@ export default function RemoveLiquidity({
           </AutoColumn>
         ) : null}
       </AppBody>
-
     </>
   )
 }

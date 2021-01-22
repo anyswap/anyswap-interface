@@ -69,7 +69,7 @@ const config: ConFig = {
       else return 1
     }
   },
-  getBaseCoin (value:any, type: number) {
+  getBaseCoin(value: any, type: number) {
     if (value && value === 'BASECURRENCY') {
       if (type) {
         return netConfig.name

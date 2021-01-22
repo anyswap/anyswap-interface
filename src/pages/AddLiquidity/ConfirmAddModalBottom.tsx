@@ -43,16 +43,16 @@ export function ConfirmAddModalBottom({
       <RowBetween>
         <TYPE.body>Rates</TYPE.body>
         <TYPE.body>
-          {`1 ${config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} = ${price?.toSignificant(4)} ${
-            config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
-          }`}
+          {`1 ${config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)} = ${price?.toSignificant(
+            4
+          )} ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}`}
         </TYPE.body>
       </RowBetween>
       <RowBetween style={{ justifyContent: 'flex-end' }}>
         <TYPE.body>
-          {`1 ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} = ${price?.invert().toSignificant(4)} ${
-            config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
-          }`}
+          {`1 ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)} = ${price
+            ?.invert()
+            .toSignificant(4)} ${config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}`}
         </TYPE.body>
       </RowBetween>
       <RowBetween>

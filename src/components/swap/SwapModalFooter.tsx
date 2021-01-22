@@ -83,8 +83,8 @@ export default function SwapModalFooter({
             </TYPE.black>
             <TYPE.black fontSize={14} marginLeft={'4px'}>
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? (config.getBaseCoin(trade.outputAmount.currency.symbol))
-                : (config.getBaseCoin(trade.inputAmount.currency.symbol))}
+                ? config.getBaseCoin(trade.outputAmount.currency.symbol)
+                : config.getBaseCoin(trade.inputAmount.currency.symbol)}
             </TYPE.black>
           </RowFixed>
         </RowBetween>
@@ -105,7 +105,9 @@ export default function SwapModalFooter({
             <QuestionHelper text="A portion of each trade (0.30%) goes to liquidity providers as a protocol incentive." />
           </RowFixed>
           <TYPE.black fontSize={14}>
-            {realizedLPFee ? realizedLPFee?.toSignificant(6) + ' ' + config.getBaseCoin(trade.inputAmount.currency.symbol) : '-'}
+            {realizedLPFee
+              ? realizedLPFee?.toSignificant(6) + ' ' + config.getBaseCoin(trade.inputAmount.currency.symbol)
+              : '-'}
           </TYPE.black>
         </RowBetween>
       </AutoColumn>

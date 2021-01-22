@@ -414,7 +414,10 @@ export default function DashboardDtil() {
                           <DBTd>
                             <TokenTableCoinBox>
                               <TokenTableLogo>
-                                <TokenLogo symbol={config.getBaseCoin(item?.token?.symbol)} size={'1.625rem'}></TokenLogo>
+                                <TokenLogo
+                                  symbol={config.getBaseCoin(item?.token?.symbol)}
+                                  size={'1.625rem'}
+                                ></TokenLogo>
                               </TokenTableLogo>
                               <TokenNameBox>
                                 <h3>{config.getBaseCoin(item?.token?.symbol)}</h3>

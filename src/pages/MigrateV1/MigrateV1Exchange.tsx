@@ -305,7 +305,9 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity will become Uniswap V2 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
+        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${
+          config.symbol
+        } liquidity will become Uniswap V2 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
       </TYPE.darkGray>
     </AutoColumn>
   )

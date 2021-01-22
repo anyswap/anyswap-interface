@@ -201,7 +201,9 @@ export default function Manage({
               </RowBetween>
               <RowBetween style={{ marginBottom: '1rem' }}>
                 <TYPE.white fontSize={14}>
-                  {`UNI-V2 LP tokens are required. Once you've added liquidity to the ${config.getBaseCoin(currencyA?.symbol)}-${config.getBaseCoin(currencyB?.symbol)} pool you can stake your liquidity tokens on this page.`}
+                  {`UNI-V2 LP tokens are required. Once you've added liquidity to the ${config.getBaseCoin(
+                    currencyA?.symbol
+                  )}-${config.getBaseCoin(currencyB?.symbol)} pool you can stake your liquidity tokens on this page.`}
                 </TYPE.white>
               </RowBetween>
               <ButtonPrimary

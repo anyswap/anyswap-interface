@@ -212,7 +212,9 @@ export function useSwapCallback(
             const inputAmount = trade.inputAmount.toSignificant(3)
             const outputAmount = trade.outputAmount.toSignificant(3)
 
-            const base = `Swap ${inputAmount} ${config.getBaseCoin(inputSymbol)} for ${outputAmount} ${config.getBaseCoin(outputSymbol)}`
+            const base = `Swap ${inputAmount} ${config.getBaseCoin(
+              inputSymbol
+            )} for ${outputAmount} ${config.getBaseCoin(outputSymbol)}`
             const withRecipient =
               recipient === account
                 ? base
