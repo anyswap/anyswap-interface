@@ -1,12 +1,16 @@
 import { UNI } from './../../constants/index'
-import { TokenAmount, JSBI, ChainId } from '@uniswap/sdk'
+import { TokenAmount, JSBI } from '@uniswap/sdk'
+// import { TokenAmount, JSBI, ChainId } from '@uniswap/sdk'
 import { TransactionResponse } from '@ethersproject/providers'
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { useActiveWeb3React } from '../../hooks'
 import { useMerkleDistributorContract } from '../../hooks/useContract'
 import { useSingleCallResult } from '../multicall/hooks'
-import { calculateGasMargin, isAddress } from '../../utils'
+// import { calculateGasMargin, isAddress } from '../../utils'
+import { calculateGasMargin } from '../../utils'
 import { useTransactionAdder } from '../transactions/hooks'
+
+import config from '../../config'
 
 interface UserClaimData {
   index: number
@@ -19,51 +23,52 @@ interface UserClaimData {
   }
 }
 
-const CLAIM_PROMISES: { [key: string]: Promise<UserClaimData | null> } = {}
+// const CLAIM_PROMISES: { [key: string]: Promise<UserClaimData | null> } = {}
 
 // returns the claim for the given address, or null if not valid
-function fetchClaim(account: string, chainId: ChainId): Promise<UserClaimData | null> {
-  const formatted = isAddress(account)
-  if (!formatted) return Promise.reject(new Error('Invalid address'))
-  const key = `${chainId}:${account}`
+// function fetchClaim(account: string, chainId: ChainId): Promise<UserClaimData | null> {
+//   const formatted = isAddress(account)
+//   if (!formatted) return Promise.reject(new Error('Invalid address'))
+//   const key = `${chainId}:${account}`
 
-  return (CLAIM_PROMISES[key] =
-    CLAIM_PROMISES[key] ??
-    fetch(`https://gentle-frost-9e74.uniswap.workers.dev/${chainId}/${formatted}`)
-      .then(res => {
-        if (res.status === 200) {
-          return res.json()
-        } else {
-          console.debug(`No claim for account ${formatted} on chain ID ${chainId}`)
-          return null
-        }
-      })
-      .catch(error => {
-        console.error('Failed to get claim data', error)
-      }))
-}
+//   return (CLAIM_PROMISES[key] =
+//     CLAIM_PROMISES[key] ??
+//     fetch(`https://gentle-frost-9e74.uniswap.workers.dev/${chainId}/${formatted}`)
+//       .then(res => {
+//         if (res.status === 200) {
+//           return res.json()
+//         } else {
+//           console.debug(`No claim for account ${formatted} on chain ID ${chainId}`)
+//           return null
+//         }
+//       })
+//       .catch(error => {
+//         console.error('Failed to get claim data', error)
+//       }))
+// }
 
 // parse distributorContract blob and detect if user has claim data
 // null means we know it does not
 export function useUserClaimData(account: string | null | undefined): UserClaimData | null | undefined {
-  const { chainId } = useActiveWeb3React()
+  // const { chainId } = useActiveWeb3React()
 
-  const key = `${chainId}:${account}`
-  const [claimInfo, setClaimInfo] = useState<{ [key: string]: UserClaimData | null }>({})
+  // const key = `${chainId}:${account}`
+  // const [claimInfo, setClaimInfo] = useState<{ [key: string]: UserClaimData | null }>({})
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    fetchClaim(account, chainId).then(accountClaimInfo =>
-      setClaimInfo(claimInfo => {
-        return {
-          ...claimInfo,
-          [key]: accountClaimInfo
-        }
-      })
-    )
-  }, [account, chainId, key])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   fetchClaim(account, chainId).then(accountClaimInfo =>
+  //     setClaimInfo(claimInfo => {
+  //       return {
+  //         ...claimInfo,
+  //         [key]: accountClaimInfo
+  //       }
+  //     })
+  //   )
+  // }, [account, chainId, key])
 
-  return account && chainId ? claimInfo[key] : undefined
+  // return account && chainId ? claimInfo[key] : undefined
+  return undefined
 }
 
 // check if user is in blob and has not yet claimed UNI
@@ -112,7 +117,7 @@ export function useClaimCallback(
         .claim(...args, { value: null, gasLimit: calculateGasMargin(estimatedGasLimit) })
         .then((response: TransactionResponse) => {
           addTransaction(response, {
-            summary: `Claimed ${unClaimedAmount?.toSignificant(4)} UNI`,
+            summary: `Claimed ${unClaimedAmount?.toSignificant(4)} ${config.baseCurrency}`,
             claim: { recipient: account }
           })
           return response.hash

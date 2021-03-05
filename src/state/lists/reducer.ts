@@ -5,6 +5,8 @@ import { DEFAULT_LIST_OF_LISTS, DEFAULT_TOKEN_LIST_URL } from '../../constants/l
 import { updateVersion } from '../global/actions'
 import { acceptListUpdate, addList, fetchTokenList, removeList, selectList } from './actions'
 
+import config from '../../config'
+
 export interface ListsState {
   readonly byUrl: {
     readonly [url: string]: {
@@ -53,24 +55,14 @@ export default createReducer(initialState, builder => {
         error: null
       }
     })
-    .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
+    // .addCase(fetchTokenList.fulfilled, (state, { payload: { requestId, tokenList, url } }) => {
+    .addCase(fetchTokenList.fulfilled, (state, { payload: { tokenList, url } }) => {
       // const current = state.byUrl[url]?.current
-      state.byUrl[url] = {
-        ...state.byUrl[url],
-        loadingRequestId: requestId,
-        error: null,
-        current: tokenList,
-        pendingUpdate: null
-      }
       // const loadingRequestId = state.byUrl[url]?.loadingRequestId
-      // 如果更新不执行任何操作，则不执行任何操作
+
+      // 如果更新不起作用，则无操作
       // if (current) {
-      // const upgradeType = getVersionUpgrade(current.version, tokenList.version)
-      // console.log(current)
-      // console.log(current.version)
-      // console.log(tokenList)
-      // console.log(VersionUpgrade)
-      // console.log(state.byUrl[url])
+      //   const upgradeType = getVersionUpgrade(current.version, tokenList.version)
       //   if (upgradeType === VersionUpgrade.NONE) return
       //   if (loadingRequestId === null || loadingRequestId === requestId) {
       //     state.byUrl[url] = {
@@ -90,18 +82,55 @@ export default createReducer(initialState, builder => {
       //     pendingUpdate: null
       //   }
       // }
-    })
-    .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
-      if (state.byUrl[url]?.loadingRequestId !== requestId) {
-        // 没有行动，因为这不是最新的请求
-        return
+      // console.log(tokenList)
+      // console.log(config.tokenList)
+      
+      if (tokenList && tokenList.tokens && tokenList.tokens.length > 0) {
+        // tokenList.tokens.unshift(...config.tokenList.tokens)
+        const tlArr:Array<string> = []
+        for (const obj of tokenList.tokens) {
+          if (!tlArr.includes(obj.address)) {
+            tlArr.push(obj.address)
+          }
+        }
+        for (const obj of config.tokenList.tokens) {
+          if (!tlArr.includes(obj.address)) {
+            tokenList.tokens.unshift(obj)
+          }
+        }
+      } else {
+        tokenList = config.tokenList
       }
-
+      // console.log(tokenList)
       state.byUrl[url] = {
         ...state.byUrl[url],
         loadingRequestId: null,
-        error: errorMessage,
-        current: null,
+        error: null,
+        current: tokenList,
+        pendingUpdate: null
+      }
+    })
+    // .addCase(fetchTokenList.rejected, (state, { payload: { url, requestId, errorMessage } }) => {
+    .addCase(fetchTokenList.rejected, (state, { payload: { url } }) => {
+      // console.log(state.byUrl[url]?.loadingRequestId)
+      // console.log(requestId)
+      // if (state.byUrl[url]?.loadingRequestId !== requestId) {
+      //   // no-op since it's not the latest request
+      //   return
+      // }
+      // console.log(123)
+      // state.byUrl[url] = {
+      //   ...state.byUrl[url],
+      //   loadingRequestId: null,
+      //   error: errorMessage,
+      //   current: config.tokenList,
+      //   pendingUpdate: null
+      // }
+      state.byUrl[url] = {
+        ...state.byUrl[url],
+        loadingRequestId: null,
+        error: null,
+        current: config.tokenList,
         pendingUpdate: null
       }
     })
@@ -136,7 +165,7 @@ export default createReducer(initialState, builder => {
       }
     })
     .addCase(updateVersion, state => {
-      // state loaded from localStorage, but new lists have never been initialized
+      // 从localStorage加载的状态，但从未初始化新列表
       if (!state.lastInitializedDefaultListOfLists) {
         state.byUrl = initialState.byUrl
         state.selectedListUrl = DEFAULT_TOKEN_LIST_URL

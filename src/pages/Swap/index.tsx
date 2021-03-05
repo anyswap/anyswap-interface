@@ -2,6 +2,7 @@ import { CurrencyAmount, JSBI, Token, Trade } from '@uniswap/sdk'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ArrowDown } from 'react-feather'
 import { Text } from 'rebass'
+import { useTranslation } from 'react-i18next'
 import { ThemeContext } from 'styled-components'
 import AddressInputPanel from '../../components/AddressInputPanel'
 import { ButtonError, ButtonLight, ButtonPrimary, ButtonConfirmed } from '../../components/Button'
@@ -12,7 +13,8 @@ import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 import { AutoRow, RowBetween } from '../../components/Row'
 import AdvancedSwapDetailsDropdown from '../../components/swap/AdvancedSwapDetailsDropdown'
-import BetterTradeLink, { DefaultVersionLink } from '../../components/swap/BetterTradeLink'
+// import BetterTradeLink, { DefaultVersionLink } from '../../components/swap/BetterTradeLink'
+import { DefaultVersionLink } from '../../components/swap/BetterTradeLink'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import { ArrowWrapper, BottomGrouping, SwapCallbackError, Wrapper } from '../../components/swap/styleds'
 import TradePrice from '../../components/swap/TradePrice'
@@ -45,14 +47,11 @@ import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
-import { useTranslation } from 'react-i18next'
 import Title from '../../components/Title'
 import SwapIcon from '../../components/SwapIcon'
 
 import config from '../../config'
 
-// import {getPairAddress} from '../../utils/tools/getPairAddress'
-// getPairAddress()
 export default function Swap() {
   const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
@@ -261,7 +260,8 @@ export default function Swap() {
   const handleOutputSelect = useCallback(outputCurrency => onCurrencySelection(Field.OUTPUT, outputCurrency), [
     onCurrencySelection
   ])
-
+  // console.log(currencies)
+  // console.log(Field.OUTPUT)
   return (
     <>
       <TokenWarningModal
@@ -311,9 +311,7 @@ export default function Swap() {
 
           <AutoColumn gap={'md'}>
             <CurrencyInputPanel
-              label={
-                independentField === Field.OUTPUT && !showWrap && trade ? t('input') + ' ' + t('estimated') : t('input')
-              }
+              label={independentField === Field.OUTPUT && !showWrap && trade ? t('FromEstimated') : t('From')}
               value={formattedAmounts[Field.INPUT]}
               showMaxButton={!atMaxAmountInput}
               currency={currencies[Field.INPUT]}
@@ -344,7 +342,7 @@ export default function Swap() {
                 </ArrowWrapper>
                 {recipient === null && !showWrap && isExpertMode ? (
                   <LinkStyledButton id="add-recipient-button" onClick={() => onChangeRecipient('')}>
-                    + Add a send (optional)
+                    + {t('AddSend')}
                   </LinkStyledButton>
                 ) : null}
               </AutoRow>
@@ -352,11 +350,7 @@ export default function Swap() {
             <CurrencyInputPanel
               value={formattedAmounts[Field.OUTPUT]}
               onUserInput={handleTypeOutput}
-              label={
-                independentField === Field.INPUT && !showWrap && trade
-                  ? t('output') + ' ' + t('estimated')
-                  : t('output')
-              }
+              label={independentField === Field.INPUT && !showWrap && trade ? t('ToEstimated') : t('To')}
               showMaxButton={false}
               currency={currencies[Field.OUTPUT]}
               onCurrencySelect={handleOutputSelect}
@@ -371,7 +365,7 @@ export default function Swap() {
                     <ArrowDown size="16" color={theme.text2} />
                   </ArrowWrapper>
                   {/* <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
-                    - Remove send
+                    - {t('RemoveSend')}
                   </LinkStyledButton> */}
                 </AutoRow>
                 <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
@@ -384,7 +378,7 @@ export default function Swap() {
                   {Boolean(trade) && (
                     <RowBetween align="center">
                       <Text fontWeight={500} fontSize={14} color={theme.text2}>
-                        Price
+                      {t('Price')}
                       </Text>
                       <TradePrice
                         price={trade?.executionPrice}
@@ -396,7 +390,7 @@ export default function Swap() {
                   {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
                     <RowBetween align="center">
                       <ClickableText fontWeight={500} fontSize={14} color={theme.text2} onClick={toggleSettings}>
-                        Slippage Tolerance
+                        {t('SlippageTolerance')}
                       </ClickableText>
                       <ClickableText fontWeight={500} fontSize={14} color={theme.text2} onClick={toggleSettings}>
                         {allowedSlippage / 100}%
@@ -413,11 +407,11 @@ export default function Swap() {
             ) : showWrap ? (
               <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
                 {wrapInputError ??
-                  (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
+                  (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)}
               </ButtonPrimary>
             ) : noRoute && userHasSpecifiedInputOutput ? (
               <GreyCard style={{ textAlign: 'center' }}>
-                <TYPE.main mb="4px">{t('InsufficientLiquidity')}</TYPE.main>
+                <TYPE.main mb="4px">{t('tip16')}</TYPE.main>
               </GreyCard>
             ) : showApproveFlow ? (
               <RowBetween>
@@ -430,12 +424,12 @@ export default function Swap() {
                 >
                   {approval === ApprovalState.PENDING ? (
                     <AutoRow gap="6px" justify="center">
-                      Approving <Loader stroke="white" />
+                      {t('Approving')} <Loader stroke="white" />
                     </AutoRow>
                   ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
-                    'Approved'
+                    t('Approved')
                   ) : (
-                    'Approve ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
+                    t('Approve') + ' ' + config.getBaseCoin(currencies[Field.INPUT]?.symbol)
                   )}
                 </ButtonConfirmed>
                 <ButtonError
@@ -461,8 +455,8 @@ export default function Swap() {
                 >
                   <Text fontSize={16} fontWeight={500}>
                     {priceImpactSeverity > 3 && !isExpertMode
-                      ? `Price Impact High`
-                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                      ? t('PriceImpactHigh')
+                      : `${t('swap')}${priceImpactSeverity > 2 ? ' ' + t('Anyway') : ''}`}
                   </Text>
                 </ButtonError>
               </RowBetween>
@@ -489,8 +483,8 @@ export default function Swap() {
                   {swapInputError
                     ? swapInputError
                     : priceImpactSeverity > 3 && !isExpertMode
-                    ? `Price Impact Too High`
-                    : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                    ? t('PriceImpactTooHigh')
+                    : `${t('swap')}${priceImpactSeverity > 2 ? ' ' + t('Anyway') : ''}`}
                 </Text>
               </ButtonError>
             )}
@@ -501,7 +495,8 @@ export default function Swap() {
             )}
             {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
             {betterTradeLinkVersion ? (
-              <BetterTradeLink version={betterTradeLinkVersion} />
+              // <BetterTradeLink version={betterTradeLinkVersion} />
+              ''
             ) : toggledVersion !== DEFAULT_VERSION && defaultTrade ? (
               <DefaultVersionLink />
             ) : null}

@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@uniswap/sdk'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList } from 'react-window'
+import { useTranslation } from 'react-i18next' 
 import { Text } from 'rebass'
 import styled from 'styled-components'
 import { useActiveWeb3React } from '../../hooks'
@@ -11,7 +12,6 @@ import { LinkStyledButton, TYPE } from '../../theme'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
 import Column from '../Column'
 import { RowFixed } from '../Row'
-// import CurrencyLogo from '../CurrencyLogo'
 import TokenLogo from '../TokenLogo'
 import { MouseoverTooltip } from '../Tooltip'
 import { FadedSpan, MenuItem } from './styleds'
@@ -97,6 +97,7 @@ function CurrencyRow({
   style: CSSProperties
 }) {
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
   const key = currencyKey(currency)
   const selectedTokenList = useSelectedTokenList()
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
@@ -137,7 +138,7 @@ function CurrencyRow({
                   if (chainId && currency instanceof Token) removeToken(chainId, currency.address)
                 }}
               >
-                (Remove)
+                ({t('Remove')})
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
@@ -150,7 +151,7 @@ function CurrencyRow({
                   if (currency instanceof Token) addToken(currency)
                 }}
               >
-                (Add)
+                ({t('Add')})
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
@@ -183,10 +184,10 @@ export default function CurrencyList({
 }) {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
   // console.log(itemData)
-  // console.log(Currency)
-  // console.log(currencies)
   const Row = useCallback(
     ({ data, index, style }) => {
+      // console.log(data)
+      // console.log(index)
       const currency: Currency = data[index]
       const isSelected = Boolean(selectedCurrency && currencyEquals(selectedCurrency, currency))
       const otherSelected = Boolean(otherCurrency && currencyEquals(otherCurrency, currency))

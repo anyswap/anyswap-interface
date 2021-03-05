@@ -1,4 +1,5 @@
-import { TokenAmount } from '@uniswap/sdk'
+// import { ChainId, TokenAmount } from '@uniswap/sdk'
+// import { ChainId } from '@uniswap/sdk'
 import React, { useState } from 'react'
 import { Text } from 'rebass'
 // import { NavLink } from 'react-router-dom'
@@ -11,9 +12,10 @@ import Logo from '../../assets/svg/logo.svg'
 import LogoDark from '../../assets/svg/logo_white.svg'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
-import { useETHBalances, useAggregateUniBalance } from '../../state/wallet/hooks'
+// import { useETHBalances, useAggregateUniBalance } from '../../state/wallet/hooks'
+import { useETHBalances } from '../../state/wallet/hooks'
 import { CardNoise } from '../earn/styled'
-import { CountUp } from 'use-count-up'
+// import { CountUp } from 'use-count-up'
 // import { TYPE, ExternalLink } from '../../theme'
 import { TYPE } from '../../theme'
 
@@ -31,9 +33,9 @@ import { useUserHasSubmittedClaim } from '../../state/transactions/hooks'
 import { Dots } from '../swap/styleds'
 import Modal from '../Modal'
 import UniBalanceContent from './UniBalanceContent'
-import usePrevious from '../../hooks/usePrevious'
-
+// import usePrevious from '../../hooks/usePrevious'
 import config from '../../config'
+
 
 const HeaderFrame = styled.div`
   display: grid;
@@ -58,7 +60,6 @@ const HeaderFrame = styled.div`
     width: calc(100%);
     position: relative;
   `};
-
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
         padding: 0.5rem 1rem;
   `}
@@ -109,6 +110,7 @@ const HeaderRow = styled(RowFixed)`
   position: relative;
   height: 100%;
   ${({ theme }) => theme.mediaWidth.upToMedium`
+  height: 100%;
    width: 100%;
   `};
 `
@@ -155,7 +157,7 @@ const UNIAmount = styled(AccountElement)`
   height: 36px;
   font-weight: 500;
   background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
+  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #fff 0%, #2172e5 100%), #edeef2;
 `
 
 const UNIWrapper = styled.span`
@@ -289,6 +291,13 @@ const UniIcon = styled.div`
 // `}
 // `
 
+// const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
+//   [ChainId.RINKEBY]: 'Rinkeby',
+//   [ChainId.ROPSTEN]: 'Ropsten',
+//   [ChainId.GÖRLI]: 'Görli',
+//   [ChainId.KOVAN]: 'Kovan'
+// }
+
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
   // const { t } = useTranslation()
@@ -302,13 +311,13 @@ export default function Header() {
 
   const { claimTxn } = useUserHasSubmittedClaim(account ?? undefined)
 
-  const aggregateBalance: TokenAmount | undefined = useAggregateUniBalance()
+  // const aggregateBalance: TokenAmount | undefined = useAggregateUniBalance()
 
   const [showUniBalanceModal, setShowUniBalanceModal] = useState(false)
   const showClaimPopup = useShowClaimPopup()
 
-  const countUpValue = aggregateBalance?.toFixed(0) ?? '0'
-  const countUpValuePrevious = usePrevious(countUpValue) ?? '0'
+  // const countUpValue = aggregateBalance?.toFixed(0) ?? '0'
+  // const countUpValuePrevious = usePrevious(countUpValue) ?? '0'
 
   return (
     <HeaderFrame>
@@ -317,9 +326,9 @@ export default function Header() {
         <UniBalanceContent setShowUniBalanceModal={setShowUniBalanceModal} />
       </Modal>
       <HeaderRow>
-        <Title href=".">
+        <Title href="https://htswap.io/" target="__blank">
           <UniIcon>
-            <img height={'42px'} src={isDark ? LogoDark : Logo} alt="logo" />
+            <img src={isDark ? LogoDark : Logo} alt="logo" />
           </UniIcon>
         </Title>
         {/* <HeaderLinks>
@@ -339,13 +348,13 @@ export default function Header() {
           >
             {t('pool')}
           </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
+          {/* <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
             UNI
           </StyledNavLink>
           <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
             Vote
-          </StyledNavLink>
-          <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
+          </StyledNavLink> */}
+          {/* <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
             Charts <span style={{ fontSize: '11px' }}>↗</span>
           </StyledExternalLink>
         </HeaderLinks> */}
@@ -357,13 +366,13 @@ export default function Header() {
             <UNIWrapper onClick={toggleClaimModal}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 <TYPE.white padding="0 2px">
-                  {claimTxn && !claimTxn?.receipt ? <Dots>Claiming UNI</Dots> : 'Claim UNI'}
+                  {claimTxn && !claimTxn?.receipt ? <Dots>Claiming UNI</Dots> : ('Claim ' + config.baseCurrency)}
                 </TYPE.white>
               </UNIAmount>
               <CardNoise />
             </UNIWrapper>
           )}
-          {!availableClaim && aggregateBalance && (
+          {/* {!availableClaim && aggregateBalance && (
             <UNIWrapper onClick={() => setShowUniBalanceModal(true)}>
               <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
                 {account && (
@@ -388,7 +397,7 @@ export default function Header() {
               </UNIAmount>
               <CardNoise />
             </UNIWrapper>
-          )}
+          )} */}
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>

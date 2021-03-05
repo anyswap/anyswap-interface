@@ -1,13 +1,16 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+// import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components'
-import { Pair, Token } from '@uniswap/sdk'
+import { Pair } from '@uniswap/sdk'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 
 import FullPositionCard from '../../components/PositionCard'
-import { useUserHasLiquidityInAllTokens } from '../../data/V1'
+// import { useUserHasLiquidityInAllTokens } from '../../data/V1'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { StyledInternalLink, ExternalLink, TYPE, HideSmall } from '../../theme'
+// import { StyledInternalLink, ExternalLink, TYPE, HideSmall } from '../../theme'
+import { StyledInternalLink, TYPE, HideSmall } from '../../theme'
 import { Text } from 'rebass'
 import Card from '../../components/Card'
 import { RowBetween, RowFixed } from '../../components/Row'
@@ -16,13 +19,10 @@ import { AutoColumn } from '../../components/Column'
 
 import { useActiveWeb3React } from '../../hooks'
 import { usePairs } from '../../data/Reserves'
-// import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import { useTrackedTokenPairs } from '../../state/user/hooks'
-import { Dots } from '../../components/swap/styleds'
-import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
-import { useTranslation } from 'react-i18next'
+import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+// import { Dots } from '../../components/swap/styleds'
+// import { CardSection, DataCard, CardNoise, CardBGImage } from '../../components/earn/styled'
 
-import { getPairsAddress } from '../../utils/tools/getPairAddress'
 
 import config from '../../config'
 
@@ -31,10 +31,10 @@ const PageWrapper = styled(AutoColumn)`
   width: 100%;
 `
 
-const VoteCard = styled(DataCard)`
-  background: radial-gradient(76.02% 75.41% at 1.84% 0%, #27ae60 0%, #000000 100%);
-  overflow: hidden;
-`
+// const VoteCard = styled(DataCard)`
+//   background: radial-gradient(76.02% 75.41% at 1.84% 0%, #27ae60 0%, #000000 100%);
+//   overflow: hidden;
+// `
 
 const TitleRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
@@ -77,10 +77,11 @@ const EmptyProposals = styled.div`
   justify-content: center;
   align-items: center;
 `
-interface TPWLT {
-  liquidityToken: Token
-  tokens: [Token, Token]
-}
+
+const LoadingBox = styled.div`
+color:#999;
+`
+
 export default function Pool() {
   const theme = useContext(ThemeContext)
   const { account } = useActiveWeb3React()
@@ -88,33 +89,33 @@ export default function Pool() {
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
-  // const tokenPairsWithLiquidityTokens = useMemo(
-  //   () => trackedTokenPairs.map(tokens => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
-  //   [trackedTokenPairs]
-  // )
-  const [tokenPairsWithLiquidityTokens, setTokenPairsWithLiquidityTokens] = useState<Array<TPWLT>>([])
-  const getGokenPairsWithLiquidityTokens = useCallback(() => {
-    getPairsAddress(trackedTokenPairs).then((res: any) => {
-      console.log(trackedTokenPairs)
-      console.log(res)
-      if (res && res.length > 0) {
-        const arr = []
-        for (const obj of res) {
-          if (obj.pairAddress) {
-            arr.push({
-              liquidityToken: new Token(obj.chainId, obj.pairAddress, 18, 'UNI-V2', 'Uniswap V2'),
-              tokens: obj.tokens
-            })
-          }
-        }
-        console.log(arr)
-        setTokenPairsWithLiquidityTokens(arr)
-      }
-    })
-  }, [trackedTokenPairs])
-  useEffect(() => {
-    getGokenPairsWithLiquidityTokens()
-  }, [getGokenPairsWithLiquidityTokens])
+  const tokenPairsWithLiquidityTokens = useMemo(
+    () => trackedTokenPairs.map(tokens => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
+    [trackedTokenPairs]
+  )
+  // const [tokenPairsWithLiquidityTokens, setTokenPairsWithLiquidityTokens] = useState<Array<TPWLT>>([])
+  // const getGokenPairsWithLiquidityTokens = useCallback(() => {
+  //   getPairsAddress(trackedTokenPairs).then((res: any) => {
+  //     console.log(trackedTokenPairs)
+  //     console.log(res)
+  //     if (res && res.length > 0) {
+  //       const arr = []
+  //       for (const obj of res) {
+  //         if (obj.pairAddress) {
+  //           arr.push({
+  //             liquidityToken: new Token(obj.chainId, obj.pairAddress, 18, 'UNI-V2', 'Uniswap V2'),
+  //             tokens: obj.tokens
+  //           })
+  //         }
+  //       }
+  //       console.log(arr)
+  //       setTokenPairsWithLiquidityTokens(arr)
+  //     }
+  //   })
+  // }, [trackedTokenPairs])
+  // useEffect(() => {
+  //   getGokenPairsWithLiquidityTokens()
+  // }, [getGokenPairsWithLiquidityTokens])
   const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map(tpwlt => tpwlt.liquidityToken), [
     tokenPairsWithLiquidityTokens
   ])
@@ -144,14 +145,14 @@ export default function Pool() {
 
   const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
 
-  const hasV1Liquidity = useUserHasLiquidityInAllTokens()
+  // const hasV1Liquidity = useUserHasLiquidityInAllTokens()
 
   return (
     <>
       <PageWrapper>
         <SwapPoolTabs active={'pool'} />
 
-        <VoteCard>
+        {/* <VoteCard>
           <CardBGImage />
           <CardNoise />
           <CardSection>
@@ -173,7 +174,7 @@ export default function Pool() {
           </CardSection>
           <CardBGImage />
           <CardNoise />
-        </VoteCard>
+        </VoteCard> */}
 
         <AutoColumn gap="lg" justify="center">
           <AutoColumn gap="lg" style={{ width: '100%' }}>
@@ -184,10 +185,10 @@ export default function Pool() {
                 </TYPE.mediumHeader>
               </HideSmall>
               <ButtonRow>
-                <ResponsiveButtonSecondary as={Link} padding="6px 8px" to={'/create/' + config.symbol}>
+                <ResponsiveButtonSecondary as={Link} padding="6px 8px" to={"/create/" + config.symbol}>
                   {t('CreatePair')}
                 </ResponsiveButtonSecondary>
-                <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 8px" to={'/add/' + config.symbol}>
+                <ResponsiveButtonPrimary id="join-pool-button" as={Link} padding="6px 8px" to={"/add/" + config.symbol}>
                   <Text fontWeight={500} fontSize={16}>
                     {t('AddLiquidity')}
                   </Text>
@@ -198,14 +199,15 @@ export default function Pool() {
             {!account ? (
               <Card padding="40px">
                 <TYPE.body color={theme.text3} textAlign="center">
-                  {t('ViewLiquidity')}
+                  {t('ConnectWalletViewLiquidity')}
                 </TYPE.body>
               </Card>
             ) : v2IsLoading ? (
               <EmptyProposals>
-                <TYPE.body color={theme.text3} textAlign="center">
+                {/* <TYPE.body color={theme.text3} textAlign="center">
                   <Dots>Loading</Dots>
-                </TYPE.body>
+                </TYPE.body> */}
+                <LoadingBox>{t('Loading')}</LoadingBox>
               </EmptyProposals>
             ) : allV2PairsWithLiquidity?.length > 0 ? (
               <>
@@ -225,16 +227,20 @@ export default function Pool() {
             ) : (
               <EmptyProposals>
                 <TYPE.body color={theme.text3} textAlign="center">
-                  {t('NoLiquidity')}
+                  {t('NoLiquidityFound')}
                 </TYPE.body>
               </EmptyProposals>
             )}
 
             <AutoColumn justify={'center'} gap="md">
               <Text textAlign="center" fontSize={14} style={{ padding: '.5rem 0 .5rem 0' }}>
-                {hasV1Liquidity ? t('hasV1Liquidity') : t('hasV1Liquidity1')}{' '}
+                {/* {hasV1Liquidity ? 'Uniswap V1 liquidity found!' : "Don't see a pool you joined?"}{' '}
                 <StyledInternalLink id="import-pool-link" to={hasV1Liquidity ? '/migrate/v1' : '/find'}>
-                  {hasV1Liquidity ? t('MigrateNow') : t('ImportIt')}
+                  {hasV1Liquidity ? 'Migrate now.' : 'Import it.'}
+                </StyledInternalLink> */}
+                {t('DoNotSeeYouPool')}
+                <StyledInternalLink id="import-pool-link" to={'/find'}>
+                  {t('ImportIt')}
                 </StyledInternalLink>
               </Text>
             </AutoColumn>

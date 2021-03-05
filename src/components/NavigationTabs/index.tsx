@@ -75,7 +75,7 @@ export function FindPoolTabs() {
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>{t('ImportPool')}</ActiveText>
-        <QuestionHelper text={t('ImportPoolTip')} />
+        <QuestionHelper text={t('tip31')} />
       </RowBetween>
     </Tabs>
   )
@@ -90,7 +90,13 @@ export function AddRemoveTabs({ adding, creating }: { adding: boolean; creating:
           <StyledArrowLeft />
         </HistoryLink>
         <ActiveText>{creating ? t('CreatePair') : adding ? t('AddLiquidity') : t('RemoveLiquidity')}</ActiveText>
-        <QuestionHelper text={adding ? t('AddRemoveTabsTip1') : t('AddRemoveTabsTip2')} />
+        <QuestionHelper
+          text={
+            adding
+              ? t('tip3')
+              : t('tip4')
+          }
+        />
       </RowBetween>
     </Tabs>
   )

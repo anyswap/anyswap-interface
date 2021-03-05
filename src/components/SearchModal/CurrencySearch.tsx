@@ -25,6 +25,8 @@ import { useTokenComparator } from './sorting'
 import { PaddedColumn, SearchInput, Separator } from './styleds'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
+import config from '../../config'
+
 interface CurrencySearchProps {
   isOpen: boolean
   onDismiss: () => void
@@ -32,7 +34,7 @@ interface CurrencySearchProps {
   onCurrencySelect: (currency: Currency) => void
   otherSelectedCurrency?: Currency | null
   showCommonBases?: boolean
-  onChangeList: () => void
+  // onChangeList: () => void
 }
 
 export function CurrencySearch({
@@ -42,7 +44,7 @@ export function CurrencySearch({
   showCommonBases,
   onDismiss,
   isOpen,
-  onChangeList
+  // onChangeList
 }: CurrencySearchProps) {
   const { t } = useTranslation()
   const { chainId } = useActiveWeb3React()
@@ -69,7 +71,7 @@ export function CurrencySearch({
 
   const showETH: boolean = useMemo(() => {
     const s = searchQuery.toLowerCase().trim()
-    return s === '' || s === 'e' || s === 'et' || s === 'eth'
+    return s === '' || config.symbol.toLowerCase().indexOf(s) !== -1
   }, [searchQuery])
 
   const tokenComparator = useTokenComparator(invertSearchOrder)
@@ -81,6 +83,8 @@ export function CurrencySearch({
 
   const filteredSortedTokens: Token[] = useMemo(() => {
     if (searchToken) return [searchToken]
+    // console.log(filteredTokens)
+    // console.log(filteredTokens)
     const sorted = filteredTokens.sort(tokenComparator)
     // console.log(sorted)
     const symbolMatch = searchQuery
@@ -91,7 +95,7 @@ export function CurrencySearch({
 
     return [
       ...(searchToken ? [searchToken] : []),
-      // sort any exact symbol matches first
+      // 首先对任何完全匹配的符号进行排序
       ...sorted.filter(token => token.symbol?.toLowerCase() === symbolMatch[0]),
       ...sorted.filter(token => token.symbol?.toLowerCase() !== symbolMatch[0])
     ]
@@ -146,7 +150,7 @@ export function CurrencySearch({
         <RowBetween>
           <Text fontWeight={500} fontSize={16}>
             {t('selectToken')}
-            <QuestionHelper text={t('selectTokenTip')} />
+            <QuestionHelper text={t('tip6')} />
           </Text>
           <CloseIcon onClick={onDismiss} />
         </RowBetween>

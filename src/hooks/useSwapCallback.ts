@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { JSBI, Percent, Router, SwapParameters, Trade, TradeType } from '@uniswap/sdk'
+import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../constants'
 import { getTradeVersion, useV1TradeExchangeAddress } from '../data/V1'
@@ -13,7 +14,6 @@ import { useV1ExchangeContract } from './useContract'
 import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
 import { Version } from './useToggledVersion'
-import { useTranslation } from 'react-i18next'
 
 import config from '../config'
 
@@ -212,9 +212,7 @@ export function useSwapCallback(
             const inputAmount = trade.inputAmount.toSignificant(3)
             const outputAmount = trade.outputAmount.toSignificant(3)
 
-            const base = `Swap ${inputAmount} ${config.getBaseCoin(
-              inputSymbol
-            )} for ${outputAmount} ${config.getBaseCoin(outputSymbol)}`
+            const base = `Swap ${inputAmount} ${config.getBaseCoin(inputSymbol)} for ${outputAmount} ${config.getBaseCoin(outputSymbol)}`
             const withRecipient =
               recipient === account
                 ? base

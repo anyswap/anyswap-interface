@@ -1,13 +1,13 @@
 // import { ChainId, CurrencyAmount, JSBI, Token, TokenAmount, WETH, Pair } from '@uniswap/sdk'
 import { ChainId, CurrencyAmount, JSBI, Token, TokenAmount, Pair } from '@uniswap/sdk'
 import { useMemo } from 'react'
-// import { DAI, UNI, USDC, USDT, WBTC } from '../../constants'
+import { useTranslation } from 'react-i18next'
 import { UNI } from '../../constants'
+// import { DAI, UNI, USDC, USDT, WBTC } from '../../constants'
 import { STAKING_REWARDS_INTERFACE } from '../../constants/abis/staking-rewards'
 import { useActiveWeb3React } from '../../hooks'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/hooks'
-import { useTranslation } from 'react-i18next'
 
 export const STAKING_GENESIS = 1600387200
 
@@ -232,7 +232,7 @@ export function useDerivedStakeInfo(
     error = t('ConnectWallet')
   }
   if (!parsedAmount) {
-    error = error ?? t('enterAmount')
+    error = error ?? t('EnterAnAmount')
   }
 
   return {
@@ -261,7 +261,7 @@ export function useDerivedUnstakeInfo(
     error = t('ConnectWallet')
   }
   if (!parsedAmount) {
-    error = error ?? t('enterAmount')
+    error = error ?? t('EnterAnAmount')
   }
 
   return {

@@ -23,6 +23,8 @@ import { Version } from '../hooks/useToggledVersion'
 import { NEVER_RELOAD, useSingleCallResult, useSingleContractMultipleData } from '../state/multicall/hooks'
 import { useETHBalances, useTokenBalance, useTokenBalances } from '../state/wallet/hooks'
 
+import config from '../config'
+
 export function useV1ExchangeAddress(tokenAddress?: string): string | undefined {
   const contract = useV1FactoryContract()
 
@@ -79,7 +81,7 @@ export function useUserHasLiquidityInAllTokens(): boolean | undefined {
 
   const v1ExchangeLiquidityTokens = useMemo(
     () =>
-      chainId ? Object.keys(exchanges).map(address => new Token(chainId, address, 18, 'UNI-V1', 'Uniswap V1')) : [],
+      chainId ? Object.keys(exchanges).map(address => new Token(chainId, address, 18, config.baseCurrency + '-V1', config.oldAppName)) : [],
     [chainId, exchanges]
   )
 

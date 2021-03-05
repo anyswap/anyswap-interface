@@ -69,10 +69,10 @@ export function formatExecutionPrice(trade?: Trade, inverted?: boolean): string 
     return ''
   }
   return inverted
-    ? `${trade.executionPrice.invert().toSignificant(6)} ${config.getBaseCoin(
-        trade.inputAmount.currency.symbol
-      )} / ${config.getBaseCoin(trade.outputAmount.currency.symbol)}`
-    : `${trade.executionPrice.toSignificant(6)} ${config.getBaseCoin(
-        trade.outputAmount.currency.symbol
-      )} / ${config.getBaseCoin(trade.inputAmount.currency.symbol)}`
+    ? `${trade.executionPrice.invert().toSignificant(6)} ${config.getBaseCoin(trade.inputAmount.currency.symbol)} / ${
+      config.getBaseCoin(trade.outputAmount.currency.symbol)
+      }`
+    : `${trade.executionPrice.toSignificant(6)} ${config.getBaseCoin(trade.outputAmount.currency.symbol)} / ${
+      config.getBaseCoin(trade.inputAmount.currency.symbol)
+      }`
 }

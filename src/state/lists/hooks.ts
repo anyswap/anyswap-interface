@@ -3,6 +3,7 @@ import { Tags, TokenInfo, TokenList } from '@uniswap/token-lists'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from '../index'
+import config from '../../config'
 
 type TagDetails = Tags[keyof Tags]
 export interface TagInfo extends TagDetails {
@@ -38,7 +39,6 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.MAINNET]: {},
   [ChainId.HTTEST]: {},
   [ChainId.HTMAIN]: {}
-  // [ChainId.FSNTEST]: {}
 }
 
 const listCache: WeakMap<TokenList, TokenAddressMap> | null =
@@ -93,7 +93,10 @@ export function useTokenList(url: string | undefined): TokenAddressMap {
 }
 
 export function useSelectedListUrl(): string | undefined {
-  return useSelector<AppState, AppState['lists']['selectedListUrl']>(state => state.lists.selectedListUrl)
+  // return useSelector<AppState, AppState['lists']['selectedListUrl']>(state => {
+  //   return state.lists.selectedListUrl
+  // })
+  return config.tokenListUrl
 }
 
 export function useSelectedTokenList(): TokenAddressMap {
@@ -104,6 +107,7 @@ export function useSelectedListInfo(): { current: TokenList | null; pending: Tok
   const selectedUrl = useSelectedListUrl()
   const listsByUrl = useSelector<AppState, AppState['lists']['byUrl']>(state => state.lists.byUrl)
   const list = selectedUrl ? listsByUrl[selectedUrl] : undefined
+  // console.log(listsByUrl)
   return {
     current: list?.current ?? null,
     pending: list?.pendingUpdate ?? null,

@@ -7,20 +7,10 @@ import EthereumLogo from '../../assets/images/ethereum-logo.png'
 import { WrappedTokenInfo } from '../../state/lists/hooks'
 import Logo from '../Logo'
 
-const getTokenLogoURL = (address: any) => {
-  // console.log(address)
-  try {
-    return require('../../assets/images/coin/' + address + '.svg')
-  } catch (error) {
-    try {
-      return require('../../assets/images/coin/' + address + '.png')
-    } catch (error) {
-      return ''
-      // return require('../../assets/images/question.svg')
-    }
-  }
-  // return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
-}
+import config from '../../config'
+
+const getTokenLogoURL = (address: string | undefined) =>
+  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
@@ -68,5 +58,5 @@ export default function CurrencyLogo({
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} />
   }
 
-  return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
+  return <StyledLogo size={size} srcs={srcs} alt={`${config.getBaseCoin(currency?.symbol) ?? 'token'} logo`} style={style} />
 }

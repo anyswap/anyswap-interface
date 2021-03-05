@@ -21,8 +21,7 @@ import {
   toggleURLWarning
 } from './actions'
 
-// import {getPairAddress} from '../../utils/tools/getPairAddress'
-// import {usePairAddress} from '../../hooks/getPairAddress'
+import config from '../../config'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -180,47 +179,7 @@ export function useURLWarningToggle(): () => void {
  * @param tokenB the other token
  */
 export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
-  // console.log(tokenA)
-  // console.log(tokenB)
-  // const [pairAddress, setPairAddress] = useState('')
-  // useEffect(() => {
-  //   getPairAddress([{tokenA, tokenB}]).then((res:any) => {
-  //     console.log(res)
-  //     setPairAddress(res)
-  //   })
-  // }, [])
-  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'UNI-V2', 'Uniswap V2')
-  // return new Token(tokenA.chainId, pairAddress, 18, 'UNI-V2', 'Uniswap V2')
-  // const dispatch = useDispatch<AppDispatch>()
-  // const pairAddress = useSelector<AppState, AppState['user']['pairAddress']>(state => {
-  //   return state.user.pairAddress
-  // })
-
-  // const setUserDeadline = useCallback(
-  //   (pairAddress: number) => {
-  //     dispatch(updatePairAddress({ pairAddress }))
-  //   },
-  //   [dispatch]
-  // )
-  // useCallback(
-  //   () => {
-  //     getPairAddress([{tokenA, tokenB}]).then((res:any) => {
-  //       console.log(res)
-  //       dispatch(updatePairAddress({ pairAddress:res }))
-  //     })
-  //   }),
-  //   [tokenA, tokenB, dispatch]
-  // )
-
-  // useEffect(() => {
-  //   getPairAddress([{tokenA, tokenB}]).then((res:any) => {
-  //     console.log(res)
-  //     dispatch(updatePairAddress({ pairAddress:res }))
-  //   })
-  // }, [tokenA, tokenB])
-  // const pairAddress = usePairAddress([{tokenA, tokenB}])
-
-  // return new Token(tokenA.chainId, pairAddress, 18, 'UNI-V2', 'Uniswap V2')
+  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, config.baseCurrency + '-V2', config.appName)
 }
 
 /**

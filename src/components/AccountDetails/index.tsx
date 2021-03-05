@@ -1,5 +1,6 @@
 import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import styled, { ThemeContext } from 'styled-components'
 import { useActiveWeb3React } from '../../hooks'
 import { AppDispatch } from '../../state'
@@ -21,7 +22,6 @@ import Identicon from '../Identicon'
 import { ButtonSecondary } from '../Button'
 import { ExternalLink as LinkIcon } from 'react-feather'
 import { ExternalLink, LinkStyledButton, TYPE } from '../../theme'
-import { useTranslation } from 'react-i18next'
 
 import config from '../../config'
 
@@ -229,8 +229,8 @@ export default function AccountDetails({
   openOptions
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
-  const theme = useContext(ThemeContext)
   const { t } = useTranslation()
+  const theme = useContext(ThemeContext)
   const dispatch = useDispatch<AppDispatch>()
 
   function formatConnectorName() {
@@ -242,7 +242,7 @@ export default function AccountDetails({
           SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === 'METAMASK'))
       )
       .map(k => SUPPORTED_WALLETS[k].name)[0]
-    return <WalletName>Connected with {name}</WalletName>
+    return <WalletName>{t('ConnectedWith')} {name}</WalletName>
   }
 
   function getStatusIcon() {
@@ -280,7 +280,7 @@ export default function AccountDetails({
                 portis.portis.showPortis()
               }}
             >
-              Show Portis
+              {t('ShowPortis')}
             </MainWalletAction>
           </IconWrapper>
         </>
@@ -313,7 +313,7 @@ export default function AccountDetails({
                         ;(connector as any).close()
                       }}
                     >
-                      Disconnect
+                      {t('Disconnect')}
                     </WalletAction>
                   )}
                   <WalletAction
@@ -322,7 +322,7 @@ export default function AccountDetails({
                       openOptions()
                     }}
                   >
-                    Change
+                    {t('Change')}
                   </WalletAction>
                 </div>
               </AccountGroupingRow>
@@ -352,7 +352,7 @@ export default function AccountDetails({
                       <div>
                         {account && (
                           <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
+                            <span style={{ marginLeft: '4px' }}>{t('CopyAddress')}</span>
                           </Copy>
                         )}
                         {chainId && account && (
@@ -362,7 +362,7 @@ export default function AccountDetails({
                             href={chainId && getEtherscanLink(chainId, ENSName, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on {config.name}</span>
+                            <span style={{ marginLeft: '4px' }}>{t('ViewOn')} {config.name}</span>
                           </AddressLink>
                         )}
                       </div>
@@ -374,7 +374,7 @@ export default function AccountDetails({
                       <div>
                         {account && (
                           <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
+                            <span style={{ marginLeft: '4px' }}>{t('CopyAddress')}</span>
                           </Copy>
                         )}
                         {chainId && account && (
@@ -384,7 +384,7 @@ export default function AccountDetails({
                             href={getEtherscanLink(chainId, account, 'address')}
                           >
                             <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on {config.name}</span>
+                            <span style={{ marginLeft: '4px' }}>{t('ViewOn')} {config.name}</span>
                           </AddressLink>
                         )}
                       </div>
@@ -399,15 +399,15 @@ export default function AccountDetails({
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
           <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between' }}>
-            <TYPE.body>Recent Transactions</TYPE.body>
-            <LinkStyledButton onClick={clearAllTransactionsCallback}>(clear all)</LinkStyledButton>
+            <TYPE.body>{t('RecentTransactions')}</TYPE.body>
+            <LinkStyledButton onClick={clearAllTransactionsCallback}>({t('clearAll')})</LinkStyledButton>
           </AutoRow>
           {renderTransactions(pendingTransactions)}
           {renderTransactions(confirmedTransactions)}
         </LowerSection>
       ) : (
         <LowerSection>
-          <TYPE.body color={theme.text1}>Your transactions will appear here...</TYPE.body>
+          <TYPE.body color={theme.text1}>{t('tip17')}</TYPE.body>
         </LowerSection>
       )}
     </>

@@ -5,12 +5,25 @@ import { useState, useLayoutEffect } from 'react'
 // import { Token, ChainId } from '@uniswap/sdk'
 import { Token } from '@uniswap/sdk'
 
+// const initPath = require('../assets/images/question.svg')
+// import initPath from '../assets/images/question.svg'
+
 // async function getColorFromToken(token: Token): Promise<string | null> {
 //   if (token.chainId === ChainId.RINKEBY && token.address === '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735') {
 //     return Promise.resolve('#FAAB14')
 //   }
 
-//   const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`
+//   // const path = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${token.address}/logo.png`
+//   let path = initPath
+//   try {
+//     path = require('../assets/images/coin/any/' + token.symbol + '.svg')
+//   } catch (error) {
+//     try {
+//       path = require('../assets/images/coin/any/' + token.symbol + '.png')
+//     } catch (error) {
+//       path = initPath
+//     }
+//   }
 
 //   return Vibrant.from(path)
 //     .getPalette()

@@ -6,6 +6,7 @@ import { Plus } from 'react-feather'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { ButtonError, ButtonLight, ButtonPrimary } from '../../components/Button'
 import { BlueCard, LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
@@ -37,7 +38,6 @@ import { Dots, Wrapper } from '../Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { currencyId } from '../../utils/currencyId'
 import { PoolPriceBar } from './PoolPriceBar'
-import { useTranslation } from 'react-i18next'
 
 import config from '../../config'
 
@@ -47,13 +47,13 @@ export default function AddLiquidity({
   },
   history
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  currencyIdB = currencyIdB ? currencyIdB : config.initToken
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
   const { t } = useTranslation()
-
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
-  // console.log(currencyA)
+  // console.log(t('tip1'))
   const oneCurrencyIsWETH = Boolean(
     chainId &&
       ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
@@ -217,9 +217,7 @@ export default function AddLiquidity({
         <LightCard mt="20px" borderRadius="20px">
           <RowFlat>
             <Text fontSize="48px" fontWeight={500} lineHeight="42px" marginRight={10}>
-              {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) +
-                '/' +
-                config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}
+              {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}
             </Text>
             <DoubleCurrencyLogo
               currency0={currencies[Field.CURRENCY_A]}
@@ -243,15 +241,13 @@ export default function AddLiquidity({
         </RowFlat>
         <Row>
           <Text fontSize="24px">
-            {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) +
-              '/' +
-              config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) +
-              ' Pool Tokens'}
+            {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + '/' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) + ' Pool Tokens'}
           </Text>
         </Row>
         <TYPE.italic fontSize={12} textAlign="left" padding={'8px 0 0 0 '}>
-          {`Output is estimated. If the price changes by more than ${allowedSlippage /
-            100}% your transaction will revert.`}
+            {t('tip30', {
+              allowedSlippage: allowedSlippage / 100
+            })}
         </TYPE.italic>
       </AutoColumn>
     )
@@ -270,11 +266,9 @@ export default function AddLiquidity({
     )
   }
 
-  const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${config.getBaseCoin(
-    currencies[Field.CURRENCY_A]?.symbol
-  )} and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(
-    currencies[Field.CURRENCY_B]?.symbol
-  )}`
+  const pendingText = `Supplying ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+    config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
+  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}`
 
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
@@ -341,13 +335,13 @@ export default function AddLiquidity({
                   <BlueCard>
                     <AutoColumn gap="10px">
                       <TYPE.link fontWeight={600} color={'primaryText1'}>
-                        You are the first liquidity provider.
+                        {t('YouFirstLiquidity')}
                       </TYPE.link>
                       <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        The ratio of tokens you add will set the price of this pool.
+                        {t('firstAddPoolTip')}
                       </TYPE.link>
                       <TYPE.link fontWeight={400} color={'primaryText1'}>
-                        Once you are happy with the rate click supply to review.
+                        {t('firstAddPoolTip1')}
                       </TYPE.link>
                     </AutoColumn>
                   </BlueCard>
@@ -364,6 +358,7 @@ export default function AddLiquidity({
               currency={currencies[Field.CURRENCY_A]}
               id="add-liquidity-input-tokena"
               showCommonBases
+              label={t('input')}
             />
             <ColumnCenter>
               <Plus size="16" color={theme.text2} />
@@ -379,6 +374,7 @@ export default function AddLiquidity({
               currency={currencies[Field.CURRENCY_B]}
               id="add-liquidity-input-tokenb"
               showCommonBases
+              label={t('input')}
             />
             {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
               <>
@@ -417,9 +413,9 @@ export default function AddLiquidity({
                           width={approvalB !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalA === ApprovalState.PENDING ? (
-                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}</Dots>
+                            <Dots>{t('Approving')} {config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
+                            t('Approve') + ' ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}
@@ -430,9 +426,9 @@ export default function AddLiquidity({
                           width={approvalA !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
                           {approvalB === ApprovalState.PENDING ? (
-                            <Dots>Approving {config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}</Dots>
+                            <Dots>{t('Approving')} {config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)}</Dots>
                           ) : (
-                            'Approve ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
+                            t('Approve') + ' ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)
                           )}
                         </ButtonPrimary>
                       )}
@@ -446,7 +442,7 @@ export default function AddLiquidity({
                   error={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
                 >
                   <Text fontSize={20} fontWeight={500}>
-                    {error ?? 'Supply'}
+                    {error ?? t('Supply')}
                   </Text>
                 </ButtonError>
               </AutoColumn>

@@ -7,7 +7,7 @@ import { useActiveWeb3React } from '../../hooks'
 import { useAllTokens } from '../../hooks/Tokens'
 import { ExternalLink, TYPE } from '../../theme'
 import { getEtherscanLink, shortenAddress } from '../../utils'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import Modal from '../Modal'
 import { AutoRow, RowBetween } from '../Row'
 import { AutoColumn } from '../Column'
@@ -66,20 +66,18 @@ function TokenWarningCard({ token }: TokenWarningCardProps) {
     <Wrapper error={duplicateNameOrSymbol}>
       <AutoRow gap="6px">
         <AutoColumn gap="24px">
-          <CurrencyLogo currency={token} size={'16px'} />
+          <TokenLogo symbol={token.symbol} size={'16px'}></TokenLogo>
           <div> </div>
         </AutoColumn>
         <AutoColumn gap="10px" justify="flex-start">
           <TYPE.main>
             {token && token.name && token.symbol && token.name !== token.symbol
-              ? `${config.getBaseCoin(token.name, 1)} (${config.getBaseCoin(token.symbol)})`
-              : config.getBaseCoin(token.name, 1) || config.getBaseCoin(token.symbol)}{' '}
+              ? `${config.getBaseCoin(token.name,1)} (${config.getBaseCoin(token.symbol)})`
+              : config.getBaseCoin(token.name,1) || config.getBaseCoin(token.symbol)}{' '}
           </TYPE.main>
           {chainId && (
             <ExternalLink style={{ fontWeight: 400 }} href={getEtherscanLink(chainId, token.address, 'token')}>
-              <TYPE.blue title={token.address}>
-                {shortenAddress(token.address)} (View on {config.name})
-              </TYPE.blue>
+              <TYPE.blue title={token.address}>{shortenAddress(token.address)} (View on {config.name})</TYPE.blue>
             </ExternalLink>
           )}
         </AutoColumn>
@@ -109,9 +107,17 @@ export default function TokenWarningModal({
             <StyledWarningIcon />
             <TYPE.main color={'red2'}>{t('TokenImported')}</TYPE.main>
           </AutoRow>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip') }}></TYPE.body>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip1') }}></TYPE.body>
-          <TYPE.body color={'red2'} dangerouslySetInnerHTML={{ __html: t('TokenImportedTip2') }}></TYPE.body>
+          <TYPE.body color={'red2'}>
+            Anyone can create an ERC20 token on {config.name} with <em>any</em> name, including creating fake versions of
+            existing tokens and tokens that claim to represent projects that do not have a token.
+          </TYPE.body>
+          <TYPE.body color={'red2'}>
+            This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research
+            when interacting with arbitrary ERC20 tokens.
+          </TYPE.body>
+          <TYPE.body color={'red2'}>
+            If you purchase an arbitrary token, <strong>you may be unable to sell it back.</strong>
+          </TYPE.body>
           {tokens.map(token => {
             return <TokenWarningCard key={token.address} token={token} />
           })}

@@ -2,6 +2,7 @@ import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, currencyEquals, ETHER, Percent, WETH } from '@uniswap/sdk'
+import { useTranslation } from 'react-i18next'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
 import { RouteComponentProps } from 'react-router'
@@ -18,7 +19,7 @@ import { MinimalPositionCard } from '../../components/PositionCard'
 import Row, { RowBetween, RowFixed } from '../../components/Row'
 
 import Slider from '../../components/Slider'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import { ROUTER_ADDRESS } from '../../constants'
 import { useActiveWeb3React } from '../../hooks'
 import { useCurrency } from '../../hooks/Tokens'
@@ -42,7 +43,6 @@ import { Field } from '../../state/burn/actions'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useUserSlippageTolerance } from '../../state/user/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useTranslation } from 'react-i18next'
 
 import config from '../../config'
 
@@ -126,7 +126,7 @@ export default function RemoveLiquidity({
       { name: 'verifyingContract', type: 'address' }
     ]
     const domain = {
-      name: 'Uniswap V2',
+      name: config.appName,
       version: '1',
       chainId: chainId,
       verifyingContract: pair.liquidityToken.address
@@ -159,8 +159,11 @@ export default function RemoveLiquidity({
       .send('eth_signTypedData_v4', [account, data])
       .then(splitSignature)
       .then(signature => {
+        // console.log(signature)
+        // let v = Number(config.chainID) * 2 + 35 + signature.v - 27
         setSignatureData({
           v: signature.v,
+          // v: v,
           r: signature.r,
           s: signature.s,
           deadline: deadline.toNumber()
@@ -218,7 +221,7 @@ export default function RemoveLiquidity({
     if (!tokenA || !tokenB) throw new Error('could not wrap')
 
     let methodNames: string[], args: Array<string | string[] | number | boolean>
-    // we have approval, use normal remove liquidity
+    // 我们得到许可，使用正常的流动性
     if (approval === ApprovalState.APPROVED) {
       // removeLiquidityETH
       if (oneCurrencyIsETH) {
@@ -246,7 +249,7 @@ export default function RemoveLiquidity({
         ]
       }
     }
-    // we have a signataure, use permit versions of remove liquidity
+    // 我们有一个签名，使用许可证的版本
     else if (signatureData !== null) {
       // removeLiquidityETHWithPermit
       if (oneCurrencyIsETH) {
@@ -299,7 +302,9 @@ export default function RemoveLiquidity({
     const indexOfSuccessfulEstimation = safeGasEstimates.findIndex(safeGasEstimate =>
       BigNumber.isBigNumber(safeGasEstimate)
     )
-
+      // console.log(signatureData)
+      // console.log(router)
+      // console.log(indexOfSuccessfulEstimation)
     // all estimations failed...
     if (indexOfSuccessfulEstimation === -1) {
       console.error('This transaction would fail. Please contact support.')
@@ -350,7 +355,7 @@ export default function RemoveLiquidity({
             {parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
           </Text>
           <RowFixed gap="4px">
-            <CurrencyLogo currency={currencyA} size={'24px'} />
+            <TokenLogo symbol={config.getBaseCoin(currencyA?.symbol)} size={'24px'}></TokenLogo>
             <Text fontSize={24} fontWeight={500} style={{ marginLeft: '10px' }}>
               {config.getBaseCoin(currencyA?.symbol)}
             </Text>
@@ -364,7 +369,7 @@ export default function RemoveLiquidity({
             {parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
           </Text>
           <RowFixed gap="4px">
-            <CurrencyLogo currency={currencyB} size={'24px'} />
+            <TokenLogo symbol={config.getBaseCoin(currencyB?.symbol)} size={'24px'}></TokenLogo>
             <Text fontSize={24} fontWeight={500} style={{ marginLeft: '10px' }}>
               {config.getBaseCoin(currencyB?.symbol)}
             </Text>
@@ -372,8 +377,7 @@ export default function RemoveLiquidity({
         </RowBetween>
 
         <TYPE.italic fontSize={12} color={theme.text2} textAlign="left" padding={'12px 0 0 0'}>
-          {`Output is estimated. If the price changes by more than ${allowedSlippage /
-            100}% your transaction will revert.`}
+          {t('tip30', {allowedslipage: allowedSlippage / 100})}
         </TYPE.italic>
       </AutoColumn>
     )
@@ -384,7 +388,7 @@ export default function RemoveLiquidity({
       <>
         <RowBetween>
           <Text color={theme.text2} fontWeight={500} fontSize={16}>
-            {'UNI ' + config.getBaseCoin(currencyA?.symbol) + '/' + config.getBaseCoin(currencyB?.symbol)} Burned
+            {config.baseCurrency + ' ' + config.getBaseCoin(currencyA?.symbol) + '/' + config.getBaseCoin(currencyB?.symbol)} Burned
           </Text>
           <RowFixed>
             <DoubleCurrencyLogo currency0={currencyA} currency1={currencyB} margin={true} />
@@ -397,34 +401,32 @@ export default function RemoveLiquidity({
           <>
             <RowBetween>
               <Text color={theme.text2} fontWeight={500} fontSize={16}>
-                Price
+              {t('Price')}
               </Text>
               <Text fontWeight={500} fontSize={16} color={theme.text1}>
-                1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
-                {config.getBaseCoin(currencyB?.symbol)}
+                1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
               </Text>
             </RowBetween>
             <RowBetween>
               <div />
               <Text fontWeight={500} fontSize={16} color={theme.text1}>
-                1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
-                {config.getBaseCoin(currencyA?.symbol)}
+                1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {config.getBaseCoin(currencyA?.symbol)}
               </Text>
             </RowBetween>
           </>
         )}
         <ButtonPrimary disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)} onClick={onRemove}>
           <Text fontWeight={500} fontSize={20}>
-            Confirm
+            {t('Confirm')}
           </Text>
         </ButtonPrimary>
       </>
     )
   }
 
-  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${config.getBaseCoin(
-    currencyA?.symbol
-  )} and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencyB?.symbol)}`
+  const pendingText = `Removing ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)} ${
+    config.getBaseCoin(currencyA?.symbol)
+  } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)} ${config.getBaseCoin(currencyB?.symbol)}`
 
   const liquidityPercentChangeCallback = useCallback(
     (value: number) => {
@@ -500,14 +502,14 @@ export default function RemoveLiquidity({
             <LightCard>
               <AutoColumn gap="20px">
                 <RowBetween>
-                  <Text fontWeight={500}>Amount</Text>
+                  <Text fontWeight={500}>{t('Amount')}</Text>
                   <ClickableText
                     fontWeight={500}
                     onClick={() => {
                       setShowDetailed(!showDetailed)
                     }}
                   >
-                    {showDetailed ? 'Simple' : 'Detailed'}
+                    {showDetailed ? t('Simple') : t('Detailed')}
                   </ClickableText>
                 </RowBetween>
                 <Row style={{ alignItems: 'flex-end' }}>
@@ -548,7 +550,7 @@ export default function RemoveLiquidity({
                         {formattedAmounts[Field.CURRENCY_A] || '-'}
                       </Text>
                       <RowFixed>
-                        <CurrencyLogo currency={currencyA} style={{ marginRight: '12px' }} />
+                        <TokenLogo symbol={config.getBaseCoin(currencyA?.symbol)} style={{ marginRight: '12px' }}></TokenLogo>
                         <Text fontSize={24} fontWeight={500} id="remove-liquidity-tokena-symbol">
                           {config.getBaseCoin(currencyA?.symbol)}
                         </Text>
@@ -559,7 +561,7 @@ export default function RemoveLiquidity({
                         {formattedAmounts[Field.CURRENCY_B] || '-'}
                       </Text>
                       <RowFixed>
-                        <CurrencyLogo currency={currencyB} style={{ marginRight: '12px' }} />
+                        <TokenLogo symbol={config.getBaseCoin(currencyB?.symbol)} style={{ marginRight: '12px' }}></TokenLogo>
                         <Text fontSize={24} fontWeight={500} id="remove-liquidity-tokenb-symbol">
                           {config.getBaseCoin(currencyB?.symbol)}
                         </Text>
@@ -573,7 +575,7 @@ export default function RemoveLiquidity({
                               currencyB === ETHER ? WETH[chainId].address : currencyIdB
                             }`}
                           >
-                            Receive WETH
+                            {t('Receive')} W{config.symbol}
                           </StyledInternalLink>
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink
@@ -581,7 +583,7 @@ export default function RemoveLiquidity({
                               currencyA && currencyEquals(currencyA, WETH[chainId]) ? config.symbol : currencyIdA
                             }/${currencyB && currencyEquals(currencyB, WETH[chainId]) ? config.symbol : currencyIdB}`}
                           >
-                            Receive {config.symbol}
+                            {t('Receive')} {config.symbol}
                           </StyledInternalLink>
                         ) : null}
                       </RowBetween>
@@ -604,6 +606,7 @@ export default function RemoveLiquidity({
                   currency={pair?.liquidityToken}
                   pair={pair}
                   id="liquidity-amount"
+                  label={t('input')}
                 />
                 <ColumnCenter>
                   <ArrowDown size="16" color={theme.text2} />
@@ -615,7 +618,7 @@ export default function RemoveLiquidity({
                   onMax={() => onUserInput(Field.LIQUIDITY_PERCENT, '100')}
                   showMaxButton={!atMaxAmount}
                   currency={currencyA}
-                  label={'Output'}
+                  label={t('Output')}
                   onCurrencySelect={handleSelectCurrencyA}
                   id="remove-liquidity-tokena"
                 />
@@ -629,7 +632,7 @@ export default function RemoveLiquidity({
                   onMax={() => onUserInput(Field.LIQUIDITY_PERCENT, '100')}
                   showMaxButton={!atMaxAmount}
                   currency={currencyB}
-                  label={'Output'}
+                  label={t('Output')}
                   onCurrencySelect={handleSelectCurrencyB}
                   id="remove-liquidity-tokenb"
                 />
@@ -638,17 +641,15 @@ export default function RemoveLiquidity({
             {pair && (
               <div style={{ padding: '10px 20px' }}>
                 <RowBetween>
-                  Price:
+                {t('Price')}:
                   <div>
-                    1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'}{' '}
-                    {config.getBaseCoin(currencyB?.symbol)}
+                    1 {config.getBaseCoin(currencyA?.symbol)} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {config.getBaseCoin(currencyB?.symbol)}
                   </div>
                 </RowBetween>
                 <RowBetween>
                   <div />
                   <div>
-                    1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'}{' '}
-                    {config.getBaseCoin(currencyA?.symbol)}
+                    1 {config.getBaseCoin(currencyB?.symbol)} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {config.getBaseCoin(currencyA?.symbol)}
                   </div>
                 </RowBetween>
               </div>
@@ -667,11 +668,11 @@ export default function RemoveLiquidity({
                     fontSize={16}
                   >
                     {approval === ApprovalState.PENDING ? (
-                      <Dots>Approving</Dots>
+                      <Dots>{t('Approving')}</Dots>
                     ) : approval === ApprovalState.APPROVED || signatureData !== null ? (
-                      'Approved'
+                      t('Approved')
                     ) : (
-                      'Approve'
+                      t('Approve')
                     )}
                   </ButtonConfirmed>
                   <ButtonError
@@ -682,7 +683,7 @@ export default function RemoveLiquidity({
                     error={!isValid && !!parsedAmounts[Field.CURRENCY_A] && !!parsedAmounts[Field.CURRENCY_B]}
                   >
                     <Text fontSize={16} fontWeight={500}>
-                      {error || 'Remove'}
+                      {error || t('Remove')}
                     </Text>
                   </ButtonError>
                 </RowBetween>

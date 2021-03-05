@@ -6,8 +6,6 @@ import { injected } from '../connectors'
 
 import config from '../config'
 
-// export const ROUTER_ADDRESS = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D'
-// export const ROUTER_ADDRESS = '0x9a463c2d1f63b76b2a1fe8e0df8a8ae84a06e7ac'
 export const ROUTER_ADDRESS = config.router
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -43,23 +41,22 @@ export const TIMELOCK_ADDRESS = '0x1a9C8182C09F50C8318d769245beA52c32BE35BC'
 
 const UNI_ADDRESS = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
 export const UNI: { [chainId in ChainId]: Token } = {
-  [ChainId.MAINNET]: new Token(ChainId.MAINNET, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.RINKEBY]: new Token(ChainId.RINKEBY, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.ROPSTEN]: new Token(ChainId.ROPSTEN, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.KOVAN]: new Token(ChainId.KOVAN, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.HTTEST]: new Token(ChainId.HTTEST, UNI_ADDRESS, 18, 'UNI', 'Uniswap'),
-  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, UNI_ADDRESS, 18, 'UNI', 'Uniswap')
-  // [ChainId.FSNTEST]: new Token(ChainId.FSNTEST, UNI_ADDRESS, 18, 'UNI', 'Uniswap')
+  [ChainId.MAINNET]: new Token(ChainId.MAINNET, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.RINKEBY]: new Token(ChainId.RINKEBY, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.ROPSTEN]: new Token(ChainId.ROPSTEN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.KOVAN]: new Token(ChainId.KOVAN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.HTTEST]: new Token(ChainId.HTTEST, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName)
 }
 
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
-  [UNI_ADDRESS]: 'UNI',
+  [UNI_ADDRESS]: config.baseCurrency,
   [GOVERNANCE_ADDRESS]: 'Governance',
   [TIMELOCK_ADDRESS]: 'Timelock'
 }
 
-// TODO:为mainnet指定merkle分发服务器
+// TODO:指定主服务器的标记分发服务器
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: '0x090D4613473dEE047c3f2706764f49E0821D256e'
 }
@@ -72,7 +69,6 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
   [ChainId.HTTEST]: [WETH[ChainId.HTTEST]],
   [ChainId.HTMAIN]: [WETH[ChainId.HTMAIN]]
-  // [ChainId.FSNTEST]: [WETH[ChainId.FSNTEST]]
 }
 
 // 用于构造用于交易的中介对
@@ -146,7 +142,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     description: 'Easy-to-use browser extension.',
     href: null,
     color: '#E8831D'
-  }
+  },
   // WALLET_CONNECT: {
   //   connector: walletconnect,
   //   name: 'WalletConnect',

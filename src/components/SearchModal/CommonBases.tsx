@@ -1,14 +1,13 @@
 import React from 'react'
 import { Text } from 'rebass'
 import { ChainId, Currency, currencyEquals, ETHER, Token } from '@uniswap/sdk'
+import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 import { SUGGESTED_BASES } from '../../constants'
 import { AutoColumn } from '../Column'
 import QuestionHelper from '../QuestionHelper'
 import { AutoRow } from '../Row'
-import { useTranslation } from 'react-i18next'
-
 import TokenLogo from '../TokenLogo'
 
 import config from '../../config'
@@ -45,7 +44,7 @@ export default function CommonBases({
         <Text fontWeight={500} fontSize={14}>
           {t('CommonBases')}
         </Text>
-        <QuestionHelper text={t('CommonBasesTip')} />
+        <QuestionHelper text={t('tip19')} />
       </AutoRow>
       <AutoRow gap="4px">
         <BaseWrapper
@@ -56,7 +55,7 @@ export default function CommonBases({
           }}
           disable={selectedCurrency === ETHER}
         >
-          <TokenLogo symbol={config.symbol}></TokenLogo>
+          <TokenLogo symbol={config.symbol} style={{ marginRight: 8 }}></TokenLogo>
           <Text fontWeight={500} fontSize={16}>
             {config.symbol}
           </Text>

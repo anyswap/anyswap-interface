@@ -1,11 +1,12 @@
 import { Currency, ETHER, JSBI, TokenAmount } from '@uniswap/sdk'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus } from 'react-feather'
 import { Text } from 'rebass'
 import { ButtonDropdownLight } from '../../components/Button'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import { FindPoolTabs } from '../../components/NavigationTabs'
 import { MinimalPositionCard } from '../../components/PositionCard'
 import Row from '../../components/Row'
@@ -17,8 +18,7 @@ import { useTokenBalance } from '../../state/wallet/hooks'
 import { StyledInternalLink } from '../../theme'
 import { currencyId } from '../../utils/currencyId'
 import AppBody from '../AppBody'
-import { Dots } from '../Pool/styleds'
-import { useTranslation } from 'react-i18next'
+// import { Dots } from '../Pool/styleds'
 
 import config from '../../config'
 
@@ -74,7 +74,9 @@ export default function PoolFinder() {
 
   const prerequisiteMessage = (
     <LightCard padding="45px 10px">
-      <Text textAlign="center">{!account ? t('findPools') : t('selectTokenFindLiquidity')}</Text>
+      <Text textAlign="center">
+        {!account ? t('tip33') : t('tip34')}
+      </Text>
     </LightCard>
   )
 
@@ -90,7 +92,7 @@ export default function PoolFinder() {
         >
           {currency0 ? (
             <Row>
-              <CurrencyLogo currency={currency0} />
+              <TokenLogo symbol={config.getBaseCoin(currency0.symbol)}></TokenLogo>
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
                 {config.getBaseCoin(currency0.symbol)}
               </Text>
@@ -114,7 +116,7 @@ export default function PoolFinder() {
         >
           {currency1 ? (
             <Row>
-              <CurrencyLogo currency={currency1} />
+              <TokenLogo symbol={config.getBaseCoin(currency1.symbol)}></TokenLogo>
               <Text fontWeight={500} fontSize={20} marginLeft={'12px'}>
                 {config.getBaseCoin(currency1.symbol)}
               </Text>
@@ -134,7 +136,7 @@ export default function PoolFinder() {
               {t('PoolFound')}
             </Text>
             <StyledInternalLink to={`/pool`}>
-              <Text textAlign="center">{t('ManagePool')}</Text>
+              <Text textAlign="center">{t('ManageThisPool')}</Text>
             </StyledInternalLink>
           </ColumnCenter>
         )}
@@ -146,7 +148,7 @@ export default function PoolFinder() {
             ) : (
               <LightCard padding="45px 10px">
                 <AutoColumn gap="sm" justify="center">
-                  <Text textAlign="center">{t('noLiquidityInPool')}</Text>
+                  <Text textAlign="center">{t('tip32')}</Text>
                   <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                     <Text textAlign="center">{t('AddLiquidity')}</Text>
                   </StyledInternalLink>
@@ -156,7 +158,7 @@ export default function PoolFinder() {
           ) : validPairNoLiquidity ? (
             <LightCard padding="45px 10px">
               <AutoColumn gap="sm" justify="center">
-                <Text textAlign="center">{t('noPool')}</Text>
+                <Text textAlign="center">{t('NoPoolFound')}</Text>
                 <StyledInternalLink to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}>
                   {t('CreatePool')}
                 </StyledInternalLink>
@@ -166,19 +168,20 @@ export default function PoolFinder() {
             <LightCard padding="45px 10px">
               <AutoColumn gap="sm" justify="center">
                 <Text textAlign="center" fontWeight={500}>
-                  {t('InvalidPair')}
+                 {t('InvalidPair')}
                 </Text>
               </AutoColumn>
             </LightCard>
           ) : pairState === PairState.LOADING ? (
-            <LightCard padding="45px 10px">
-              <AutoColumn gap="sm" justify="center">
-                <Text textAlign="center">
-                  Loading
-                  <Dots />
-                </Text>
-              </AutoColumn>
-            </LightCard>
+            t('Loading')
+            // <LightCard padding="45px 10px">
+            //   <AutoColumn gap="sm" justify="center">
+            //     <Text textAlign="center">
+            //       Loading
+            //       <Dots />
+            //     </Text>
+            //   </AutoColumn>
+            // </LightCard>
           ) : null
         ) : (
           prerequisiteMessage

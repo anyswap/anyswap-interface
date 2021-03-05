@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
 import { Token, TokenAmount, WETH } from '@uniswap/sdk'
-
+import { useTranslation } from 'react-i18next'
 import { Text } from 'rebass'
 import { AutoColumn } from '../Column'
 import { ButtonSecondary } from '../Button'
@@ -22,6 +22,7 @@ function V1PositionCard({ token, V1LiquidityBalance }: PositionCardProps) {
   const theme = useContext(ThemeContext)
 
   const { chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   return (
     <HoverCard>
@@ -30,7 +31,7 @@ function V1PositionCard({ token, V1LiquidityBalance }: PositionCardProps) {
           <RowFixed>
             <DoubleCurrencyLogo currency0={token} margin={true} size={20} />
             <Text fontWeight={500} fontSize={20} style={{ marginLeft: '' }}>
-              {`${chainId && token.equals(WETH[chainId]) ? 'WETH' : token.symbol}/${config.symbol}`}
+              {`${chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}/${config.symbol}`}
             </Text>
             <Text
               fontSize={12}
@@ -59,7 +60,7 @@ function V1PositionCard({ token, V1LiquidityBalance }: PositionCardProps) {
               as={Link}
               to={`/remove/v1/${V1LiquidityBalance.token.address}`}
             >
-              Remove
+              {t('Remove')}
             </ButtonSecondary>
           </RowBetween>
         </AutoColumn>

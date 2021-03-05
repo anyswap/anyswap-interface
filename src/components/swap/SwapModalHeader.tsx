@@ -1,6 +1,7 @@
 import { Trade, TradeType } from '@uniswap/sdk'
 import React, { useContext, useMemo } from 'react'
 import { ArrowDown, AlertTriangle } from 'react-feather'
+import { useTranslation } from 'react-i18next'
 import { Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
 import { Field } from '../../state/swap/actions'
@@ -9,7 +10,7 @@ import { ButtonPrimary } from '../Button'
 import { isAddress, shortenAddress } from '../../utils'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import { AutoColumn } from '../Column'
-import CurrencyLogo from '../CurrencyLogo'
+import TokenLogo from '../TokenLogo'
 import { RowBetween, RowFixed } from '../Row'
 import { TruncatedText, SwapShowAcceptChanges } from './styleds'
 
@@ -35,13 +36,14 @@ export default function SwapModalHeader({
   const { priceImpactWithoutFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
 
+  const { t } = useTranslation()
   const theme = useContext(ThemeContext)
 
   return (
     <AutoColumn gap={'md'} style={{ marginTop: '20px' }}>
       <RowBetween align="flex-end">
         <RowFixed gap={'0px'}>
-          <CurrencyLogo currency={trade.inputAmount.currency} size={'24px'} style={{ marginRight: '12px' }} />
+          <TokenLogo symbol={config.getBaseCoin(trade.inputAmount.currency.symbol)} size={'24px'} style={{ marginRight: '12px' }}></TokenLogo>
           <TruncatedText
             fontSize={24}
             fontWeight={500}
@@ -61,7 +63,7 @@ export default function SwapModalHeader({
       </RowFixed>
       <RowBetween align="flex-end">
         <RowFixed gap={'0px'}>
-          <CurrencyLogo currency={trade.outputAmount.currency} size={'24px'} style={{ marginRight: '12px' }} />
+          <TokenLogo symbol={config.getBaseCoin(trade.outputAmount.currency.symbol)} size={'24px'} style={{ marginRight: '12px' }}></TokenLogo>
           <TruncatedText
             fontSize={24}
             fontWeight={500}
@@ -87,13 +89,13 @@ export default function SwapModalHeader({
           <RowBetween>
             <RowFixed>
               <AlertTriangle size={20} style={{ marginRight: '8px', minWidth: 24 }} />
-              <TYPE.main color={theme.primary1}> Price Updated</TYPE.main>
+              <TYPE.main color={theme.primary1}> {t('PriceUpdated')}</TYPE.main>
             </RowFixed>
             <ButtonPrimary
               style={{ padding: '.5rem', width: 'fit-content', fontSize: '0.825rem', borderRadius: '12px' }}
               onClick={onAcceptChanges}
             >
-              Accept
+              {t('Accept')}
             </ButtonPrimary>
           </RowBetween>
         </SwapShowAcceptChanges>
@@ -101,28 +103,26 @@ export default function SwapModalHeader({
       <AutoColumn justify="flex-start" gap="sm" style={{ padding: '12px 0 0 0px' }}>
         {trade.tradeType === TradeType.EXACT_INPUT ? (
           <TYPE.italic textAlign="left" style={{ width: '100%' }}>
-            {`Output is estimated. You will receive at least `}
+            {t('tip44')}
             <b>
-              {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)}{' '}
-              {config.getBaseCoin(trade.outputAmount.currency.symbol)}
+              {slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)} {config.getBaseCoin(trade.outputAmount.currency.symbol)}
             </b>
-            {' or the transaction will revert.'}
+            {t('tip43')}
           </TYPE.italic>
         ) : (
           <TYPE.italic textAlign="left" style={{ width: '100%' }}>
-            {`Input is estimated. You will sell at most `}
+            {t('tip45')}
             <b>
-              {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)}{' '}
-              {config.getBaseCoin(trade.inputAmount.currency.symbol)}
+              {slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)} {config.getBaseCoin(trade.inputAmount.currency.symbol)}
             </b>
-            {' or the transaction will revert.'}
+            {t('tip43')}
           </TYPE.italic>
         )}
       </AutoColumn>
       {recipient !== null ? (
         <AutoColumn justify="flex-start" gap="sm" style={{ padding: '12px 0 0 0px' }}>
           <TYPE.main>
-            Output will be sent to{' '}
+            {t('tip46')}{' '}
             <b title={recipient}>{isAddress(recipient) ? shortenAddress(recipient) : recipient}</b>
           </TYPE.main>
         </AutoColumn>

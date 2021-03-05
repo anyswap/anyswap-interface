@@ -2,12 +2,13 @@ import { TransactionResponse } from '@ethersproject/abstract-provider'
 import { AddressZero } from '@ethersproject/constants'
 import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Token, TokenAmount, WETH } from '@uniswap/sdk'
 import React, { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Redirect, RouteComponentProps } from 'react-router'
 import { Text } from 'rebass'
 import { ButtonConfirmed } from '../../components/Button'
 import { LightCard, PinkCard, YellowCard } from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
-import CurrencyLogo from '../../components/CurrencyLogo'
+import TokenLogo from '../../components/TokenLogo'
 import FormattedCurrencyAmount from '../../components/FormattedCurrencyAmount'
 import QuestionHelper from '../../components/QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from '../../components/Row'
@@ -26,7 +27,7 @@ import { useETHBalances, useTokenBalance } from '../../state/wallet/hooks'
 import { BackArrow, ExternalLink, TYPE } from '../../theme'
 import { getEtherscanLink, isAddress } from '../../utils'
 import { BodyWrapper } from '../AppBody'
-import { EmptyState } from './EmptyState'
+// import { EmptyState } from './EmptyState'
 
 import config from '../../config'
 
@@ -48,39 +49,40 @@ export function V1LiquidityInfo({
   ethWorth: CurrencyAmount
 }) {
   const { chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   return (
     <>
       <AutoRow style={{ justifyContent: 'flex-start', width: 'fit-content' }}>
-        <CurrencyLogo size="24px" currency={token} />
+        <TokenLogo symbol={config.getBaseCoin(token.symbol)} size="24px"></TokenLogo>
         <div style={{ marginLeft: '.75rem' }}>
           <TYPE.mediumHeader>
             {<FormattedCurrencyAmount currencyAmount={liquidityTokenAmount} />}{' '}
-            {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}/{config.symbol}
+            {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}/{config.symbol}
           </TYPE.mediumHeader>
         </div>
       </AutoRow>
 
       <RowBetween my="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {chainId && token.equals(WETH[chainId]) ? 'WETH' : config.getBaseCoin(token.symbol)}:
+          {t('Pooled')} {chainId && token.equals(WETH[chainId]) ? ('W' + config.symbol) : config.getBaseCoin(token.symbol)}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
             {tokenWorth.toSignificant(4)}
           </Text>
-          <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={token} />
+          <TokenLogo symbol={config.getBaseCoin(token.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
         </RowFixed>
       </RowBetween>
       <RowBetween mb="1rem">
         <Text fontSize={16} fontWeight={500}>
-          Pooled {config.symbol}:
+          {t('Pooled')} {config.symbol}:
         </Text>
         <RowFixed>
           <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
             <FormattedCurrencyAmount currencyAmount={ethWorth} />
           </Text>
-          <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={Currency.ETHER} />
+          <TokenLogo symbol={config.getBaseCoin(Currency.ETHER.symbol)} size="20px" style={{ marginLeft: '8px' }}></TokenLogo>
         </RowFixed>
       </RowBetween>
     </>
@@ -89,6 +91,7 @@ export function V1LiquidityInfo({
 
 function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount: TokenAmount; token: Token }) {
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
   const totalSupply = useTotalSupply(liquidityTokenAmount.token)
   const exchangeETHBalance = useETHBalances([liquidityTokenAmount.token.address])?.[liquidityTokenAmount.token.address]
   const exchangeTokenBalance = useTokenBalance(liquidityTokenAmount.token.address, token)
@@ -188,11 +191,10 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
   return (
     <AutoColumn gap="20px">
       <TYPE.body my={9} style={{ fontWeight: 400 }}>
-        This tool will safely migrate your V1 liquidity to V2 with minimal price risk. The process is completely
-        trustless thanks to the{' '}
+        {t('tip23')}{' '}
         {chainId && (
           <ExternalLink href={getEtherscanLink(chainId, MIGRATOR_ADDRESS, 'address')}>
-            <TYPE.blue display="inline">Uniswap migration contract↗</TYPE.blue>
+            <TYPE.blue display="inline">{config.name} {t('migrationContract')}↗</TYPE.blue>
           </ExternalLink>
         )}
         .
@@ -201,12 +203,11 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {!isFirstLiquidityProvider && largePriceDifference ? (
         <YellowCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            It{"'"}s best to deposit liquidity into Uniswap V2 at a price you believe is correct. If the V2 price seems
-            incorrect, you can either make a swap to move the price or wait for someone else to do so.
+            {t('tip24', {appName: config.appName})}
           </TYPE.body>
           <AutoColumn gap="8px">
             <RowBetween>
-              <TYPE.body>V1 Price:</TYPE.body>
+              <TYPE.body>V1 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -219,7 +220,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             </RowBetween>
 
             <RowBetween>
-              <TYPE.body>V2 Price:</TYPE.body>
+              <TYPE.body>V2 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v2SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -232,7 +233,7 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
             </RowBetween>
 
             <RowBetween>
-              <TYPE.body color="inherit">Price Difference:</TYPE.body>
+              <TYPE.body color="inherit">{t('PriceDifference')}:</TYPE.body>
               <TYPE.black color="inherit">{priceDifferenceAbs?.toSignificant(4)}%</TYPE.black>
             </RowBetween>
           </AutoColumn>
@@ -242,13 +243,12 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
       {isFirstLiquidityProvider && (
         <PinkCard>
           <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-            You are the first liquidity provider for this pair on Uniswap V2. Your liquidity will be migrated at the
-            current V1 price. Your transaction cost also includes the gas to create the pool.
+          {t('tip25', {appName: config.appName})}
           </TYPE.body>
 
           <AutoColumn gap="8px">
             <RowBetween>
-              <TYPE.body>V1 Price:</TYPE.body>
+              <TYPE.body>V1 {t('Price')}:</TYPE.body>
               <TYPE.black>
                 {v1SpotPrice?.toSignificant(6)} {config.getBaseCoin(token.symbol)}/{config.symbol}
               </TYPE.black>
@@ -279,11 +279,11 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
               onClick={approve}
             >
               {approval === ApprovalState.PENDING ? (
-                <Dots>Approving</Dots>
+                <Dots>{t('Approving')}</Dots>
               ) : approval === ApprovalState.APPROVED ? (
-                'Approved'
+                t('Approved')
               ) : (
-                'Approve'
+                t('Approve')
               )}
             </ButtonConfirmed>
           </AutoColumn>
@@ -299,15 +299,16 @@ function V1PairMigration({ liquidityTokenAmount, token }: { liquidityTokenAmount
               }
               onClick={migrate}
             >
-              {isSuccessfullyMigrated ? 'Success' : isMigrationPending ? <Dots>Migrating</Dots> : 'Migrate'}
+              {isSuccessfullyMigrated ? 'Success' : isMigrationPending ? <Dots>{t('Migrating')}</Dots> : t('Migrate')}
             </ButtonConfirmed>
           </AutoColumn>
         </div>
       </LightCard>
       <TYPE.darkGray style={{ textAlign: 'center' }}>
-        {`Your Uniswap V1 ${config.getBaseCoin(token.symbol)}/${
-          config.symbol
-        } liquidity will become Uniswap V2 ${config.getBaseCoin(token.symbol)}/${config.symbol} liquidity.`}
+        {t('tip28', {
+          oldApp: config.oldAppName + ' ' + config.getBaseCoin(token.symbol) + '/' + config.symbol,
+          nowApp: config.appName + ' ' + config.getBaseCoin(token.symbol) + '/' + config.symbol
+        })}
       </TYPE.darkGray>
     </AutoColumn>
   )
@@ -321,6 +322,7 @@ export default function MigrateV1Exchange({
 }: RouteComponentProps<{ address: string }>) {
   const validatedAddress = isAddress(address)
   const { chainId, account } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const exchangeContract = useV1ExchangeContract(validatedAddress ? validatedAddress : undefined)
   const tokenAddress = useSingleCallResult(exchangeContract, 'tokenAddress', undefined, NEVER_RELOAD)?.result?.[0]
@@ -330,7 +332,7 @@ export default function MigrateV1Exchange({
   const liquidityToken: Token | undefined = useMemo(
     () =>
       validatedAddress && chainId && token
-        ? new Token(chainId, validatedAddress, 18, `UNI-V1-${config.getBaseCoin(token.symbol)}`, 'Uniswap V1')
+        ? new Token(chainId, validatedAddress, 18, `${config.baseCurrency}-V1-${config.getBaseCoin(token.symbol)}`, config.oldAppName)
         : undefined,
     [chainId, validatedAddress, token]
   )
@@ -347,19 +349,23 @@ export default function MigrateV1Exchange({
       <AutoColumn gap="16px">
         <AutoRow style={{ alignItems: 'center', justifyContent: 'space-between' }} gap="8px">
           <BackArrow to="/migrate/v1" />
-          <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
+          <TYPE.mediumHeader>{t('MigrateV1Liquidity')}</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Migrate your liquidity tokens from Uniswap V1 to Uniswap V2." />
+            <QuestionHelper text={t('tip27', {oldAppName: config.oldAppName, appName: config.appName})} />
           </div>
         </AutoRow>
 
         {!account ? (
-          <TYPE.largeHeader>You must connect an account.</TYPE.largeHeader>
+          <TYPE.largeHeader>{t('tip26')}</TYPE.largeHeader>
         ) : validatedAddress && chainId && token?.equals(WETH[chainId]) ? (
           <>
             <TYPE.body my={9} style={{ fontWeight: 400 }}>
-              Because Uniswap V2 uses WETH under the hood, your Uniswap V1 WETH/{config.symbol} liquidity cannot be
-              migrated. You may want to remove your liquidity instead.
+              {t('tip29', {
+                appName: config.appName,
+                symbol: 'W' + config.symbol,
+                symbol1: config.symbol,
+                oldAppName: config.oldAppName
+              })}
             </TYPE.body>
 
             <ButtonConfirmed
@@ -367,13 +373,14 @@ export default function MigrateV1Exchange({
                 history.push(`/remove/v1/${validatedAddress}`)
               }}
             >
-              Remove
+              {t('Remove')}
             </ButtonConfirmed>
           </>
         ) : userLiquidityBalance && token ? (
           <V1PairMigration liquidityTokenAmount={userLiquidityBalance} token={token} />
         ) : (
-          <EmptyState message="Loading..." />
+          // <EmptyState message="Loading..." />
+          t('Loading')
         )}
       </AutoColumn>
     </BodyWrapper>

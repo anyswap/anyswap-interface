@@ -4,7 +4,6 @@ import styled, { ThemeContext } from 'styled-components'
 import { darken } from 'polished'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
-import TokenLogo from '../TokenLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween } from '../Row'
 import { TYPE } from '../../theme'
@@ -17,6 +16,8 @@ import { transparentize } from 'polished'
 
 import config from '../../config'
 
+import TokenLogo from '../TokenLogo'
+
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
@@ -26,7 +27,7 @@ const InputRow = styled.div<{ selected: boolean }>`
 const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
   color: ${({ selected, theme }) => (selected ? theme.textColor : '#031a6e')};
-  font-size: ${({ selected, theme }) => (selected ? '1rem' : '12px')};
+  font-size: ${({ selected }) => (selected ? '1rem' : '12px')};
   height: 70px;
   font-family: 'Manrope';
   width: 220px;
@@ -123,10 +124,11 @@ const LabelRow = styled.div`
 
 const Aligner = styled.span`
   display: flex;
+  ${({ theme }) => theme.flexSC};
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 0px 1.625rem 0 51px;
+  padding: 0px 1.25rem 0 51px;
   width: 100%;
   height: 100%;
   &.pl-0 {
@@ -218,29 +220,29 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
 
 `
 
-// const StyledBalanceMax = styled.button`
-//   height: 28px;
-//   background-color: ${({ theme }) => theme.primary5};
-//   border: 1px solid ${({ theme }) => theme.primary5};
-//   border-radius: 0.5rem;
-//   font-size: 0.875rem;
+const StyledBalanceMax = styled.button`
+  height: 28px;
+  background-color: ${({ theme }) => theme.primary5};
+  border: 1px solid ${({ theme }) => theme.primary5};
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
 
-//   font-weight: 500;
-//   cursor: pointer;
-//   margin-right: 0.5rem;
-//   color: ${({ theme }) => theme.primaryText1};
-//   :hover {
-//     border: 1px solid ${({ theme }) => theme.primary1};
-//   }
-//   :focus {
-//     border: 1px solid ${({ theme }) => theme.primary1};
-//     outline: none;
-//   }
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  color: ${({ theme }) => theme.primaryText1};
+  :hover {
+    border: 1px solid ${({ theme }) => theme.primary1};
+  }
+  :focus {
+    border: 1px solid ${({ theme }) => theme.primary1};
+    outline: none;
+  }
 
-//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-//     margin-right: 0.5rem;
-//   `};
-// `
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    margin-right: 0.5rem;
+  `};
+`
 
 interface CurrencyInputPanelProps {
   value: string
@@ -287,7 +289,8 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-  // console.log(currency)
+
+  // console.log(showCommonBases)
   return (
     <InputPanel id={id}>
       <Container hideInput={hideInput}>
@@ -306,7 +309,7 @@ export default function CurrencyInputPanel({
                   style={{ display: 'inline', cursor: 'pointer' }}
                 >
                   {!hideBalance && !!currency && selectedCurrencyBalance
-                    ? (customBalanceText ?? 'Balance: ') + selectedCurrencyBalance?.toSignificant(6)
+                    ? (customBalanceText ?? (t('balanceTxt') + ': ')) + selectedCurrencyBalance?.toSignificant(6)
                     : ' -'}
                 </TYPE.body>
               )} */}
@@ -324,9 +327,9 @@ export default function CurrencyInputPanel({
                 }}
                 style={{ marginRight: '1.875rem' }}
               />
-              {/* {account && currency && showMaxButton && label !== 'To' && (
-                <StyledBalanceMax onClick={onMax}>MAX</StyledBalanceMax>
-              )} */}
+              {account && currency && showMaxButton && label !== 'To' && (
+                <StyledBalanceMax onClick={onMax}>{t('MAX')}</StyledBalanceMax>
+              )}
             </>
           )}
           <CurrencySelect
@@ -339,35 +342,25 @@ export default function CurrencyInputPanel({
             }}
           >
             <Aligner>
-              {pair ? (
-                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
-              ) : currency ? (
-                <TokenLogoBox>
-                  <TokenLogo
-                    symbol={currency && currency.symbol ? config.getBaseCoin(currency?.symbol) : currency?.symbol}
-                    size={'1.625rem'}
-                  />
-                </TokenLogoBox>
-              ) : null}
+              <TokenLogoBox>
+
+                {pair ? (
+                  <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
+                ) : currency ? (
+                  <TokenLogo symbol={currency.symbol} size={'24px'} />
+                ) : null}
+              </TokenLogoBox>
               {pair ? (
                 <StyledTokenName className="pair-name-container">
-                  <h3>
-                    {config.getBaseCoin(pair?.token0.symbol)}:{config.getBaseCoin(pair?.token1.symbol)}
-                  </h3>
+                  {config.getBaseCoin(pair?.token0.symbol)}:{config.getBaseCoin(pair?.token1.symbol)}
                 </StyledTokenName>
               ) : (
                 <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
-                  <h3>
-                    {(currency && currency.symbol && currency.symbol.length > 20
-                      ? currency.symbol.slice(0, 4) +
-                        '...' +
-                        currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                      : currency && currency.symbol
-                      ? config.getBaseCoin(currency?.symbol)
-                      : currency?.symbol) || t('selectToken')}
-                  </h3>
-                  {/* <p>{currency && currency.name ? currency.name : ''}</p> */}
-                  <p>{currency && currency.symbol ? config.getBaseCoin(currency?.name, 1) : currency?.name}</p>
+                  {(currency && currency.symbol && currency.symbol.length > 20
+                    ? currency.symbol.slice(0, 4) +
+                      '...' +
+                      currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
+                    : config.getBaseCoin(currency?.symbol)) || t('selectToken')}
                 </StyledTokenName>
               )}
               {!disableCurrencySelect && !!currency && (

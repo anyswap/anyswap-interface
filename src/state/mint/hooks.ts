@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount, ETHER, JSBI, Pair, Percent, Price, TokenAmount } from '@uniswap/sdk'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { PairState, usePair } from '../../data/Reserves'
 import { useTotalSupply } from '../../data/TotalSupply'
 
@@ -10,7 +11,6 @@ import { AppDispatch, AppState } from '../index'
 import { tryParseAmount } from '../swap/hooks'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, typeInput } from './actions'
-import { useTranslation } from 'react-i18next'
 
 import config from '../../config'
 
@@ -140,21 +140,21 @@ export function useDerivedMintInfo(
   }
 
   if (pairState === PairState.INVALID) {
-    error = error ?? 'Invalid pair'
+    error = error ?? t('InvalidPair')
   }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? t('enterAmount')
+    error = error ?? t('EnterAnAmount')
   }
 
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
   if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    error = 'Insufficient ' + config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol) + ' balance'
+    error = t('Insufficient', {symbol: config.getBaseCoin(currencies[Field.CURRENCY_A]?.symbol)})
   }
 
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
-    error = 'Insufficient ' + config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol) + ' balance'
+    error = t('Insufficient', {symbol: config.getBaseCoin(currencies[Field.CURRENCY_B]?.symbol)})
   }
 
   return {

@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import Modal from '../Modal'
 import { AutoColumn } from '../Column'
 import styled from 'styled-components'
+
+import { useTranslation } from 'react-i18next'
+
 import { RowBetween } from '../Row'
 import { TYPE, CloseIcon } from '../../theme'
 import { ButtonError } from '../Button'
@@ -11,7 +14,8 @@ import { SubmittedView, LoadingView } from '../ModalViews'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useActiveWeb3React } from '../../hooks'
-import { useTranslation } from 'react-i18next'
+
+import config from '../../config'
 
 const ContentWrapper = styled(AutoColumn)`
   width: 100%;
@@ -48,7 +52,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
         .getReward({ gasLimit: 350000 })
         .then((response: TransactionResponse) => {
           addTransaction(response, {
-            summary: `Claim accumulated UNI rewards`
+            summary: `Claim accumulated ${config.baseCurrency} rewards`
           })
           setHash(response.hash)
         })
@@ -64,7 +68,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
     error = t('ConnectWallet')
   }
   if (!stakingInfo?.stakedAmount) {
-    error = error ?? t('enterAmount')
+    error = error ?? t('EnterAnAmount')
   }
 
   return (
@@ -80,11 +84,11 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
               <TYPE.body fontWeight={600} fontSize={36}>
                 {stakingInfo?.earnedAmount?.toSignificant(6)}
               </TYPE.body>
-              <TYPE.body>Unclaimed UNI</TYPE.body>
+              <TYPE.body>Unclaimed {config.baseCurrency}</TYPE.body>
             </AutoColumn>
           )}
           <TYPE.subHeader style={{ textAlign: 'center' }}>
-            When you claim without withdrawing your liquidity remains in the mining pool.
+            {t('tip1')}
           </TYPE.subHeader>
           <ButtonError disabled={!!error} error={!!error && !!stakingInfo?.stakedAmount} onClick={onClaimReward}>
             {error ?? 'Claim'}
@@ -94,7 +98,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
       {attempting && !hash && (
         <LoadingView onDismiss={wrappedOnDismiss}>
           <AutoColumn gap="12px" justify={'center'}>
-            <TYPE.body fontSize={20}>Claiming {stakingInfo?.earnedAmount?.toSignificant(6)} UNI</TYPE.body>
+            <TYPE.body fontSize={20}>Claiming {stakingInfo?.earnedAmount?.toSignificant(6)} {config.baseCurrency}</TYPE.body>
           </AutoColumn>
         </LoadingView>
       )}
@@ -102,7 +106,7 @@ export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: Sta
         <SubmittedView onDismiss={wrappedOnDismiss} hash={hash}>
           <AutoColumn gap="12px" justify={'center'}>
             <TYPE.largeHeader>Transaction Submitted</TYPE.largeHeader>
-            <TYPE.body fontSize={20}>Claimed UNI!</TYPE.body>
+            <TYPE.body fontSize={20}>Claimed {config.baseCurrency}!</TYPE.body>
           </AutoColumn>
         </SubmittedView>
       )}

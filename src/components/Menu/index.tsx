@@ -10,6 +10,8 @@ import { useModalOpen, useToggleModal } from '../../state/application/hooks'
 import { ExternalLink } from '../../theme'
 import { ButtonPrimary } from '../Button'
 
+import config from '../../config'
+
 const StyledMenuIcon = styled(MenuIcon)`
   path {
     stroke: ${({ theme }) => theme.text1};
@@ -127,7 +129,7 @@ export default function Menu() {
           </MenuItem>
           {account && (
             <ButtonPrimary onClick={openClaimModal} padding="8px 16px" width="100%" borderRadius="12px" mt="0.5rem">
-              Claim UNI
+              Claim {config.baseCurrency}
             </ButtonPrimary>
           )}
         </MenuFlyout>

@@ -1,6 +1,7 @@
 import { JSBI, Token } from '@uniswap/sdk'
 import React, { useCallback, useContext, useMemo, useState, useEffect } from 'react'
 import { ThemeContext } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { AutoColumn } from '../../components/Column'
 import { AutoRow } from '../../components/Row'
 import { SearchInput } from '../../components/SearchModal/styleds'
@@ -19,9 +20,12 @@ import { Dots } from '../../components/swap/styleds'
 import { useAddUserToken } from '../../state/user/hooks'
 import { isTokenOnList } from '../../utils'
 
+import config from '../../config'
+
 export default function MigrateV1() {
   const theme = useContext(ThemeContext)
   const { account, chainId } = useActiveWeb3React()
+  const { t } = useTranslation()
 
   const [tokenSearch, setTokenSearch] = useState<string>('')
   const handleTokenSearchChange = useCallback(e => setTokenSearch(e.target.value), [setTokenSearch])
@@ -73,14 +77,13 @@ export default function MigrateV1() {
           <BackArrow to="/pool" />
           <TYPE.mediumHeader>Migrate V1 Liquidity</TYPE.mediumHeader>
           <div>
-            <QuestionHelper text="Migrate your liquidity tokens from Uniswap V1 to Uniswap V2." />
+            <QuestionHelper text={`Migrate your liquidity tokens from ${config.oldAppName} to ${config.appName}.`} />
           </div>
         </AutoRow>
 
-        <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
-          For each pool shown below, click migrate to remove your liquidity from Uniswap V1 and deposit it into Uniswap
-          V2.
-        </TYPE.body>
+        {/* <TYPE.body style={{ marginBottom: 8, fontWeight: 400 }}>
+          For each pool shown below, click migrate to remove your liquidity from {config.oldAppName} and deposit it into {config.appName} V2.
+        </TYPE.body> */}
 
         {!account ? (
           <LightCard padding="40px">
@@ -91,7 +94,7 @@ export default function MigrateV1() {
         ) : isLoading ? (
           <LightCard padding="40px">
             <TYPE.body color={theme.text3} textAlign="center">
-              <Dots>Loading</Dots>
+              <Dots>{t('Loading')}</Dots>
             </TYPE.body>
           </LightCard>
         ) : (
