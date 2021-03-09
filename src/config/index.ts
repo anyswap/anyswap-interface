@@ -26,7 +26,8 @@ let netConfig:ConFig = {
   lookBlock: explorerUrl + '/block/',
   tokenList: httest,
   initToken: '0x3b2c595173831bc4ceea2406fe49577bdb95d90a',
-  multicalToken: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29'
+  multicalToken: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29',
+  factoryToken: '0x2302c14f2928bb9b68053320309b84db3702f89f'
 }
 
 if (ENV === 'main') {
@@ -47,7 +48,8 @@ if (ENV === 'main') {
     lookBlock: explorerUrl + '/block/',
     tokenList: htmain,
     initToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e',
-    multicalToken: '0xbff74da37df72695b1d7e8185edd47fd0771ee3a'
+    multicalToken: '0xbff74da37df72695b1d7e8185edd47fd0771ee3a',
+    factoryToken: '0xed776e576809012fb43382b37f576efbe3ab3390'
   }
 }
 
