@@ -30,8 +30,8 @@ export function useDerivedBurnInfo(
   error?: string
 } {
   const { account, chainId } = useActiveWeb3React()
-
   const { t } = useTranslation()
+
   const { independentField, typedValue } = useBurnState()
 
   // pair + totalsupply

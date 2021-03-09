@@ -1,5 +1,6 @@
 import { parseBytes32String } from '@ethersproject/strings'
 import { Currency, ETHER, Token, currencyEquals } from '@uniswap/sdk'
+// import { Currency, Token, currencyEquals } from '@uniswap/sdk'
 import { useMemo } from 'react'
 import { useSelectedTokenList } from '../state/lists/hooks'
 import { NEVER_RELOAD, useSingleCallResult } from '../state/multicall/hooks'
@@ -15,7 +16,7 @@ export function useAllTokens(): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()
   const userAddedTokens = useUserAddedTokens()
   const allTokens = useSelectedTokenList()
-
+  // console.log(allTokens)
   return useMemo(() => {
     if (!chainId) return {}
     return (

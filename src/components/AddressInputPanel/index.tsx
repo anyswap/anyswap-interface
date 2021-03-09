@@ -32,7 +32,7 @@ const ContainerRow = styled.div<{ error: boolean }>`
 
 const InputContainer = styled.div`
   flex: 1;
-  padding: 1rem;
+  padding: 1.25rem 2.5rem;
 `
 
 const Input = styled.input<{ error?: boolean }>`
@@ -48,6 +48,8 @@ const Input = styled.input<{ error?: boolean }>`
   text-overflow: ellipsis;
   font-weight: 500;
   width: 100%;
+  height: 70px;
+  border-bottom: 0.0625rem solid ${({ theme }) => theme.inputBorder};
   ::placeholder {
     color: ${({ theme }) => theme.text4};
   }

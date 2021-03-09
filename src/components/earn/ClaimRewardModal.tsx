@@ -30,8 +30,8 @@ interface StakingModalProps {
 
 export default function ClaimRewardModal({ isOpen, onDismiss, stakingInfo }: StakingModalProps) {
   const { account } = useActiveWeb3React()
-
   const { t } = useTranslation()
+
 
   // monitor call to help UI loading state
   const addTransaction = useTransactionAdder()

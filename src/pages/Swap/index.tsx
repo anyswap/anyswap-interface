@@ -40,12 +40,15 @@ import {
   useSwapState
 } from '../../state/swap/hooks'
 import { useExpertModeManager, useUserSlippageTolerance } from '../../state/user/hooks'
-import { LinkStyledButton, TYPE } from '../../theme'
+// import { LinkStyledButton, TYPE } from '../../theme'
+import { TYPE } from '../../theme'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 import { ClickableText } from '../Pool/styleds'
 import Loader from '../../components/Loader'
+import Title from '../../components/Title'
+import SwapIcon from '../../components/SwapIcon'
 
 import config from '../../config'
 
@@ -102,6 +105,9 @@ export default function Swap() {
     [Version.v1]: v1Trade,
     [Version.v2]: v2Trade
   }
+  // console.log(showWrap)
+  // console.log(toggledVersion)
+  // console.log(tradesByVersion[toggledVersion])
   const trade = showWrap ? undefined : tradesByVersion[toggledVersion]
   const defaultTrade = showWrap ? undefined : tradesByVersion[DEFAULT_VERSION]
 
@@ -160,7 +166,7 @@ export default function Swap() {
       ? parsedAmounts[independentField]?.toExact() ?? ''
       : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
   }
-
+  // console.log(trade)
   const route = trade?.route
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
@@ -210,7 +216,7 @@ export default function Swap() {
         })
       })
   }, [tradeToConfirm, priceImpactWithoutFee, showConfirm, swapCallback])
-// }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
+  // }, [tradeToConfirm, account, priceImpactWithoutFee, recipient, recipientAddress, showConfirm, swapCallback, trade])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
@@ -264,6 +270,29 @@ export default function Swap() {
         onConfirm={handleConfirmTokenWarning}
       />
       <AppBody>
+        <Title
+          title={t('swap')}
+          tabList={[
+            {
+              name: t('swap'),
+              onTabClick: name => {
+                console.log(name)
+                onChangeRecipient(null)
+              },
+              iconUrl: require('../../assets/images/icon/swap.svg'),
+              iconActiveUrl: require('../../assets/images/icon/swap-white.svg')
+            },
+            {
+              name: t('send'),
+              onTabClick: name => {
+                console.log(name)
+                onChangeRecipient('')
+              },
+              iconUrl: require('../../assets/images/icon/send.svg'),
+              iconActiveUrl: require('../../assets/images/icon/send-white.svg')
+            }
+          ]}
+        ></Title>
         <SwapPoolTabs active={'swap'} />
         <Wrapper id="swap-page">
           <ConfirmSwapModal
@@ -292,7 +321,14 @@ export default function Swap() {
               otherCurrency={currencies[Field.OUTPUT]}
               id="swap-currency-input"
             />
-            <AutoColumn justify="space-between">
+            <SwapIcon
+              onClick={() => {
+                setApprovalSubmitted(false) // reset 2 step UI for approvals
+                onSwitchTokens()
+              }}
+              iconUrl={require('../../assets/images/icon/revert.svg')}
+            ></SwapIcon>
+            {/* <AutoColumn justify="space-between">
               <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
                 <ArrowWrapper clickable>
                   <ArrowDown
@@ -310,7 +346,7 @@ export default function Swap() {
                   </LinkStyledButton>
                 ) : null}
               </AutoRow>
-            </AutoColumn>
+            </AutoColumn> */}
             <CurrencyInputPanel
               value={formattedAmounts[Field.OUTPUT]}
               onUserInput={handleTypeOutput}
@@ -324,13 +360,13 @@ export default function Swap() {
 
             {recipient !== null && !showWrap ? (
               <>
-                <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
+                <AutoRow justify="center" style={{ padding: '0 1rem' }}>
                   <ArrowWrapper clickable={false}>
                     <ArrowDown size="16" color={theme.text2} />
                   </ArrowWrapper>
-                  <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
-                    - {t('RemoveSend')}
-                  </LinkStyledButton>
+                  {/* <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
+                    - Remove send
+                  </LinkStyledButton> */}
                 </AutoRow>
                 <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
               </>
@@ -466,8 +502,8 @@ export default function Swap() {
             ) : null}
           </BottomGrouping>
         </Wrapper>
+        <AdvancedSwapDetailsDropdown trade={trade} />
       </AppBody>
-      <AdvancedSwapDetailsDropdown trade={trade} />
     </>
   )
 }

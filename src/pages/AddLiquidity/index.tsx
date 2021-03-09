@@ -38,7 +38,6 @@ import { Dots, Wrapper } from '../Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { currencyId } from '../../utils/currencyId'
 import { PoolPriceBar } from './PoolPriceBar'
-
 import config from '../../config'
 
 export default function AddLiquidity({
@@ -449,13 +448,12 @@ export default function AddLiquidity({
             )}
           </AutoColumn>
         </Wrapper>
+        {pair && !noLiquidity && pairState !== PairState.INVALID ? (
+          <AutoColumn style={{ minWidth: '20rem', width: '100%', marginTop: '1rem' }}>
+            <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
+          </AutoColumn>
+        ) : null}
       </AppBody>
-
-      {pair && !noLiquidity && pairState !== PairState.INVALID ? (
-        <AutoColumn style={{ minWidth: '20rem', width: '100%', maxWidth: '400px', marginTop: '1rem' }}>
-          <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
-        </AutoColumn>
-      ) : null}
     </>
   )
 }

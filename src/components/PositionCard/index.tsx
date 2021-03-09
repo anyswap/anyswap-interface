@@ -24,11 +24,12 @@ import { useColor } from '../../hooks/useColor'
 import Card, { GreyCard, LightCard } from '../Card'
 import { AutoColumn } from '../Column'
 import TokenLogo from '../TokenLogo'
-import DoubleCurrencyLogo from '../DoubleLogo'
+// import DoubleCurrencyLogo from '../DoubleLogo'
 import { RowBetween, RowFixed } from '../Row'
 // import { Dots } from '../swap/styleds'
 
 import config from '../../config'
+
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -97,7 +98,13 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             </FixedHeightRow>
             <FixedHeightRow onClick={() => setShowMore(!showMore)}>
               <RowFixed>
-                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
+                {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
+                <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
+                <TokenLogo
+                  symbol={config.getBaseCoin(currency1.symbol)}
+                  size="20px"
+                  style={{ marginLeft: '8px' }}
+                ></TokenLogo>
                 <Text fontWeight={500} fontSize={20}>
                   {config.getBaseCoin(currency0.symbol)}/{config.getBaseCoin(currency1.symbol)}
                 </Text>
@@ -199,7 +206,14 @@ export default function FullPositionCard({ pair, border }: PositionCardProps) {
       <AutoColumn gap="12px">
         <FixedHeightRow>
           <RowFixed>
-            <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} />
+            {/* <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin={true} size={20} /> */}
+
+            <TokenLogo symbol={config.getBaseCoin(currency0.symbol)} size="20px"></TokenLogo>
+            <TokenLogo
+              symbol={config.getBaseCoin(currency1.symbol)}
+              size="20px"
+              style={{ marginLeft: '8px' }}
+            ></TokenLogo>
             <Text fontWeight={500} fontSize={20}>
               {!currency0 || !currency1 ? t('Loading') : `${config.getBaseCoin(currency0.symbol)}/${config.getBaseCoin(currency1.symbol)}`}
             </Text>

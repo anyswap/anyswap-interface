@@ -1,4 +1,4 @@
-import { transparentize } from 'polished'
+// import { transparentize } from 'polished'
 import React, { useMemo } from 'react'
 import styled, {
   ThemeProvider as StyledComponentsThemeProvider,
@@ -41,25 +41,72 @@ export function colors(darkMode: boolean): Colors {
     black,
 
     // text
-    text1: darkMode ? '#FFFFFF' : '#000000',
+    text1: darkMode ? '#FFFFFF' : '#96989e',
     text2: darkMode ? '#C3C5CB' : '#565A69',
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
     text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    textNav: darkMode ? '#979dac' : '#062536',
+    textColor: darkMode ? '#979dac' : '#031a6e',
+    textColorBold: darkMode ? white : '#062536',
 
     // backgrounds / greys
-    bg1: darkMode ? '#212429' : '#FFFFFF',
+    // bg1: darkMode ? '#212429' : '#FFFFFF',
+    // bg2: darkMode ? '#2C2F36' : '#F7F8FA',
+    // bg3: darkMode ? '#40444F' : '#EDEEF2',
+    // bg4: darkMode ? '#565A69' : '#CED0D9',
+    // bg5: darkMode ? '#6C7284' : '#888D9B',
+    bg1: darkMode ? '#21263e' : '#FFFFFF',
     bg2: darkMode ? '#2C2F36' : '#F7F8FA',
     bg3: darkMode ? '#40444F' : '#EDEEF2',
     bg4: darkMode ? '#565A69' : '#CED0D9',
     bg5: darkMode ? '#6C7284' : '#888D9B',
+    contentBg: darkMode ? '#21263e' : white,
+    navIconBg: darkMode ? '#363d5f' : 'rgba(0,0,0,0.05)',
+    navBg: darkMode ? '#21263e' : '#031a6e',
+    navBg2: darkMode ? '#363d5f' : '#031a6e',
+    bgColorLinear: 'linear-gradient(to right, #734ce2 , #606bfb)',
+    outLinkIconBg: darkMode ? '#2b314f' : '#ecf6ff',
+    bodyBg: darkMode ? '#151a2f' : '#f9fafb',
+    tabBg: darkMode ? '#2b314f' : white,
+    tabActiveBg: darkMode ? '#6725fc' : 'none',
+    tabColor: darkMode ? white : '#96989e',
+    tabActiveColor: darkMode ? white : '#734be2',
+    tabBdColor: darkMode ? 'none' : '#734be2',
+
+    selectedBg: darkMode ? '#2b314f' : '#ecf6ff',
+    selectedHoverBg: darkMode ? '#252b49' : '#deefff',
+
+    selectedBorder: darkMode ? '#363d5f' : '#c0d6ea',
+    selectedHoverBorder: darkMode ? '#4a5482' : '#6d9cc6',
+
+    selectedBgNo: darkMode ? '#2b314f' : '#f8f8f9',
+    selectedHoverBgNo: darkMode ? '#252b49' : '#f2f2f2',
+
+    selectedBorderNo: darkMode ? '#363d5f' : '#d9d9e2',
+    selectedHoverBorderNo: darkMode ? '#4a5482' : '#9c9cb0',
+
+    inputBorder: darkMode ? '#5c677d' : '#062536',
+
+    selectTextColor: darkMode ? white : '#031a6e',
+
+    arrowBg: darkMode ? '#21263e' : white,
+
+    swapBg: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.1)',
+
+    // backgrounds
+    // bgc1: darkMode ? '#21263e' : '#FFFFFF',
+
+    // // borders
+    // bsd1: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
 
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#2483fe',
+    // primary1: darkMode ? '#2172E5' : '#ff007a',
+    primary1: 'linear-gradient(to right, #734ce2 , #606bfb)',
     primary2: darkMode ? '#3680E7' : '#FF8CC3',
     primary3: darkMode ? '#4D8FEA' : '#9bd4f9',
     primary4: darkMode ? '#376bad70' : '#9bd4f9',
@@ -99,6 +146,8 @@ export function theme(darkMode: boolean): DefaultTheme {
 
     //shadows
     shadow1: darkMode ? '#000' : '#2F80ED',
+    shadow2: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
+    contentShadow: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
 
     // media queries
     mediaWidth: mediaWidthTemplates,
@@ -111,6 +160,26 @@ export function theme(darkMode: boolean): DefaultTheme {
     flexRowNoWrap: css`
       display: flex;
       flex-flow: row nowrap;
+    `,
+    flexC: css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `,
+    flexSC: css`
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    `,
+    flexEC: css`
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    `,
+    flexBC: css`
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     `
   }
 }
@@ -177,12 +246,12 @@ export const TYPE = {
 
 export const FixedGlobalStyle = createGlobalStyle`
 html, input, textarea, button {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', sans-serif !important;
   font-display: fallback;
 }
 @supports (font-variation-settings: normal) {
   html, input, textarea, button {
-    font-family: 'Inter var', sans-serif;
+    font-family: 'Manrope', sans-serif !important;
   }
 }
 
@@ -194,6 +263,7 @@ body {
 
  a {
    color: ${colors(false).blue1}; 
+   font-family: 'Manrope', sans-serif !important;
  }
 
 * {
@@ -217,14 +287,33 @@ html {
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
-  color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg2};
+  // color: ${({ theme }) => theme.text1};
+  // background-color: ${({ theme }) => theme.bg2};
+  color: ${({ theme }) => theme.textColor};
+  background-color: ${({ theme }) => theme.bodyBg};
 }
 
 body {
   min-height: 100vh;
   background-position: 0 -30vh;
   background-repeat: no-repeat;
-  // background-image: ${({ theme }) => `radial-gradient(50% 50% at 50% 50%, ${transparentize(0.9, theme.primary1)} 0%, ${transparentize( 1, theme.bg1 )} 100%)`};
+}
+/* 滚动条凹槽的颜色，还可以设置边框属性 */
+::-webkit-scrollbar-track-piece {
+background-color:#f8f8f8;
+}
+/* 滚动条的宽度 */
+::-webkit-scrollbar {
+width:0px;
+height:0px;
+}
+/* 滚动条的设置 */
+::-webkit-scrollbar-thumb {
+background-color:#dddddd;
+background-clip:padding-box;
+min-height:28px;
+}
+::-webkit-scrollbar-thumb:hover {
+background-color:#bbb;
 }
 `

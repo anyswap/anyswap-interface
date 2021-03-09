@@ -10,9 +10,8 @@ import { useActiveWeb3React } from './index'
 
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const { chainId } = useActiveWeb3React()
-
   const bases: Token[] = chainId ? BASES_TO_CHECK_TRADES_AGAINST[chainId] : []
-
+  // console.log(bases)
   const [tokenA, tokenB] = chainId
     ? [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)]
     : [undefined, undefined]
@@ -29,7 +28,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
     () =>
       tokenA && tokenB
         ? [
-            // the direct pair
+            // 直接对
             [tokenA, tokenB],
             // token A against all bases
             ...bases.map((base): [Token, Token] => [tokenA, base]),
@@ -61,14 +60,14 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
 
   const allPairs = usePairs(allPairCombinations)
 
-  // only pass along valid pairs, non-duplicated pairs
+  // 只传递有效对、非重复对
   return useMemo(
     () =>
       Object.values(
         allPairs
-          // filter out invalid pairs
+          // 筛选出无效对
           .filter((result): result is [PairState.EXISTS, Pair] => Boolean(result[0] === PairState.EXISTS && result[1]))
-          // filter out duplicated pairs
+          // 过滤出重复的对
           .reduce<{ [pairAddress: string]: Pair }>((memo, [, curr]) => {
             memo[curr.liquidityToken.address] = memo[curr.liquidityToken.address] ?? curr
             return memo
@@ -79,10 +78,11 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
 }
 
 /**
- * Returns the best trade for the exact amount of tokens in to the given token out
+ * 返回给定令牌出的确切数量的令牌的最佳交易
  */
 export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       return (
@@ -94,7 +94,7 @@ export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?:
 }
 
 /**
- * Returns the best trade for the token in to the exact amount of token out
+ * 将代币入市的最佳交易金额返回到代币的确切金额
  */
 export function useTradeExactOut(currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)

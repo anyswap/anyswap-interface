@@ -54,7 +54,7 @@ export function CurrencySearch({
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [invertSearchOrder, setInvertSearchOrder] = useState<boolean>(false)
   const allTokens = useAllTokens()
-
+  // console.log(allTokens)
   // if they input an address, use it
   const isAddressSearch = isAddress(searchQuery)
   const searchToken = useToken(searchQuery)
@@ -86,6 +86,7 @@ export function CurrencySearch({
     // console.log(filteredTokens)
     // console.log(filteredTokens)
     const sorted = filteredTokens.sort(tokenComparator)
+    // console.log(sorted)
     const symbolMatch = searchQuery
       .toLowerCase()
       .split(/\s+/)

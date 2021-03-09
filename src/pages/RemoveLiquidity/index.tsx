@@ -43,7 +43,6 @@ import { Field } from '../../state/burn/actions'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useUserSlippageTolerance } from '../../state/user/hooks'
 import { BigNumber } from '@ethersproject/bignumber'
-
 import config from '../../config'
 
 export default function RemoveLiquidity({
@@ -691,13 +690,12 @@ export default function RemoveLiquidity({
             </div>
           </AutoColumn>
         </Wrapper>
+        {pair ? (
+          <AutoColumn style={{ minWidth: '20rem', width: '100%', marginTop: '1rem' }}>
+            <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
+          </AutoColumn>
+        ) : null}
       </AppBody>
-
-      {pair ? (
-        <AutoColumn style={{ minWidth: '20rem', width: '100%', maxWidth: '400px', marginTop: '1rem' }}>
-          <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} />
-        </AutoColumn>
-      ) : null}
     </>
   )
 }

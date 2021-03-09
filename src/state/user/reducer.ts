@@ -33,6 +33,8 @@ export interface UserState {
   // deadline set by user in minutes, used in all txns
   userDeadline: number
 
+  pairAddress: any
+
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
@@ -60,6 +62,7 @@ export const initialState: UserState = {
   userExpertMode: false,
   userSlippageTolerance: INITIAL_ALLOWED_SLIPPAGE,
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
+  pairAddress: undefined,
   tokens: {},
   pairs: {},
   timestamp: currentTimestamp(),

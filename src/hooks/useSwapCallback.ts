@@ -14,7 +14,6 @@ import { useV1ExchangeContract } from './useContract'
 import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
 import { Version } from './useToggledVersion'
-
 import config from '../config'
 
 export enum SwapCallbackState {

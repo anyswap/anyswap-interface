@@ -41,6 +41,7 @@ class MiniRpcProvider implements AsyncSendable {
   private batch: BatchItem[] = []
 
   constructor(chainId: number, url: string, batchWaitTimeMs?: number) {
+    // console.log(url)
     this.chainId = chainId
     this.url = url
     const parsed = new URL(url)
@@ -56,6 +57,7 @@ class MiniRpcProvider implements AsyncSendable {
     this.batch = []
     this.batchTimeoutId = null
     let response: Response
+    // console.log(batch)
     try {
       response = await fetch(this.url, {
         method: 'POST',
@@ -63,6 +65,7 @@ class MiniRpcProvider implements AsyncSendable {
         body: JSON.stringify(batch.map(item => item.request))
       })
     } catch (error) {
+      // console.log(error)
       batch.forEach(({ reject }) => reject(new Error('Failed to send batch call')))
       return
     }
@@ -120,6 +123,7 @@ class MiniRpcProvider implements AsyncSendable {
     if (method === 'eth_chainId') {
       return `0x${this.chainId.toString(16)}`
     }
+    // console.log(params)
     const promise = new Promise((resolve, reject) => {
       this.batch.push({
         request: {
@@ -144,7 +148,7 @@ export class NetworkConnector extends AbstractConnector {
   constructor({ urls, defaultChainId }: NetworkConnectorArguments) {
     invariant(defaultChainId || Object.keys(urls).length === 1, 'defaultChainId is a required argument with >1 url')
     super({ supportedChainIds: Object.keys(urls).map((k): number => Number(k)) })
-
+    // console.log(urls)
     this.currentChainId = defaultChainId || Number(Object.keys(urls)[0])
     this.providers = Object.keys(urls).reduce<{ [chainId: number]: MiniRpcProvider }>((accumulator, chainId) => {
       accumulator[Number(chainId)] = new MiniRpcProvider(Number(chainId), urls[Number(chainId)])

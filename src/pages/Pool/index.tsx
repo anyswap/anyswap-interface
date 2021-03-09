@@ -1,4 +1,5 @@
-import React, { useContext, useMemo } from 'react'
+import React, {  useContext, useMemo } from 'react'
+// import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { Pair } from '@uniswap/sdk'
 import { useTranslation } from 'react-i18next'
@@ -92,6 +93,29 @@ export default function Pool() {
     () => trackedTokenPairs.map(tokens => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
     [trackedTokenPairs]
   )
+  // const [tokenPairsWithLiquidityTokens, setTokenPairsWithLiquidityTokens] = useState<Array<TPWLT>>([])
+  // const getGokenPairsWithLiquidityTokens = useCallback(() => {
+  //   getPairsAddress(trackedTokenPairs).then((res: any) => {
+  //     console.log(trackedTokenPairs)
+  //     console.log(res)
+  //     if (res && res.length > 0) {
+  //       const arr = []
+  //       for (const obj of res) {
+  //         if (obj.pairAddress) {
+  //           arr.push({
+  //             liquidityToken: new Token(obj.chainId, obj.pairAddress, 18, 'UNI-V2', 'Uniswap V2'),
+  //             tokens: obj.tokens
+  //           })
+  //         }
+  //       }
+  //       console.log(arr)
+  //       setTokenPairsWithLiquidityTokens(arr)
+  //     }
+  //   })
+  // }, [trackedTokenPairs])
+  // useEffect(() => {
+  //   getGokenPairsWithLiquidityTokens()
+  // }, [getGokenPairsWithLiquidityTokens])
   const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map(tpwlt => tpwlt.liquidityToken), [
     tokenPairsWithLiquidityTokens
   ])
@@ -99,8 +123,10 @@ export default function Pool() {
     account ?? undefined,
     liquidityTokens
   )
+  // console.log(tokenPairsWithLiquidityTokens)
+  // console.log(trackedTokenPairs)
 
-  // fetch the reserves for all V2 pools in which the user has a balance
+  // 获取用户有余额的所有V2池的保留
   const liquidityTokensWithBalances = useMemo(
     () =>
       tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
@@ -108,8 +134,12 @@ export default function Pool() {
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances]
   )
-
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  // console.log(tokenPairsWithLiquidityTokens)
+  // console.log(v2PairsBalances)
+  // console.log(liquidityTokensWithBalances)
+  const tokenArr = useMemo(() => liquidityTokensWithBalances.map(({ tokens }) => tokens), [liquidityTokensWithBalances])
+  // const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const v2Pairs = usePairs(tokenArr)
   const v2IsLoading =
     fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some(V2Pair => !V2Pair)
 
@@ -128,19 +158,17 @@ export default function Pool() {
           <CardSection>
             <AutoColumn gap="md">
               <RowBetween>
-                <TYPE.white fontWeight={600}>Liquidity provider rewards</TYPE.white>
+                <TYPE.white fontWeight={600}>{t('LiquidityProviderPewards')}</TYPE.white>
               </RowBetween>
               <RowBetween>
-                <TYPE.white fontSize={14}>
-                  {`Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.`}
-                </TYPE.white>
+                <TYPE.white fontSize={14}>{t('LiquidityProviderPewardsTip')}</TYPE.white>
               </RowBetween>
               <ExternalLink
                 style={{ color: 'white', textDecoration: 'underline' }}
                 target="_blank"
                 href="https://uniswap.org/docs/v2/core-concepts/pools/"
               >
-                <TYPE.white fontSize={14}>Read more about providing liquidity</TYPE.white>
+                <TYPE.white fontSize={14}>{t('readMore')}</TYPE.white>
               </ExternalLink>
             </AutoColumn>
           </CardSection>
@@ -186,7 +214,7 @@ export default function Pool() {
                 {/* <ButtonSecondary>
                   <RowBetween>
                     <ExternalLink href={'https://uniswap.info/account/' + account}>
-                      Account analytics and accrued fees
+                      {t('AccountAnalytics')}
                     </ExternalLink>
                     <span> ↗</span>
                   </RowBetween>

@@ -15,6 +15,7 @@ import {
   SerializedToken,
   updateUserDarkMode,
   updateUserDeadline,
+  // updatePairAddress,
   updateUserExpertMode,
   updateUserSlippageTolerance,
   toggleURLWarning
@@ -187,11 +188,16 @@ export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
 export function useTrackedTokenPairs(): [Token, Token][] {
   const { chainId } = useActiveWeb3React()
   const tokens = useAllTokens()
-
   // pinned pairs
   const pinnedPairs = useMemo(() => (chainId ? PINNED_PAIRS[chainId] ?? [] : []), [chainId])
+  // if (chainId) {
+  //   console.log(tokens)
+  //   console.log(PINNED_PAIRS)
+  //   console.log(chainId)
+  //   console.log(PINNED_PAIRS[chainId])
+  // }
 
-  // pairs for every token against every base
+  // 对每个令牌对每个基进行配对
   const generatedPairs: [Token, Token][] = useMemo(
     () =>
       chainId
@@ -218,7 +224,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 
   // pairs saved by users
   const savedSerializedPairs = useSelector<AppState, AppState['user']['pairs']>(({ user: { pairs } }) => pairs)
-
+  // console.log(savedSerializedPairs)
   const userPairs: [Token, Token][] = useMemo(() => {
     if (!chainId || !savedSerializedPairs) return []
     const forChain = savedSerializedPairs[chainId]
