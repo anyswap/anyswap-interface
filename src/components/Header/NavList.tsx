@@ -204,12 +204,12 @@ const OutLinkImgBox = styled.div`
 const Link = styled(ExternalLink)`
   .icon {
     ${({ theme }) => theme.flexC};
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     background-color: ${({ theme }) => theme.outLinkIconBg};
     border-radius: 100%;
     margin-right: 0.625rem;
-    padding: 10px;
+    padding: 8px;
     &:hover {
       background-color: #5f6cfc;
     }
@@ -312,6 +312,13 @@ export default function NavList() {
           </div>
           {t('Documents')}
         </MenuItem>
+        <MenuItem id="link" href="https://dard6erxu8t.typeform.com/to/C7RwF08A">
+          <div className="icon">
+            <img src={require('../../assets/images/icon/bridge-gray.svg')} className="off" alt="" />
+            <img src={require('../../assets/images/icon/bridge.svg')} className="on" alt="" />
+          </div>
+          {t('Listing')}
+        </MenuItem>
       </Tabs>
       <OutLink>
         <OutLinkImgBox>
@@ -343,6 +350,12 @@ export default function NavList() {
             <div className="icon">
               <img src={require('../../assets/images/icon/coinmarketcap.png')} className="off" alt="" />
               <img src={require('../../assets/images/icon/coinmarketcap-white.png')} className="on" alt="" />
+            </div>
+          </Link>
+          <Link id="link" href="https://www.coingecko.com/en/coins/anyswap">
+            <div className="icon">
+              <img src={require('../../assets/images/icon/coingecko.png')} className="off" alt="" />
+              <img src={require('../../assets/images/icon/coingecko-white.png')} className="on" alt="" />
             </div>
           </Link>
         </OutLinkImgBox>
