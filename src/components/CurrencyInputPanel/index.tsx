@@ -220,29 +220,36 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
 
 `
 
-const StyledBalanceMax = styled.button`
-  height: 28px;
-  background-color: ${({ theme }) => theme.primary5};
-  border: 1px solid ${({ theme }) => theme.primary5};
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-
-  font-weight: 500;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  color: ${({ theme }) => theme.primaryText1};
-  :hover {
-    border: 1px solid ${({ theme }) => theme.primary1};
+const HideSmallBox = styled.div`
+  display:none;
+  @media screen and (max-width: 960px) {
+    display: block;
   }
-  :focus {
-    border: 1px solid ${({ theme }) => theme.primary1};
-    outline: none;
-  }
-
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    margin-right: 0.5rem;
-  `};
 `
+
+// const StyledBalanceMax = styled.button`
+//   height: 28px;
+//   background-color: ${({ theme }) => theme.primary5};
+//   border: 1px solid ${({ theme }) => theme.primary5};
+//   border-radius: 0.5rem;
+//   font-size: 0.875rem;
+
+//   font-weight: 500;
+//   cursor: pointer;
+//   margin-right: 0.5rem;
+//   color: ${({ theme }) => theme.primaryText1};
+//   :hover {
+//     border: 1px solid ${({ theme }) => theme.primary1};
+//   }
+//   :focus {
+//     border: 1px solid ${({ theme }) => theme.primary1};
+//     outline: none;
+//   }
+
+//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+//     margin-right: 0.5rem;
+//   `};
+// `
 
 interface CurrencyInputPanelProps {
   value: string
@@ -300,19 +307,22 @@ export default function CurrencyInputPanel({
               <TYPE.body color={theme.text2} fontWeight={500} fontSize={14}>
                 {label}
               </TYPE.body>
-              {/* {account && (
-                <TYPE.body
-                  onClick={onMax}
-                  color={theme.text2}
-                  fontWeight={500}
-                  fontSize={14}
-                  style={{ display: 'inline', cursor: 'pointer' }}
-                >
-                  {!hideBalance && !!currency && selectedCurrencyBalance
-                    ? (customBalanceText ?? (t('balanceTxt') + ': ')) + selectedCurrencyBalance?.toSignificant(6)
-                    : ' -'}
-                </TYPE.body>
-              )} */}
+              {account && showMaxButton ? (
+                <HideSmallBox>
+
+                  <TYPE.body
+                    onClick={onMax}
+                    color={theme.text2}
+                    fontWeight={500}
+                    fontSize={14}
+                    style={{ display: 'inline', cursor: 'pointer' }}
+                  >
+                    {!hideBalance && !!currency && selectedCurrencyBalance
+                      ? (customBalanceText ?? (t('balanceTxt') + ': ')) + selectedCurrencyBalance?.toSignificant(6)
+                      : ' -'}
+                  </TYPE.body>
+                </HideSmallBox>
+              ) : ''}
             </RowBetween>
           </LabelRow>
         )}
@@ -327,9 +337,9 @@ export default function CurrencyInputPanel({
                 }}
                 style={{ marginRight: '1.875rem' }}
               />
-              {account && currency && showMaxButton && label !== 'To' && (
+              {/* {account && currency && showMaxButton && label !== 'To' && (
                 <StyledBalanceMax onClick={onMax}>MAX</StyledBalanceMax>
-              )}
+              )} */}
             </>
           )}
           <CurrencySelect
