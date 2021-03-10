@@ -354,7 +354,7 @@ export default function CurrencyInputPanel({
             <Aligner>
               <TokenLogoBox>
                 {pair ? (
-                  <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={35} margin={true} />
+                  <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={20} margin={true} />
                 ) : currency ? (
                   <TokenLogo symbol={currency.symbol} size={'24px'} />
                 ) : null}

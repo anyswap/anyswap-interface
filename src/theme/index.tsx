@@ -43,24 +43,19 @@ export function colors(darkMode: boolean): Colors {
     // text
     text1: darkMode ? '#FFFFFF' : '#96989e',
     text2: darkMode ? '#C3C5CB' : '#565A69',
-    text3: darkMode ? '#6C7284' : '#888D9B',
+    text3: darkMode ? '#ddd' : '#999',
     text4: darkMode ? '#565A69' : '#C3C5CB',
-    text5: darkMode ? '#2C2F36' : '#EDEEF2',
+    text5: darkMode ? 'rgb(21, 26, 47)' : '#EDEEF2',
     textNav: darkMode ? '#979dac' : '#062536',
     textColor: darkMode ? '#979dac' : '#031a6e',
     textColorBold: darkMode ? white : '#062536',
 
     // backgrounds / greys
-    // bg1: darkMode ? '#212429' : '#FFFFFF',
-    // bg2: darkMode ? '#2C2F36' : '#F7F8FA',
-    // bg3: darkMode ? '#40444F' : '#EDEEF2',
-    // bg4: darkMode ? '#565A69' : '#CED0D9',
-    // bg5: darkMode ? '#6C7284' : '#888D9B',
-    bg1: darkMode ? '#21263e' : '#FFFFFF',
-    bg2: darkMode ? '#2C2F36' : '#F7F8FA',
+    bg1: darkMode ? '#212429' : '#FFFFFF',
+    bg2: darkMode ? 'rgb(21, 26, 47)' : '#F7F8FA',
     bg3: darkMode ? '#40444F' : '#EDEEF2',
     bg4: darkMode ? '#565A69' : '#CED0D9',
-    bg5: darkMode ? '#6C7284' : '#888D9B',
+    bg5: darkMode ? '#ddd' : '#999',
     contentBg: darkMode ? '#21263e' : white,
     navIconBg: darkMode ? '#363d5f' : 'rgba(0,0,0,0.05)',
     navBg: darkMode ? '#21263e' : '#031a6e',
@@ -100,17 +95,17 @@ export function colors(darkMode: boolean): Colors {
     // // borders
     // bsd1: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
 
+
     //specialty colors
     modalBG: darkMode ? 'rgba(0,0,0,.425)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    // primary1: darkMode ? '#2172E5' : '#ff007a',
     primary1: 'linear-gradient(to right, #734ce2 , #606bfb)',
     primary2: darkMode ? '#3680E7' : '#FF8CC3',
     primary3: darkMode ? '#4D8FEA' : '#5f6bfb',
-    primary4: darkMode ? '#376bad70' : '#5f6bfb',
-    primary5: darkMode ? '#153d6f70' : '#5f6bfb',
+    primary4: darkMode ? '#5f6bfb' : '#5f6bfb',
+    primary5: darkMode ? '#5f6bfb' : '#5f6bfb',
 
     // color text
     primaryText1: darkMode ? '#fff' : '#fff',
@@ -148,6 +143,7 @@ export function theme(darkMode: boolean): DefaultTheme {
     shadow1: darkMode ? '#000' : '#2F80ED',
     shadow2: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
     contentShadow: darkMode ? '7px 2px 26px 0 rgba(5, 6, 13, 0.24)' : '7px 2px 26px 0 rgba(0, 0, 0, 0.06)',
+
 
     // media queries
     mediaWidth: mediaWidthTemplates,
@@ -287,10 +283,8 @@ html {
 
 export const ThemedGlobalStyle = createGlobalStyle`
 html {
-  // color: ${({ theme }) => theme.text1};
-  // background-color: ${({ theme }) => theme.bg2};
-  color: ${({ theme }) => theme.textColor};
-  background-color: ${({ theme }) => theme.bodyBg};
+  color: ${({ theme }) => theme.text1};
+  background-color: ${({ theme }) => theme.bg2};
 }
 
 body {

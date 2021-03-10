@@ -44,7 +44,7 @@ const Base = styled(RebassButton)<{
 `
 
 export const ButtonPrimary = styled(Base)`
-  background-color: ${({ theme }) => theme.primary1};
+  background: ${({ theme }) => theme.primary1};
   color: white;
   &:focus {
     opacity: 0.91;
@@ -110,7 +110,7 @@ export const ButtonGray = styled(Base)`
 
 export const ButtonSecondary = styled(Base)`
   border: 1px solid ${({ theme }) => theme.primary4};
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.primary4};
   background-color: transparent;
   font-size: 16px;
   border-radius: 12px;
@@ -176,7 +176,7 @@ export const ButtonOutlined = styled(Base)`
 
 export const ButtonEmpty = styled(Base)`
   background-color: transparent;
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.primary4};
   display: flex;
   justify-content: center;
   align-items: center;

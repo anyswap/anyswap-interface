@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import TokenLogo from '../TokenLogo'
 
 const Wrapper = styled.div<{ margin: boolean; sizeraw: number }>`
+${({ theme }) => theme.flexC};
   position: relative;
-  display: flex;
-  flex-direction: row;
-  margin-right: ${({ sizeraw, margin }) => margin && (sizeraw / 3 + 8).toString() + 'px'};
+  // display: flex;
+  // flex-direction: row;
+  // margin-right: ${({ sizeraw, margin }) => margin && (sizeraw / 3 + 8).toString() + 'px'};
 `
 
 interface DoubleCurrencyLogoProps {
@@ -22,7 +23,7 @@ const HigherLogo = styled(TokenLogo)`
 `
 const CoveredLogo = styled(TokenLogo)<{ sizeraw: number }>`
   position: absolute;
-  left: ${({ sizeraw }) => '-' + (sizeraw * 2 / 3).toString() + 'px'} !important;
+  right: ${({ sizeraw }) => '-' + (sizeraw * 2 / 3).toString() + 'px'} !important;
 `
 
 export default function DoubleCurrencyLogo({
