@@ -108,24 +108,24 @@ export function colors(darkMode: boolean): Colors {
     // primary1: darkMode ? '#2172E5' : '#ff007a',
     primary1: 'linear-gradient(to right, #734ce2 , #606bfb)',
     primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#9bd4f9',
-    primary4: darkMode ? '#376bad70' : '#9bd4f9',
-    primary5: darkMode ? '#153d6f70' : '#9bd4f9',
+    primary3: darkMode ? '#4D8FEA' : '#5f6bfb',
+    primary4: darkMode ? '#376bad70' : '#5f6bfb',
+    primary5: darkMode ? '#153d6f70' : '#5f6bfb',
 
     // color text
-    primaryText1: darkMode ? '#6da8ff' : '#2483fe',
+    primaryText1: darkMode ? '#fff' : '#fff',
 
     // secondary colors
     secondary1: darkMode ? '#2172E5' : '#2483fe',
-    secondary2: darkMode ? '#17000b26' : '#9bd4f9',
-    secondary3: darkMode ? '#17000b26' : '#9bd4f9',
+    secondary2: darkMode ? '#17000b26' : '#5f6bfb',
+    secondary3: darkMode ? '#17000b26' : '#5f6bfb',
 
     // other
     red1: '#FF6871',
     red2: '#F82D3A',
     green1: '#27AE60',
     yellow1: '#FFE270',
-    yellow2: '#F3841E',
+    yellow2: '#5f6bfb',
     blue1: '#2172E5'
 
     // dont wanna forget these blue yet
