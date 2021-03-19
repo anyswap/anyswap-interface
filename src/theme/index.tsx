@@ -120,7 +120,7 @@ export function colors(darkMode: boolean): Colors {
     red2: '#F82D3A',
     green1: '#27AE60',
     yellow1: '#FFE270',
-    yellow2: '#5f6bfb',
+    yellow2: 'rgb(3, 26, 110)',
     blue1: '#2172E5'
 
     // dont wanna forget these blue yet

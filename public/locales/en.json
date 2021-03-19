@@ -290,5 +290,8 @@
 
   "IUnderstand": "I understand",
   "Continue": "Continue",
-  "Listing": "Listing"
+  "Listing": "Listing",
+
+  "bridgeAssets": "Bridge",
+  "bridgeTxns": "Bridge Transactions"
 }

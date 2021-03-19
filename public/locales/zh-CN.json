@@ -290,5 +290,8 @@
 
   "IUnderstand": "同意",
   "Continue": "继续",
-  "Listing": "上币"
+  "Listing": "上币",
+
+  "bridgeAssets": "跨链",
+  "bridgeTxns": "跨链交易"
 }

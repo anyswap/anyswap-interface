@@ -275,13 +275,13 @@ export default function NavList() {
           </div>
           {t('pool')}
         </StyledNavLink>
-        {/* <StyledNavLink id={`bridge-nav-link`} to={'/bridge'}>
+        <StyledNavLink id={`bridge-nav-link`} to={'/bridge'}>
           <div className="icon">
             <img src={require('../../assets/images/icon/bridge.svg')} className="off" alt="" />
             <img src={require('../../assets/images/icon/bridge-purpl.svg')} className="on" alt="" />
           </div>
           {t('bridge')}
-        </StyledNavLink> */}
+        </StyledNavLink>
       </HeaderLinks>
       <Tabs>
         <MenuItem id="link" href={config.marketsUrl}>

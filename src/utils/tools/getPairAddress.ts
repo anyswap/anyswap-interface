@@ -72,11 +72,17 @@ export function getPairsAddress(paArr: any) {
 }
 
 export function getPairAddress(tokenA: any, tokenB: any) {
-  return new Promise(resolve => {
-    factoryContract.methods.getPair(tokenA, tokenB).call((err: any, res: any) => {
-      if (!err) {
-        resolve(res)
-      }
+  const getPA = () => {
+    return new Promise(resolve => {
+      factoryContract.methods.getPair(tokenA, tokenB).call((err: any, res: any) => {
+        if (!err) {
+          console.log(res)
+          resolve(res)
+        } else {
+          resolve('')
+        }
+      })
     })
-  })
+  }
+  return getPA()
 }

@@ -1,0 +1,630 @@
+[{
+	"inputs": [{
+		"internalType": "address[2]",
+		"name": "newOwners",
+		"type": "address[2]"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "constructor"
+}, {
+	"anonymous": false,
+	"inputs": [{
+		"indexed": true,
+		"internalType": "address",
+		"name": "previousOwner",
+		"type": "address"
+	}, {
+		"indexed": true,
+		"internalType": "address",
+		"name": "newOwner",
+		"type": "address"
+	}],
+	"name": "OwnershipTransferred",
+	"type": "event"
+}, {
+	"inputs": [{
+		"internalType": "uint256[]",
+		"name": "chainIDs",
+		"type": "uint256[]"
+	}],
+	"name": "addChainIDs",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "token",
+		"type": "address"
+	}],
+	"name": "addPeerToken",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256[]",
+		"name": "chainID",
+		"type": "uint256[]"
+	}, {
+		"internalType": "address[]",
+		"name": "tokens",
+		"type": "address[]"
+	}],
+	"name": "addPeerTokens",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string[]",
+		"name": "tokenIDs",
+		"type": "string[]"
+	}],
+	"name": "addTokenIDs",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "getAllChainIDs",
+	"outputs": [{
+		"internalType": "uint256[]",
+		"name": "",
+		"type": "uint256[]"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "getAllTokenIDs",
+	"outputs": [{
+		"internalType": "string[]",
+		"name": "",
+		"type": "string[]"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}],
+	"name": "getChainConfig",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "index",
+		"type": "uint256"
+	}],
+	"name": "getChainIDAtIndex",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "getChainIDCount",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "start",
+		"type": "uint256"
+	}, {
+		"internalType": "uint256",
+		"name": "end",
+		"type": "uint256"
+	}],
+	"name": "getChainIDInRange",
+	"outputs": [{
+		"internalType": "uint256[]",
+		"name": "result",
+		"type": "uint256[]"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "string",
+		"name": "key",
+		"type": "string"
+	}],
+	"name": "getCustomConfig",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "mpcAddress",
+		"type": "address"
+	}],
+	"name": "getMPCPubkey",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "mpcAddress",
+		"type": "string"
+	}],
+	"name": "getMPCPubkey2",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}],
+	"name": "getPeerTokenCount",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "start",
+		"type": "uint256"
+	}, {
+		"internalType": "uint256",
+		"name": "end",
+		"type": "uint256"
+	}],
+	"name": "getPeerTokenInRange",
+	"outputs": [{
+		"internalType": "uint256[]",
+		"name": "chainIDs",
+		"type": "uint256[]"
+	}, {
+		"internalType": "address[]",
+		"name": "tokens",
+		"type": "address[]"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}],
+	"name": "getPeerTokenOnChain",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "token",
+		"type": "address"
+	}],
+	"name": "getTokenConfig",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "index",
+		"type": "uint256"
+	}],
+	"name": "getTokenIDAtIndex",
+	"outputs": [{
+		"internalType": "string",
+		"name": "",
+		"type": "string"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [],
+	"name": "getTokenIDCount",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "start",
+		"type": "uint256"
+	}, {
+		"internalType": "uint256",
+		"name": "end",
+		"type": "uint256"
+	}],
+	"name": "getTokenIDInRange",
+	"outputs": [{
+		"internalType": "string[]",
+		"name": "result",
+		"type": "string[]"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "token",
+		"type": "address"
+	}],
+	"name": "getTokenIDOfToken",
+	"outputs": [{
+		"internalType": "string",
+		"name": "",
+		"type": "string"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "token",
+		"type": "address"
+	}],
+	"name": "getUserTokenConfig",
+	"outputs": [{
+		"internalType": "bytes",
+		"name": "",
+		"type": "bytes"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}],
+	"name": "isChainIDExist",
+	"outputs": [{
+		"internalType": "bool",
+		"name": "",
+		"type": "bool"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}],
+	"name": "isTokenIDExist",
+	"outputs": [{
+		"internalType": "bool",
+		"name": "",
+		"type": "bool"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"name": "owners",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "tokenAddr",
+		"type": "address"
+	}],
+	"name": "pickUserTokenConfig",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}],
+	"name": "removeChainID",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "token",
+		"type": "address"
+	}],
+	"name": "removePeerToken",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}],
+	"name": "removeTokenID",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setChainConfig",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256[]",
+		"name": "chainIDs",
+		"type": "uint256[]"
+	}],
+	"name": "setChainIDs",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "string",
+		"name": "key",
+		"type": "string"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setCustomConfig",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "addr",
+		"type": "address"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setMPCPubkey",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "addr",
+		"type": "string"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setMPCPubkey2",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "tokenAddr",
+		"type": "address"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setTokenConfig",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "tokenAddr",
+		"type": "address"
+	}, {
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}],
+	"name": "setTokenID",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string[]",
+		"name": "tokenIDs",
+		"type": "string[]"
+	}],
+	"name": "setTokenIDs",
+	"outputs": [{
+		"internalType": "uint256",
+		"name": "",
+		"type": "uint256"
+	}],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}, {
+		"internalType": "address",
+		"name": "tokenAddr",
+		"type": "address"
+	}, {
+		"internalType": "bytes",
+		"name": "data",
+		"type": "bytes"
+	}],
+	"name": "setUserTokenConfig",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "address",
+		"name": "newOwner",
+		"type": "address"
+	}],
+	"name": "transferOwnership",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}]
