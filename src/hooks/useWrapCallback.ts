@@ -17,10 +17,10 @@ export enum WrapType {
 
 const NOT_APPLICABLE = { wrapType: WrapType.NOT_APPLICABLE }
 /**
- * Given the selected input and output currency, return a wrap callback
- * @param inputCurrency the selected input currency
- * @param outputCurrency the selected output currency
- * @param typedValue the user input value
+ * 给定选定的输入和输出货币，返回一个wrap回调
+ * @param inputCurrency 选定的输入货币
+ * @param outputCurrency 选定的输出货币
+ * @param typedValue 用户输入值
  */
 export default function useWrapCallback(
   inputCurrency: Currency | undefined,

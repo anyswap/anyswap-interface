@@ -105,7 +105,7 @@ export default function Swap() {
     [Version.v1]: v1Trade,
     [Version.v2]: v2Trade
   }
-  // console.log(showWrap)
+  // console.log(currencies)
   // console.log(toggledVersion)
   // console.log(tradesByVersion[toggledVersion])
   const trade = showWrap ? undefined : tradesByVersion[toggledVersion]

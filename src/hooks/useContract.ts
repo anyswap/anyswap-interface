@@ -23,6 +23,10 @@ import { V1_EXCHANGE_ABI, V1_FACTORY_ABI, V1_FACTORY_ADDRESSES } from '../consta
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './index'
 
+import RouterSwapAction from '../constants/abis/bridge/RouterSwapAction.json'
+
+import config from '../config/index'
+
 // returns null on errors
 function useContract(address: string | undefined, ABI: any, withSignerIfPossible = true): Contract | null {
   const { library, account } = useActiveWeb3React()
@@ -58,6 +62,11 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 export function useWETHContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(chainId ? WETH[chainId].address : undefined, WETH_ABI, withSignerIfPossible)
+}
+
+export function useBridgeContract(withSignerIfPossible?: boolean): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(chainId ? config.chainInfo[chainId].bridgeToken : undefined, RouterSwapAction, withSignerIfPossible)
 }
 
 export function useArgentWalletDetectorContract(): Contract | null {

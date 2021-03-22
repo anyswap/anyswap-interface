@@ -14,15 +14,33 @@ import SelectCurrencyInputPanel from './selectCurrency'
 
 import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
 
+import useBridgeCallback from '../../hooks/useBridgeCallback'
+import { WrapType } from '../../hooks/useWrapCallback'
+import { useDerivedSwapInfo } from '../../state/swap/hooks'
+
+// import { ButtonError, ButtonLight, ButtonPrimary, ButtonConfirmed } from '../../components/Button'
+import { ButtonPrimary } from '../../components/Button'
+import { useSelectedTokenList } from '../../state/lists/hooks'
+
 
 // const 
 export default function Bridge() {
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
   // const balances = useAllTokenBalances()
+  const selectedTokenList = useSelectedTokenList()
 
   const [inputBridgeValue, setInputBridgeValue] = useState('')
 
+  const { currencies } = useDerivedSwapInfo()
+  console.log(currencies)
+  const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
+    currencies['INPUT'],
+    '',
+    '0x0',
+    ''
+  )
+    console.log(selectedTokenList)
   useEffect(() => {
     getBaseInfo()
   }, [])
@@ -59,6 +77,10 @@ export default function Bridge() {
           showMaxButton={true}
           id="test"
         ></SelectCurrencyInputPanel>
+        <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
+          {wrapInputError ??
+            (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)}
+        </ButtonPrimary>
         {account}
       </AppBody>
     </>

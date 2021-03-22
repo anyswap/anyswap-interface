@@ -49,7 +49,7 @@
 		"name": "token",
 		"type": "address"
 	}],
-	"name": "addPeerToken",
+	"name": "addMultichainToken",
 	"outputs": [],
 	"stateMutability": "nonpayable",
 	"type": "function"
@@ -60,14 +60,14 @@
 		"type": "string"
 	}, {
 		"internalType": "uint256[]",
-		"name": "chainID",
+		"name": "chainIDs",
 		"type": "uint256[]"
 	}, {
 		"internalType": "address[]",
 		"name": "tokens",
 		"type": "address[]"
 	}],
-	"name": "addPeerTokens",
+	"name": "addMultichainTokens",
 	"outputs": [],
 	"stateMutability": "nonpayable",
 	"type": "function"
@@ -153,7 +153,7 @@
 		"name": "end",
 		"type": "uint256"
 	}],
-	"name": "getChainIDInRange",
+	"name": "getChainIDsInRange",
 	"outputs": [{
 		"internalType": "uint256[]",
 		"name": "result",
@@ -213,11 +213,29 @@
 		"name": "tokenID",
 		"type": "string"
 	}],
-	"name": "getPeerTokenCount",
+	"name": "getMultichainTokenCount",
 	"outputs": [{
 		"internalType": "uint256",
 		"name": "",
 		"type": "uint256"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "string",
+		"name": "tokenID",
+		"type": "string"
+	}, {
+		"internalType": "uint256",
+		"name": "chainID",
+		"type": "uint256"
+	}],
+	"name": "getMultichainTokenOnChain",
+	"outputs": [{
+		"internalType": "address",
+		"name": "",
+		"type": "address"
 	}],
 	"stateMutability": "view",
 	"type": "function"
@@ -235,7 +253,7 @@
 		"name": "end",
 		"type": "uint256"
 	}],
-	"name": "getPeerTokenInRange",
+	"name": "getMultichainTokensInRange",
 	"outputs": [{
 		"internalType": "uint256[]",
 		"name": "chainIDs",
@@ -244,24 +262,6 @@
 		"internalType": "address[]",
 		"name": "tokens",
 		"type": "address[]"
-	}],
-	"stateMutability": "view",
-	"type": "function"
-}, {
-	"inputs": [{
-		"internalType": "string",
-		"name": "tokenID",
-		"type": "string"
-	}, {
-		"internalType": "uint256",
-		"name": "chainID",
-		"type": "uint256"
-	}],
-	"name": "getPeerTokenOnChain",
-	"outputs": [{
-		"internalType": "address",
-		"name": "",
-		"type": "address"
 	}],
 	"stateMutability": "view",
 	"type": "function"
@@ -310,24 +310,6 @@
 }, {
 	"inputs": [{
 		"internalType": "uint256",
-		"name": "start",
-		"type": "uint256"
-	}, {
-		"internalType": "uint256",
-		"name": "end",
-		"type": "uint256"
-	}],
-	"name": "getTokenIDInRange",
-	"outputs": [{
-		"internalType": "string[]",
-		"name": "result",
-		"type": "string[]"
-	}],
-	"stateMutability": "view",
-	"type": "function"
-}, {
-	"inputs": [{
-		"internalType": "uint256",
 		"name": "chainID",
 		"type": "uint256"
 	}, {
@@ -340,6 +322,24 @@
 		"internalType": "string",
 		"name": "",
 		"type": "string"
+	}],
+	"stateMutability": "view",
+	"type": "function"
+}, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "start",
+		"type": "uint256"
+	}, {
+		"internalType": "uint256",
+		"name": "end",
+		"type": "uint256"
+	}],
+	"name": "getTokenIDsInRange",
+	"outputs": [{
+		"internalType": "string[]",
+		"name": "result",
+		"type": "string[]"
 	}],
 	"stateMutability": "view",
 	"type": "function"
@@ -449,7 +449,7 @@
 		"name": "token",
 		"type": "address"
 	}],
-	"name": "removePeerToken",
+	"name": "removeMultichainToken",
 	"outputs": [{
 		"internalType": "uint256",
 		"name": "",
