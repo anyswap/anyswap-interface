@@ -6,7 +6,7 @@ interface ConFig {
 
 const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
 const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
-const ENV = LOCALCONFIG ? LOCALCONFIG : '256'
+const ENV = LOCALCONFIG ? LOCALCONFIG : '128'
 const netConfig:ConFig = chainInfo[ENV]
 // console.log(netConfig)
 

@@ -11,6 +11,10 @@ const V1_FACTORY_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.KOVAN]: '0xD3E51Ef092B2845f10401a0159B2B96e8B6c3D30',
   [ChainId.HTTEST]: '0x87fe4ea2692aeb64dbab6593de87cc4741e20c7f',
   [ChainId.HTMAIN]: '0xdd2bc74e7a5e613379663e72689e668300b42f37',
+  [ChainId.BNBMAIN]: '',
+  [ChainId.MATICMAIN]: '',
+  [ChainId.XDAIMAIN]: '',
+  [ChainId.FTMMAIN]: '',
 }
 
 const V1_FACTORY_INTERFACE = new Interface(V1_FACTORY_ABI)

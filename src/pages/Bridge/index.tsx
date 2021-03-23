@@ -12,7 +12,7 @@ import Title from '../../components/Title'
 // import config from '../../config'
 import SelectCurrencyInputPanel from './selectCurrency'
 
-import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
+// import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
 
 import useBridgeCallback from '../../hooks/useBridgeCallback'
 import { WrapType } from '../../hooks/useWrapCallback'
@@ -22,6 +22,7 @@ import { useDerivedSwapInfo } from '../../state/swap/hooks'
 import { ButtonPrimary } from '../../components/Button'
 import { useSelectedTokenList } from '../../state/lists/hooks'
 
+import {test} from '../../utils/tools/getPairAddress'
 
 // const 
 export default function Bridge() {
@@ -40,7 +41,7 @@ export default function Bridge() {
   const [inputBridgeValue, setInputBridgeValue] = useState('')
 
   const { currencies } = useDerivedSwapInfo()
-  console.log(currencies)
+  // console.log(currencies)
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
     currencies['INPUT'],
     '',
@@ -49,7 +50,9 @@ export default function Bridge() {
   )
     console.log(useTokenList)
   useEffect(() => {
-    getBaseInfo()
+    // getBaseInfo()
+
+    test()
   }, [])
   return (
     <>

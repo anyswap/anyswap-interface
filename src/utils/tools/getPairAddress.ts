@@ -6,7 +6,6 @@ import config from '../../config'
 const factoryContract = getContract(v2Factory)
 const fa = config.factoryToken
 factoryContract.options.address = fa
-
 // export async function getPairAddress (tokenA: Token, tokenB: Token) {
 export function getPairsAddress(paArr: any) {
   // console.log(paArr)
@@ -85,4 +84,19 @@ export function getPairAddress(tokenA: any, tokenB: any) {
     })
   }
   return getPA()
+}
+
+export function test () {
+  console.log(factoryContract)
+  web3Fn.setProvider(config.nodeRpc)
+  console.log(web3Fn)
+  factoryContract.methods.allPairs(0).call((err: any, res: any) => {
+  // factoryContract.methods.allPairsLength().call((err: any, res: any) => {
+    console.log(err)
+    console.log(res)
+  })
+  factoryContract.methods.allPairsLength().call((err: any, res: any) => {
+    console.log(err)
+    console.log(res)
+  })
 }

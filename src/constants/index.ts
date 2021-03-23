@@ -28,7 +28,7 @@ export const PROPOSAL_LENGTH_IN_DAYS = 7
 
 export const GOVERNANCE_ADDRESS = '0x5e4be8Bc9637f0EAA1A755019e06A68ce081D58F'
 
-export const TIMELOCK_ADDRESS = '0x1a9C8182C09F50C8318d769245beA52c32BE35BC'
+export const TIMELOCK_ADDRESS = config.timelock
 
 const UNI_ADDRESS = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
 export const UNI: { [chainId in ChainId]: Token } = {
@@ -38,7 +38,11 @@ export const UNI: { [chainId in ChainId]: Token } = {
   [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
   [ChainId.KOVAN]: new Token(ChainId.KOVAN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
   [ChainId.HTTEST]: new Token(ChainId.HTTEST, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName)
+  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.BNBMAIN]: new Token(ChainId.BNBMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.MATICMAIN]: new Token(ChainId.MATICMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.XDAIMAIN]: new Token(ChainId.XDAIMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.FTMMAIN]: new Token(ChainId.FTMMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
 }
 
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
@@ -59,7 +63,11 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.GÖRLI]: [WETH[ChainId.GÖRLI]],
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
   [ChainId.HTTEST]: [WETH[ChainId.HTTEST]],
-  [ChainId.HTMAIN]: [WETH[ChainId.HTMAIN]]
+  [ChainId.HTMAIN]: [WETH[ChainId.HTMAIN]],
+  [ChainId.BNBMAIN]: [WETH[ChainId.BNBMAIN]],
+  [ChainId.MATICMAIN]: [WETH[ChainId.MATICMAIN]],
+  [ChainId.XDAIMAIN]: [WETH[ChainId.XDAIMAIN]],
+  [ChainId.FTMMAIN]: [WETH[ChainId.FTMMAIN]],
 }
 
 // 用于构造用于交易的中介对
