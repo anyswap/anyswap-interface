@@ -1,5 +1,5 @@
 // import React, { useEffect, useMemo, useState } from 'react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 // import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { useActiveWeb3React } from '../../hooks'
@@ -25,10 +25,17 @@ import { useSelectedTokenList } from '../../state/lists/hooks'
 
 // const 
 export default function Bridge() {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
   // const balances = useAllTokenBalances()
   const selectedTokenList = useSelectedTokenList()
+  // const useTokenList = selectedTokenList && chainId ? selectedTokenList[chainId] : []
+  const useTokenList = useMemo(() => {
+    if (selectedTokenList && chainId) {
+      return selectedTokenList[chainId]
+    }
+    return {}
+  }, [selectedTokenList, chainId])
 
   const [inputBridgeValue, setInputBridgeValue] = useState('')
 
@@ -40,7 +47,7 @@ export default function Bridge() {
     '0x0',
     ''
   )
-    console.log(selectedTokenList)
+    console.log(useTokenList)
   useEffect(() => {
     getBaseInfo()
   }, [])
@@ -74,6 +81,10 @@ export default function Bridge() {
             console.log(value)
             setInputBridgeValue(value)
           }}
+          onCurrencySelect={() => {
+            console.log('onCurrencySelect')
+          }}
+          disableCurrencySelect={false}
           showMaxButton={true}
           id="test"
         ></SelectCurrencyInputPanel>

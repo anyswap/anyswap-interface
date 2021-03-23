@@ -1,22 +1,32 @@
 import { Currency, Pair } from '@uniswap/sdk'
-import React, { useState, useContext, useCallback } from 'react'
+import React, { KeyboardEvent, useState, useContext, RefObject, useCallback, useEffect, useRef } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { darken } from 'polished'
+import { Text } from 'rebass'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
+// import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
 import DoubleCurrencyLogo from '../../components/DoubleLogo'
 import { RowBetween } from '../../components/Row'
-import { TYPE } from '../../theme'
+import Column from '../../components/Column'
+import QuestionHelper from '../../components/QuestionHelper'
+// import SortButton from '../../components/SearchModal/SortButton'
+import { PaddedColumn, SearchInput, Separator } from '../../components/SearchModal/styleds'
+
+import { TYPE, CloseIcon } from '../../theme'
+
 import { Input as NumericalInput } from '../../components/NumericalInput'
 import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 
 import { useActiveWeb3React } from '../../hooks'
 import { useTranslation } from 'react-i18next'
 import { transparentize } from 'polished'
-
 import config from '../../config'
 
 import TokenLogo from '../../components/TokenLogo'
+
+import Modal from '../../components/Modal'
+
+import { isAddress } from '../../utils'
 
 
 const InputRow = styled.div<{ selected: boolean }>`
@@ -289,6 +299,36 @@ export default function SelectCurrencyInputPanel({
   const { t } = useTranslation()
 
   const [modalOpen, setModalOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState<string>('')
+
+  const inputRef = useRef<HTMLInputElement>()
+  const handleInput = useCallback(event => {
+    const input = event.target.value
+    const checksummedInput = isAddress(input)
+    setSearchQuery(checksummedInput || input)
+    // fixedList.current?.scrollTo(0)
+  }, [])
+
+  const handleEnter = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        const s = searchQuery.toLowerCase().trim()
+        if (s === 'eth') {
+        //   handleCurrencySelect(ETHER)
+        // } else if (filteredSortedTokens.length > 0) {
+        //   if (
+        //     filteredSortedTokens[0].symbol?.toLowerCase() === searchQuery.trim().toLowerCase() ||
+        //     filteredSortedTokens.length === 1
+        //   ) {
+        //     handleCurrencySelect(filteredSortedTokens[0])
+        //   }
+        }
+      }
+    },
+    [searchQuery]
+    // [filteredSortedTokens, handleCurrencySelect, searchQuery]
+  )
+
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useContext(ThemeContext)
@@ -296,6 +336,10 @@ export default function SelectCurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
+
+  useEffect(() => {
+    if (modalOpen) setSearchQuery('')
+  }, [modalOpen])
 
   // console.log(selectedCurrencyBalance)
   return (
@@ -395,14 +439,43 @@ export default function SelectCurrencyInputPanel({
         </InputRow>
       </Container>
       {!disableCurrencySelect && onCurrencySelect && (
-        <CurrencySearchModal
-          isOpen={modalOpen}
-          onDismiss={handleDismissSearch}
-          onCurrencySelect={onCurrencySelect}
-          selectedCurrency={currency}
-          otherSelectedCurrency={otherCurrency}
-          showCommonBases={showCommonBases}
-        />
+        // <CurrencySearchModal
+        //   isOpen={modalOpen}
+        //   onDismiss={handleDismissSearch}
+        //   onCurrencySelect={onCurrencySelect}
+        //   selectedCurrency={currency}
+        //   otherSelectedCurrency={otherCurrency}
+        //   showCommonBases={showCommonBases}
+        // />
+        <Modal isOpen={modalOpen} onDismiss={handleDismissSearch} maxHeight={80} minHeight={80}>
+          <Column style={{ width: '100%', flex: '1 1' }}>
+            <PaddedColumn gap="14px">
+              <RowBetween>
+                <Text fontWeight={500} fontSize={16}>
+                  {t('selectToken')}
+                  <QuestionHelper text={t('tip6')} />
+                </Text>
+                <CloseIcon onClick={handleDismissSearch} />
+              </RowBetween>
+              <SearchInput
+                type="text"
+                id="token-search-input"
+                placeholder={t('tokenSearchPlaceholder')}
+                value={searchQuery}
+                ref={inputRef as RefObject<HTMLInputElement>}
+                onChange={handleInput}
+                onKeyDown={handleEnter}
+              />
+              {/* <RowBetween>
+                <Text fontSize={14} fontWeight={500}>
+                  {t('TokenName')}
+                </Text>
+                <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder(iso => !iso)} />
+              </RowBetween> */}
+            </PaddedColumn>
+            <Separator />
+          </Column>
+        </Modal>
       )}
     </InputPanel>
   )
