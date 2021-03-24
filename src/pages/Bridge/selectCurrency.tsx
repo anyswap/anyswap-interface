@@ -1,8 +1,10 @@
-import { Currency, Pair } from '@uniswap/sdk'
-import React, { KeyboardEvent, useState, useContext, RefObject, useCallback, useEffect, useRef } from 'react'
+import { Currency, Pair, Token, ETHER } from '@uniswap/sdk'
+import React, { KeyboardEvent, useState, useContext, RefObject, useCallback, useEffect, useRef, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { darken } from 'polished'
 import { Text } from 'rebass'
+import { FixedSizeList } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 // import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
 import DoubleCurrencyLogo from '../../components/DoubleLogo'
@@ -11,22 +13,28 @@ import Column from '../../components/Column'
 import QuestionHelper from '../../components/QuestionHelper'
 // import SortButton from '../../components/SearchModal/SortButton'
 import { PaddedColumn, SearchInput, Separator } from '../../components/SearchModal/styleds'
-
-import { TYPE, CloseIcon } from '../../theme'
+import { useTokenComparator } from '../../components/SearchModal/sorting'
+import { filterTokens } from '../../components/SearchModal/filtering'
 
 import { Input as NumericalInput } from '../../components/NumericalInput'
+import TokenLogo from '../../components/TokenLogo'
+import Modal from '../../components/Modal'
+// import { useAddUserToken, useRemoveUserAddedToken } from '../../state/user/hooks'
+import { TYPE, CloseIcon } from '../../theme'
+
 import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 
 import { useActiveWeb3React } from '../../hooks'
+import { useAllTokens, useToken } from '../../hooks/Tokens'
 import { useTranslation } from 'react-i18next'
 import { transparentize } from 'polished'
 import config from '../../config'
 
-import TokenLogo from '../../components/TokenLogo'
 
-import Modal from '../../components/Modal'
 
 import { isAddress } from '../../utils'
+
+import CurrencyList from './CurrencyList'
 
 
 const InputRow = styled.div<{ selected: boolean }>`
@@ -291,7 +299,7 @@ export default function SelectCurrencyInputPanel({
   hideBalance = false,
   pair = null, // used for double token logo
   hideInput = false,
-  // otherCurrency,
+  otherCurrency,
   id,
   // showCommonBases,
   customBalanceText
@@ -301,7 +309,17 @@ export default function SelectCurrencyInputPanel({
   const [modalOpen, setModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
 
+  const allTokens = useAllTokens()
+  // console.log(allTokens)
+  // if they input an address, use it
+  const isAddressSearch = isAddress(searchQuery)
+  const searchToken = useToken(searchQuery)
+
+  const tokenComparator = useTokenComparator(true)
+
   const inputRef = useRef<HTMLInputElement>()
+  const fixedList = useRef<FixedSizeList>()
+
   const handleInput = useCallback(event => {
     const input = event.target.value
     const checksummedInput = isAddress(input)
@@ -309,33 +327,75 @@ export default function SelectCurrencyInputPanel({
     // fixedList.current?.scrollTo(0)
   }, [])
 
+  const filteredTokens: Token[] = useMemo(() => {
+    if (isAddressSearch) return searchToken ? [searchToken] : []
+    return filterTokens(Object.values(allTokens), searchQuery)
+  }, [isAddressSearch, searchToken, allTokens, searchQuery])
+
+  const filteredSortedTokens: Token[] = useMemo(() => {
+    if (searchToken) return [searchToken]
+    // console.log(filteredTokens)
+    // console.log(filteredTokens)
+    const sorted = filteredTokens.sort(tokenComparator)
+    // console.log(sorted)
+    const symbolMatch = searchQuery
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(s => s.length > 0)
+    if (symbolMatch.length > 1) return sorted
+
+    // console.log(symbolMatch)
+    // console.log(searchQuery)
+
+    return [
+      ...(searchToken ? [searchToken] : []),
+      // 首先对任何完全匹配的符号进行排序
+      ...sorted.filter(token => token.symbol?.toLowerCase() === symbolMatch[0]),
+      ...sorted.filter(token => token.symbol?.toLowerCase() !== symbolMatch[0])
+    ]
+  }, [searchQuery, searchToken, tokenComparator])
+  // }, [filteredTokens, searchQuery, searchToken, tokenComparator])
+  
+  const handleDismissSearch = useCallback(() => {
+    setModalOpen(false)
+  }, [setModalOpen])
+
+  const handleCurrencySelect = useCallback(
+    (currency: Currency) => {
+      if (onCurrencySelect) {
+        onCurrencySelect(currency)
+        handleDismissSearch()
+      }
+    },
+    [onCurrencySelect]
+  )
   const handleEnter = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const s = searchQuery.toLowerCase().trim()
         if (s === 'eth') {
-        //   handleCurrencySelect(ETHER)
-        // } else if (filteredSortedTokens.length > 0) {
-        //   if (
-        //     filteredSortedTokens[0].symbol?.toLowerCase() === searchQuery.trim().toLowerCase() ||
-        //     filteredSortedTokens.length === 1
-        //   ) {
-        //     handleCurrencySelect(filteredSortedTokens[0])
-        //   }
+          handleCurrencySelect(ETHER)
+        } else if (filteredSortedTokens.length > 0) {
+          if (
+            filteredSortedTokens[0].symbol?.toLowerCase() === searchQuery.trim().toLowerCase() ||
+            filteredSortedTokens.length === 1
+          ) {
+            handleCurrencySelect(filteredSortedTokens[0])
+          }
         }
       }
     },
-    [searchQuery]
-    // [filteredSortedTokens, handleCurrencySelect, searchQuery]
+    // [searchQuery]
+    [filteredSortedTokens, handleCurrencySelect, searchQuery]
   )
 
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useContext(ThemeContext)
 
-  const handleDismissSearch = useCallback(() => {
-    setModalOpen(false)
-  }, [setModalOpen])
+  // const removeToken = useRemoveUserAddedToken()
+  // const addToken = useAddUserToken()
+
 
   useEffect(() => {
     if (modalOpen) setSearchQuery('')
@@ -474,6 +534,21 @@ export default function SelectCurrencyInputPanel({
               </RowBetween> */}
             </PaddedColumn>
             <Separator />
+            <div style={{ flex: '1' }}>
+              <AutoSizer disableWidth>
+                {({ height }) => (
+                  <CurrencyList
+                    height={height}
+                    showETH={true}
+                    currencies={filteredSortedTokens}
+                    onCurrencySelect={handleCurrencySelect}
+                    otherCurrency={otherCurrency}
+                    selectedCurrency={currency}
+                    fixedListRef={fixedList}
+                  />
+                )}
+              </AutoSizer>
+            </div>
           </Column>
         </Modal>
       )}

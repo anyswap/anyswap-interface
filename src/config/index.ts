@@ -6,13 +6,14 @@ interface ConFig {
 
 const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
 const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
-const ENV = LOCALCONFIG ? LOCALCONFIG : '250'
+const ENV = LOCALCONFIG ? LOCALCONFIG : '256'
 const netConfig:ConFig = chainInfo[ENV]
 // console.log(netConfig)
 
 const config: ConFig = {
   ...netConfig,
   chainInfo,
+  localDataDeadline: '',
   getBaseCoin (value:any, type: number) {
     if (value && value === 'BASECURRENCY') {
       if (type) {

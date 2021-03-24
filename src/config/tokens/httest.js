@@ -19,13 +19,13 @@ export default {
       "name": "HTC",
       "symbol": "HTC"
     },
-    {
-      "address": "0x2987e112b86cce93357c10bd1be07fe64e6fc01f",
-      "chainId": chainId,
-      "decimals": 18,
-      "name": "TEST",
-      "symbol": "TEST"
-    },
+    // {
+    //   "address": "0x2987e112b86cce93357c10bd1be07fe64e6fc01f",
+    //   "chainId": chainId,
+    //   "decimals": 18,
+    //   "name": "TEST",
+    //   "symbol": "TEST"
+    // },
     {
       "address": "0xa5a3c93776ba2e1a78c79e88a2cb5abab2a0097f",
       "chainId": chainId,
