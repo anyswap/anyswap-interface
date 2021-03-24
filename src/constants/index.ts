@@ -7,56 +7,82 @@ import { injected } from '../connectors'
 import config from '../config'
 
 export const ROUTER_ADDRESS = config.router
-
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+// export { PRELOADED_PROPOSALS } from './proposals'
 
 // a list of tokens by chain
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[]
 }
 
-export const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'Dai Stablecoin')
-export const USDC = new Token(ChainId.MAINNET, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD//C')
-export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6, 'USDT', 'Tether USD')
-export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f5717214004A7f26888', 18, 'COMP', 'Compound')
-export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker')
-export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
-export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 18, 'WBTC', 'Wrapped BTC')
-
-// TODO this is only approximate, it's actually based on blocks
+type ChainTokenMap = {
+  readonly [chainId in ChainId]?: Token
+}
 export const PROPOSAL_LENGTH_IN_DAYS = 7
+// Block time here is slightly higher (~1s) than average in order to avoid ongoing proposals past the displayed time
+export const AVERAGE_BLOCK_TIME_IN_SECS = 13
+export const PROPOSAL_LENGTH_IN_BLOCKS = 40_320
+export const PROPOSAL_LENGTH_IN_SECS = AVERAGE_BLOCK_TIME_IN_SECS * PROPOSAL_LENGTH_IN_BLOCKS
 
 export const GOVERNANCE_ADDRESS = '0x5e4be8Bc9637f0EAA1A755019e06A68ce081D58F'
 
 export const TIMELOCK_ADDRESS = config.timelock
 
-const UNI_ADDRESS = '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984'
+// SUSHI
+export const SUSHI: ChainTokenMap = {
+  [ChainId.MAINNET]: new Token(
+    ChainId.MAINNET,
+    '0x6B3595068778DD592e39A122f4f5a5cF09C90fE2',
+    18,
+    'SUSHI',
+    'SushiToken'
+  ),
+  [ChainId.ROPSTEN]: new Token(
+    ChainId.ROPSTEN,
+    '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F',
+    18,
+    'SUSHI',
+    'SushiToken'
+  ),
+  [ChainId.RINKEBY]: new Token(
+    ChainId.RINKEBY,
+    '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F',
+    18,
+    'SUSHI',
+    'SushiToken'
+  ),
+  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, 'SUSHI', 'SushiToken'),
+  [ChainId.KOVAN]: new Token(ChainId.KOVAN, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, 'SUSHI', 'SushiToken'),
+  [ChainId.FTMMAIN]: new Token(ChainId.KOVAN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, 'SUSHI', 'SushiToken')
+}
 export const UNI: { [chainId in ChainId]: Token } = {
-  [ChainId.MAINNET]: new Token(ChainId.MAINNET, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.RINKEBY]: new Token(ChainId.RINKEBY, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.ROPSTEN]: new Token(ChainId.ROPSTEN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.KOVAN]: new Token(ChainId.KOVAN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.HTTEST]: new Token(ChainId.HTTEST, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.BNBMAIN]: new Token(ChainId.BNBMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.MATICMAIN]: new Token(ChainId.MATICMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.XDAIMAIN]: new Token(ChainId.XDAIMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
-  [ChainId.FTMMAIN]: new Token(ChainId.FTMMAIN, UNI_ADDRESS, 18, config.baseCurrency, config.appName),
+  [ChainId.MAINNET]: new Token(ChainId.MAINNET, '0x6B3595068778DD592e39A122f4f5a5cF09C90fE2', 18, config.baseCurrency, config.appName),
+  [ChainId.RINKEBY]: new Token(ChainId.RINKEBY, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, config.baseCurrency, config.appName),
+  [ChainId.ROPSTEN]: new Token(ChainId.ROPSTEN, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, config.baseCurrency, config.appName),
+  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, config.baseCurrency, config.appName),
+  [ChainId.KOVAN]: new Token(ChainId.KOVAN, '0x0769fd68dFb93167989C6f7254cd0D766Fb2841F', 18, config.baseCurrency, config.appName),
+  [ChainId.HTTEST]: new Token(ChainId.HTTEST, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, config.baseCurrency, config.appName),
+  [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, config.baseCurrency, config.appName),
+  [ChainId.BNBMAIN]: new Token(ChainId.BNBMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
+  [ChainId.MATICMAIN]: new Token(ChainId.MATICMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
+  [ChainId.XDAIMAIN]: new Token(ChainId.XDAIMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
+  [ChainId.FTMMAIN]: new Token(ChainId.FTMMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
 }
 
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
-  [UNI_ADDRESS]: config.baseCurrency,
+  // [UNI_ADDRESS]: 'UNI',
   [GOVERNANCE_ADDRESS]: 'Governance',
   [TIMELOCK_ADDRESS]: 'Timelock'
 }
 
-// TODO:指定主服务器的标记分发服务器
+// TODO: specify merkle distributor for mainnet
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId in ChainId]?: string } = {
   [ChainId.MAINNET]: '0x090D4613473dEE047c3f2706764f49E0821D256e'
 }
 
-const WETH_ONLY: ChainTokenList = {
+// TODO: SDK should have two maps, WETH map and WNATIVE map.
+const WRAPPED_NATIVE_ONLY: ChainTokenList = {
   [ChainId.MAINNET]: [WETH[ChainId.MAINNET]],
   [ChainId.ROPSTEN]: [WETH[ChainId.ROPSTEN]],
   [ChainId.RINKEBY]: [WETH[ChainId.RINKEBY]],
@@ -64,41 +90,119 @@ const WETH_ONLY: ChainTokenList = {
   [ChainId.KOVAN]: [WETH[ChainId.KOVAN]],
   [ChainId.HTTEST]: [WETH[ChainId.HTTEST]],
   [ChainId.HTMAIN]: [WETH[ChainId.HTMAIN]],
-  [ChainId.BNBMAIN]: [WETH[ChainId.BNBMAIN]],
+  [ChainId.FTMMAIN]: [WETH[ChainId.FTMMAIN]],
   [ChainId.MATICMAIN]: [WETH[ChainId.MATICMAIN]],
   [ChainId.XDAIMAIN]: [WETH[ChainId.XDAIMAIN]],
-  [ChainId.FTMMAIN]: [WETH[ChainId.FTMMAIN]],
+  [ChainId.BNBMAIN]: [WETH[ChainId.BNBMAIN]],
+  // [ChainId.ARBITRUM]: [WETH[ChainId.ARBITRUM]],
+  // [ChainId.AVALANCHE]: [WETH[ChainId.AVALANCHE]],
 }
 
-// 用于构造用于交易的中介对
-export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT, COMP, MKR]
+// Default Ethereum chain tokens
+export const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'Dai Stablecoin')
+export const USDC = new Token(ChainId.MAINNET, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD Coin')
+export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6, 'USDT', 'Tether USD')
+export const COMP = new Token(ChainId.MAINNET, '0xc00e94Cb662C3520282E6f5717214004A7f26888', 18, 'COMP', 'Compound')
+export const MKR = new Token(ChainId.MAINNET, '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2', 18, 'MKR', 'Maker')
+export const AMPL = new Token(ChainId.MAINNET, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
+export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 8, 'WBTC', 'Wrapped BTC')
+export const RUNE = new Token(ChainId.MAINNET, '0x3155BA85D5F96b2d030a4966AF206230e46849cb', 18, 'RUNE', 'RUNE.ETH')
+
+export const BSC: { [key: string]: Token } = {
+  DAI: new Token(ChainId.BNBMAIN, '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3', 18, 'DAI', 'Dai Stablecoin'),
+  USD: new Token(ChainId.BNBMAIN, '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56', 18, 'BUSD', 'Binance USD'),
+  USDC: new Token(ChainId.BNBMAIN, '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', 18, 'USDC', 'USD Coin'),
+  USDT: new Token(ChainId.BNBMAIN, '0x55d398326f99059fF775485246999027B3197955', 18, 'USDT', 'Tether USD'),
+  BTCB: new Token(ChainId.BNBMAIN, '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c', 18, 'BTCB', 'Bitcoin')
 }
+
+export const FANTOM: { [key: string]: Token } = {
+  USDC: new Token(ChainId.FTMMAIN, '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', 6, 'USDC', 'USD Coin'),
+  WBTC: new Token(ChainId.FTMMAIN, '0x321162Cd933E2Be498Cd2267a90534A804051b11', 8, 'WBTC', 'Wrapped Bitcoin'),
+  DAI: new Token(ChainId.FTMMAIN, '0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E', 18, 'DAI', 'Dai Stablecoin'),
+  WETH: new Token(ChainId.FTMMAIN, '0x74b23882a30290451A17c44f4F05243b6b58C76d', 18, 'WETH', 'Wrapped Ether')
+}
+
+// used to construct intermediary pairs for trading
+export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  ...WRAPPED_NATIVE_ONLY,
+  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], DAI, USDC, USDT, COMP, MKR, WBTC, RUNE],
+  [ChainId.FTMMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.FTMMAIN], FANTOM.DAI, FANTOM.USDC, FANTOM.WBTC, FANTOM.WETH],
+  [ChainId.BNBMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.BNBMAIN], BSC.DAI, BSC.USD, BSC.USDC, BSC.USDT, BSC.BTCB]
+}
+
+export const CREAM = new Token(ChainId.MAINNET, '0x2ba592F78dB6436527729929AAf6c908497cB200', 18, 'CREAM', 'Cream')
+export const BAC = new Token(ChainId.MAINNET, '0x3449FC1Cd036255BA1EB19d65fF4BA2b8903A69a', 18, 'BAC', 'Basis Cash')
+export const FXS = new Token(ChainId.MAINNET, '0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0', 18, 'FXS', 'Frax Share')
+export const ALPHA = new Token(ChainId.MAINNET, '0xa1faa113cbE53436Df28FF0aEe54275c13B40975', 18, 'ALPHA', 'AlphaToken')
+export const USDP = new Token(
+  ChainId.MAINNET,
+  '0x1456688345527bE1f37E9e627DA0837D6f08C925',
+  18,
+  'USDP',
+  'USDP Stablecoin'
+)
+export const DUCK = new Token(ChainId.MAINNET, '0x92E187a03B6CD19CB6AF293ba17F2745Fd2357D5', 18, 'DUCK', 'DUCK')
+export const BAB = new Token(ChainId.MAINNET, '0xC36824905dfF2eAAEE7EcC09fCC63abc0af5Abc5', 18, 'BAB', 'BAB')
+export const HBTC = new Token(ChainId.MAINNET, '0x0316EB71485b0Ab14103307bf65a021042c6d380', 18, 'HBTC', 'Huobi BTC')
+export const FRAX = new Token(ChainId.MAINNET, '0x853d955aCEf822Db058eb8505911ED77F175b99e', 18, 'FRAX', 'FRAX')
+export const IBETH = new Token(
+  ChainId.MAINNET,
+  '0xeEa3311250FE4c3268F8E684f7C87A82fF183Ec1',
+  8,
+  'ibETHv2',
+  'Interest Bearing Ether v2'
+)
+export const PONT = new Token(
+  ChainId.MAINNET,
+  '0xcb46C550539ac3DB72dc7aF7c89B11c306C727c2',
+  9,
+  'pONT',
+  'Poly Ontology Token'
+)
+export const PWING = new Token(
+  ChainId.MAINNET,
+  '0xDb0f18081b505A7DE20B18ac41856BCB4Ba86A1a',
+  9,
+  'pWING',
+  'Poly Ontology Wing Token'
+)
 
 /**
- * 一些令牌只能通过某些对进行交换，因此我们覆盖了这些令牌所考虑的基的列表。
+ * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
+ * tokens.
  */
 export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
   [ChainId.MAINNET]: {
-    [AMPL.address]: [DAI, WETH[ChainId.MAINNET]]
+    [AMPL.address]: [DAI, WETH[ChainId.MAINNET]],
+    [DUCK.address]: [USDP, WETH[ChainId.MAINNET]],
+    [BAB.address]: [BAC, WETH[ChainId.MAINNET]],
+    [HBTC.address]: [CREAM, WETH[ChainId.MAINNET]],
+    [FRAX.address]: [FXS, WETH[ChainId.MAINNET]],
+    [IBETH.address]: [ALPHA, WETH[ChainId.MAINNET]],
+    [PONT.address]: [PWING, WETH[ChainId.MAINNET]]
   }
 }
 
-// 用于添加流动性时在默认列表中显示
+// used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]
+  ...WRAPPED_NATIVE_ONLY,
+  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], DAI, USDC, USDT, WBTC],
+  [ChainId.FTMMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.FTMMAIN], FANTOM.DAI, FANTOM.USDC, FANTOM.WBTC, FANTOM.WETH],
+  [ChainId.BNBMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.BNBMAIN], BSC.DAI, BSC.USD, BSC.USDC, BSC.USDT, BSC.BTCB]
 }
 
-// 用于构建我们在前端默认考虑的所有对的列表
+// used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
-  ...WETH_ONLY,
-  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET], DAI, USDC, USDT]
+  ...WRAPPED_NATIVE_ONLY,
+  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], DAI, USDC, USDT, WBTC],
+  [ChainId.FTMMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.FTMMAIN], FANTOM.DAI, FANTOM.USDC, FANTOM.WBTC, FANTOM.WETH],
+  [ChainId.BNBMAIN]: [...WRAPPED_NATIVE_ONLY[ChainId.BNBMAIN], BSC.DAI, BSC.USD, BSC.USDC, BSC.USDT, BSC.BTCB]
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   [ChainId.MAINNET]: [
+    [SUSHI[ChainId.MAINNET] as Token, WETH[ChainId.MAINNET]],
     [
       new Token(ChainId.MAINNET, '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643', 8, 'cDAI', 'Compound Dai'),
       new Token(ChainId.MAINNET, '0x39AA39c021dfbaE8faC545936693aC917d5E7563', 8, 'cUSDC', 'Compound USD Coin')
@@ -147,6 +251,15 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   //   color: '#4196FC',
   //   mobile: true
   // },
+  // LATTICE: {
+  //   connector: lattice,
+  //   name: 'Lattice',
+  //   iconName: 'gridPlusWallet.png',
+  //   description: 'Connect to GridPlus Wallet.',
+  //   href: null,
+  //   color: '#40a9ff',
+  //   mobile: true
+  // },
   // WALLET_LINK: {
   //   connector: walletlink,
   //   name: 'Coinbase Wallet',
@@ -159,7 +272,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   //   name: 'Open in Coinbase Wallet',
   //   iconName: 'coinbaseWalletIcon.svg',
   //   description: 'Open in Coinbase Wallet app.',
-  //   href: 'https://go.cb-w.com/mtUDhEZPy1',
+  //   href: 'https://go.cb-w.com',
   //   color: '#315CF5',
   //   mobile: true,
   //   mobileOnly: true
@@ -191,6 +304,9 @@ export const INITIAL_ALLOWED_SLIPPAGE = 50
 // 20 minutes, denominated in seconds
 export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20
 
+// used for rewards deadlines
+export const BIG_INT_SECONDS_IN_WEEK = JSBI.BigInt(60 * 60 * 24 * 7)
+
 export const BIG_INT_ZERO = JSBI.BigInt(0)
 
 // one basis point
@@ -207,4 +323,16 @@ export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(
 
 // used to ensure the user doesn't send so much ETH so they end up with <.01
 export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
+// export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000))
 export const BETTER_TRADE_LINK_THRESHOLD = new Percent(JSBI.BigInt(75), JSBI.BigInt(10000))
+
+export const ZERO_PERCENT = new Percent('0')
+export const ONE_HUNDRED_PERCENT = new Percent('1')
+
+// SDN OFAC addresses
+export const BLOCKED_ADDRESSES: string[] = [
+  '0x7F367cC41522cE07553e823bf3be79A889DEbe1B',
+  '0xd882cFc20F52f2599D84b8e8D58C7FB62cfE344b',
+  '0x901bb9583b24D97e995513C6778dc6888AB6870e',
+  '0xA7e5d5A720f06526557c513402f2e6B5fA20b008'
+]

@@ -90,6 +90,7 @@ export function test () {
   console.log(factoryContract)
   web3Fn.setProvider(config.nodeRpc)
   console.log(web3Fn)
+  console.log(config)
   factoryContract.methods.allPairs(0).call((err: any, res: any) => {
   // factoryContract.methods.allPairsLength().call((err: any, res: any) => {
     console.log(err)

@@ -291,9 +291,9 @@ export default function SelectCurrencyInputPanel({
   hideBalance = false,
   pair = null, // used for double token logo
   hideInput = false,
-  otherCurrency,
+  // otherCurrency,
   id,
-  showCommonBases,
+  // showCommonBases,
   customBalanceText
 }: SelectCurrencyInputPanelProps) {
   const { t } = useTranslation()

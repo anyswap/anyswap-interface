@@ -51,7 +51,6 @@ export default function Bridge() {
     console.log(useTokenList)
   useEffect(() => {
     // getBaseInfo()
-
     test()
   }, [])
   return (
