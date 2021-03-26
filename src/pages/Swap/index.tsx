@@ -105,7 +105,7 @@ export default function Swap() {
     [Version.v1]: v1Trade,
     [Version.v2]: v2Trade
   }
-  console.log(currencies)
+  // console.log(currencies)
   // console.log(toggledVersion)
   // console.log(tradesByVersion[toggledVersion])
   const trade = showWrap ? undefined : tradesByVersion[toggledVersion]
@@ -172,8 +172,8 @@ export default function Swap() {
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
   const noRoute = !route
-
-  // check whether the user has approved the router on the input token
+// console.log(trade)
+  // 检查用户是否已批准输入令牌上的路由器
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
 
   // check if user has gone through approval process, used to show two step buttons, reset on token change

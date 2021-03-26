@@ -1,4 +1,4 @@
-import { chainInfo } from './coinbase/nodeConfig'
+import { chainInfo } from './chainConfig'
 
 function getParams(param: any) {
   const str = window.location.href.indexOf('?') ? window.location.href.split('?')[1] : ''

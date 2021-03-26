@@ -107,7 +107,7 @@ function CurrencyRow({
   const removeToken = useRemoveUserAddedToken()
   const addToken = useAddUserToken()
   // console.log(selectedTokenList)
-  // console.log(isOnSelectedList)
+  console.log(currency)
   // only show add or remove buttons if not on selected list
   return (
     <MenuItem
@@ -123,7 +123,7 @@ function CurrencyRow({
           {config.getBaseCoin(currency.symbol)}
         </Text>
         <FadedSpan>
-          {!isOnSelectedList && customAdded ? (
+          {!isOnSelectedList && customAdded && !currency?.isCrossChain ? (
             <TYPE.main fontWeight={500}>
               Added by user
               <LinkStyledButton
@@ -136,7 +136,7 @@ function CurrencyRow({
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
-          {!isOnSelectedList && !customAdded ? (
+          {!isOnSelectedList && !customAdded && !currency?.isCrossChain ? (
             <TYPE.main fontWeight={500}>
               Found by address
               <LinkStyledButton

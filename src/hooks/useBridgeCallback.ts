@@ -23,6 +23,7 @@ const NOT_APPLICABLE = { wrapType: WrapType.NOT_APPLICABLE }
  */
 export default function useBridgeCallback(
   inputCurrency: Currency | undefined,
+  inputToken: string | undefined,
   toAddress:  string | undefined,
   typedValue: string | undefined,
   toChainID: string | undefined,
@@ -35,7 +36,8 @@ export default function useBridgeCallback(
   const inputAmount = useMemo(() => tryParseAmount(typedValue, inputCurrency), [inputCurrency, typedValue])
   const addTransaction = useTransactionAdder()
   return useMemo(() => {
-    console.log(inputCurrency)
+    // console.log(inputCurrency)
+    // console.log(typedValue)
     if (!bridgeContract || !chainId || !inputCurrency || !toAddress || !toChainID) return NOT_APPLICABLE
 
     const sufficientBalance = inputAmount && balance && !balance.lessThan(inputAmount)
@@ -47,8 +49,9 @@ export default function useBridgeCallback(
           ? async () => {
               try {
                 console.log(bridgeContract)
+                // console.log(inputAmount.raw.toString(16))
                 const txReceipt = await bridgeContract.anySwapOut(
-                  inputCurrency,
+                  inputToken,
                   toAddress,
                   `0x${inputAmount.raw.toString(16)}`,
                   toChainID
