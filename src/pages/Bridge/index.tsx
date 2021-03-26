@@ -30,6 +30,8 @@ import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useSelectedTokenList } from '../../state/lists/hooks'
+import { useToken } from '../../hooks/Tokens'
+
 import config from '../../config'
 
 // import {test} from '../../utils/tools/getPairAddress'
@@ -57,8 +59,9 @@ export default function Bridge() {
 
   // const { currencies } = useDerivedSwapInfo()
 
+  const useCurrency = useToken(selectCurrency?.address)
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
-    selectCurrency,
+    useCurrency?useCurrency:undefined,
     selectCurrency?.address,
     recipient,
     inputBridgeValue,
@@ -195,7 +198,7 @@ export default function Bridge() {
               ) : (
                 <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
                   {wrapInputError ??
-                    (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)}123
+                    (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)}
                     {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
                 </ButtonPrimary>
               )
