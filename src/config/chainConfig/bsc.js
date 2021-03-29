@@ -20,7 +20,15 @@ export const tokenList = [
 ]
 
 export const testTokenList = [
-
+  {
+    "address": "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73",
+    "chainId": BNB_TEST_CHAINID,
+    "decimals": 6,
+    "name": "aaa",
+    "symbol": "AAA",
+    "isUnderlying": 0,
+    "isCrossChain": 1
+  }
 ]
 
 const symbol = 'BNB'
@@ -34,7 +42,7 @@ export default {
     tokenList: formatSwapTokenList(symbol, tokenList),
     bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
-    bridgeToken: '',
+    bridgeRouterToken: '',
     router: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
     initToken: '',
     multicalToken: '0xe348b292e8eA5FAB54340656f3D374b259D658b8',
@@ -60,14 +68,15 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + BNB_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
+    bridgeTokenList: formatBridgeTokenList(testTokenList),
+    bridgeInitToken: '0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73',
+    bridgeRouterToken: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
     router: '',
     initToken: '',
     multicalToken: '',
     factoryToken: '',
-    bridgeToken: '',
-    bridgeRouterToken: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
     timelock: '',
-    initChain: '',
+    initChain: '4',
     nodeRpc: BNB_TESTNET,
     chainID: BNB_TEST_CHAINID,
     lookHash: BNB_TEST_EXPLORER + '/tx/',

@@ -7,7 +7,7 @@ import { useCurrencyBalance } from '../state/wallet/hooks'
 import { useActiveWeb3React } from './index'
 import { useBridgeContract } from './useContract'
 
-import config from '../config'
+// import config from '../config'
 
 export enum WrapType {
   NOT_APPLICABLE,
@@ -27,6 +27,7 @@ export default function useBridgeCallback(
   toAddress:  string | undefined,
   typedValue: string | undefined,
   toChainID: string | undefined,
+// ): { execute?: undefined | (() => Promise<void>); inputError?: string } {
 ): { wrapType: WrapType; execute?: undefined | (() => Promise<void>); inputError?: string } {
   const { chainId, account } = useActiveWeb3React()
   const bridgeContract = useBridgeContract()
@@ -58,13 +59,13 @@ export default function useBridgeCallback(
                   `0x${inputAmount.raw.toString(16)}`,
                   toChainID
                 )
-                addTransaction(txReceipt, { summary: `Wrap ${inputAmount.toSignificant(6)} ${config.symbol} to W${config.symbol}` })
+                addTransaction(txReceipt, { summary: `Cross bridge ${inputAmount.toSignificant(6)} ${inputCurrency?.symbol}` })
               } catch (error) {
                 console.error('Could not swapout', error)
               }
             }
           : undefined,
-      inputError: sufficientBalance ? undefined : t('Insufficient', {symbol: config.symbol})
+      inputError: sufficientBalance ? undefined : t('Insufficient', {symbol: inputCurrency?.symbol})
     }
   }, [bridgeContract, chainId, inputCurrency, inputAmount, balance, addTransaction, t])
 }

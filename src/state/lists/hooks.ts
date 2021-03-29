@@ -40,6 +40,7 @@ const EMPTY_LIST: TokenAddressMap = {
   [ChainId.HTTEST]: {},
   [ChainId.HTMAIN]: {},
   [ChainId.BNBMAIN]: {},
+  [ChainId.BNBTEST]: {},
   [ChainId.MATICMAIN]: {},
   [ChainId.XDAIMAIN]: {},
   [ChainId.FTMMAIN]: {},

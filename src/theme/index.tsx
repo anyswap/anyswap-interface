@@ -68,6 +68,9 @@ export function colors(darkMode: boolean): Colors {
     tabColor: darkMode ? white : '#96989e',
     tabActiveColor: darkMode ? white : '#734be2',
     tabBdColor: darkMode ? 'none' : '#734be2',
+    tipBg: darkMode ? '#2b314f' : '#f2edff',
+    tipBorder: darkMode ? '#2b314f' : '#b398f9',
+    tipColor: darkMode ? white : '#734be2',
 
     selectedBg: darkMode ? '#2b314f' : '#ecf6ff',
     selectedHoverBg: darkMode ? '#252b49' : '#deefff',

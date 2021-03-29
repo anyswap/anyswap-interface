@@ -66,7 +66,7 @@ export function useWETHContract(withSignerIfPossible?: boolean): Contract | null
 
 export function useBridgeContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
-  return useContract(chainId ? config.chainInfo[chainId].bridgeToken : undefined, RouterSwapAction, withSignerIfPossible)
+  return useContract(chainId ? config.chainInfo[chainId].bridgeRouterToken : undefined, RouterSwapAction, withSignerIfPossible)
 }
 
 export function useArgentWalletDetectorContract(): Contract | null {

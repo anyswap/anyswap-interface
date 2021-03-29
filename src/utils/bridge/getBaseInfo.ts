@@ -115,6 +115,35 @@ export function getAllChainIDs () {
   })
 }
 
+// 获取合约配置
+const BRIDGETOKENCONFIG = 'BRIDGETOKENCONFIG'
+export function getTokenConfig(token:any) {
+  return new Promise(resolve => {
+    // web3Fn.setProvider(config.nodeRpc)
+    const lData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 30)
+    if (lData) {
+      resolve(lData.list)
+    } else {
+      web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
+      routerContract.options.address = config.bridgeConfigToken
+      routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
+        if (err) {
+          console.log(err)
+          resolve(false)
+        } else {
+          const results = res
+          if (results) {
+            const obj = JSON.parse(web3Fn.utils.hexToUtf8(results))
+            setLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, {list: obj})
+            resolve(obj)
+          }
+          resolve(res)
+        }
+      })
+    }
+  })
+}
+
 export function getBaseInfo () {
   web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
   routerContract.options.address = config.bridgeConfigToken

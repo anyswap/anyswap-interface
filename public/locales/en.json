@@ -293,5 +293,14 @@
   "Listing": "Listing",
 
   "bridgeAssets": "Bridge",
-  "bridgeTxns": "Bridge Transactions"
+  "bridgeTxns": "Bridge Transactions",
+
+  "Reminder": "Reminder",
+  
+  "mintTip0": "You need have <strong>{{coin}} and 0.02 {{coin2}} gas fee</strong> on your same eth wallet first:",
+  "mintTip1": "Deposit Fee is {{dFee}} %, Minimum Deposit Fee is {{dMinFee}} {{coin}}, Maximum Deposit Fee is {{dMaxFee}} {{coin}}",
+  "mintTip2": "Minimum Deposit Amount is",
+  "mintTip3": "Maximum Deposit Amount is",
+  "mintTip4": "Estimated Time of Deposit Arrival is 10-30 min",
+  "mintTip5": "Deposit amount larger than {{depositBigValMoreTime}} {{coin}} could take up to 12 hours"
 }

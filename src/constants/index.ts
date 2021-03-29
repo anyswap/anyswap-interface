@@ -65,6 +65,7 @@ export const UNI: { [chainId in ChainId]: Token } = {
   [ChainId.HTTEST]: new Token(ChainId.HTTEST, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, config.baseCurrency, config.appName),
   [ChainId.HTMAIN]: new Token(ChainId.HTMAIN, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, config.baseCurrency, config.appName),
   [ChainId.BNBMAIN]: new Token(ChainId.BNBMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
+  [ChainId.BNBTEST]: new Token(ChainId.BNBTEST, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
   [ChainId.MATICMAIN]: new Token(ChainId.MATICMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
   [ChainId.XDAIMAIN]: new Token(ChainId.XDAIMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
   [ChainId.FTMMAIN]: new Token(ChainId.FTMMAIN, '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC', 18, config.baseCurrency, config.appName),
@@ -94,6 +95,7 @@ const WRAPPED_NATIVE_ONLY: ChainTokenList = {
   [ChainId.MATICMAIN]: [WETH[ChainId.MATICMAIN]],
   [ChainId.XDAIMAIN]: [WETH[ChainId.XDAIMAIN]],
   [ChainId.BNBMAIN]: [WETH[ChainId.BNBMAIN]],
+  [ChainId.BNBTEST]: [WETH[ChainId.BNBTEST]],
   // [ChainId.ARBITRUM]: [WETH[ChainId.ARBITRUM]],
   // [ChainId.AVALANCHE]: [WETH[ChainId.AVALANCHE]],
 }

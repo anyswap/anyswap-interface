@@ -12,6 +12,7 @@ const V1_FACTORY_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.HTTEST]: '0x87fe4ea2692aeb64dbab6593de87cc4741e20c7f',
   [ChainId.HTMAIN]: '0xdd2bc74e7a5e613379663e72689e668300b42f37',
   [ChainId.BNBMAIN]: '',
+  [ChainId.BNBTEST]: '',
   [ChainId.MATICMAIN]: '',
   [ChainId.XDAIMAIN]: '',
   [ChainId.FTMMAIN]: '',

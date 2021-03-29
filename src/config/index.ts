@@ -1,18 +1,21 @@
 // import {chainInfo} from './coinbase/nodeConfig'
 import {chainInfo} from './chainConfig'
+
+import {getNetwork, getInitBridgeChain} from './getUrlParams'
  
 interface ConFig {
   [key: string]: any
 }
 
 const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
-const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
-const ENV = LOCALCONFIG ? LOCALCONFIG : '4'
+// const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
+const ENV = getNetwork(ENV_NODE_CONFIG, '4')
 const netConfig:ConFig = chainInfo[ENV]
-// console.log(netConfig)
+const INITBRIDGE = getInitBridgeChain(netConfig.initChain, netConfig.bridgeInitToken)
 
 const config: ConFig = {
   ...netConfig,
+  ...INITBRIDGE,
   chainInfo,
   localDataDeadline: '',
   bridgeConfigToken: '0x264c1383ea520f73dd837f915ef3a732e204a493',

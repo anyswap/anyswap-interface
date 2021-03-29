@@ -1,6 +1,7 @@
 // import React, { useEffect, useMemo, useState } from 'react'
 import React, { useEffect, useState, useContext } from 'react'
-// import styled from 'styled-components'
+import styled from 'styled-components'
+import { createBrowserHistory } from 'history'
 import { useTranslation } from 'react-i18next'
 import { useActiveWeb3React } from '../../hooks'
 // import { useAllTokenBalances } from '../../state/wallet/hooks'
@@ -37,23 +38,98 @@ import config from '../../config'
 // import {test} from '../../utils/tools/getPairAddress'
 // import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
 import {getAllowance} from '../../utils/bridge/approval'
+import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
+import {thousandBit} from '../../utils/tools/tools'
 
+import BulbIcon from '../../assets/images/icon/bulb.svg'
+
+const SubCurrencySelectBox = styled.div`
+  width: 100%;
+  object-fit: contain;
+  border-radius: 0.5625rem;
+  border: solid 0.5px ${({ theme }) => theme.tipBorder};
+  background-color: ${({ theme }) => theme.tipBg};
+  padding: 1rem 1.25rem;
+  margin-top: 0.625rem;
+
+  .tip {
+    ${({ theme }) => theme.flexSC};
+    font-size: 12px;
+    font-weight: 500;
+    color: ${({ theme }) => theme.tipColor};
+    padding: 2px 20px 18px;
+    border-bottom: 1px solid #f1f6fa;
+    word-break:break-all;
+    img {
+      display:inlne-block;
+    }
+    p {
+      ${({ theme }) => theme.flexSC};
+      flex-wrap:wrap;
+      display:inline-block;
+      margin: 0;
+      line-height: 1rem;
+      .span {
+        text-decoration: underline;
+        margin: 0 5px;
+      }
+      a {
+        display:inline-block;
+        overflow:hidden;
+        height: 1rem;
+      }
+    }
+  }
+  .list {
+    margin:0;
+    padding: 0 0px 0;
+    font-size: 12px;
+    color: ${({ theme }) => theme.tipColor};
+    dt {
+      ${({ theme }) => theme.flexSC};
+      font-weight: bold;
+      line-height: 1.5;
+      img {
+        margin-right: 8px;
+      }
+    }
+    dd {
+      font-weight: 500;
+      line-height: 1.83;
+      i{
+        display:inline-block;
+        width:4px;
+        height: 4px;
+        border-radius:100%;
+        background:${({ theme }) => theme.tipColor};
+        margin-right: 10px;
+      }
+    }
+  }
+`
 
 export default function Bridge() {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
+  const history = createBrowserHistory()
   // const balances = useAllTokenBalances()
   const selectedTokenList = useSelectedTokenList()
   const theme = useContext(ThemeContext)
   const toggleWalletModal = useWalletModalToggle()
 
   const [inputBridgeValue, setInputBridgeValue] = useState('')
+  const [outputBridgeValue, setOutputBridgeValue] = useState('')
   const [bridgeTypeName, setBridgeTypeName] = useState(t('bridgeAssets'))
   const [selectCurrency, setSelectCurrency] = useState<any>()
   const [selectChain, setSelectChain] = useState<any>()
   // const [approval, setApproval] = useState<any>()
   const [approvaling, setApprovaling] = useState<any>()
-  const [recipient, setRecipient] = useState<any>('0xE000E632124aa65B80f74E3e4cc06DC761610583')
+  // const [recipient, setRecipient] = useState<any>('0xE000E632124aa65B80f74E3e4cc06DC761610583')
+  const [recipient, setRecipient] = useState<any>('')
+
+  const [bridgeConfig, setBridgeConfig] = useState<any>()
+
+  const [isCrossBridge, setIsCrossBridge] = useState<any>(true)
 
   const [approval, approveCallback] = useApproveCallback(undefined, selectCurrency?.address)
 
@@ -67,6 +143,30 @@ export default function Bridge() {
     inputBridgeValue,
     selectChain
   )
+
+  // const outputBridgeValue = bridgeConfig && inputBridgeValue ? (Number(inputBridgeValue) * (1 - bridgeConfig.SwapFeeRate)).toFixed(Math.min(6, selectCurrency.decimals)) : ''
+
+  useEffect(() => {
+    if (account && bridgeConfig && selectCurrency && inputBridgeValue && !wrapInputError) {
+      if (Number(inputBridgeValue) < bridgeConfig.MinimumSwap || Number(inputBridgeValue) > bridgeConfig.MaximumSwap) {
+        setIsCrossBridge(true)
+        setOutputBridgeValue('')
+      } else {
+        setIsCrossBridge(false)
+        const fee = Number(inputBridgeValue) * bridgeConfig.SwapFeeRate
+        let value = (Number(inputBridgeValue) * (1 - bridgeConfig.SwapFeeRate))
+        if (fee < bridgeConfig.MinimumSwapFee) {
+          value = Number(inputBridgeValue) - bridgeConfig.MinimumSwapFee
+        } else if (fee > bridgeConfig.MaximumSwapFee) {
+          value = Number(inputBridgeValue) - bridgeConfig.MaximumSwapFee
+        }
+        setOutputBridgeValue(value.toFixed(Math.min(6, selectCurrency.decimals)))
+      }
+    } else {
+      setOutputBridgeValue('')
+      setIsCrossBridge(true)
+    }
+  }, [chainId, selectCurrency, account, bridgeConfig, wrapInputError, inputBridgeValue])
 
   useEffect(() => {
     if (selectedTokenList && chainId && !selectCurrency) {
@@ -88,25 +188,39 @@ export default function Bridge() {
     }
   }, [chainId, selectChain])
 
-
-
   useEffect(() => {
-    // getBaseInfo()
-    if (account && selectCurrency && selectCurrency.isUnderlying) {
-      // console.log(selectCurrency)
-      getAllowance(account, selectCurrency?.address).then((res:any) => {
-        console.log(ApprovalState)
+    if (account && selectCurrency) {
+      if (selectCurrency.isUnderlying) {
+        getAllowance(account, selectCurrency?.address).then((res:any) => {
+          console.log(ApprovalState)
+          console.log(res)
+          setApprovaling('')
+          // setApproval(res)
+        })
+      }
+      getTokenConfig(selectCurrency.address).then(res => {
         console.log(res)
-        setApprovaling('')
-        // setApproval(res)
+        if (res) {
+          setBridgeConfig(res)
+        } else {
+          setBridgeConfig('')
+        }
       })
+      // console.log(WrapType)
     }
-    // test()
   }, [selectCurrency, account])
 
-  // function approveCallback () {
-  //   setApprovaling(true)
-  // }
+  function onBridge() {
+    if (wrapInputError && inputBridgeValue) {
+      return wrapInputError
+    } else if (wrapInputError && !inputBridgeValue) {
+      return bridgeTypeName
+    } else if (wrapType === WrapType.WRAP) {
+      return bridgeTypeName
+    }
+    return bridgeTypeName
+  }
+
   return (
     <>
       <AppBody>
@@ -148,13 +262,18 @@ export default function Bridge() {
           ></SelectCurrencyInputPanel>
 
           <AutoRow justify="center" style={{ padding: '0 1rem' }}>
-            <ArrowWrapper clickable={false}>
+            <ArrowWrapper clickable={false} style={{cursor:'pointer'}} onClick={() => {
+              localStorage.setItem('ENV_NODE_CONFIG', selectChain)
+              console.log(window.location.pathname)
+              history.push(window.location.pathname + '#/bridge')
+              history.go(0)
+            }}>
               <ArrowDown size="16" color={theme.text2} />
             </ArrowWrapper>
           </AutoRow>
 
           <SelectChainIdInputPanel
-            value={inputBridgeValue}
+            value={outputBridgeValue.toString()}
             onUserInput={(value) => {
               setInputBridgeValue(value)
             }}
@@ -166,11 +285,11 @@ export default function Bridge() {
             id="selectChainID"
           ></SelectChainIdInputPanel>
 
-          <AutoRow justify="center" style={{ padding: '0 1rem' }}>
+          {/* <AutoRow justify="center" style={{ padding: '0 1rem' }}>
             <ArrowWrapper clickable={false}>
               <ArrowDown size="16" color={theme.text2} />
             </ArrowWrapper>
-          </AutoRow>
+          </AutoRow> */}
           <AddressInputPanel id="recipient" value={recipient} onChange={setRecipient} />
         </AutoColumn>
 
@@ -197,15 +316,42 @@ export default function Bridge() {
                   )}
                 </ButtonConfirmed>
               ) : (
-                <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                <ButtonPrimary disabled={isCrossBridge} onClick={onWrap}>
+                  {/* {wrapType}
                   {wrapInputError ??
-                    (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)}
+                    (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
+                  {onBridge()}
                     {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
                 </ButtonPrimary>
               )
             )
           }
         </BottomGrouping>
+        {
+          bridgeConfig ? (
+            <SubCurrencySelectBox>
+              <dl className='list'>
+                <dt>
+                  <img src={BulbIcon} alt='' />
+                  {t('Reminder')}:
+                </dt>
+                <dd><i></i>{t('mintTip1', {
+                  dMinFee: bridgeConfig.MinimumSwapFee,
+                  coin: selectCurrency.symbol,
+                  dMaxFee: bridgeConfig.MaximumSwapFee,
+                  dFee: bridgeConfig.SwapFeeRate * 100
+                })}</dd>
+                <dd><i></i>{t('mintTip2')} {thousandBit(bridgeConfig.MinimumSwap, 'no')} {selectCurrency.symbol}</dd>
+                <dd><i></i>{t('mintTip3')} {thousandBit(bridgeConfig.MaximumSwap, 'no')} {selectCurrency.symbol}</dd>
+                <dd><i></i>{t('mintTip4')}</dd>
+                <dd><i></i>{t('mintTip5', {
+                  depositBigValMoreTime: thousandBit(bridgeConfig.BigValueThreshold, 'no'),
+                  coin: selectCurrency.symbol,
+                }) + (selectCurrency.symbol ? '' : '')}</dd>
+              </dl>
+            </SubCurrencySelectBox>
+          ) : ''
+        }
       </AppBody>
     </>
   )

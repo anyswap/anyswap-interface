@@ -11,6 +11,7 @@ const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {
   [ChainId.HTTEST]: config.multicalToken,
   [ChainId.HTMAIN]: config.multicalToken,
   [ChainId.BNBMAIN]: config.multicalToken,
+  [ChainId.BNBTEST]: config.multicalToken,
   [ChainId.MATICMAIN]: config.multicalToken,
   [ChainId.XDAIMAIN]: config.multicalToken,
   [ChainId.FTMMAIN]: config.multicalToken,

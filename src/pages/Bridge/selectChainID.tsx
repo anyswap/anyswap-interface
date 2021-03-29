@@ -41,7 +41,7 @@ import {
 
 // import CurrencyList from './CurrencyList'
 
-import {getAllChainIDs, getChainConfig} from '../../utils/bridge/getBaseInfo'
+import {getAllChainIDs} from '../../utils/bridge/getBaseInfo'
 
 const CurrencySelect1 = styled(CurrencySelect)`
 
@@ -101,9 +101,7 @@ export default function SelectChainIdInputPanel({
   const theme = useContext(ThemeContext)
 
   useEffect(() => {
-    getChainConfig().then(res => {
-      console.log(res)
-    })
+    
     getAllChainIDs().then((res:any) => {
       // console.log(res)
       setChainList(res)

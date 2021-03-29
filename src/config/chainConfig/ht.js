@@ -118,19 +118,21 @@ export const testTokenList = [
     "name": "HTC",
     "symbol": "HTC"
   },
-  // {
-  //   "address": "0x2987e112b86cce93357c10bd1be07fe64e6fc01f",
-  //   "chainId": HT_TEST_CHAINID,
-  //   "decimals": 18,
-  //   "name": "TEST",
-  //   "symbol": "TEST"
-  // },
   {
     "address": "0xa5a3c93776ba2e1a78c79e88a2cb5abab2a0097f",
     "chainId": HT_TEST_CHAINID,
     "decimals": 18,
     "name": "WETH",
     "symbol": "WETH"
+  },
+  {
+    "address": "0x130966628846bfd36ff31a822705796e8cb8c18d",
+    "chainId": HT_TEST_CHAINID,
+    "decimals": 6,
+    "name": "aaa",
+    "symbol": "AAA",
+    "isUnderlying": 0,
+    "isCrossChain": 1
   }
 ]
 
@@ -145,7 +147,7 @@ export default {
     tokenList: formatSwapTokenList(symbol, tokenList),
     bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
-    bridgeToken: '',
+    bridgeRouterToken: '',
     router: '0x77e0e26de17be1ea2df87269475431e0e17dc74f',
     initToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e',
     multicalToken: '0xbff74da37df72695b1d7e8185edd47fd0771ee3a',
@@ -171,16 +173,15 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + HT_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
-    bridgeInitToken: '',
-    bridgeToken: '0x4373ca233c17b8bf1bf8159d56019d3394a0670d',
+    bridgeTokenList: formatBridgeTokenList(testTokenList),
+    bridgeInitToken: '0x130966628846bfd36ff31a822705796e8cb8c18d',
+    bridgeRouterToken: '0xcb58418aa51ba525aef0fe474109c0354d844b7c',
     router: '0x479ab92bf721de918f01d455e90540149dbfd9da',
     initToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e',
     multicalToken: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29',
     factoryToken: '0x2302c14f2928bb9b68053320309b84db3702f89f',
-    bridgeRouterToken: '0xcb58418aa51ba525aef0fe474109c0354d844b7c',
     timelock: '',
-    initChain: '',
+    initChain: '97',
     nodeRpc: HT_TESTNET,
     chainID: HT_TEST_CHAINID,
     lookHash: HT_TEST_EXPLORER + '/tx/',

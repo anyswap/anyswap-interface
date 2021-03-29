@@ -37,7 +37,7 @@ export default {
     tokenList: formatSwapTokenList(symbol, tokenList),
     bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
-    bridgeToken: '',
+    bridgeRouterToken: '',
     router: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
     initToken: '0xf99d58e463a2e07e5692127302c20a191861b4d6',
     multicalToken: '0x63B8310c5093ac917552931D8b15d5AB6945c0a6',

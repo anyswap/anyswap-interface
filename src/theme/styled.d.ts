@@ -34,6 +34,9 @@ export interface Colors {
   tabColor: Color
   tabActiveColor: Color
   tabBdColor: Color
+  tipBg: Color
+  tipBorder: Color
+  tipColor: Color
 
   selectedBg: Color
   selectedHoverBg: Color
