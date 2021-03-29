@@ -73,7 +73,8 @@ export default {
     name: 'Ethereum',
     type: 'main',
     label: ETH_MAIN_CHAINID,
-    isSwitch: 0
+    isSwitch: 0,
+    suffix: 'ERC20'
   },
   [ETH_TEST_CHAINID]: {
     oldAppName: 'Anyswap V1',
@@ -101,6 +102,7 @@ export default {
     name: 'Ethereum',
     type: 'test',
     label: ETH_TEST_CHAINID,
-    isSwitch: 0
+    isSwitch: 0,
+    suffix: 'ERC20'
   },
 }

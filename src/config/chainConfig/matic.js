@@ -42,6 +42,7 @@ export default {
     type: 'main',
     label: MATIC_MAIN_CHAINID,
     isSwitch: 1,
-    underlying: []
+    underlying: [],
+    suffix: 'MATIC'
   },
 }

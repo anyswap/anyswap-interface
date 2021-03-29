@@ -51,7 +51,8 @@ export default {
     name: 'BSC',
     type: 'main',
     label: BNB_MAIN_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'BEP20'
   },
   [BNB_TEST_CHAINID]: {
     oldAppName: 'Anyswap V1',
@@ -77,6 +78,7 @@ export default {
     name: 'BSC',
     type: 'test',
     label: BNB_TEST_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'BEP20'
   }
 }

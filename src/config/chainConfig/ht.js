@@ -162,7 +162,8 @@ export default {
     name: 'Huobi',
     type: 'main',
     label: HT_MAIN_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'HECO'
   },
   [HT_TEST_CHAINID]: {
     oldAppName: 'Anyswap V1',
@@ -190,6 +191,7 @@ export default {
     name: 'Huobi',
     type: 'test',
     label: HT_TEST_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'HECO'
   },
 }

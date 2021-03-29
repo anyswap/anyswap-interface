@@ -37,6 +37,7 @@ export default {
     name: 'Avalanche',
     type: 'main',
     label: AVAX_MAIN_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'AVAX'
   },
 }

@@ -46,6 +46,8 @@ import { isAddress } from '../../utils'
 
 import CurrencyList from './CurrencyList'
 
+import {isTokenIDExist} from '../../utils/bridge/getBaseInfo'
+
 
 interface SelectCurrencyInputPanelProps {
   value: string
@@ -85,6 +87,8 @@ export default function SelectCurrencyInputPanel({
 }: SelectCurrencyInputPanelProps) {
   // const { chainId } = useActiveWeb3React()
   const { t } = useTranslation()
+  const { account } = useActiveWeb3React()
+  const theme = useContext(ThemeContext)
 
   const [modalOpen, setModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
@@ -104,6 +108,10 @@ export default function SelectCurrencyInputPanel({
   const handleInput = useCallback(event => {
     const input = event.target.value
     const checksummedInput = isAddress(input)
+    isTokenIDExist(input).then((res:any) => {
+      console.log(input)
+      console.log(res)
+    })
     setSearchQuery(checksummedInput || input)
     // fixedList.current?.scrollTo(0)
   }, [])
@@ -170,11 +178,9 @@ export default function SelectCurrencyInputPanel({
     [filteredSortedTokens, handleCurrencySelect, searchQuery]
   )
 
-  const { account } = useActiveWeb3React()
   const formatCurrency = useToken(currency?.address)
   // const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, formatCurrency ?? undefined)
-  const theme = useContext(ThemeContext)
     // console.log(currency)
   // const removeToken = useRemoveUserAddedToken()
   // const addToken = useAddUserToken()
@@ -309,12 +315,6 @@ export default function SelectCurrencyInputPanel({
                 onChange={handleInput}
                 onKeyDown={handleEnter}
               />
-              {/* <RowBetween>
-                <Text fontSize={14} fontWeight={500}>
-                  {t('TokenName')}
-                </Text>
-                <SortButton ascending={invertSearchOrder} toggleSortOrder={() => setInvertSearchOrder(iso => !iso)} />
-              </RowBetween> */}
             </PaddedColumn>
             <Separator />
             <div style={{ flex: '1' }}>

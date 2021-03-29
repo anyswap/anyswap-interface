@@ -42,6 +42,7 @@ export default {
     type: 'main',
     label: XDAI_MAIN_CHAINID,
     isSwitch: 1,
-    underlying: []
+    underlying: [],
+    suffix: 'xDAI'
   },
 }

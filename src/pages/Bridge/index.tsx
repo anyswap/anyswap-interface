@@ -38,7 +38,7 @@ import config from '../../config'
 // import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
 import {getAllowance} from '../../utils/bridge/approval'
 
-// const 
+
 export default function Bridge() {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
@@ -92,10 +92,10 @@ export default function Bridge() {
 
   useEffect(() => {
     // getBaseInfo()
-    console.log(ApprovalState)
     if (account && selectCurrency && selectCurrency.isUnderlying) {
-      console.log(selectCurrency)
+      // console.log(selectCurrency)
       getAllowance(account, selectCurrency?.address).then((res:any) => {
+        console.log(ApprovalState)
         console.log(res)
         setApprovaling('')
         // setApproval(res)
@@ -161,6 +161,7 @@ export default function Bridge() {
             onChainSelect={(chainID) => {
               setSelectChain(chainID)
             }}
+            currency={selectCurrency}
             selectChainId={selectChain}
             id="selectChainID"
           ></SelectChainIdInputPanel>

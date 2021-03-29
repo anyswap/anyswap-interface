@@ -12,7 +12,7 @@ export function formatWeb3Str (str:string, len = 64) {
   return arr
 }
 
-export function getLocalConfig (account:string, token:string, chainID:string|number, type:string, timeout?:string|number|undefined) {
+export function getLocalConfig (account:string, token:string, chainID:any, type:string, timeout?:string|number|undefined) {
   const lstr = sessionStorage.getItem(type)
   timeout = timeout ? timeout : config.localDataDeadline
   if (!lstr) {
@@ -35,7 +35,7 @@ export function getLocalConfig (account:string, token:string, chainID:string|num
   }
 }
 
-export function setLocalConfig (account:string, token:string, chainID:string|number, type:string, data: any) {
+export function setLocalConfig (account:string, token:string, chainID:any, type:string, data: any) {
   const lstr = sessionStorage.getItem(type)
   let lboj:any = {}
   if (!lstr) {

@@ -37,6 +37,7 @@ export default {
     name: 'Arbitrum',
     type: 'main',
     label: ARBITRUM_TEST_CHAINID,
-    isSwitch: 1
+    isSwitch: 1,
+    suffix: 'ARBITRUM'
   },
 }

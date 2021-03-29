@@ -49,7 +49,8 @@ export default {
     type: 'main',
     label: FSN_MAIN_CHAINID,
     isSwitch: 1,
-    underlying: []
+    underlying: [],
+    suffix: 'Fusion'
   },
   [FSN_TEST_CHAINID]: {
     oldAppName: 'Anyswap V1',
@@ -77,6 +78,7 @@ export default {
     type: 'test',
     label: FSN_TEST_CHAINID,
     isSwitch: 1,
-    underlying: []
+    underlying: [],
+    suffix: 'Fusion'
   }
 }

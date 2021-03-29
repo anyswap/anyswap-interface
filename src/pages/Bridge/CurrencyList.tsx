@@ -63,11 +63,11 @@ function TokenTags({ currency }: { currency: Currency }) {
   if (!tags || tags.length === 0) return <span />
 
   const tag = tags[0]
-
+  console.log(tag)
   return (
     <TagContainer>
       <MouseoverTooltip text={tag.description}>
-        <Tag key={tag.id}>{tag.name}</Tag>
+        <Tag key={tag.id + Math.random()}>{tag.name}</Tag>
       </MouseoverTooltip>
       {tags.length > 1 ? (
         <MouseoverTooltip
@@ -107,7 +107,9 @@ function CurrencyRow({
   const removeToken = useRemoveUserAddedToken()
   const addToken = useAddUserToken()
   // console.log(selectedTokenList)
-  console.log(currency)
+  // console.log(key)
+  // console.log(index)
+  // console.log(Math.random())
   // only show add or remove buttons if not on selected list
   return (
     <MenuItem
@@ -177,7 +179,7 @@ export default function CurrencyList({
   showETH: boolean
 }) {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
-  console.log(itemData)
+  // console.log(itemData)
   const Row = useCallback(
     ({ data, index, style }) => {
       // console.log(data)

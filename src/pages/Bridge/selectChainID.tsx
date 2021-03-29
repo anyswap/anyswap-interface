@@ -1,6 +1,8 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react'
 import { ThemeContext } from 'styled-components'
 import { Text } from 'rebass'
+import styled from 'styled-components'
+import { useActiveWeb3React } from '../../hooks'
 // import AutoSizer from 'react-virtualized-auto-sizer'
 // import { FixedSizeList } from 'react-window'
 import { RowBetween } from '../../components/Row'
@@ -20,7 +22,7 @@ import config from '../../config'
 import {
   InputRow,
   CurrencySelect,
-  ErrorSpanBox,
+  // ErrorSpanBox,
   // ErrorSpan,
   // ExtraText,
   LabelRow,
@@ -39,7 +41,28 @@ import {
 
 // import CurrencyList from './CurrencyList'
 
-import {getAllChainIDs} from '../../utils/bridge/getBaseInfo'
+import {getAllChainIDs, getChainConfig} from '../../utils/bridge/getBaseInfo'
+
+const CurrencySelect1 = styled(CurrencySelect)`
+
+  
+  border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
+  background-color: ${({ theme }) => theme.selectedBgNo};
+  :hover {
+    border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
+    background-color: ${({ theme }) => theme.selectedBgNo};
+  }
+
+  :focus {
+    border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
+    background-color: ${({ theme }) => theme.selectedBgNo};
+  }
+
+  :active {
+    border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
+    background-color: ${({ theme }) => theme.selectedBgNo};
+  }
+`
 
 
 interface SelectChainIdInputPanel {
@@ -47,6 +70,7 @@ interface SelectChainIdInputPanel {
   onUserInput: (value: string) => void
   label?: string
   onChainSelect?: (selectChainId: any) => void
+  currency?: any
   selectChainId?: any
   disableCurrencySelect?: boolean
   hideInput?: boolean
@@ -58,12 +82,14 @@ export default function SelectChainIdInputPanel({
   onUserInput,
   label = 'Input',
   onChainSelect,
+  currency,
   selectChainId,
   disableCurrencySelect = false,
   hideInput = false,
   id
 }: SelectChainIdInputPanel) {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   const [modalOpen, setModalOpen] = useState(false)
   const [chainList, setChainList] = useState<Array<any>>([])
@@ -75,8 +101,11 @@ export default function SelectChainIdInputPanel({
   const theme = useContext(ThemeContext)
 
   useEffect(() => {
-    getAllChainIDs().then((res:any) => {
+    getChainConfig().then(res => {
       console.log(res)
+    })
+    getAllChainIDs().then((res:any) => {
+      // console.log(res)
       setChainList(res)
     })
   }, [])
@@ -96,6 +125,9 @@ export default function SelectChainIdInputPanel({
       <>
         {
           chainList.map((item:string|number, index) => {
+            if (Number(chainId) === Number(item)) {
+              return ''
+            }
             return (
               <MenuItem
                 className={`token-item-${index}`}
@@ -147,6 +179,25 @@ export default function SelectChainIdInputPanel({
               />
             </>
           )}
+          <CurrencySelect1
+            selected={!!selectChainId}
+            className="open-currency-select-button"
+          >
+            <Aligner>
+              <TokenLogoBox>
+                <TokenLogo symbol={currency?.symbol} size={'24px'} />
+              </TokenLogoBox>
+              <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
+                {(currency && currency.symbol && currency.symbol.length > 20
+                  ? currency.symbol.slice(0, 4) +
+                    '...' +
+                    currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
+                  : config.getBaseCoin(currency?.symbol)) || t('selectToken')}
+                {selectChainId ? '-' + config.chainInfo[selectChainId].suffix : ''}
+              </StyledTokenName>
+            </Aligner>
+          </CurrencySelect1>
+
           <CurrencySelect
             selected={!!selectChainId}
             className="open-currency-select-button"
@@ -155,6 +206,7 @@ export default function SelectChainIdInputPanel({
                 setModalOpen(true)
               }
             }}
+            style={{marginLeft: "10px"}}
           >
             <Aligner>
               <TokenLogoBox>
@@ -170,22 +222,6 @@ export default function SelectChainIdInputPanel({
               )}
             </Aligner>
           </CurrencySelect>
-          <ErrorSpanBox>
-            {/* {!hideBalance && !!currency && selectedCurrencyBalance ? (
-              <ErrorSpan onClick={onMax}>
-                <ExtraText>
-                  <h5>{t('balance')}</h5>
-                  <p>
-                    {!hideBalance && !!currency && selectedCurrencyBalance
-                      ? (customBalanceText ?? '') + selectedCurrencyBalance?.toSignificant(6)
-                      : ' -'}{' '}
-                  </p>
-                </ExtraText>
-              </ErrorSpan>
-            ) : (
-              ''
-            )} */}
-          </ErrorSpanBox>
         </InputRow>
       </Container>
       {!disableCurrencySelect && onChainSelect && (

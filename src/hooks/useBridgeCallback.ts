@@ -32,8 +32,8 @@ export default function useBridgeCallback(
   const bridgeContract = useBridgeContract()
   const { t } = useTranslation()
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency)
-  console.log(balance)
-  console.log(inputCurrency)
+  // console.log(balance)
+  // console.log(inputCurrency)
   // 我们总是可以解析输入货币的金额，因为包装是1:1
   const inputAmount = useMemo(() => tryParseAmount(typedValue, inputCurrency), [inputCurrency, typedValue])
   const addTransaction = useTransactionAdder()

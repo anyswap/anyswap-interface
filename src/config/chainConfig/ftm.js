@@ -55,5 +55,6 @@ export default {
     type: 'main',
     label: FTM_MAIN_CHAINID,
     isSwitch: 0,
+    suffix: 'FRC20'
   },
 }
