@@ -45,7 +45,6 @@ import {getAllChainIDs} from '../../utils/bridge/getBaseInfo'
 
 const CurrencySelect1 = styled(CurrencySelect)`
 
-  
   border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
   background-color: ${({ theme }) => theme.selectedBgNo};
   :hover {
@@ -61,6 +60,9 @@ const CurrencySelect1 = styled(CurrencySelect)`
   :active {
     border: 0.0625rem solid ${({ theme }) => theme.selectedBorderNo};
     background-color: ${({ theme }) => theme.selectedBgNo};
+  }
+  @media screen and (max-width: 960px) {
+    display: none;
   }
 `
 
@@ -151,77 +153,78 @@ export default function SelectChainIdInputPanel({
 
   // console.log(selectedCurrencyBalance)
   return (
-    <InputPanel id={id}>
-      <Container hideInput={hideInput}>
-        {!hideInput && (
-          <LabelRow>
-            <RowBetween>
-              <TYPE.body color={theme.text2} fontWeight={500} fontSize={14}>
-                {label}
-              </TYPE.body>
-              {/* ) : ''} */}
-            </RowBetween>
-          </LabelRow>
-        )}
-        <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={disableCurrencySelect}>
+    <>
+      <InputPanel id={id}>
+        <Container hideInput={hideInput}>
           {!hideInput && (
-            <>
-              <NumericalInput
-                className="token-amount-input"
-                value={value}
-                onUserInput={val => {
-                  onUserInput(val)
-                }}
-                style={{ marginRight: '1.875rem' }}
-                disabled
-              />
-            </>
+            <LabelRow>
+              <RowBetween>
+                <TYPE.body color={theme.text2} fontWeight={500} fontSize={14}>
+                  {label}
+                </TYPE.body>
+              </RowBetween>
+            </LabelRow>
           )}
-          <CurrencySelect1
-            selected={!!selectChainId}
-            className="open-currency-select-button"
-          >
-            <Aligner>
-              <TokenLogoBox>
-                <TokenLogo symbol={currency?.symbol} size={'24px'} />
-              </TokenLogoBox>
-              <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
-                {(currency && currency.symbol && currency.symbol.length > 20
-                  ? currency.symbol.slice(0, 4) +
-                    '...' +
-                    currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
-                  : config.getBaseCoin(currency?.symbol)) || t('selectToken')}
-                {selectChainId ? '-' + config.chainInfo[selectChainId].suffix : ''}
-              </StyledTokenName>
-            </Aligner>
-          </CurrencySelect1>
+          <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={disableCurrencySelect}>
+            {!hideInput && (
+              <>
+                <NumericalInput
+                  className="token-amount-input"
+                  value={value}
+                  onUserInput={val => {
+                    onUserInput(val)
+                  }}
+                  style={{ marginRight: '1.875rem' }}
+                  disabled
+                />
+              </>
+            )}
+            <CurrencySelect1
+              selected={!!selectChainId}
+              className="open-currency-select-button"
+            >
+              <Aligner>
+                <TokenLogoBox>
+                  <TokenLogo symbol={currency?.symbol} size={'24px'} />
+                </TokenLogoBox>
+                <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
+                  {(currency && currency.symbol && currency.symbol.length > 20
+                    ? currency.symbol.slice(0, 4) +
+                      '...' +
+                      currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
+                    : config.getBaseCoin(currency?.symbol)) || t('selectToken')}
+                  {selectChainId ? '-' + config.chainInfo[selectChainId].suffix : ''}
+                </StyledTokenName>
+              </Aligner>
+            </CurrencySelect1>
 
-          <CurrencySelect
-            selected={!!selectChainId}
-            className="open-currency-select-button"
-            onClick={() => {
-              if (!disableCurrencySelect) {
-                setModalOpen(true)
-              }
-            }}
-            style={{marginLeft: "10px"}}
-          >
-            <Aligner>
-              <TokenLogoBox>
-                <TokenLogo symbol={selectChainId ? config.chainInfo[selectChainId].symbol : ''} size={'24px'} />
-              </TokenLogoBox>
-              <StyledTokenName className="token-symbol-container" active={Boolean(selectChainId)}>
-                {selectChainId && config.chainInfo[selectChainId].symbol ? config.chainInfo[selectChainId].symbol : t('selectToken')}
-              </StyledTokenName>
-              {!disableCurrencySelect && !!selectChainId && (
-                <StyledDropDownBox>
-                  <StyledDropDown selected={!!selectChainId} />
-                </StyledDropDownBox>
-              )}
-            </Aligner>
-          </CurrencySelect>
-        </InputRow>
-      </Container>
+            <CurrencySelect
+              selected={!!selectChainId}
+              className="open-currency-select-button"
+              onClick={() => {
+                if (!disableCurrencySelect) {
+                  setModalOpen(true)
+                }
+              }}
+              style={{marginLeft: "10px"}}
+            >
+              <Aligner>
+                <TokenLogoBox>
+                  <TokenLogo symbol={selectChainId ? config.chainInfo[selectChainId].symbol : ''} size={'24px'} />
+                </TokenLogoBox>
+                <StyledTokenName className="token-symbol-container" active={Boolean(selectChainId)}>
+                  {selectChainId && config.chainInfo[selectChainId].symbol ? config.chainInfo[selectChainId].symbol : t('selectToken')}
+                </StyledTokenName>
+                {!disableCurrencySelect && !!selectChainId && (
+                  <StyledDropDownBox>
+                    <StyledDropDown selected={!!selectChainId} />
+                  </StyledDropDownBox>
+                )}
+              </Aligner>
+            </CurrencySelect>
+          </InputRow>
+        </Container>
+      </InputPanel>
       {!disableCurrencySelect && onChainSelect && (
         <Modal isOpen={modalOpen} onDismiss={handleDismissSearch} maxHeight={80} minHeight={80}>
           <Column style={{ width: '100%', flex: '1 1' }}>
@@ -241,6 +244,6 @@ export default function SelectChainIdInputPanel({
           </Column>
         </Modal>
       )}
-    </InputPanel>
+    </>
   )
 }

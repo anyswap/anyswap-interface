@@ -189,7 +189,7 @@ export default function Bridge() {
             disableCurrencySelect={false}
             showMaxButton={true}
             id="selectCurrency"
-          ></SelectCurrencyInputPanel>
+          />
 
           <AutoRow justify="center" style={{ padding: '0 1rem' }}>
             <ArrowWrapper clickable={false} style={{cursor:'pointer'}} onClick={() => {
@@ -201,6 +201,13 @@ export default function Bridge() {
               <ArrowDown size="16" color={theme.text2} />
             </ArrowWrapper>
           </AutoRow>
+          {/* <SwapIcon
+            onClick={() => {
+              setApprovalSubmitted(false) // reset 2 step UI for approvals
+              onSwitchTokens()
+            }}
+            iconUrl={require('../../assets/images/icon/revert.svg')}
+          ></SwapIcon> */}
 
           <SelectChainIdInputPanel
             label={t('to')}
@@ -214,7 +221,7 @@ export default function Bridge() {
             currency={selectCurrency}
             selectChainId={selectChain}
             id="selectChainID"
-          ></SelectChainIdInputPanel>
+          />
 
           <AddressInputPanel id="recipient" value={recipient} onChange={setRecipient} />
         </AutoColumn>

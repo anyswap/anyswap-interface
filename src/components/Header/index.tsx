@@ -38,7 +38,7 @@ import config from '../../config'
 
 
 const HeaderFrame = styled.div`
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 120px;
   align-items: center;
   justify-content: space-between;
@@ -47,13 +47,11 @@ const HeaderFrame = styled.div`
   width: 100%;
   top: 0;
   position: relative;
-  // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.875rem 1rem;
   z-index: 2;
   height: 70px;
 
   max-width: 1440px;
-  // margin:auth;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     grid-template-columns: 1fr;
     padding: 0 1rem;
@@ -61,7 +59,7 @@ const HeaderFrame = styled.div`
     position: relative;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-        padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
   `}
 `
 
@@ -79,12 +77,7 @@ const HeaderControls = styled.div`
     width: 100%;
     max-width: 960px;
     padding: 1rem;
-    // position: fixed;
-    // bottom: 0px;
-    // left: 0px;
-    width: 100%;
     z-index: 99;
-    // height: 56px;
     border-radius: 12px 12px 0 0;
     background-color: ${({ theme }) => theme.bg1};
   `};
@@ -110,28 +103,10 @@ const HeaderRow = styled(RowFixed)`
   position: relative;
   height: 100%;
   ${({ theme }) => theme.mediaWidth.upToMedium`
-  height: 100%;
-   width: 100%;
+    height: 100%;
+    width: 100%;
   `};
 `
-
-// const HeaderLinks = styled(Row)`
-// const HeaderLinks = styled.div`
-//   // justify-content: center;
-//   position:absolute;
-//   left:0;
-//   top:50px;
-//   height:100vh;
-//   width: 320px;
-//   padding-top: 0;
-//   box-shadow: ${({theme}) => theme.contentShadow};
-//   background: ${({theme}) => theme.contentBg};
-
-//   ${({ theme }) => theme.mediaWidth.upToMedium`
-//     padding: 1rem 0 1rem 1rem;
-//     justify-content: flex-end;
-// `};
-// `
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
@@ -215,6 +190,7 @@ const Title = styled.a`
 `
 
 const UniIcon = styled.div`
+  ${({ theme }) => theme.flexSC};
   height: 100%;
   // padding: 10px 0;
   transition: transform 0.3s ease;
@@ -222,75 +198,6 @@ const UniIcon = styled.div`
     transform: rotate(-5deg);
   }
 `
-
-// const activeClassName = 'ACTIVE'
-
-// const StyledNavLink = styled(NavLink).attrs({
-//   activeClassName
-// })`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: left;
-//   outline: none;
-//   cursor: pointer;
-//   text-decoration: none;
-
-//   width: 100%;
-//   font-weight: 500;
-//   color: ${({theme}) => theme.textNav};
-//   font-size: 0.875rem;
-//   font-family: 'Manrope';
-//   box-sizing: border-box;
-//   padding: 1rem 0.875rem;
-//   line-height: 1rem;
-//   margin: 6px 0;
-//   height: 48px;
-//   border-radius: 0.5625rem;
-//   position:relative;
-//   white-space:nowrap;
-
-//   &.${activeClassName} {
-//     border-radius: 12px;
-//     font-weight: 600;
-//     color: ${({ theme }) => theme.text1};
-//   }
-
-//   :hover,
-//   :focus {
-//     color: ${({ theme }) => darken(0.1, theme.text1)};
-//   }
-// `
-
-// const StyledExternalLink = styled(ExternalLink).attrs({
-//   activeClassName
-// })<{ isActive?: boolean }>`
-//   ${({ theme }) => theme.flexRowNoWrap}
-//   align-items: left;
-//   border-radius: 3rem;
-//   outline: none;
-//   cursor: pointer;
-//   text-decoration: none;
-//   color: ${({ theme }) => theme.text2};
-//   font-size: 1rem;
-//   width: fit-content;
-//   margin: 0 12px;
-//   font-weight: 500;
-
-//   &.${activeClassName} {
-//     border-radius: 12px;
-//     font-weight: 600;
-//     color: ${({ theme }) => theme.text1};
-//   }
-
-//   :hover,
-//   :focus {
-//     color: ${({ theme }) => darken(0.1, theme.text1)};
-//   }
-
-//   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-//       display: none;
-// `}
-// `
-
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
   // const { t } = useTranslation()
@@ -319,38 +226,11 @@ export default function Header() {
         <UniBalanceContent setShowUniBalanceModal={setShowUniBalanceModal} />
       </Modal>
       <HeaderRow>
-        <Title href="https://htswap.io/" target="__blank">
+        <Title href="/" target="__blank">
           <UniIcon>
             <img height={'42px'} src={isDark ? LogoDark : Logo} alt="logo" />
           </UniIcon>
         </Title>
-        {/* <HeaderLinks>
-          <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-            {t('swap')}
-          </StyledNavLink>
-          <StyledNavLink
-            id={`pool-nav-link`}
-            to={'/pool'}
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/add') ||
-              pathname.startsWith('/remove') ||
-              pathname.startsWith('/create') ||
-              pathname.startsWith('/find')
-            }
-          >
-            {t('pool')}
-          </StyledNavLink>
-          {/* <StyledNavLink id={`stake-nav-link`} to={'/uni'}>
-            UNI
-          </StyledNavLink>
-          <StyledNavLink id={`stake-nav-link`} to={'/vote'}>
-            Vote
-          </StyledNavLink>
-          <StyledExternalLink id={`stake-nav-link`} href={'https://uniswap.info'}>
-            Charts <span style={{ fontSize: '11px' }}>↗</span>
-          </StyledExternalLink>
-        </HeaderLinks> */}
       </HeaderRow>
       <HeaderControls>
         <HeaderElement>
@@ -365,32 +245,6 @@ export default function Header() {
               <CardNoise />
             </UNIWrapper>
           )}
-          {/* {!availableClaim && aggregateBalance && (
-            <UNIWrapper onClick={() => setShowUniBalanceModal(true)}>
-              <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
-                {account && (
-                  <HideSmall>
-                    <TYPE.white
-                      style={{
-                        paddingRight: '.4rem'
-                      }}
-                    >
-                      <CountUp
-                        key={countUpValue}
-                        isCounting
-                        start={parseFloat(countUpValuePrevious)}
-                        end={parseFloat(countUpValue)}
-                        thousandsSeparator={','}
-                        duration={1}
-                      />
-                    </TYPE.white>
-                  </HideSmall>
-                )}
-                UNI
-              </UNIAmount>
-              <CardNoise />
-            </UNIWrapper>
-          )} */}
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
