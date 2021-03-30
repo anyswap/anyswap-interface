@@ -106,3 +106,30 @@ export function thousandBit (num:any, dec:any = 8) {
     }
     return num
 }
+
+export function formatDecimal(num:any, decimal:number) {
+  if (isNaN(num)) {
+    return num
+  }
+  // num = (num * 10000).toFixed(decimal) / 10000
+  num = num.toString()
+  const index = num.indexOf('.')
+  if (index !== -1) {
+      num = num.substring(0, decimal + index + 1)
+  } else {
+      num = num.substring(0)
+  }
+  return Number(parseFloat(num).toFixed(decimal))
+}
+
+export function formatNum (num:any) {
+  if (isNaN(num)) {
+    return num
+  }
+  num = Number(num)
+  if (num >= 1) {
+    return formatDecimal(num, 2)
+  } else {
+    return formatDecimal(num, config.keepDec)
+  }
+}

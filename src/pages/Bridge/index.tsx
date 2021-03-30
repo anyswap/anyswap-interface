@@ -1,5 +1,6 @@
 // import React, { useEffect, useMemo, useState } from 'react'
-import React, { useEffect, useState, useContext, useMemo } from 'react'
+import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react'
+// import { CurrencyAmount } from '@uniswap/sdk'
 // import styled from 'styled-components'
 import { createBrowserHistory } from 'history'
 import { useTranslation } from 'react-i18next'
@@ -31,13 +32,15 @@ import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useSelectedTokenList } from '../../state/lists/hooks'
+import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { useToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
 import {getAllowance} from '../../utils/bridge/approval'
-import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
-// import {thousandBit} from '../../utils/tools/tools'
+import {getTokenConfig, getAllTokenIDs} from '../../utils/bridge/getBaseInfo'
+import {formatDecimal} from '../../utils/tools/tools'
+// import { maxAmountSpend } from '../../utils/maxAmountSpend'
 
 import { isAddress } from '../../utils'
 
@@ -62,8 +65,10 @@ export default function Bridge() {
   const [bridgeConfig, setBridgeConfig] = useState<any>()
 
   const [approval, approveCallback] = useApproveCallback(undefined, selectCurrency?.address)
-
+  
   const useCurrency = useToken(selectCurrency?.address)
+  const balance = useCurrencyBalance(account ?? undefined, useCurrency ?? undefined)
+
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
     useCurrency?useCurrency:undefined,
     selectCurrency?.address,
@@ -74,14 +79,17 @@ export default function Bridge() {
 
   const outputBridgeValue = useMemo(() => {
     if (inputBridgeValue && bridgeConfig) {
-      const fee = Number(inputBridgeValue) * bridgeConfig.SwapFeeRate
-      let value = (Number(inputBridgeValue) * (1 - bridgeConfig.SwapFeeRate))
-      if (fee < bridgeConfig.MinimumSwapFee) {
-        value = Number(inputBridgeValue) - bridgeConfig.MinimumSwapFee
+      const fee = Number(inputBridgeValue) * Number(bridgeConfig.SwapFeeRatePerMillion)
+      let value = Number(inputBridgeValue) - fee
+      if (fee < Number(bridgeConfig.MinimumSwapFee)) {
+        value = Number(inputBridgeValue) - Number(bridgeConfig.MinimumSwapFee)
       } else if (fee > bridgeConfig.MaximumSwapFee) {
-        value = Number(inputBridgeValue) - bridgeConfig.MaximumSwapFee
+        value = Number(inputBridgeValue) - Number(bridgeConfig.MaximumSwapFee)
       }
-      return value.toFixed(Math.min(6, selectCurrency.decimals))
+      if (value && Number(value)) {
+        return formatDecimal(value, Math.min(6, selectCurrency.decimals))
+      }
+      return ''
     } else {
       return ''
     }
@@ -89,7 +97,7 @@ export default function Bridge() {
 
   const isCrossBridge = useMemo(() => {
     if (account && bridgeConfig && selectCurrency && inputBridgeValue && !wrapInputError && isAddress(recipient)) {
-      if (Number(inputBridgeValue) < bridgeConfig.MinimumSwap || Number(inputBridgeValue) > bridgeConfig.MaximumSwap) {
+      if (Number(inputBridgeValue) < Number(bridgeConfig.MinimumSwap) || Number(inputBridgeValue) > Number(bridgeConfig.MaximumSwap)) {
         return true
       } else {
         return false
@@ -139,16 +147,25 @@ export default function Bridge() {
         })
       }
       getTokenConfig(selectCurrency.address).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res) {
           setBridgeConfig(res)
         } else {
           setBridgeConfig('')
         }
       })
+      getAllTokenIDs(selectCurrency.address)
       // console.log(WrapType)
     }
   }, [selectCurrency, account])
+
+  const handleMaxInput = useCallback(() => {
+    if (balance) {
+      setInputBridgeValue(balance?.toSignificant(6))
+    } else {
+      setInputBridgeValue('')
+    }
+  }, [balance])
 
   return (
     <>
@@ -185,6 +202,7 @@ export default function Bridge() {
             onCurrencySelect={(inputCurrency) => {
               setSelectCurrency(inputCurrency)
             }}
+            onMax={handleMaxInput}
             currency={selectCurrency}
             disableCurrencySelect={false}
             showMaxButton={true}

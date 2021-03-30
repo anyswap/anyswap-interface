@@ -1,6 +1,6 @@
 import RouterConfig from '../../constants/abis/bridge/RouterConfig.json'
 import { getContract, web3Fn } from '../tools/web3Utils'
-import {setLocalConfig, getLocalConfig} from '../tools/tools'
+import {setLocalConfig, getLocalConfig, formatWeb3Str} from '../tools/tools'
 import config from '../../config'
 
 // import {formatWeb3Str} from '../tools/tools'
@@ -8,7 +8,9 @@ import config from '../../config'
 const routerContract = getContract(RouterConfig)
 const chainID = config.bridgeInitDataChain
 
-
+interface ObjType {
+  [key: string]: any
+}
 
 // 获取单条链配置
 const BRIDGEALLCHAINCONFIG = 'BRIDGEALLCHAINCONFIG'
@@ -125,22 +127,92 @@ export function getTokenConfig(token:any) {
       resolve(lData.list)
     } else {
       web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
+      // web3Fn.setProvider(config.nodeRpc)
       routerContract.options.address = config.bridgeConfigToken
+      
+      // routerContract.methods.getMultichainToken(token).call((err:any, res:any) => {
+      //   if (err) {
+      //     console.log(err)
+      //   } else {
+      //     console.log(res)
+      //   }
+      // })
       routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
         if (err) {
           console.log(err)
           resolve(false)
         } else {
-          const results = res
-          if (results) {
-            const obj = JSON.parse(web3Fn.utils.hexToUtf8(results))
-            setLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, {list: obj})
-            resolve(obj)
+          const results:ObjType = {}
+          for (const obj in res) {
+            results[obj] = res[obj]
           }
+          console.log(res)
+          // setLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, {list: results})
           resolve(res)
         }
       })
     }
+  })
+}
+
+export function getAllTokenConfig (list:Array<[]>, token:any) {
+  return new Promise(resolve => {
+    const lData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 10)
+    if (lData) {
+      resolve(lData.list)
+    } else {
+      web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
+      const batch = new web3Fn.BatchRequest()
+      // for (const chainid of list) {
+      const len = list.length
+      for (let i = 0; i < len; i++) {
+        const tokenid = list[i]
+        console.log(tokenid)
+        const data = routerContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
+        batch.add(web3Fn.eth.call.request({data: data, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
+          if (err) {
+            console.log(err)
+            resolve('')
+          } else {
+            console.log(res)
+            console.log(web3Fn.utils.hexToUtf8(formatWeb3Str(res)[1]))
+            const results = res.substr(130)
+            console.log(JSON.parse(web3Fn.utils.hexToUtf8(res)))
+            console.log(JSON.parse(web3Fn.utils.hexToUtf8('0x' + results)))
+            // if (results) {
+            //   setLocalConfig(BRIDGETOKENCONFIG, BRIDGETOKENCONFIG, config.chainID, BRIDGETOKENCONFIG, {list: JSON.parse(web3Fn.utils.hexToUtf8('0x' + results))})
+            // }
+            // const lData1 = getLocalConfig(BRIDGETOKENCONFIG, BRIDGETOKENCONFIG, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 10)
+            // if (lData1) {
+            //   resolve(lData1)
+            // } else if (i === (len - 1)) {
+            //   resolve('')
+            // }
+          }
+        }))
+      }
+
+      batch.execute()
+    }
+  })
+}
+
+export function getAllTokenIDs (token:any) {
+  return new Promise(resolve => {
+    web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
+    routerContract.options.address = config.bridgeConfigToken
+  
+    routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log(res)
+        getAllTokenConfig(res, token).then(results => {
+          console.log(results)
+        })
+      }
+      // resolve(res)
+    })
   })
 }
 
