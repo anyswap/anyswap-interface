@@ -35,15 +35,11 @@ import { useToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
-// import {test} from '../../utils/tools/getPairAddress'
-// import {getBaseInfo} from '../../utils/bridge/getBaseInfo'
 import {getAllowance} from '../../utils/bridge/approval'
 import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
 // import {thousandBit} from '../../utils/tools/tools'
 
 import { isAddress } from '../../utils'
-
-// import BulbIcon from '../../assets/images/icon/bulb.svg'
 
 
 export default function Bridge() {
@@ -103,6 +99,17 @@ export default function Bridge() {
     }
   }, [selectCurrency, account, bridgeConfig, wrapInputError, inputBridgeValue, recipient])
 
+  const btnTxt = useMemo(() => {
+    if (wrapInputError && inputBridgeValue) {
+      return wrapInputError
+    } else if (wrapInputError && !inputBridgeValue) {
+      return bridgeTypeName
+    } else if (wrapType === WrapType.WRAP) {
+      return bridgeTypeName
+    }
+    return bridgeTypeName
+  }, [bridgeTypeName, wrapInputError])
+
   useEffect(() => {
     if (selectedTokenList && chainId && !selectCurrency) {
       const useTokenList = config.bridgeTokenList
@@ -143,17 +150,6 @@ export default function Bridge() {
     }
   }, [selectCurrency, account])
 
-  function onBridge() {
-    if (wrapInputError && inputBridgeValue) {
-      return wrapInputError
-    } else if (wrapInputError && !inputBridgeValue) {
-      return bridgeTypeName
-    } else if (wrapType === WrapType.WRAP) {
-      return bridgeTypeName
-    }
-    return bridgeTypeName
-  }
-
   return (
     <>
       <AppBody>
@@ -181,6 +177,7 @@ export default function Bridge() {
         <AutoColumn gap={'md'}>
 
           <SelectCurrencyInputPanel
+            label={t('From')}
             value={inputBridgeValue}
             onUserInput={(value) => {
               setInputBridgeValue(value)
@@ -206,6 +203,7 @@ export default function Bridge() {
           </AutoRow>
 
           <SelectChainIdInputPanel
+            label={t('to')}
             value={outputBridgeValue.toString()}
             onUserInput={(value) => {
               setInputBridgeValue(value)
@@ -250,7 +248,7 @@ export default function Bridge() {
                   {/* {wrapType}
                   {wrapInputError ??
                     (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
-                  {onBridge()}
+                  {btnTxt}
                     {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
                 </ButtonPrimary>
               )

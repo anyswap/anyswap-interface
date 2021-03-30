@@ -7,7 +7,7 @@ import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 export const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: center;
-  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
+  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0rem 0.75rem')};
 `
 
 export const CurrencySelect = styled.button<{ selected: boolean }>`
@@ -101,7 +101,7 @@ export const LabelRow = styled.div`
   color: ${({ theme }) => theme.text1};
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0.75rem 1rem 0 1rem;
+  padding: 0.75rem 0rem 0;
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.text2)};
@@ -156,7 +156,7 @@ export const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
 export const InputPanel = styled.div<{ hideInput?: boolean }>`
   ${({ theme }) => theme.flexColumnNoWrap}
   position: relative;
-  border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
+  border-radius: ${({ hideInput }) => (hideInput ? '1.25rem' : '1.25rem')};
   background-color: ${({ theme }) => theme.bg2};
   z-index: 1;
 `
@@ -166,7 +166,7 @@ export const Container = styled.div<{ hideInput: boolean }>`
   // border: 1px solid ${({ theme }) => theme.bg2};
   background-color: ${({ theme }) => theme.contentBg};
   box-shadow: 0 0.25rem 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
-  border-radius: 0.5625rem;
+  border-radius: 1.25rem;
   border: 1px solid rgb (255, 92, 177);
   padding: 1.25rem 2.5rem;
   ${({ theme }) => theme.mediaWidth.upToMedium`
