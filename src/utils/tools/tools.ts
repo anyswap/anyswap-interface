@@ -1,3 +1,4 @@
+import { formatUnits, parseUnits } from '@ethersproject/units'
 import config from '../../config'
 
 export function formatWeb3Str (str:string, len = 64) {
@@ -132,4 +133,24 @@ export function formatNum (num:any) {
   } else {
     return formatDecimal(num, config.keepDec)
   }
+}
+
+export function fromWei (value:any, decimals:number) {
+  if (!value || !value) {
+    return ''
+  }
+  if (Number(value) === 0) {
+    return 0
+  }
+  return Number(formatUnits(value.toString(), decimals))
+}
+
+export function toWei (value:any, decimals:number) {
+  if (!value || !value) {
+    return ''
+  }
+  if (Number(value) === 0) {
+    return 0
+  }
+  return parseUnits(value.toString(), decimals)
 }

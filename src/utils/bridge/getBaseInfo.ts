@@ -1,6 +1,7 @@
+
 import RouterConfig from '../../constants/abis/bridge/RouterConfig.json'
 import { getContract, web3Fn } from '../tools/web3Utils'
-import {setLocalConfig, getLocalConfig, formatWeb3Str} from '../tools/tools'
+import {setLocalConfig, getLocalConfig, formatWeb3Str, fromWei} from '../tools/tools'
 import config from '../../config'
 
 // import {formatWeb3Str} from '../tools/tools'
@@ -8,9 +9,9 @@ import config from '../../config'
 const routerContract = getContract(RouterConfig)
 const chainID = config.bridgeInitDataChain
 
-interface ObjType {
-  [key: string]: any
-}
+// interface ObjType {
+//   [key: string]: any
+// }
 
 // 获取单条链配置
 const BRIDGEALLCHAINCONFIG = 'BRIDGEALLCHAINCONFIG'
@@ -119,45 +120,46 @@ export function getAllChainIDs () {
 
 // 获取合约配置
 const BRIDGETOKENCONFIG = 'BRIDGETOKENCONFIG'
-export function getTokenConfig(token:any) {
-  return new Promise(resolve => {
-    // web3Fn.setProvider(config.nodeRpc)
-    const lData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 30)
-    if (lData) {
-      resolve(lData.list)
-    } else {
-      web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
-      // web3Fn.setProvider(config.nodeRpc)
-      routerContract.options.address = config.bridgeConfigToken
+// export function getTokenConfig(token:any) {
+//   return new Promise(resolve => {
+//     // web3Fn.setProvider(config.nodeRpc)
+//     const lData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 30)
+//     if (lData) {
+//       resolve(lData.list)
+//     } else {
+//       web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
+//       // web3Fn.setProvider(config.nodeRpc)
+//       routerContract.options.address = config.bridgeConfigToken
       
-      // routerContract.methods.getMultichainToken(token).call((err:any, res:any) => {
-      //   if (err) {
-      //     console.log(err)
-      //   } else {
-      //     console.log(res)
-      //   }
-      // })
-      routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
-        if (err) {
-          console.log(err)
-          resolve(false)
-        } else {
-          const results:ObjType = {}
-          for (const obj in res) {
-            results[obj] = res[obj]
-          }
-          console.log(res)
-          // setLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, {list: results})
-          resolve(res)
-        }
-      })
-    }
-  })
-}
+//       // routerContract.methods.getMultichainToken(token).call((err:any, res:any) => {
+//       //   if (err) {
+//       //     console.log(err)
+//       //   } else {
+//       //     console.log(res)
+//       //   }
+//       // })
+//       routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
+//         if (err) {
+//           console.log(err)
+//           resolve(false)
+//         } else {
+//           const results:ObjType = {}
+//           for (const obj in res) {
+//             results[obj] = res[obj]
+//           }
+//           console.log(res)
+//           // setLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, {list: results})
+//           resolve(res)
+//         }
+//       })
+//     }
+//   })
+// }
 
 export function getAllTokenConfig (list:Array<[]>, token:any) {
   return new Promise(resolve => {
     const lData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 10)
+    let callbackData:any = ''
     if (lData) {
       resolve(lData.list)
     } else {
@@ -167,27 +169,38 @@ export function getAllTokenConfig (list:Array<[]>, token:any) {
       const len = list.length
       for (let i = 0; i < len; i++) {
         const tokenid = list[i]
-        console.log(tokenid)
-        const data = routerContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
-        batch.add(web3Fn.eth.call.request({data: data, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
+        const gtcData = routerContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
+        batch.add(web3Fn.eth.call.request({data: gtcData, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
           if (err) {
             console.log(err)
             resolve('')
           } else {
-            console.log(res)
-            console.log(web3Fn.utils.hexToUtf8(formatWeb3Str(res)[1]))
-            const results = res.substr(130)
-            console.log(JSON.parse(web3Fn.utils.hexToUtf8(res)))
-            console.log(JSON.parse(web3Fn.utils.hexToUtf8('0x' + results)))
-            // if (results) {
-            //   setLocalConfig(BRIDGETOKENCONFIG, BRIDGETOKENCONFIG, config.chainID, BRIDGETOKENCONFIG, {list: JSON.parse(web3Fn.utils.hexToUtf8('0x' + results))})
-            // }
-            // const lData1 = getLocalConfig(BRIDGETOKENCONFIG, BRIDGETOKENCONFIG, config.chainID, BRIDGETOKENCONFIG, 1000 * 60 * 10)
-            // if (lData1) {
-            //   resolve(lData1)
-            // } else if (i === (len - 1)) {
-            //   resolve('')
-            // }
+            const results = formatWeb3Str(res)
+            const decimals = web3Fn.utils.hexToNumber(results[0])
+            const cbtoken = results[1].replace('0x000000000000000000000000', '0x')
+            const data = {
+              Decimals: decimals,
+              ContractAddress: cbtoken,
+              ContractVersion: web3Fn.utils.hexToNumber(results[2]),
+              MaximumSwap: fromWei(web3Fn.utils.hexToNumber(results[3]), decimals),
+              MinimumSwap: fromWei(web3Fn.utils.hexToNumber(results[4]), decimals),
+              BigValueThreshold: fromWei(web3Fn.utils.hexToNumber(results[5]), decimals),
+              SwapFeeRatePerMillion: fromWei(web3Fn.utils.hexToNumber(results[6]), decimals),
+              MaximumSwapFee: fromWei(web3Fn.utils.hexToNumber(results[7]), decimals),
+              MinimumSwapFee: fromWei(web3Fn.utils.hexToNumber(results[8]), decimals),
+            }
+            if (cbtoken.toLowerCase() === token.toLowerCase()) {
+              callbackData = data
+            }
+            console.log(data)
+            setLocalConfig(BRIDGETOKENCONFIG, cbtoken, config.chainID, BRIDGETOKENCONFIG, {list: data})
+            if (i === (len - 1)) {
+              if (callbackData) {
+                resolve(callbackData)
+              } else {
+                resolve('')
+              }
+            }
           }
         }))
       }
@@ -197,7 +210,7 @@ export function getAllTokenConfig (list:Array<[]>, token:any) {
   })
 }
 
-export function getAllTokenIDs (token:any) {
+export function getTokenConfig (token:any) {
   return new Promise(resolve => {
     web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
     routerContract.options.address = config.bridgeConfigToken
@@ -205,13 +218,12 @@ export function getAllTokenIDs (token:any) {
     routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
       if (err) {
         console.log(err)
+        resolve('')
       } else {
-        console.log(res)
         getAllTokenConfig(res, token).then(results => {
-          console.log(results)
+          resolve(results)
         })
       }
-      // resolve(res)
     })
   })
 }

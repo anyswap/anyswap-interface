@@ -38,7 +38,7 @@ import { useToken } from '../../hooks/Tokens'
 import config from '../../config'
 
 import {getAllowance} from '../../utils/bridge/approval'
-import {getTokenConfig, getAllTokenIDs} from '../../utils/bridge/getBaseInfo'
+import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
 import {formatDecimal} from '../../utils/tools/tools'
 // import { maxAmountSpend } from '../../utils/maxAmountSpend'
 
@@ -154,7 +154,7 @@ export default function Bridge() {
           setBridgeConfig('')
         }
       })
-      getAllTokenIDs(selectCurrency.address)
+      // getAllTokenIDs(selectCurrency.address)
       // console.log(WrapType)
     }
   }, [selectCurrency, account])

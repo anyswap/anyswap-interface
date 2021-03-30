@@ -93,7 +93,7 @@ function CrossBridge (bridgeConfig:any, currency:any) {
           dMinFee: bridgeConfig.MinimumSwapFee,
           coin: currency.symbol,
           dMaxFee: bridgeConfig.MaximumSwapFee,
-          dFee: Number(bridgeConfig.SwapFeeRatePerMillion) * 100
+          dFee: Number(bridgeConfig.SwapFeeRatePerMillion)
         })}</dd>
         <dd><i></i>{t('mintTip2')} {thousandBit(bridgeConfig.MinimumSwap, 'no')} {currency.symbol}</dd>
         <dd><i></i>{t('mintTip3')} {thousandBit(bridgeConfig.MaximumSwap, 'no')} {currency.symbol}</dd>
