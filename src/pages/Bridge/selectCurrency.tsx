@@ -322,7 +322,7 @@ export default function SelectCurrencyInputPanel({
                 {({ height }) => (
                   <CurrencyList
                     height={height}
-                    showETH={true}
+                    showETH={false}
                     currencies={filteredSortedTokens}
                     onCurrencySelect={handleCurrencySelect}
                     otherCurrency={otherCurrency}
