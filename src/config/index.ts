@@ -20,7 +20,7 @@ const config: ConFig = {
   ...INITBRIDGE,
   chainInfo,
   localDataDeadline: '',
-  bridgeConfigToken: '0x5d47bAbA0d66083C52009271faF3F50DCc01023C',
+  bridgeConfigToken: '0xd96ddb35c6268cb3085003248853c39f3bfffb4b',
   bridgeInitDataChain: '256',
   getBaseCoin (value:any, type: number) {
     if (value && value === 'BASECURRENCY') {

@@ -108,7 +108,7 @@ function CurrencyRow({
   const addToken = useAddUserToken()
   // console.log(selectedTokenList)
   // console.log(key)
-  // console.log(index)
+  // console.log(currency)
   // console.log(Math.random())
   // only show add or remove buttons if not on selected list
   return (
@@ -161,7 +161,7 @@ function CurrencyRow({
   )
 }
 
-export default function CurrencyList({
+export default function BridgeCurrencyList({
   height,
   currencies,
   selectedCurrency,
@@ -179,6 +179,7 @@ export default function CurrencyList({
   showETH: boolean
 }) {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
+  // console.log(currencies)
   // console.log(itemData)
   const Row = useCallback(
     ({ data, index, style }) => {
@@ -202,7 +203,7 @@ export default function CurrencyList({
   )
 
   const itemKey = useCallback((index: number, data: any) => currencyKey(data[index]), [])
-
+    // console.log(fixedListRef)
   return (
     <FixedSizeList
       height={height}

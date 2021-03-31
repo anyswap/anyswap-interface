@@ -33,7 +33,7 @@ import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useSelectedTokenList } from '../../state/lists/hooks'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { useToken } from '../../hooks/Tokens'
+// import { useToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
@@ -66,11 +66,12 @@ export default function Bridge() {
 
   const [approval, approveCallback] = useApproveCallback(undefined, selectCurrency?.address)
   
-  const useCurrency = useToken(selectCurrency?.address)
-  const balance = useCurrencyBalance(account ?? undefined, useCurrency ?? undefined)
+  // const useCurrency = useToken(selectCurrency?.address)
+  // console.log(useCurrency?.address)
+  const balance = useCurrencyBalance(account ?? undefined, selectCurrency ?? undefined)
 
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
-    useCurrency?useCurrency:undefined,
+    selectCurrency?selectCurrency:undefined,
     selectCurrency?.address,
     recipient,
     inputBridgeValue,

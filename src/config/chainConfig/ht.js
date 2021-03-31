@@ -7,7 +7,7 @@ export const HT_MAIN_EXPLORER = 'https://scan.hecochain.com'
 
 export const HT_TESTNET = 'https://http-testnet.hecochain.com'
 export const HT_TEST_CHAINID = 256
-export const HT_TEST_EXPLORER = 'https://scan-testnet.hecochain.com'
+export const HT_TEST_EXPLORER = 'https://testnet.hecoinfo.com'
 
 export const tokenList = [
   {

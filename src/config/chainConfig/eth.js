@@ -42,6 +42,15 @@ export const testTokenList = [
     "symbol": "USDT",
     "isUnderlying": 1,
     "isCrossChain": 1
+  },
+  {
+    "address": "0xd5190a1c83b7cf3566098605e00fa0c0fd5f3778",
+    "chainId": ETH_TEST_CHAINID,
+    "decimals": 18,
+    "name": "FTM",
+    "symbol": "FTM",
+    "isUnderlying": 1,
+    "isCrossChain": 1
   }
 ]
 
