@@ -35,7 +35,7 @@ import SearchModal from './searchModal'
 interface SelectCurrencyInputPanelProps {
   value: string
   onUserInput: (value: string) => void
-  onMax?: () => void
+  onMax: (value: any) => void
   showMaxButton: boolean
   label?: string
   onCurrencySelect?: (currency: Currency) => void
@@ -80,6 +80,16 @@ export default function SelectCurrencyInputPanel({
 
   const formatCurrency = useToken(currency?.address)
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, formatCurrency ?? undefined)
+
+  const handleMax = useCallback(() => {
+    // console.log(selectedCurrencyBalance?.toSignificant(6))
+    if (selectedCurrencyBalance) {
+      onMax(selectedCurrencyBalance?.toSignificant(6))
+    } else {
+      onMax('')
+    }
+  }, [selectedCurrencyBalance, onMax])
+
   
   return (
     <InputPanel id={id}>
@@ -94,7 +104,7 @@ export default function SelectCurrencyInputPanel({
                 <HideSmallBox>
 
                   <TYPE.body
-                    onClick={onMax}
+                    onClick={handleMax}
                     color={theme.text2}
                     fontWeight={500}
                     fontSize={14}
@@ -161,7 +171,7 @@ export default function SelectCurrencyInputPanel({
           </CurrencySelect>
           <ErrorSpanBox>
             {!hideBalance && !!currency && selectedCurrencyBalance ? (
-              <ErrorSpan onClick={onMax}>
+              <ErrorSpan onClick={handleMax}>
                 <ExtraText>
                   <h5>{t('balance')}</h5>
                   <p>

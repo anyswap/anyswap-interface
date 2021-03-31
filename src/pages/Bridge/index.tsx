@@ -32,7 +32,7 @@ import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useSelectedTokenList } from '../../state/lists/hooks'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
+// import { useCurrencyBalance } from '../../state/wallet/hooks'
 // import { useToken } from '../../hooks/Tokens'
 
 import config from '../../config'
@@ -66,10 +66,6 @@ export default function Bridge() {
 
   const [approval, approveCallback] = useApproveCallback(undefined, selectCurrency?.address)
   
-  // const useCurrency = useToken(selectCurrency?.address)
-  // console.log(useCurrency?.address)
-  const balance = useCurrencyBalance(account ?? undefined, selectCurrency ?? undefined)
-
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
     selectCurrency?selectCurrency:undefined,
     selectCurrency?.address,
@@ -155,18 +151,16 @@ export default function Bridge() {
           setBridgeConfig('')
         }
       })
-      // getAllTokenIDs(selectCurrency.address)
-      // console.log(WrapType)
     }
   }, [selectCurrency, account])
 
-  const handleMaxInput = useCallback(() => {
-    if (balance) {
-      setInputBridgeValue(balance?.toSignificant(6))
+  const handleMaxInput = useCallback((value) => {
+    if (value) {
+      setInputBridgeValue(value)
     } else {
       setInputBridgeValue('')
     }
-  }, [balance])
+  }, [setInputBridgeValue])
 
   return (
     <>
@@ -203,7 +197,9 @@ export default function Bridge() {
             onCurrencySelect={(inputCurrency) => {
               setSelectCurrency(inputCurrency)
             }}
-            onMax={handleMaxInput}
+            onMax={(value) => {
+              handleMaxInput(value)
+            }}
             currency={selectCurrency}
             disableCurrencySelect={false}
             showMaxButton={true}
