@@ -68,7 +68,7 @@ export function useUserClaimData(account: string | null | undefined): UserClaimD
   // }, [account, chainId, key])
 
   // return account && chainId ? claimInfo[key] : undefined
-  return undefined
+  return account ? null : undefined
 }
 
 // check if user is in blob and has not yet claimed UNI

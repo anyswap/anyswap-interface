@@ -9,8 +9,10 @@ interface ConFig {
 
 const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
 // const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
-const ENV = getNetwork(ENV_NODE_CONFIG, '4')
-const netConfig:ConFig = chainInfo[ENV]
+const INIT_NODE = '4'
+const ENV = getNetwork(ENV_NODE_CONFIG, INIT_NODE)
+const netConfig:ConFig = chainInfo[ENV] ? chainInfo[ENV] : chainInfo[INIT_NODE]
+
 const INITBRIDGE = getInitBridgeChain(netConfig.initChain, netConfig.bridgeInitToken)
 
 const config: ConFig = {
