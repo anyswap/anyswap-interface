@@ -12,7 +12,7 @@ export function getAllowance (account:string, token:string) {
       if (err) {
         console.log(err)
       } else {
-        console.log(res)
+        // console.log(res)
         resolve(res)
       }
     })

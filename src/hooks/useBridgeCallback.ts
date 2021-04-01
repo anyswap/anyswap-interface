@@ -40,8 +40,8 @@ export default function useBridgeCallback(
   const addTransaction = useTransactionAdder()
   return useMemo(() => {
     // console.log(inputCurrency)
-    // console.log(typedValue)
     if (!bridgeContract || !chainId || !inputCurrency || !toAddress || !toChainID) return NOT_APPLICABLE
+    // console.log(typedValue)
 
     const sufficientBalance = inputAmount && balance && !balance.lessThan(inputAmount)
 

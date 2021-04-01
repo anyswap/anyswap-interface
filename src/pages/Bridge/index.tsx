@@ -1,6 +1,6 @@
 // import React, { useEffect, useMemo, useState } from 'react'
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react'
-// import { CurrencyAmount } from '@uniswap/sdk'
+import { TokenAmount } from '@uniswap/sdk'
 // import styled from 'styled-components'
 import { createBrowserHistory } from 'history'
 import { useTranslation } from 'react-i18next'
@@ -33,12 +33,13 @@ import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useSelectedTokenList } from '../../state/lists/hooks'
 // import { useCurrencyBalance } from '../../state/wallet/hooks'
-// import { useToken } from '../../hooks/Tokens'
+import { useLocalToken } from '../../hooks/Tokens'
+// import { useToken, useLocalToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
 import {getAllowance} from '../../utils/bridge/approval'
-import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
+import {getTokenConfig, getBaseInfo} from '../../utils/bridge/getBaseInfo'
 import {formatDecimal} from '../../utils/tools/tools'
 // import { maxAmountSpend } from '../../utils/maxAmountSpend'
 
@@ -64,10 +65,12 @@ export default function Bridge() {
 
   const [bridgeConfig, setBridgeConfig] = useState<any>()
 
-  const [approval, approveCallback] = useApproveCallback(undefined, selectCurrency?.address)
+  const formatCurrency = useLocalToken(selectCurrency)
+  const amountToApprove = formatCurrency ? new TokenAmount(formatCurrency ?? undefined, inputBridgeValue) : undefined
+  const [approval, approveCallback] = useApproveCallback(amountToApprove ?? undefined, config.bridgeRouterToken)
   
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
-    selectCurrency?selectCurrency:undefined,
+    formatCurrency?formatCurrency:undefined,
     selectCurrency?.address,
     recipient,
     inputBridgeValue,
@@ -139,7 +142,7 @@ export default function Bridge() {
         getAllowance(account, selectCurrency?.address).then((res:any) => {
           console.log(ApprovalState)
           console.log(res)
-          setApprovaling('')
+          setApprovaling(res)
           // setApproval(res)
         })
       }
@@ -152,6 +155,7 @@ export default function Bridge() {
         }
       })
     }
+    getBaseInfo()
   }, [selectCurrency, account])
 
   const handleMaxInput = useCallback((value) => {
@@ -195,12 +199,13 @@ export default function Bridge() {
               setInputBridgeValue(value)
             }}
             onCurrencySelect={(inputCurrency) => {
+              console.log(inputCurrency)
               setSelectCurrency(inputCurrency)
             }}
             onMax={(value) => {
               handleMaxInput(value)
             }}
-            currency={selectCurrency}
+            currency={formatCurrency}
             disableCurrencySelect={false}
             showMaxButton={true}
             id="selectCurrency"
@@ -233,7 +238,7 @@ export default function Bridge() {
             onChainSelect={(chainID) => {
               setSelectChain(chainID)
             }}
-            currency={selectCurrency}
+            currency={formatCurrency}
             selectChainId={selectChain}
             id="selectChainID"
           />
@@ -244,6 +249,8 @@ export default function Bridge() {
         <Reminder bridgeConfig={bridgeConfig} bridgeType='bridgeAssets' currency={selectCurrency} />
 
         <BottomGrouping>
+          --{approval}--
+          --{(!approval || !Number(approval))}--
           {!account ? (
               <ButtonLight onClick={toggleWalletModal}>{t('ConnectWallet')}</ButtonLight>
             ) : (

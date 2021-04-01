@@ -1,6 +1,6 @@
 import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@uniswap/sdk'
-import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { FixedSizeList } from 'react-window'
+import React, { CSSProperties, useMemo } from 'react'
+// import { FixedSizeList } from 'react-window'
 import { useTranslation } from 'react-i18next' 
 import { Text } from 'rebass'
 import styled from 'styled-components'
@@ -45,6 +45,10 @@ const Tag = styled.div`
   margin-right: 4px;
 `
 
+const ListBox = styled.div`
+  overflow:auto;
+`
+
 function Balance({ balance }: { balance: CurrencyAmount }) {
   return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
 }
@@ -63,7 +67,7 @@ function TokenTags({ currency }: { currency: Currency }) {
   if (!tags || tags.length === 0) return <span />
 
   const tag = tags[0]
-  console.log(tag)
+  // console.log(tag)
   return (
     <TagContainer>
       <MouseoverTooltip text={tag.description}>
@@ -167,7 +171,7 @@ export default function BridgeCurrencyList({
   selectedCurrency,
   onCurrencySelect,
   otherCurrency,
-  fixedListRef,
+  // fixedListRef,
   showETH
 }: {
   height: number
@@ -175,46 +179,33 @@ export default function BridgeCurrencyList({
   selectedCurrency?: Currency | null
   onCurrencySelect: (currency: Currency) => void
   otherCurrency?: Currency | null
-  fixedListRef?: MutableRefObject<FixedSizeList | undefined>
+  // fixedListRef?: MutableRefObject<FixedSizeList | undefined>
   showETH: boolean
 }) {
   const itemData = useMemo(() => (showETH ? [Currency.ETHER, ...currencies] : currencies), [currencies, showETH])
-  // console.log(currencies)
-  // console.log(itemData)
-  const Row = useCallback(
-    ({ data, index, style }) => {
-      // console.log(data)
-      // console.log(index)
-      const currency: Currency = data[index]
-      const isSelected = Boolean(selectedCurrency && currencyEquals(selectedCurrency, currency))
-      const otherSelected = Boolean(otherCurrency && currencyEquals(otherCurrency, currency))
-      const handleSelect = () => onCurrencySelect(currency)
-      return (
-        <CurrencyRow
-          style={style}
-          currency={currency}
-          isSelected={isSelected}
-          onSelect={handleSelect}
-          otherSelected={otherSelected}
-        />
-      )
-    },
-    [onCurrencySelect, otherCurrency, selectedCurrency]
-  )
-
-  const itemKey = useCallback((index: number, data: any) => currencyKey(data[index]), [])
-    // console.log(fixedListRef)
+  
   return (
-    <FixedSizeList
-      height={height}
-      ref={fixedListRef as any}
-      width="100%"
-      itemData={itemData}
-      itemCount={itemData.length}
-      itemSize={56}
-      itemKey={itemKey}
-    >
-      {Row}
-    </FixedSizeList>
+    <>
+      <ListBox style={{height: height}}>
+        {
+          itemData.map((item, index) => {
+            const currency: Currency = item
+            const isSelected = Boolean(selectedCurrency && currencyEquals(selectedCurrency, currency))
+            const otherSelected = Boolean(otherCurrency && currencyEquals(otherCurrency, currency))
+            const handleSelect = () => onCurrencySelect(currency)
+            return (
+              <CurrencyRow
+                style={{margin:'auto'}}
+                currency={currency}
+                isSelected={isSelected}
+                onSelect={handleSelect}
+                otherSelected={otherSelected}
+                key={index}
+              />
+            )
+          })
+        }
+      </ListBox>
+    </>
   )
 }

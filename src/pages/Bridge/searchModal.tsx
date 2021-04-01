@@ -4,7 +4,7 @@ import { Currency, Token, ETHER } from '@uniswap/sdk'
 import { Text } from 'rebass'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { useTranslation } from 'react-i18next'
-import { FixedSizeList } from 'react-window'
+// import { FixedSizeList } from 'react-window'
 
 import Column from '../../components/Column'
 import { RowBetween } from '../../components/Row'
@@ -47,7 +47,7 @@ export default function SearchModal ({
   const tokenComparator = useTokenComparator(true)
 
   const inputRef = useRef<HTMLInputElement>()
-  const fixedList = useRef<FixedSizeList>()
+  // const fixedList = useRef<FixedSizeList>()
 
   const [searchQuery, setSearchQuery] = useState<string>('')
 
@@ -61,8 +61,8 @@ export default function SearchModal ({
   }, [isAddressSearch, searchToken, allTokens, searchQuery])
 
   const filteredSortedTokens: Token[] = useMemo(() => {
+    // console.log(searchToken)
     if (searchToken) return [searchToken]
-    // console.log(filteredTokens)
     // console.log(filteredTokens)
     const sorted = filteredTokens.sort(tokenComparator)
     // console.log(sorted)
@@ -87,7 +87,7 @@ export default function SearchModal ({
     const input = event.target.value
     const checksummedInput = isAddress(input)
     setSearchQuery(checksummedInput || input)
-    fixedList.current?.scrollTo(0)
+    // fixedList.current?.scrollTo(0)
   }, [])
 
   const handleCurrencySelect = useCallback(
@@ -153,7 +153,7 @@ export default function SearchModal ({
                   onCurrencySelect={handleCurrencySelect}
                   otherCurrency={otherSelectedCurrency}
                   selectedCurrency={selectedCurrency}
-                  fixedListRef={fixedList}
+                  // fixedListRef={fixedList}
                 />
               </>
             )}

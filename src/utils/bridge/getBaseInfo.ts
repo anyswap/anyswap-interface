@@ -131,13 +131,6 @@ const BRIDGETOKENCONFIG = 'BRIDGETOKENCONFIG'
 //       // web3Fn.setProvider(config.nodeRpc)
 //       routerContract.options.address = config.bridgeConfigToken
       
-//       // routerContract.methods.getMultichainToken(token).call((err:any, res:any) => {
-//       //   if (err) {
-//       //     console.log(err)
-//       //   } else {
-//       //     console.log(res)
-//       //   }
-//       // })
 //       routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
 //         if (err) {
 //           console.log(err)
@@ -232,7 +225,7 @@ export function getBaseInfo () {
   web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
   routerContract.options.address = config.bridgeConfigToken
 
-  routerContract.methods.getAllChainIDs().call((err:any, res:any) => {
+  routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
     if (err) {
       console.log(err)
     } else {
@@ -267,13 +260,13 @@ export function getBaseInfo () {
   // })
 
   
-  routerContract.methods.getMultichainTokenCount('0').call((err:any, res:any) => {
-    console.log(err)
-    console.log(res)
-    if (res) {
-      // console.log(JSON.parse(web3Fn.utils.hexToUtf8(res)))
-    }
-  })
+  // routerContract.methods.getMultichainTokenCount('0').call((err:any, res:any) => {
+  //   console.log(err)
+  //   console.log(res)
+  //   if (res) {
+  //     // console.log(JSON.parse(web3Fn.utils.hexToUtf8(res)))
+  //   }
+  // })
   
   // routerContract.methods.getChainConfig(chainID).call((err:any, res:any) => {
   //   console.log(err)

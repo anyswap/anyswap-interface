@@ -103,6 +103,45 @@ export function useToken(tokenAddress?: string): Token | undefined | null {
   ])
 }
 
+export function useLocalToken(currency?: any): Token | undefined | null {
+  const { chainId } = useActiveWeb3React()
+
+  const address = isAddress(currency?.address)
+
+  const symbol = currency?.symbol
+  const name = currency?.name
+  const decimals = currency?.decimals
+  const isUnderlying = currency?.isUnderlying
+  const isCrossChain = currency?.isCrossChain
+
+  // const token = address && name ? undefined : useToken(address ? address : undefined)
+  // console.log(token)
+  // console.log(address)
+  // console.log(currency)
+  return useMemo(() => {
+    if (!currency) return undefined
+    if (!chainId || !address) return undefined
+    // if (token) return token
+    return new Token(
+      chainId,
+      address,
+      decimals,
+      symbol,
+      name,
+      isUnderlying,
+      isCrossChain
+    )
+  }, [
+    address,
+    chainId,
+    symbol,
+    decimals,
+    name,
+    isUnderlying,
+    isCrossChain
+  ])
+}
+
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
   const isETH = currencyId?.toUpperCase() === config.symbol
 

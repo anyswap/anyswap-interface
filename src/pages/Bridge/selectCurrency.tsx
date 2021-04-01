@@ -10,7 +10,7 @@ import TokenLogo from '../../components/TokenLogo'
 import { TYPE } from '../../theme'
 
 import { useActiveWeb3React } from '../../hooks'
-import { useToken } from '../../hooks/Tokens'
+// import { useToken } from '../../hooks/Tokens'
 import config from '../../config'
 
 import {
@@ -78,8 +78,8 @@ export default function SelectCurrencyInputPanel({
     setModalOpen(false)
   }, [setModalOpen])
 
-  const formatCurrency = useToken(currency?.address)
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, formatCurrency ?? undefined)
+  // const formatCurrency = useToken(currency?.address)
+  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
 
   const handleMax = useCallback(() => {
     // console.log(selectedCurrencyBalance?.toSignificant(6))
