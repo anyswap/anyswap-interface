@@ -6,7 +6,6 @@ import { injected } from '../connectors'
 
 import config from '../config'
 
-export const ROUTER_ADDRESS = config.router
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 // export { PRELOADED_PROPOSALS } from './proposals'

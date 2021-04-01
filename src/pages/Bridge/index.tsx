@@ -132,7 +132,7 @@ export default function Bridge() {
 
   useEffect(() => {
     if (chainId && !selectChain) {
-      setSelectChain(config.initChain)
+      setSelectChain(config.bridgeInitChain)
     }
   }, [chainId, selectChain])
 
@@ -249,8 +249,6 @@ export default function Bridge() {
         <Reminder bridgeConfig={bridgeConfig} bridgeType='bridgeAssets' currency={selectCurrency} />
 
         <BottomGrouping>
-          --{approval}--
-          --{(!approval || !Number(approval))}--
           {!account ? (
               <ButtonLight onClick={toggleWalletModal}>{t('ConnectWallet')}</ButtonLight>
             ) : (

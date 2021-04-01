@@ -92,8 +92,8 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
 }
 
 const BAD_RECIPIENT_ADDRESSES: string[] = [
-  config.factoryToken, // v2 factory
-  config.router, // v2 router 01
+  config.v2FactoryToken, // v2 factory
+  config.swapRouterToken, // v2 router 01
   // '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D' // v2 router 02
 ]
 
@@ -132,7 +132,7 @@ export function useDerivedSwapInfo(): {
   } = useSwapState()
   // console.log(outputCurrencyId)
   const inputCurrency = useCurrency(inputCurrencyId)
-  const outputCurrency = useCurrency(outputCurrencyId ? outputCurrencyId : config.initToken)
+  const outputCurrency = useCurrency(outputCurrencyId ? outputCurrencyId : config.swapInitToken)
   const recipientLookup = useENS(recipient ?? undefined)
   const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
 

@@ -7,7 +7,7 @@ import config from '../config'
 // import { Token } from '@uniswap/sdk'
 // import { getCreate2Address } from '@ethersproject/address'
 const factoryContract = getContract(v2Factory)
-const fa = config.factoryToken
+const fa = config.v2FactoryToken
 factoryContract.options.address = fa
 
 // export function usePairAddress(paArr: any) {
