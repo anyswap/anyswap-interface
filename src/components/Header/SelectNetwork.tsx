@@ -200,7 +200,7 @@ export default function SelectNetwork () {
     if (item.symbol === config.symbol || !item.isSwitch) {
       return
     }
-    // console.log(item.label)
+    // console.log(item)
     localStorage.setItem(config.ENV_NODE_CONFIG, item.label)
     history.push(window.location.pathname + window.location.hash)
     history.go(0)

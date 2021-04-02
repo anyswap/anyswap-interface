@@ -84,7 +84,7 @@ export default {
     networkName: 'ETH mainnet',
     type: 'main',
     label: ETH_MAIN_CHAINID,
-    isSwitch: 0,
+    isSwitch: 1,
     suffix: 'ERC20'
   },
   [ETH_TEST_CHAINID]: {
@@ -114,7 +114,7 @@ export default {
     networkName: 'ETH rinkeby',
     type: 'test',
     label: ETH_TEST_CHAINID,
-    isSwitch: 0,
+    isSwitch: 1,
     suffix: 'ERC20'
   },
 }

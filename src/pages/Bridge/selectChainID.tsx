@@ -7,7 +7,7 @@ import { useActiveWeb3React } from '../../hooks'
 // import { FixedSizeList } from 'react-window'
 import { RowBetween } from '../../components/Row'
 import Column from '../../components/Column'
-import QuestionHelper from '../../components/QuestionHelper'
+// import QuestionHelper from '../../components/QuestionHelper'
 import { PaddedColumn, Separator } from '../../components/SearchModal/styleds'
 
 import { Input as NumericalInput } from '../../components/NumericalInput'
@@ -213,7 +213,7 @@ export default function SelectChainIdInputPanel({
                   <TokenLogo symbol={selectChainId ? config.chainInfo[selectChainId].symbol : ''} size={'24px'} />
                 </TokenLogoBox>
                 <StyledTokenName className="token-symbol-container" active={Boolean(selectChainId)}>
-                  {selectChainId && config.chainInfo[selectChainId].networkName ? config.chainInfo[selectChainId].networkName : t('selectToken')}
+                  {selectChainId && config.chainInfo[selectChainId].networkName ? config.chainInfo[selectChainId].networkName : t('selectNetwork')}
                 </StyledTokenName>
                 {!disableCurrencySelect && !!selectChainId && (
                   <StyledDropDownBox>
@@ -231,8 +231,8 @@ export default function SelectChainIdInputPanel({
             <PaddedColumn gap="14px">
               <RowBetween>
                 <Text fontWeight={500} fontSize={16}>
-                  {t('selectToken')}
-                  <QuestionHelper text={t('tip6')} />
+                  {t('selectNetwork')}
+                  {/* <QuestionHelper text={t('tip6')} /> */}
                 </Text>
                 <CloseIcon onClick={handleDismissSearch} />
               </RowBetween>

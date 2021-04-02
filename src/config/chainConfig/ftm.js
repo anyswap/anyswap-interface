@@ -56,7 +56,7 @@ export default {
     networkName: 'FTM mainnet',
     type: 'main',
     label: FTM_MAIN_CHAINID,
-    isSwitch: 0,
+    isSwitch: 1,
     suffix: 'FRC20'
   },
 }
