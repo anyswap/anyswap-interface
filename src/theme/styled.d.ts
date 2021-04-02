@@ -58,6 +58,11 @@ export interface Colors {
 
   swapBg: Color
 
+  chaliceGray: Color
+  royalBlue: Color
+  placeholderGray: Color
+  activeGray: Color
+
   modalBG: Color
   advancedBG: Color
 

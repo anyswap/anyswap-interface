@@ -40,6 +40,7 @@ export default {
     explorer: XDAI_MAIN_EXPLORER,
     symbol: symbol,
     name: 'xDAI',
+    networkName: 'XDAI mainnet',
     type: 'main',
     label: XDAI_MAIN_CHAINID,
     isSwitch: 1,

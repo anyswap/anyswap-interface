@@ -18,6 +18,7 @@ const INITBRIDGE = getInitBridgeChain(netConfig.bridgeInitChain, netConfig.bridg
 const config: ConFig = {
   ...netConfig,
   ...INITBRIDGE,
+  ENV_NODE_CONFIG,
   chainInfo,
   localDataDeadline: '',
   bridgeConfigToken: '0xd96ddb35c6268cb3085003248853c39f3bfffb4b',

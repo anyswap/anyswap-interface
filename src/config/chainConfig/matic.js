@@ -40,6 +40,7 @@ export default {
     explorer: MATIC_MAIN_EXPLORER,
     symbol: symbol,
     name: 'Polygon',
+    networkName: 'MATIC mainnet',
     type: 'main',
     label: MATIC_MAIN_CHAINID,
     isSwitch: 1,

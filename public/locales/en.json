@@ -302,5 +302,6 @@
   "mintTip2": "Minimum Deposit Amount is",
   "mintTip3": "Maximum Deposit Amount is",
   "mintTip4": "Estimated Time of Deposit Arrival is 10-30 min",
-  "mintTip5": "Deposit amount larger than {{depositBigValMoreTime}} {{coin}} could take up to 12 hours"
+  "mintTip5": "Deposit amount larger than {{depositBigValMoreTime}} {{coin}} could take up to 12 hours",
+  "SwitchTo": "Switch to "
 }

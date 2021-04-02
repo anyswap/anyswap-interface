@@ -92,6 +92,11 @@ export function colors(darkMode: boolean): Colors {
 
     swapBg: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.1)',
 
+    chaliceGray: darkMode ? '#7B7B7B' : '#AEAEAE',
+    royalBlue: darkMode ? '#734be2' : '#734be2',
+    placeholderGray: darkMode ? '#5F5F5F' : '#E1E1E1',
+    activeGray: darkMode ? '#363d5f' : '#F7F8FA',
+
     // backgrounds
     // bgc1: darkMode ? '#21263e' : '#FFFFFF',
 

@@ -214,9 +214,9 @@ export default function Bridge() {
 
           <AutoRow justify="center" style={{ padding: '0 1rem' }}>
             <ArrowWrapper clickable={false} style={{cursor:'pointer'}} onClick={() => {
-              localStorage.setItem('ENV_NODE_CONFIG', selectChain)
+              localStorage.setItem(config.ENV_NODE_CONFIG, selectChain)
               console.log(window.location.pathname)
-              history.push(window.location.pathname + '#/bridge')
+              history.push(window.location.pathname + window.location.hash)
               history.go(0)
             }}>
               <ArrowDown size="16" color={theme.text2} />

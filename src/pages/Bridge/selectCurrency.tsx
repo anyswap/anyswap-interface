@@ -69,7 +69,7 @@ export default function SelectCurrencyInputPanel({
   customBalanceText
 }: SelectCurrencyInputPanelProps) {
   const { t } = useTranslation()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
 
   const [modalOpen, setModalOpen] = useState(false)
@@ -160,6 +160,7 @@ export default function SelectCurrencyInputPanel({
                       '...' +
                       currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
                     : config.getBaseCoin(currency?.symbol)) || t('selectToken')}
+                    {chainId ? '-' + config.suffix : ''}
                 </StyledTokenName>
               )}
               {!disableCurrencySelect && !!currency && (

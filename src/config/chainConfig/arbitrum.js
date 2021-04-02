@@ -36,6 +36,7 @@ export default {
     explorer: ARBITRUM_TEST_EXPLORER,
     symbol: symbol,
     name: 'Arbitrum',
+    networkName: 'ARBITRUM mainnet',
     type: 'main',
     label: ARBITRUM_TEST_CHAINID,
     isSwitch: 1,

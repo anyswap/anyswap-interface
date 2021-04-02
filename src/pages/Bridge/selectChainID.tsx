@@ -213,7 +213,7 @@ export default function SelectChainIdInputPanel({
                   <TokenLogo symbol={selectChainId ? config.chainInfo[selectChainId].symbol : ''} size={'24px'} />
                 </TokenLogoBox>
                 <StyledTokenName className="token-symbol-container" active={Boolean(selectChainId)}>
-                  {selectChainId && config.chainInfo[selectChainId].symbol ? config.chainInfo[selectChainId].symbol : t('selectToken')}
+                  {selectChainId && config.chainInfo[selectChainId].networkName ? config.chainInfo[selectChainId].networkName : t('selectToken')}
                 </StyledTokenName>
                 {!disableCurrencySelect && !!selectChainId && (
                   <StyledDropDownBox>
