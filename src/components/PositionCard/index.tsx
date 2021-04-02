@@ -1,4 +1,4 @@
-import { JSBI, Pair, Percent } from '@uniswap/sdk'
+import { JSBI, Pair, Percent } from 'anyswap-sdk'
 import { darken } from 'polished'
 import { useTranslation } from 'react-i18next'
 import React, { useState } from 'react'

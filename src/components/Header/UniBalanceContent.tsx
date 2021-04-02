@@ -1,4 +1,4 @@
-import { ChainId, TokenAmount } from '@uniswap/sdk'
+import { ChainId, TokenAmount } from 'anyswap-sdk'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { X } from 'react-feather'

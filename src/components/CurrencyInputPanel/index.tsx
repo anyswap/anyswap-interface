@@ -1,4 +1,4 @@
-import { Currency, Pair } from '@uniswap/sdk'
+import { Currency, Pair } from 'anyswap-sdk'
 import React, { useState, useContext, useCallback } from 'react'
 // import styled, { ThemeContext } from 'styled-components'
 import { ThemeContext } from 'styled-components'

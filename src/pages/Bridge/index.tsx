@@ -1,6 +1,6 @@
 // import React, { useEffect, useMemo, useState } from 'react'
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react'
-import { TokenAmount } from '@uniswap/sdk'
+import { TokenAmount } from 'anyswap-sdk'
 // import styled from 'styled-components'
 import { createBrowserHistory } from 'history'
 import { useTranslation } from 'react-i18next'
@@ -45,7 +45,8 @@ import {formatDecimal} from '../../utils/tools/tools'
 
 import { isAddress } from '../../utils'
 
-
+// import { ChainId } from 'anyswap-sdk'
+// console.log(ChainId)
 export default function Bridge() {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()

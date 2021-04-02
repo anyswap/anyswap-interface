@@ -1,6 +1,6 @@
 // import {
 //   JSBI
-// } from '@uniswap/sdk'
+// } from 'anyswap-sdk'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'

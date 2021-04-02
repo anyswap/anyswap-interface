@@ -1,4 +1,4 @@
-import { Currency, currencyEquals, ETHER, WETH } from '@uniswap/sdk'
+import { Currency, currencyEquals, ETHER, WETH } from 'anyswap-sdk'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { tryParseAmount } from '../state/swap/hooks'

@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@uniswap/sdk'
+import { Currency, ETHER, Token } from 'anyswap-sdk'
 import config from '../config'
 
 export function currencyId(currency: Currency): string {

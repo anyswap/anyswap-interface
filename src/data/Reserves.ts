@@ -1,4 +1,4 @@
-import { TokenAmount, Pair, Currency } from '@uniswap/sdk'
+import { TokenAmount, Pair, Currency } from 'anyswap-sdk'
 // import { useEffect, useMemo, useState } from 'react'
 // import { useCallback, useMemo, useEffect, useState } from 'react'
 import { useMemo } from 'react'

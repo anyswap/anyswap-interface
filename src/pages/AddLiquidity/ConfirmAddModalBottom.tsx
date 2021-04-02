@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from '@uniswap/sdk'
+import { Currency, CurrencyAmount, Fraction, Percent } from 'anyswap-sdk'
 import React from 'react'
 import { Text } from 'rebass'
 import { useTranslation } from 'react-i18next'

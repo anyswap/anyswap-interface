@@ -1,4 +1,4 @@
-// import { ChainId, TokenAmount } from '@uniswap/sdk'
+// import { ChainId, TokenAmount } from 'anyswap-sdk'
 // import React, { useState } from 'react'
 import React from 'react'
 // import { Text } from 'rebass'

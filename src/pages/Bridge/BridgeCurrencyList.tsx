@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@uniswap/sdk'
+import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from 'anyswap-sdk'
 import React, { CSSProperties, useMemo } from 'react'
 // import { FixedSizeList } from 'react-window'
 import { useTranslation } from 'react-i18next' 

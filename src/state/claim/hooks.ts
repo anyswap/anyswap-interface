@@ -1,6 +1,6 @@
 import { UNI } from './../../constants/index'
-import { TokenAmount, JSBI } from '@uniswap/sdk'
-// import { TokenAmount, JSBI, ChainId } from '@uniswap/sdk'
+import { TokenAmount, JSBI } from 'anyswap-sdk'
+// import { TokenAmount, JSBI, ChainId } from 'anyswap-sdk'
 import { TransactionResponse } from '@ethersproject/providers'
 // import { useEffect, useState } from 'react'
 import { useActiveWeb3React } from '../../hooks'

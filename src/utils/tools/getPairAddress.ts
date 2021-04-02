@@ -1,7 +1,7 @@
 import v2Factory from '../../constants/abis/v2_factory.json'
 import { getContract, web3Fn } from './web3Utils'
 import config from '../../config'
-// import { Token } from '@uniswap/sdk'
+// import { Token } from 'anyswap-sdk'
 // import { getCreate2Address } from '@ethersproject/address'
 const factoryContract = getContract(v2Factory)
 const fa = config.v2FactoryToken

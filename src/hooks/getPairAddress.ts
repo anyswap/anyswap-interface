@@ -1,10 +1,10 @@
-// import { Token } from '@uniswap/sdk'
+// import { Token } from 'anyswap-sdk'
 import { useEffect, useState } from 'react'
 import v2Factory from '../constants/abis/v2_factory.json'
 import { getContract, web3Fn } from '../utils/tools/web3Utils'
 import config from '../config'
 // import { useSingleContractMultipleData, useMultipleContractSingleData } from '../multicall/hooks'
-// import { Token } from '@uniswap/sdk'
+// import { Token } from 'anyswap-sdk'
 // import { getCreate2Address } from '@ethersproject/address'
 const factoryContract = getContract(v2Factory)
 const fa = config.v2FactoryToken
