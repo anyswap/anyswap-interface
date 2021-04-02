@@ -26,7 +26,6 @@ export const testTokenList = [
     "decimals": 6,
     "name": "aaa",
     "symbol": "AAA",
-    "isUnderlying": 0,
     "isCrossChain": 1
   }
 ]

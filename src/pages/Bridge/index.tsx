@@ -18,6 +18,7 @@ import Reminder from './reminder'
 import useBridgeCallback from '../../hooks/useBridgeCallback'
 import { WrapType } from '../../hooks/useWrapCallback'
 // import { useDerivedSwapInfo } from '../../state/swap/hooks'
+// import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
 import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
 
 import Title from '../../components/Title'
@@ -38,8 +39,8 @@ import { useLocalToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
-import {getAllowance} from '../../utils/bridge/approval'
-import {getTokenConfig, getBaseInfo} from '../../utils/bridge/getBaseInfo'
+// import {getAllowance} from '../../utils/bridge/approval'
+import {getTokenConfig, isUnderlying} from '../../utils/bridge/getBaseInfo'
 import {formatDecimal} from '../../utils/tools/tools'
 // import { maxAmountSpend } from '../../utils/maxAmountSpend'
 
@@ -60,15 +61,26 @@ export default function Bridge() {
   const [selectCurrency, setSelectCurrency] = useState<any>()
   const [selectChain, setSelectChain] = useState<any>()
   // const [approval, setApproval] = useState<any>()
-  const [approvaling, setApprovaling] = useState<any>()
+  // const [approvaling, setApprovaling] = useState<any>()
+  const [underlying, setUnderlying] = useState<any>()
   // const [recipient, setRecipient] = useState<any>('0xE000E632124aa65B80f74E3e4cc06DC761610583')
   const [recipient, setRecipient] = useState<any>('')
 
   const [bridgeConfig, setBridgeConfig] = useState<any>()
 
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+
+  
+
   const formatCurrency = useLocalToken(selectCurrency)
   const amountToApprove = formatCurrency ? new TokenAmount(formatCurrency ?? undefined, inputBridgeValue) : undefined
   const [approval, approveCallback] = useApproveCallback(amountToApprove ?? undefined, config.bridgeRouterToken)
+
+  useEffect(() => {
+    if (approval === ApprovalState.PENDING) {
+      setApprovalSubmitted(true)
+    }
+  }, [approval, approvalSubmitted])
   
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
     formatCurrency?formatCurrency:undefined,
@@ -138,15 +150,7 @@ export default function Bridge() {
   }, [chainId, selectChain])
 
   useEffect(() => {
-    if (account && selectCurrency) {
-      if (selectCurrency.isUnderlying) {
-        getAllowance(account, selectCurrency?.address).then((res:any) => {
-          console.log(ApprovalState)
-          console.log(res)
-          setApprovaling(res)
-          // setApproval(res)
-        })
-      }
+    if (selectCurrency) {
       getTokenConfig(selectCurrency.address).then(res => {
         // console.log(res)
         if (res) {
@@ -155,9 +159,13 @@ export default function Bridge() {
           setBridgeConfig('')
         }
       })
+      isUnderlying(selectCurrency.address).then(res => {
+        // console.log(res)
+        setUnderlying(res)
+      })
     }
-    getBaseInfo()
-  }, [selectCurrency, account])
+    // getBaseInfo()
+  }, [selectCurrency])
 
   const handleMaxInput = useCallback((value) => {
     if (value) {
@@ -253,22 +261,22 @@ export default function Bridge() {
           {!account ? (
               <ButtonLight onClick={toggleWalletModal}>{t('ConnectWallet')}</ButtonLight>
             ) : (
-              (!approval || !Number(approval)) && selectCurrency && selectCurrency.isUnderlying ? (
+              selectCurrency && !underlying && inputBridgeValue && (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING)? (
                 <ButtonConfirmed
                   onClick={approveCallback}
-                  disabled={!!approval && !!Number(approval)}
+                  disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
                   width="48%"
-                  altDisabledStyle={approvaling} // show solid button while waiting
-                  confirmed={approvaling}
+                  altDisabledStyle={approval === ApprovalState.PENDING} // show solid button while waiting
+                  // confirmed={approval === ApprovalState.APPROVED}
                 >
-                  {approvaling ? (
+                  {approval === ApprovalState.PENDING ? (
                     <AutoRow gap="6px" justify="center">
                       {t('Approving')} <Loader stroke="white" />
                     </AutoRow>
-                  ) : approval && Number(approval) ? (
+                  ) : approvalSubmitted ? (
                     t('Approved')
                   ) : (
-                    t('Approve')
+                    t('Approve') + ' ' + config.getBaseCoin(selectCurrency?.symbol)
                   )}
                 </ButtonConfirmed>
               ) : (

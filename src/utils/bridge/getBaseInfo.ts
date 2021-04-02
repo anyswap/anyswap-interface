@@ -1,17 +1,35 @@
 
 import RouterConfig from '../../constants/abis/bridge/RouterConfig.json'
+import RouterAction from '../../constants/abis/bridge/RouterAction.json'
 import { getContract, web3Fn } from '../tools/web3Utils'
 import {setLocalConfig, getLocalConfig, formatWeb3Str, fromWei} from '../tools/tools'
 import config from '../../config'
 
 // import {formatWeb3Str} from '../tools/tools'
 
-const routerContract = getContract(RouterConfig)
+const routerConfigContract = getContract(RouterConfig)
+const routerActionContract = getContract(RouterAction)
 const chainID = config.bridgeInitDataChain
 
 // interface ObjType {
 //   [key: string]: any
 // }
+
+export function isUnderlying (token:any) {
+  return new Promise(resolve => {
+    // console.log(token)
+    web3Fn.setProvider(config.nodeRpc)
+    routerActionContract.options.address = token
+    routerActionContract.methods.underlying().call((err:any, res:any) => {
+      if (err) {
+        // console.log(err)
+        resolve(false)
+      } else {
+        resolve(res)
+      }
+    })
+  })
+}
 
 // 获取单条链配置
 const BRIDGEALLCHAINCONFIG = 'BRIDGEALLCHAINCONFIG'
@@ -22,8 +40,8 @@ export function getChainConfig () {
       resolve(lData.list)
     } else {
       web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
-      routerContract.options.address = config.bridgeConfigToken
-      routerContract.methods.getChainConfig(config.chainID).call((err:any, res:any) => {
+      routerConfigContract.options.address = config.bridgeConfigToken
+      routerConfigContract.methods.getChainConfig(config.chainID).call((err:any, res:any) => {
         if (err) {
           resolve(false)
         } else {
@@ -53,7 +71,7 @@ export function getAllChainConfig (list:Array<[]>) {
       const len = list.length
       for (let i = 0; i < len; i++) {
         const chainid = list[i]
-        const data = routerContract.methods.getChainConfig(chainid).encodeABI()
+        const data = routerConfigContract.methods.getChainConfig(chainid).encodeABI()
         batch.add(web3Fn.eth.call.request({data: data, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
           if (err) {
             console.log(err)
@@ -82,8 +100,8 @@ export function getAllChainConfig (list:Array<[]>) {
 export function isTokenIDExist (token:any) {
   return new Promise(resolve => {
     web3Fn.setProvider(config.nodeRpc)
-    routerContract.options.address = config.bridgeConfigToken
-    routerContract.methods.isTokenIDExist(token).call((err:any, res:any) => {
+    routerConfigContract.options.address = config.bridgeConfigToken
+    routerConfigContract.methods.isTokenIDExist(token).call((err:any, res:any) => {
       if (err) {
         console.log(err)
         resolve(false)
@@ -103,9 +121,9 @@ export function getAllChainIDs () {
       resolve(lData.list)
     } else {
       web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
-      routerContract.options.address = config.bridgeConfigToken
+      routerConfigContract.options.address = config.bridgeConfigToken
     
-      routerContract.methods.getAllChainIDs().call((err:any, res:any) => {
+      routerConfigContract.methods.getAllChainIDs().call((err:any, res:any) => {
         if (err) {
           console.log(err)
           resolve([])
@@ -129,9 +147,9 @@ const BRIDGETOKENCONFIG = 'BRIDGETOKENCONFIG'
 //     } else {
 //       web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
 //       // web3Fn.setProvider(config.nodeRpc)
-//       routerContract.options.address = config.bridgeConfigToken
+//       routerConfigContract.options.address = config.bridgeConfigToken
       
-//       routerContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
+//       routerConfigContract.methods.getTokenConfig(config.chainID, token).call((err:any, res:any) => {
 //         if (err) {
 //           console.log(err)
 //           resolve(false)
@@ -162,7 +180,7 @@ export function getAllTokenConfig (list:Array<[]>, token:any) {
       const len = list.length
       for (let i = 0; i < len; i++) {
         const tokenid = list[i]
-        const gtcData = routerContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
+        const gtcData = routerConfigContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
         batch.add(web3Fn.eth.call.request({data: gtcData, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
           if (err) {
             console.log(err)
@@ -206,9 +224,9 @@ export function getAllTokenConfig (list:Array<[]>, token:any) {
 export function getTokenConfig (token:any) {
   return new Promise(resolve => {
     web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
-    routerContract.options.address = config.bridgeConfigToken
+    routerConfigContract.options.address = config.bridgeConfigToken
   
-    routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
+    routerConfigContract.methods.getAllTokenIDs().call((err:any, res:any) => {
       if (err) {
         console.log(err)
         resolve('')
@@ -223,9 +241,9 @@ export function getTokenConfig (token:any) {
 
 export function getBaseInfo () {
   web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
-  routerContract.options.address = config.bridgeConfigToken
+  routerConfigContract.options.address = config.bridgeConfigToken
 
-  routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
+  routerConfigContract.methods.getAllTokenIDs().call((err:any, res:any) => {
     if (err) {
       console.log(err)
     } else {
@@ -235,7 +253,7 @@ export function getBaseInfo () {
   })
 
   
-  // routerContract.methods.getTokenIDCount().call((err:any, res:any) => {
+  // routerConfigContract.methods.getTokenIDCount().call((err:any, res:any) => {
   //   if (err) {
   //     console.log(err)
   //   } else {
@@ -243,7 +261,7 @@ export function getBaseInfo () {
   //   }
   // })
 
-  // routerContract.methods.getAllTokenIDs().call((err:any, res:any) => {
+  // routerConfigContract.methods.getAllTokenIDs().call((err:any, res:any) => {
   //   if (err) {
   //     console.log(err)
   //   } else {
@@ -251,7 +269,7 @@ export function getBaseInfo () {
   //   }
   // })
 
-  // routerContract.methods.getMultichainTokenOnChain(chainID, '1').call((err:any, res:any) => {
+  // routerConfigContract.methods.getMultichainTokenOnChain(chainID, '1').call((err:any, res:any) => {
   //   if (err) {
   //     console.log(err)
   //   } else {
@@ -260,7 +278,7 @@ export function getBaseInfo () {
   // })
 
   
-  // routerContract.methods.getMultichainTokenCount('0').call((err:any, res:any) => {
+  // routerConfigContract.methods.getMultichainTokenCount('0').call((err:any, res:any) => {
   //   console.log(err)
   //   console.log(res)
   //   if (res) {
@@ -268,14 +286,14 @@ export function getBaseInfo () {
   //   }
   // })
   
-  // routerContract.methods.getChainConfig(chainID).call((err:any, res:any) => {
+  // routerConfigContract.methods.getChainConfig(chainID).call((err:any, res:any) => {
   //   console.log(err)
   //   console.log(res)
   //   if (res) {
   //     console.log(JSON.parse(web3Fn.utils.hexToUtf8(res)))
   //   }
   // })
-  // routerContract.methods.getTokenConfig(chainID, '0x897A9980808a2CAe0d09fF693f02a4F80ABB2233').call((err:any, res:any) => {
+  // routerConfigContract.methods.getTokenConfig(chainID, '0x897A9980808a2CAe0d09fF693f02a4F80ABB2233').call((err:any, res:any) => {
   //   console.log(err)
   //   console.log(res)
   //   if (res) {

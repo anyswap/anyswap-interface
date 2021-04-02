@@ -19,7 +19,6 @@ export const tokenList = [
     "decimals": 6,
     "name": "USDC",
     "symbol": "USDC",
-    "isUnderlying": 0,
     "isCrossChain": 1
   }
 ]
@@ -31,7 +30,6 @@ export const testTokenList = [
     "decimals": 6,
     "name": "AAA",
     "symbol": "AAA",
-    "isUnderlying": 0,
     "isCrossChain": 1
   },
   {
@@ -40,7 +38,6 @@ export const testTokenList = [
     "decimals": 6,
     "name": "USDT",
     "symbol": "USDT",
-    "isUnderlying": 1,
     "isCrossChain": 1
   },
   {
@@ -49,7 +46,6 @@ export const testTokenList = [
     "decimals": 18,
     "name": "FTM",
     "symbol": "FTM",
-    "isUnderlying": 1,
     "isCrossChain": 1
   }
 ]
