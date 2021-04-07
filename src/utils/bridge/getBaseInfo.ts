@@ -162,9 +162,9 @@ export function isUnderlying (token:any) {
 
 // 获取合约配置
 const BRIDGETOKENCONFIG = 'BRIDGETOKENCONFIG'
-function getAllTokenConfig (list:Array<[]>, token?:any) {
+function getAllTokenConfig (list:Array<[]>) {
   return new Promise(resolve => {
-    let callbackData:any = ''
+    // let callbackData:any = ''
     web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
     const batch = new web3Fn.BatchRequest()
 
@@ -218,41 +218,23 @@ function getAllTokenConfig (list:Array<[]>, token?:any) {
             underlying: await isUnderlying(cbtoken)
           }
           tokenList[cbtoken] = data
-          if (i === (len - 1)) {
-            for (const tokenstr in tokenList) {
-              const curTokenObj = tokenList[tokenstr]
-              const curTokenIdObj = tokenidList[curTokenObj.tokenid]
-              
-              // for (const chainidstr in curTokenIdObj) {
-              //   const destChain = {...curTokenIdObj}
-              //   delete destChain[chainidstr]
-              //   const obj = {
-              //     ...curTokenObj,
-              //     destChain: destChain
-              //   }
-              //   setLocalConfig(BRIDGETOKENCONFIG, curTokenIdObj[chainidstr], chainidstr, BRIDGETOKENCONFIG, {list: obj})
-              // }
-              const destChain = {...curTokenIdObj}
-              delete destChain[config.chainID]
-              if (curTokenObj && curTokenIdObj) {
-                const obj = {
-                  ...curTokenObj,
-                  destChain: destChain
-                }
-                setLocalConfig(BRIDGETOKENCONFIG, tokenstr, config.chainID, BRIDGETOKENCONFIG, {list: obj})
+        }
+        if (i === (len - 1)) {
+          for (const tokenstr in tokenList) {
+            const curTokenObj = tokenList[tokenstr]
+            const curTokenIdObj = tokenidList[curTokenObj.tokenid]
+            
+            const destChain = {...curTokenIdObj}
+            delete destChain[config.chainID]
+            if (curTokenObj && curTokenIdObj) {
+              const obj = {
+                ...curTokenObj,
+                destChain: destChain
               }
-              if (token && tokenstr.toLowerCase() === token.toLowerCase() && token !== 'all') {
-                callbackData = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG)
-              }
-            }
-            if (callbackData) {
-              resolve(callbackData)
-            } else if (token === 'all') {
-              resolve(getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG))
-            } else {
-              resolve('')
+              setLocalConfig(BRIDGETOKENCONFIG, tokenstr, config.chainID, BRIDGETOKENCONFIG, {list: obj})
             }
           }
+          resolve('')
         }
       }))
     }
@@ -260,7 +242,7 @@ function getAllTokenConfig (list:Array<[]>, token?:any) {
   })
 }
 
-function getAllTokenIDs (token?:any) {
+function getAllTokenIDs () {
   return new Promise(resolve => {
     web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
     routerConfigContract.options.address = config.bridgeConfigToken
@@ -270,8 +252,8 @@ function getAllTokenIDs (token?:any) {
         console.log(err)
         resolve('')
       } else {
-        getAllTokenConfig(res, token).then(results => {
-          resolve(results)
+        getAllTokenConfig(res).then(() => {
+          resolve('')
         })
       }
     })
@@ -286,10 +268,11 @@ export function getTokenConfig (token:any) {
     if (lData && lData.list && lData.list.name && lData.list.decimals && lData.list.symbol) {
       resolve(lData.list)
     } else {
-      getAllTokenIDs(token).then((res:any)=> {
-        console.log(res)
-        if (res) {
-          resolve(res.list)
+      getAllTokenIDs().then(() => {
+        // console.log(res)
+        const lData1 = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, timeout)
+        if (lData1 && lData1.list && lData1.list.name && lData1.list.decimals && lData1.list.symbol) {
+          resolve(lData1.list)
         } else {
           resolve('')
         }
@@ -301,14 +284,15 @@ export function getTokenConfig (token:any) {
 export function getAllToken () {
   return new Promise(resolve => {
     const lData = getLocalConfig(BRIDGETOKENCONFIG, 'all', config.chainID, BRIDGETOKENCONFIG, timeout)
-    console.log(lData)
+    // console.log(lData)
     if (lData) {
       resolve(lData)
     } else {
-      getAllTokenIDs('all').then((res:any)=> {
-        console.log(res)
-        if (res) {
-          resolve(res.list)
+      getAllTokenIDs().then(() => {
+        // console.log(res)
+        const lData1 = getLocalConfig(BRIDGETOKENCONFIG, 'all', config.chainID, BRIDGETOKENCONFIG)
+        if (lData1) {
+          resolve(lData1.list)
         } else {
           resolve('')
         }

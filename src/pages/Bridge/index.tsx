@@ -60,11 +60,9 @@ export default function Bridge() {
   const [bridgeTypeName, setBridgeTypeName] = useState(t('bridgeAssets'))
   const [selectCurrency, setSelectCurrency] = useState<any>()
   const [selectChain, setSelectChain] = useState<any>()
-  // const [approval, setApproval] = useState<any>()
-  // const [approvaling, setApprovaling] = useState<any>()
-  // const [underlying, setUnderlying] = useState<any>()
-  // const [recipient, setRecipient] = useState<any>('0xE000E632124aa65B80f74E3e4cc06DC761610583')
-  const [recipient, setRecipient] = useState<any>(account)
+  // const [recipient, setRecipient] = useState<any>(account)
+  const [recipient, setRecipient] = useState<any>('')
+  const [count, setCount] = useState<number>(0)
 
   const [bridgeConfig, setBridgeConfig] = useState<any>()
 
@@ -182,6 +180,9 @@ export default function Bridge() {
             })
           }
         } else {
+          setTimeout(() => {
+            setCount(count + 1)
+          }, 100)
           setBridgeConfig('')
         }
       })
@@ -189,7 +190,7 @@ export default function Bridge() {
       setBridgeConfig('')
     }
     // getBaseInfo()
-  }, [selectCurrency])
+  }, [selectCurrency, count])
 
   const handleMaxInput = useCallback((value) => {
     if (value) {
@@ -309,7 +310,7 @@ export default function Bridge() {
                     {/* {wrapType}
                     {wrapInputError ??
                       (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
-                    {btnTxt}1
+                    {btnTxt}
                       {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
                   </ButtonPrimary>
                 ) : (
@@ -317,7 +318,7 @@ export default function Bridge() {
                     {/* {wrapType}
                     {wrapInputError ??
                       (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
-                    {btnTxt}2
+                    {btnTxt}
                       {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
                   </ButtonPrimary>
                 )
