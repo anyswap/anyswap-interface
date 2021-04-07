@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const ARBITRUM_TESTNET = 'https://kovan4.arbitrum.io/rpc'
@@ -18,7 +18,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + ARBITRUM_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',

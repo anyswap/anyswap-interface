@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 const navLang = navigator.language
@@ -18,36 +18,11 @@ export const tokenList = [
     "chainId": ETH_MAIN_CHAINID,
     "decimals": 6,
     "name": "USDC",
-    "symbol": "USDC",
-    "isCrossChain": 1
+    "symbol": "USDC"
   }
 ]
-
 export const testTokenList = [
-  {
-    "address": "0x5d9ab5522c64e1f6ef5e3627eccc093f56167818",
-    "chainId": ETH_TEST_CHAINID,
-    "decimals": 6,
-    "name": "AAA",
-    "symbol": "AAA",
-    "isCrossChain": 1
-  },
-  {
-    "address": "0xb09bad01684f6d47fc7dc9591889cc77eaed8d22",
-    "chainId": ETH_TEST_CHAINID,
-    "decimals": 6,
-    "name": "USDT",
-    "symbol": "USDT",
-    "isCrossChain": 1
-  },
-  {
-    "address": "0xd5190a1c83b7cf3566098605e00fa0c0fd5f3778",
-    "chainId": ETH_TEST_CHAINID,
-    "decimals": 18,
-    "name": "FTM",
-    "symbol": "FTM",
-    "isCrossChain": 1
-  }
+
 ]
 
 const symbol = 'ETH'
@@ -59,7 +34,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + ETH_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',
@@ -89,9 +63,8 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + ETH_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
-    bridgeTokenList: formatBridgeTokenList(testTokenList),
-    bridgeInitToken: '0x5d9ab5522c64e1f6ef5e3627eccc093f56167818',
-    bridgeRouterToken: '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d',
+    bridgeInitToken: '0x332730a4f6e03d9c55829435f10360e13cfa41ff',
+    bridgeRouterToken: '0xa649325aa7c5093d12d6f98eb4378deae68ce23f',
     bridgeInitChain: '97',
     swapRouterToken: '',
     swapInitToken: '0xb09bad01684f6d47fc7dc9591889cc77eaed8d22',

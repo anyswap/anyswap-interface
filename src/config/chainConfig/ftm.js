@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const FTM_MAINNET = 'https://rpc.fantom.network'
@@ -22,10 +22,6 @@ export const tokenList = [
   },
 ]
 
-export const testTokenList = [
-
-]
-
 const symbol = 'FTM'
 
 export default {
@@ -35,7 +31,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + FTM_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',

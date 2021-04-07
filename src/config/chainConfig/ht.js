@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const HT_MAINNET = 'https://http-mainnet.hecochain.com'
@@ -130,8 +130,14 @@ export const testTokenList = [
     "chainId": HT_TEST_CHAINID,
     "decimals": 6,
     "name": "aaa",
-    "symbol": "AAA",
-    "isCrossChain": 1
+    "symbol": "AAA"
+  },
+  {
+    "address": "0xe069af87450fb51fc0d0e044617f1c134163e591",
+    "chainId": HT_TEST_CHAINID,
+    "decimals": 6,
+    "name": "USDT",
+    "symbol": "USDT"
   }
 ]
 
@@ -144,7 +150,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + HT_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',
@@ -174,12 +179,11 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + HT_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
-    bridgeTokenList: formatBridgeTokenList(testTokenList),
-    bridgeInitToken: '0x130966628846bfd36ff31a822705796e8cb8c18d',
-    bridgeRouterToken: '0xcb58418aa51ba525aef0fe474109c0354d844b7c',
+    bridgeInitToken: '0x6b26780e74cfc64b88c9e1ebc33ffae29c1679ea',
+    bridgeRouterToken: '0x306377cFA2ac72e757151591e9eCF0135d7C9613',
     bridgeInitChain: '97',
     swapRouterToken: '0x479ab92bf721de918f01d455e90540149dbfd9da',
-    swapInitToken: '0x734922e7b793b408cd434eedaa407c9c0c575d1e',
+    swapInitToken: '0xe069af87450fb51fc0d0e044617f1c134163e591',
     multicalToken: '0xe4ea48020f648b1aa7fc25af7b196596190c6b29',
     v1FactoryToken: '0x87fe4ea2692aeb64dbab6593de87cc4741e20c7f',
     v2FactoryToken: '0x2302c14f2928bb9b68053320309b84db3702f89f',

@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const BNB_MAINNET = 'https://bsc-dataseed1.binance.org/'
@@ -18,16 +18,8 @@ export const tokenList = [
     "symbol": ""
   }
 ]
-
 export const testTokenList = [
-  {
-    "address": "0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73",
-    "chainId": BNB_TEST_CHAINID,
-    "decimals": 6,
-    "name": "aaa",
-    "symbol": "AAA",
-    "isCrossChain": 1
-  }
+
 ]
 
 const symbol = 'BNB'
@@ -39,7 +31,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + BNB_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',
@@ -69,12 +60,11 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + BNB_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
-    bridgeTokenList: formatBridgeTokenList(testTokenList),
-    bridgeInitToken: '0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73',
-    bridgeRouterToken: '0xb44a9b6905af7c801311e8f4e76932ee959c663c',
+    bridgeInitToken: '0xc9baa8cfdde8e328787e29b4b078abf2dadc2055',
+    bridgeRouterToken: '0x332730a4F6E03D9C55829435f10360E13cfA41Ff',
     bridgeInitChain: '4',
     swapRouterToken: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
-    swapInitToken: '0xefaeee334f0fd1712f9a8cc375f427d9cdd40d73',
+    swapInitToken: '0x461d52769884ca6235b685ef2040f47d30c94eb5',
     multicalToken: '0xe348b292e8eA5FAB54340656f3D374b259D658b8',
     v1FactoryToken: '',
     v2FactoryToken: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',

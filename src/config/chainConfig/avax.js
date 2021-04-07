@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const AVAX_MAINNET = 'https://api.avax.network/ext/bc/C/rpc'
@@ -18,7 +18,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + AVAX_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',

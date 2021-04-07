@@ -13,9 +13,9 @@ export function formatWeb3Str (str:string, len = 64) {
   return arr
 }
 
-export function getLocalConfig (account:string, token:string, chainID:any, type:string, timeout?:string|number|undefined) {
-  const lstr = sessionStorage.getItem(type)
-  timeout = timeout ? timeout : config.localDataDeadline
+export function getLocalConfig (account:string, token:string, chainID:any, type:string, timeout?:string|number|undefined, saveType?:number|undefined) {
+  const lStorage = saveType ? localStorage : sessionStorage
+  const lstr = lStorage.getItem(type)
   if (!lstr) {
     return false
   } else {
@@ -24,11 +24,13 @@ export function getLocalConfig (account:string, token:string, chainID:any, type:
       return false
     } else if (!lboj[chainID][account]) {
       return false
-    } else if (!lboj[chainID][account][token]) {
+    } else if (!lboj[chainID][account][token] && token !== 'all') {
       return false
-    } else if ((Date.now() - lboj[chainID][account][token].timestamp) > (1000 * 60 * 10)) {
+    } else if (token === 'all') {
+      return lboj[chainID][account]
+    } else if (timeout && (Date.now() - lboj[chainID][account][token].timestamp) > timeout) {
       return false
-    } else if (timeout && lboj[chainID][account][token].timestamp < timeout) { // 在某个时间之前的数据无效
+    } else if (lboj[chainID][account][token].timestamp < config.localDataDeadline) { // 在某个时间之前的数据无效
       return false
     } else {
       return lboj[chainID][account][token]
@@ -36,8 +38,9 @@ export function getLocalConfig (account:string, token:string, chainID:any, type:
   }
 }
 
-export function setLocalConfig (account:string, token:string, chainID:any, type:string, data: any) {
-  const lstr = sessionStorage.getItem(type)
+export function setLocalConfig (account:string, token:string, chainID:any, type:string, data: any, saveType?:number|undefined) {
+  const lStorage = saveType ? localStorage : sessionStorage
+  const lstr = lStorage.getItem(type)
   let lboj:any = {}
   if (!lstr) {
     lboj[chainID] = {}
@@ -68,7 +71,7 @@ export function setLocalConfig (account:string, token:string, chainID:any, type:
       }
     }
   }
-  sessionStorage.setItem(type, JSON.stringify(lboj))
+  lStorage.setItem(type, JSON.stringify(lboj))
 }
 
 

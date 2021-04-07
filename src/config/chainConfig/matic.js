@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const MATIC_MAINNET = 'https://rpc-mainnet.maticvigil.com'
@@ -22,7 +22,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + MATIC_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',

@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const XDAI_MAINNET = 'https://rpc.xdaichain.com'
@@ -22,7 +22,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + XDAI_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',

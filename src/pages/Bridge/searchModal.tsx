@@ -19,11 +19,14 @@ import { CloseIcon } from '../../theme'
 import { isAddress } from '../../utils'
 
 import { useToken } from '../../hooks/Tokens'
+import { useActiveWeb3React } from '../../hooks'
 
 import BridgeCurrencyList from './BridgeCurrencyList'
 
-import config from '../../config'
+// import config from '../../config'
 
+import {getAllToken} from '../../utils/bridge/getBaseInfo'
+// import { config } from 'dotenv/types'
 
 interface CurrencySearchModalProps {
   isOpen: boolean
@@ -41,15 +44,38 @@ export default function SearchModal ({
   otherSelectedCurrency
 }: CurrencySearchModalProps) {
   const { t } = useTranslation()
-
-  const allTokens = config.bridgeTokenList
+  const { chainId } = useActiveWeb3React()
 
   const tokenComparator = useTokenComparator(true)
 
-  const inputRef = useRef<HTMLInputElement>()
-  // const fixedList = useRef<FixedSizeList>()
-
+  const [allTokens, setAllTokens] = useState<any>([])
   const [searchQuery, setSearchQuery] = useState<string>('')
+
+
+  const inputRef = useRef<HTMLInputElement>()
+
+  useEffect(() => {
+    getAllToken().then((res:any) => {
+      // console.log(res)
+      if (res) {
+        const list:any = []
+        for (const token in res) {
+          list.push({
+            "address": token,
+            "chainId": chainId,
+            "decimals": res[token].list.decimals,
+            "name": res[token].list.name,
+            "symbol": res[token].list.symbol,
+            "underlying": res[token].list.underlying
+          })
+        }
+        // console.log(list)
+        setAllTokens(list)
+      }
+    })
+  }, [])
+  // const fixedList = useRef<FixedSizeList>()
+  // console.log(allTokens)
 
   const isAddressSearch = isAddress(searchQuery)
 
@@ -57,6 +83,7 @@ export default function SearchModal ({
 
   const filteredTokens: Token[] = useMemo(() => {
     if (isAddressSearch) return searchToken ? [searchToken] : []
+    // console.log(allTokens)
     return filterTokens(Object.values(allTokens), searchQuery)
   }, [isAddressSearch, searchToken, allTokens, searchQuery])
 
@@ -77,7 +104,7 @@ export default function SearchModal ({
       ...sorted.filter(token => token.symbol?.toLowerCase() === symbolMatch[0]),
       ...sorted.filter(token => token.symbol?.toLowerCase() !== symbolMatch[0])
     ]
-  }, [searchQuery, searchToken, tokenComparator])
+  }, [searchQuery, searchToken, tokenComparator, filteredTokens])
 
   useEffect(() => {
     if (isOpen) setSearchQuery('')
@@ -119,7 +146,7 @@ export default function SearchModal ({
     // [searchQuery]
     [filteredSortedTokens, handleCurrencySelect, searchQuery]
   )
-
+    // console.log(filteredSortedTokens)
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={80} minHeight={80}>
       <Column style={{ width: '100%', flex: '1 1' }}>

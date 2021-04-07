@@ -1,22 +1,25 @@
 import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from 'anyswap-sdk'
 import React, { CSSProperties, useMemo } from 'react'
 // import { FixedSizeList } from 'react-window'
-import { useTranslation } from 'react-i18next' 
+// import { useTranslation } from 'react-i18next' 
 import { Text } from 'rebass'
 import styled from 'styled-components'
 import { useActiveWeb3React } from '../../hooks'
-import { useSelectedTokenList, WrappedTokenInfo } from '../../state/lists/hooks'
-import { useAddUserToken, useRemoveUserAddedToken } from '../../state/user/hooks'
+import { useLocalToken } from '../../hooks/Tokens'
+// import { useSelectedTokenList, WrappedTokenInfo } from '../../state/lists/hooks'
+import { WrappedTokenInfo } from '../../state/lists/hooks'
+// import { useAddUserToken, useRemoveUserAddedToken } from '../../state/user/hooks'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { LinkStyledButton, TYPE } from '../../theme'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
+// import { LinkStyledButton, TYPE } from '../../theme'
+// import { useIsUserAddedToken } from '../../hooks/Tokens'
 import Column from '../../components/Column'
 import { RowFixed } from '../../components/Row'
 import TokenLogo from '../../components/TokenLogo'
 import { MouseoverTooltip } from '../../components/Tooltip'
-import { FadedSpan, MenuItem } from '../../components/SearchModal/styleds'
+// import { FadedSpan, MenuItem } from '../../components/SearchModal/styleds'
+import { MenuItem } from '../../components/SearchModal/styleds'
 import Loader from '../../components/Loader'
-import { isTokenOnList } from '../../utils'
+// import { isTokenOnList } from '../../utils'
 
 import config from '../../config'
 
@@ -100,19 +103,27 @@ function CurrencyRow({
   otherSelected: boolean
   style: CSSProperties
 }) {
-  const { account, chainId } = useActiveWeb3React()
-  const { t } = useTranslation()
+  // const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
+  // const { t } = useTranslation()
   const key = currencyKey(currency)
-  const selectedTokenList = useSelectedTokenList()
-  const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
-  const customAdded = useIsUserAddedToken(currency)
-  const balance = useCurrencyBalance(account ?? undefined, currency)
+  // const selectedTokenList = useSelectedTokenList()
+  // const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
+  // const customAdded = useIsUserAddedToken(currency)
+  // console.log(currency)
+  const currencyObj = {
+    address: currency.underlying ? currency.underlying.address : currency?.address,
+    decimals: currency.decimals,
+    symbol: currency.underlying ? currency.underlying.symbol : currency.symbol,
+    name: currency.name ? currency.underlying.name : currency.name,
+  }
+  const currencies = useLocalToken(currencyObj)
+  const balance = useCurrencyBalance(account ?? undefined, currencies ?? undefined)
 
-  const removeToken = useRemoveUserAddedToken()
-  const addToken = useAddUserToken()
+  // const removeToken = useRemoveUserAddedToken()
+  // const addToken = useAddUserToken()
   // console.log(selectedTokenList)
   // console.log(key)
-  // console.log(currency)
   // console.log(Math.random())
   // only show add or remove buttons if not on selected list
   return (
@@ -123,12 +134,12 @@ function CurrencyRow({
       disabled={isSelected}
       selected={otherSelected}
     >
-      <TokenLogo symbol={currency.symbol} size={'24px'}></TokenLogo>
+      <TokenLogo symbol={currencyObj.symbol} size={'24px'}></TokenLogo>
       <Column>
-        <Text title={currency.name} fontWeight={500}>
-          {config.getBaseCoin(currency.symbol)}
+        <Text title={currencyObj.name} fontWeight={500}>
+          {config.getBaseCoin(currencyObj.symbol)}
         </Text>
-        <FadedSpan>
+        {/* <FadedSpan>
           {!isOnSelectedList && customAdded && !currency?.isCrossChain ? (
             <TYPE.main fontWeight={500}>
               Added by user
@@ -155,9 +166,9 @@ function CurrencyRow({
               </LinkStyledButton>
             </TYPE.main>
           ) : null}
-        </FadedSpan>
+        </FadedSpan> */}
       </Column>
-      <TokenTags currency={currency} />
+      <TokenTags currency={currencyObj} />
       <RowFixed style={{ justifySelf: 'flex-end' }}>
         {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
       </RowFixed>
@@ -193,6 +204,7 @@ export default function BridgeCurrencyList({
             const isSelected = Boolean(selectedCurrency && currencyEquals(selectedCurrency, currency))
             const otherSelected = Boolean(otherCurrency && currencyEquals(otherCurrency, currency))
             const handleSelect = () => onCurrencySelect(currency)
+            // console.log(currency)
             return (
               <CurrencyRow
                 style={{margin:'auto'}}

@@ -15,7 +15,7 @@ import SelectChainIdInputPanel from './selectChainID'
 import Reminder from './reminder'
 
 
-import useBridgeCallback from '../../hooks/useBridgeCallback'
+import {useBridgeCallback, useBridgeUnderlyingCallback} from '../../hooks/useBridgeCallback'
 import { WrapType } from '../../hooks/useWrapCallback'
 // import { useDerivedSwapInfo } from '../../state/swap/hooks'
 // import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
@@ -32,7 +32,7 @@ import AddressInputPanel from '../../components/AddressInputPanel'
 import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 
 import { useWalletModalToggle } from '../../state/application/hooks'
-import { useSelectedTokenList } from '../../state/lists/hooks'
+// import { useSelectedTokenList } from '../../state/lists/hooks'
 // import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { useLocalToken } from '../../hooks/Tokens'
 // import { useToken, useLocalToken } from '../../hooks/Tokens'
@@ -40,7 +40,7 @@ import { useLocalToken } from '../../hooks/Tokens'
 import config from '../../config'
 
 // import {getAllowance} from '../../utils/bridge/approval'
-import {getTokenConfig, isUnderlying} from '../../utils/bridge/getBaseInfo'
+import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
 import {formatDecimal} from '../../utils/tools/tools'
 // import { maxAmountSpend } from '../../utils/maxAmountSpend'
 
@@ -52,7 +52,7 @@ export default function Bridge() {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
   const history = createBrowserHistory()
-  const selectedTokenList = useSelectedTokenList()
+  // const selectedTokenList = useSelectedTokenList()
   const theme = useContext(ThemeContext)
   const toggleWalletModal = useWalletModalToggle()
 
@@ -62,9 +62,9 @@ export default function Bridge() {
   const [selectChain, setSelectChain] = useState<any>()
   // const [approval, setApproval] = useState<any>()
   // const [approvaling, setApprovaling] = useState<any>()
-  const [underlying, setUnderlying] = useState<any>()
+  // const [underlying, setUnderlying] = useState<any>()
   // const [recipient, setRecipient] = useState<any>('0xE000E632124aa65B80f74E3e4cc06DC761610583')
-  const [recipient, setRecipient] = useState<any>('')
+  const [recipient, setRecipient] = useState<any>(account)
 
   const [bridgeConfig, setBridgeConfig] = useState<any>()
 
@@ -72,10 +72,15 @@ export default function Bridge() {
 
   
 
-  const formatCurrency = useLocalToken(selectCurrency)
+  const formatCurrency = useLocalToken(
+    selectCurrency && selectCurrency.underlying ?
+      {...selectCurrency, address: selectCurrency.underlying.address, name: selectCurrency.underlying.name, symbol: selectCurrency.underlying.symbol} : selectCurrency)
   const amountToApprove = formatCurrency ? new TokenAmount(formatCurrency ?? undefined, inputBridgeValue) : undefined
   const [approval, approveCallback] = useApproveCallback(amountToApprove ?? undefined, config.bridgeRouterToken)
-
+  // console.log(ApprovalState)
+  // console.log(approval)
+  // console.log(underlying)
+  // console.log(formatCurrency)
   useEffect(() => {
     if (approval === ApprovalState.PENDING) {
       setApprovalSubmitted(true)
@@ -83,6 +88,14 @@ export default function Bridge() {
   }, [approval, approvalSubmitted])
   
   const { wrapType, execute: onWrap, inputError: wrapInputError } = useBridgeCallback(
+    formatCurrency?formatCurrency:undefined,
+    selectCurrency?.address,
+    recipient,
+    inputBridgeValue,
+    selectChain
+  )
+
+  const { wrapType: wrapTypeUnderlying, execute: onWrapUnderlying, inputError: wrapInputErrorUnderlying } = useBridgeUnderlyingCallback(
     formatCurrency?formatCurrency:undefined,
     selectCurrency?.address,
     recipient,
@@ -109,7 +122,17 @@ export default function Bridge() {
   }, [inputBridgeValue, bridgeConfig])
 
   const isCrossBridge = useMemo(() => {
-    if (account && bridgeConfig && selectCurrency && inputBridgeValue && !wrapInputError && isAddress(recipient)) {
+    if (
+      account
+      && bridgeConfig
+      && selectCurrency
+      && inputBridgeValue
+      && (
+        (!wrapInputError && !(selectCurrency && selectCurrency.underlying))
+        || (!wrapInputErrorUnderlying && (selectCurrency && selectCurrency.underlying))
+      )
+      && isAddress(recipient)
+    ) {
       if (Number(inputBridgeValue) < Number(bridgeConfig.MinimumSwap) || Number(inputBridgeValue) > Number(bridgeConfig.MaximumSwap)) {
         return true
       } else {
@@ -118,30 +141,21 @@ export default function Bridge() {
     } else {
       return true
     }
-  }, [selectCurrency, account, bridgeConfig, wrapInputError, inputBridgeValue, recipient])
+  }, [selectCurrency, account, bridgeConfig, wrapInputError, inputBridgeValue, recipient, wrapInputErrorUnderlying])
 
   const btnTxt = useMemo(() => {
     if (wrapInputError && inputBridgeValue) {
       return wrapInputError
     } else if (wrapInputError && !inputBridgeValue) {
       return bridgeTypeName
-    } else if (wrapType === WrapType.WRAP) {
+    } else if (
+      (wrapType === WrapType.WRAP && !(selectCurrency && selectCurrency.underlying))
+      || (wrapTypeUnderlying === WrapType.WRAP && (selectCurrency && selectCurrency.underlying))
+    ) {
       return bridgeTypeName
     }
     return bridgeTypeName
-  }, [bridgeTypeName, wrapInputError])
-
-  useEffect(() => {
-    if (selectedTokenList && chainId && !selectCurrency) {
-      const useTokenList = config.bridgeTokenList
-      for (const obj of useTokenList) {
-        if (obj.address.toLowerCase() === config.bridgeInitToken) {
-          setSelectCurrency(obj)
-          break
-        }
-      }
-    }
-  }, [selectedTokenList, chainId, selectCurrency])
+  }, [bridgeTypeName, wrapInputError, wrapTypeUnderlying, selectCurrency])
 
   useEffect(() => {
     if (chainId && !selectChain) {
@@ -150,19 +164,29 @@ export default function Bridge() {
   }, [chainId, selectChain])
 
   useEffect(() => {
-    if (selectCurrency) {
-      getTokenConfig(selectCurrency.address).then(res => {
-        // console.log(res)
-        if (res) {
+    const token = selectCurrency ? selectCurrency.address : config.bridgeInitToken
+    // console.log(token)
+    if (token) {
+      getTokenConfig(token).then((res:any) => {
+        console.log(res)
+        if (res && res.decimals && res.symbol) {
           setBridgeConfig(res)
+          if (!selectCurrency) {
+            setSelectCurrency({
+              "address": token,
+              "chainId": chainId,
+              "decimals": res.decimals,
+              "name": res.name,
+              "symbol": res.symbol,
+              "underlying": res.underlying
+            })
+          }
         } else {
           setBridgeConfig('')
         }
       })
-      isUnderlying(selectCurrency.address).then(res => {
-        // console.log(res)
-        setUnderlying(res)
-      })
+    } else {
+      setBridgeConfig('')
     }
     // getBaseInfo()
   }, [selectCurrency])
@@ -261,7 +285,7 @@ export default function Bridge() {
           {!account ? (
               <ButtonLight onClick={toggleWalletModal}>{t('ConnectWallet')}</ButtonLight>
             ) : (
-              selectCurrency && !underlying && inputBridgeValue && (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING)? (
+              selectCurrency && selectCurrency.underlying && inputBridgeValue && (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING)? (
                 <ButtonConfirmed
                   onClick={approveCallback}
                   disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
@@ -280,13 +304,23 @@ export default function Bridge() {
                   )}
                 </ButtonConfirmed>
               ) : (
-                <ButtonPrimary disabled={isCrossBridge} onClick={onWrap}>
-                  {/* {wrapType}
-                  {wrapInputError ??
-                    (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
-                  {btnTxt}
-                    {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
-                </ButtonPrimary>
+                !selectCurrency || !selectCurrency.underlying ? (
+                  <ButtonPrimary disabled={isCrossBridge} onClick={onWrap}>
+                    {/* {wrapType}
+                    {wrapInputError ??
+                      (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
+                    {btnTxt}1
+                      {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
+                  </ButtonPrimary>
+                ) : (
+                  <ButtonPrimary disabled={isCrossBridge} onClick={onWrapUnderlying}>
+                    {/* {wrapType}
+                    {wrapInputError ??
+                      (wrapType === WrapType.WRAP ? bridgeTypeName : wrapType === WrapType.UNWRAP ? bridgeTypeName : bridgeTypeName)} */}
+                    {btnTxt}2
+                      {/* (wrapType === WrapType.WRAP ? t('Wrap') : wrapType === WrapType.UNWRAP ? t('Unwrap') : null)} */}
+                  </ButtonPrimary>
+                )
               )
             )
           }

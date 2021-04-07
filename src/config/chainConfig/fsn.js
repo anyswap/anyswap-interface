@@ -1,4 +1,4 @@
-import {formatSwapTokenList, formatBridgeTokenList} from './methods'
+import {formatSwapTokenList} from './methods'
 import {tokenListUrl} from '../constant'
 
 export const FSN_MAINNET = 'https://mainnet.anyswap.exchange'
@@ -14,7 +14,6 @@ export const FSN_TEST_EXPLORER = 'https://fsnex.com'
 export const tokenList = [
 
 ]
-
 export const testTokenList = [
 
 ]
@@ -28,7 +27,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + FSN_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',
@@ -60,7 +58,6 @@ export default {
     baseCurrency: 'ANY',
     tokenListUrl: tokenListUrl + FSN_TEST_CHAINID,
     tokenList: formatSwapTokenList(symbol, testTokenList),
-    bridgeTokenList: formatBridgeTokenList(tokenList),
     bridgeInitToken: '',
     bridgeRouterToken: '',
     bridgeInitChain: '',
