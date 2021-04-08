@@ -147,10 +147,10 @@ export default function Bridge() {
 
   useEffect(() => {
     const token = selectCurrency ? selectCurrency.address : config.bridgeInitToken
-    console.log(token)
+    // console.log(token)
     if (token) {
       getTokenConfig(token).then((res:any) => {
-        console.log(res)
+        // console.log(res)
         if (res && res.decimals && res.symbol) {
           setBridgeConfig(res)
           if (!selectCurrency) {
@@ -165,8 +165,8 @@ export default function Bridge() {
           }
         } else {
           setTimeout(() => {
-            // setCount(count + 1)
-            setCount(1)
+            setCount(count + 1)
+            // setCount(1)
           }, 100)
           setBridgeConfig('')
         }
