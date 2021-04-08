@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import {thousandBit} from '../../utils/tools/tools'
-import BulbIcon from '../../assets/images/icon/bulb.svg'
+import {thousandBit} from '../../../utils/tools/tools'
+import BulbIcon from '../../../assets/images/icon/bulb.svg'
 
 const SubCurrencySelectBox = styled.div`
   width: 100%;

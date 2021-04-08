@@ -4,29 +4,25 @@ import { Currency, Token, ETHER } from 'anyswap-sdk'
 import { Text } from 'rebass'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { useTranslation } from 'react-i18next'
-// import { FixedSizeList } from 'react-window'
 
-import Column from '../../components/Column'
-import { RowBetween } from '../../components/Row'
-import Modal from '../../components/Modal'
-import QuestionHelper from '../../components/QuestionHelper'
-import { PaddedColumn, SearchInput, Separator } from '../../components/SearchModal/styleds'
-import { filterTokens } from '../../components/SearchModal/filtering'
-import { useTokenComparator } from '../../components/SearchModal/sorting'
+import Column from '../../../components/Column'
+import { RowBetween } from '../../../components/Row'
+import Modal from '../../../components/Modal'
+import QuestionHelper from '../../../components/QuestionHelper'
+import { PaddedColumn, SearchInput, Separator } from '../../../components/SearchModal/styleds'
+import { filterTokens } from '../../../components/SearchModal/filtering'
+import { useTokenComparator } from '../../../components/SearchModal/sorting'
 
-import { CloseIcon } from '../../theme'
+import { CloseIcon } from '../../../theme'
 
-import { isAddress } from '../../utils'
+import { isAddress } from '../../../utils'
 
-import { useToken } from '../../hooks/Tokens'
-import { useActiveWeb3React } from '../../hooks'
+import { useToken } from '../../../hooks/Tokens'
+import { useActiveWeb3React } from '../../../hooks'
 
-import BridgeCurrencyList from './BridgeCurrencyList'
+import CurrencyList from './CurrencyList'
 
-// import config from '../../config'
-
-import {getAllToken} from '../../utils/bridge/getBaseInfo'
-// import { config } from 'dotenv/types'
+import {getAllToken} from '../../../utils/bridge/getBaseInfo'
 
 interface CurrencySearchModalProps {
   isOpen: boolean
@@ -60,14 +56,16 @@ export default function SearchModal ({
       if (res) {
         const list:any = []
         for (const token in res) {
-          list.push({
-            "address": token,
-            "chainId": chainId,
-            "decimals": res[token].list.decimals,
-            "name": res[token].list.name,
-            "symbol": res[token].list.symbol,
-            "underlying": res[token].list.underlying
-          })
+          if (res[token].list.underlying) {
+            list.push({
+              "address": token,
+              "chainId": chainId,
+              "decimals": res[token].list.decimals,
+              "name": res[token].list.name,
+              "symbol": res[token].list.symbol,
+              "underlying": res[token].list.underlying
+            })
+          }
         }
         // console.log(list)
         setAllTokens(list)
@@ -173,7 +171,7 @@ export default function SearchModal ({
           <AutoSizer disableWidth>
             {({ height }) => (
               <>
-                <BridgeCurrencyList
+                <CurrencyList
                   height={height}
                   showETH={false}
                   currencies={filteredSortedTokens}

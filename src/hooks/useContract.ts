@@ -25,6 +25,7 @@ import { getContract } from '../utils'
 import { useActiveWeb3React } from './index'
 
 import RouterSwapAction from '../constants/abis/bridge/RouterSwapAction.json'
+import RouterAction from '../constants/abis/bridge/RouterAction.json'
 
 import config from '../config/index'
 
@@ -68,6 +69,10 @@ export function useWETHContract(withSignerIfPossible?: boolean): Contract | null
 export function useBridgeContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveWeb3React()
   return useContract(chainId ? config.chainInfo[chainId].bridgeRouterToken : undefined, RouterSwapAction, withSignerIfPossible)
+}
+
+export function useSwapUnderlyingContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(tokenAddress, RouterAction, withSignerIfPossible)
 }
 
 export function useArgentWalletDetectorContract(): Contract | null {

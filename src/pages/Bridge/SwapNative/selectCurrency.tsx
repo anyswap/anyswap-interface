@@ -2,16 +2,18 @@ import { Currency, Pair } from 'anyswap-sdk'
 import React, { useState, useContext, useCallback} from 'react'
 import { ThemeContext } from 'styled-components'
 import { useTranslation } from 'react-i18next'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
-import DoubleCurrencyLogo from '../../components/DoubleLogo'
-import { RowBetween } from '../../components/Row'
-import { Input as NumericalInput } from '../../components/NumericalInput'
-import TokenLogo from '../../components/TokenLogo'
-import { TYPE } from '../../theme'
 
-import { useActiveWeb3React } from '../../hooks'
+import { useCurrencyBalance } from '../../../state/wallet/hooks'
+import DoubleCurrencyLogo from '../../../components/DoubleLogo'
+import { RowBetween } from '../../../components/Row'
+import { Input as NumericalInput } from '../../../components/NumericalInput'
+import TokenLogo from '../../../components/TokenLogo'
+
+import { TYPE } from '../../../theme'
+
+import { useActiveWeb3React } from '../../../hooks'
 // import { useToken } from '../../hooks/Tokens'
-import config from '../../config'
+import config from '../../../config'
 
 import {
   InputRow,
@@ -28,7 +30,7 @@ import {
   Container,
   StyledTokenName,
   HideSmallBox
-} from '../../components/CurrencyInputPanel/styleds'
+} from '../../../components/CurrencyInputPanel/styleds'
 
 import SearchModal from './searchModal'
 
@@ -42,6 +44,7 @@ interface SelectCurrencyInputPanelProps {
   // currency?: Currency | null
   currency?: any
   disableCurrencySelect?: boolean
+  disableInput?: boolean
   hideBalance?: boolean
   pair?: Pair | null
   hideInput?: boolean
@@ -60,6 +63,7 @@ export default function SelectCurrencyInputPanel({
   onCurrencySelect,
   currency,
   disableCurrencySelect = false,
+  disableInput = false,
   hideBalance = false,
   pair = null, // used for double token logo
   hideInput = false,
@@ -129,6 +133,7 @@ export default function SelectCurrencyInputPanel({
                   onUserInput(val)
                 }}
                 style={{ marginRight: '1.875rem' }}
+                disabled={disableInput}
               />
             </>
           )}

@@ -2,22 +2,21 @@ import React, { useState, useContext, useCallback, useEffect } from 'react'
 import { ThemeContext } from 'styled-components'
 import { Text } from 'rebass'
 import styled from 'styled-components'
-import { useActiveWeb3React } from '../../hooks'
-// import AutoSizer from 'react-virtualized-auto-sizer'
-// import { FixedSizeList } from 'react-window'
-import { RowBetween } from '../../components/Row'
-import Column from '../../components/Column'
-// import QuestionHelper from '../../components/QuestionHelper'
-import { PaddedColumn, Separator } from '../../components/SearchModal/styleds'
-
-import { Input as NumericalInput } from '../../components/NumericalInput'
-import TokenLogo from '../../components/TokenLogo'
-import Modal from '../../components/Modal'
-import { MenuItem } from '../../components/SearchModal/styleds'
-import { TYPE, CloseIcon } from '../../theme'
-
 import { useTranslation } from 'react-i18next'
-import config from '../../config'
+
+import { useActiveWeb3React } from '../../../hooks'
+
+import { RowBetween } from '../../../components/Row'
+import Column from '../../../components/Column'
+import { PaddedColumn, Separator } from '../../../components/SearchModal/styleds'
+import { Input as NumericalInput } from '../../../components/NumericalInput'
+import TokenLogo from '../../../components/TokenLogo'
+import Modal from '../../../components/Modal'
+import { MenuItem } from '../../../components/SearchModal/styleds'
+
+import { TYPE, CloseIcon } from '../../../theme'
+
+import config from '../../../config'
 
 import {
   InputRow,
@@ -34,14 +33,9 @@ import {
   Container,
   StyledTokenName,
   // HideSmallBox
-} from '../../components/CurrencyInputPanel/styleds'
+} from '../../../components/CurrencyInputPanel/styleds'
 
-
-// import { isAddress } from '../../utils'
-
-// import CurrencyList from './CurrencyList'
-
-import {getAllChainIDs} from '../../utils/bridge/getBaseInfo'
+import {getAllChainIDs} from '../../../utils/bridge/getBaseInfo'
 
 const CurrencySelect1 = styled(CurrencySelect)`
 

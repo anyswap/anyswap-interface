@@ -7,7 +7,7 @@ const SwapIconBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 32px;
-  height: 32px;
+  height: 26px;
   object-fit: contain;
   border-radius: 6px;
   margin: 0px auto;
