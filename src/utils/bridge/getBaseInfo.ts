@@ -180,10 +180,8 @@ function getAllTokenConfig (list:Array<[]>) {
         if (err) {
           console.log(err)
         } else {
-          // console.log(res)
           const results = formatWeb3Str(res)
           const resultLen = web3Fn.utils.hexToNumber(results[1])
-          // const t = web3Fn.utils.hexToNumber(results[2])
           for (let j = 0; j < resultLen; j++) {
             const chainID = web3Fn.utils.hexToNumber(results[2 * j + 2])
             if (!tokenidList[tokenid]) tokenidList[tokenid] = {}
@@ -193,7 +191,7 @@ function getAllTokenConfig (list:Array<[]>) {
       }))
 
       const gtcData = routerConfigContract.methods.getTokenConfig(tokenid, config.chainID).encodeABI()
-      batch.add(web3Fn.eth.call.request({data: gtcData, to: config.bridgeConfigToken}, 'latest', async (err:any, res:any) => {
+      batch.add(web3Fn.eth.call.request({data: gtcData, to: config.bridgeConfigToken}, 'latest', (err:any, res:any) => {
         if (err) {
           console.log(err)
           resolve('')
@@ -202,11 +200,8 @@ function getAllTokenConfig (list:Array<[]>) {
           const decimals = web3Fn.utils.hexToNumber(results[0])
           const cbtoken = results[1].replace('0x000000000000000000000000', '0x')
           if (!tokenList[cbtoken]) tokenList[cbtoken] = {}
-          const tokenInfo = await getTokenInfo(cbtoken)
           const data = {
             decimals: decimals,
-            name: tokenInfo.name,
-            symbol: tokenInfo.symbol,
             ContractVersion: web3Fn.utils.hexToNumber(results[2]),
             MaximumSwap: fromWei(web3Fn.utils.hexToNumber(results[3]), decimals),
             MinimumSwap: fromWei(web3Fn.utils.hexToNumber(results[4]), decimals),
@@ -215,33 +210,20 @@ function getAllTokenConfig (list:Array<[]>) {
             MaximumSwapFee: fromWei(web3Fn.utils.hexToNumber(results[7]), decimals),
             MinimumSwapFee: fromWei(web3Fn.utils.hexToNumber(results[8]), decimals),
             tokenid: tokenid,
-            underlying: await isUnderlying(cbtoken)
           }
           tokenList[cbtoken] = data
         }
-        if (i === (len - 1)) {
-          for (const tokenstr in tokenList) {
-            const curTokenObj = tokenList[tokenstr]
-            const curTokenIdObj = tokenidList[curTokenObj.tokenid]
-            
-            const destChain = {...curTokenIdObj}
-            delete destChain[config.chainID]
-            if (curTokenObj && curTokenIdObj) {
-              const obj = {
-                ...curTokenObj,
-                destChain: destChain
-              }
-              setLocalConfig(BRIDGETOKENCONFIG, tokenstr, config.chainID, BRIDGETOKENCONFIG, {list: obj})
-            }
-          }
-          resolve('')
+        if (i === (len - 1) && tokenidList[tokenid]) {
+          resolve({
+            tokenList,
+            tokenidList
+          })
         }
       }))
     }
     batch.execute()
   })
 }
-
 function getAllTokenIDs () {
   return new Promise(resolve => {
     web3Fn.setProvider(config.chainInfo[chainID].nodeRpc)
@@ -252,7 +234,25 @@ function getAllTokenIDs () {
         console.log(err)
         resolve('')
       } else {
-        getAllTokenConfig(res).then(() => {
+        getAllTokenConfig(res).then(async(result:any) => {
+          for (const tokenstr in result.tokenList) {
+            const curTokenObj = result.tokenList[tokenstr]
+            const curTokenIdObj = result.tokenidList[curTokenObj.tokenid]
+            
+            const destChain = {...curTokenIdObj}
+            delete destChain[config.chainID]
+            const tokenInfo = await getTokenInfo(tokenstr)
+            if (curTokenObj && curTokenIdObj) {
+              const obj = {
+                ...curTokenObj,
+                name: tokenInfo.name,
+                symbol: tokenInfo.symbol,
+                destChain: destChain,
+                underlying: await isUnderlying(tokenstr)
+              }
+              setLocalConfig(BRIDGETOKENCONFIG, tokenstr, config.chainID, BRIDGETOKENCONFIG, {list: obj})
+            }
+          }
           resolve('')
         })
       }
@@ -269,8 +269,8 @@ export function getTokenConfig (token:any) {
       resolve(lData.list)
     } else {
       getAllTokenIDs().then(() => {
-        // console.log(res)
         const lData1 = getLocalConfig(BRIDGETOKENCONFIG, token, config.chainID, BRIDGETOKENCONFIG, timeout)
+        console.log(lData1)
         if (lData1 && lData1.list && lData1.list.name && lData1.list.decimals && lData1.list.symbol) {
           resolve(lData1.list)
         } else {

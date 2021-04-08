@@ -53,7 +53,7 @@ const ListBox = styled.div`
 `
 
 function Balance({ balance }: { balance: CurrencyAmount }) {
-  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
+  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(6)}</StyledBalanceText>
 }
 
 const TagContainer = styled.div`
@@ -119,6 +119,9 @@ function CurrencyRow({
   }
   const currencies = useLocalToken(currencyObj)
   const balance = useCurrencyBalance(account ?? undefined, currencies ?? undefined)
+  // console.log(currency)
+  // console.log(currencyObj)
+  // console.log(balance ? balance.toExact() : '')
 
   // const removeToken = useRemoveUserAddedToken()
   // const addToken = useAddUserToken()

@@ -1,30 +1,23 @@
-// import React, { useEffect, useMemo, useState } from 'react'
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react'
 import { TokenAmount } from 'anyswap-sdk'
-// import styled from 'styled-components'
 import { createBrowserHistory } from 'history'
 import { useTranslation } from 'react-i18next'
-import { useActiveWeb3React } from '../../hooks'
-// import { useAllTokenBalances } from '../../state/wallet/hooks'
-import { ArrowDown } from 'react-feather'
-// import TokenLogo from '../../components/TokenLogo'
-import AppBody from '../AppBody'
 import { ThemeContext } from 'styled-components'
+import { ArrowDown } from 'react-feather'
+import AppBody from '../AppBody'
 import SelectCurrencyInputPanel from './selectCurrency'
 import SelectChainIdInputPanel from './selectChainID'
 import Reminder from './reminder'
 
 
+import { useActiveWeb3React } from '../../hooks'
 import {useBridgeCallback, useBridgeUnderlyingCallback} from '../../hooks/useBridgeCallback'
 import { WrapType } from '../../hooks/useWrapCallback'
-// import { useDerivedSwapInfo } from '../../state/swap/hooks'
-// import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
 import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
+import { useLocalToken } from '../../hooks/Tokens'
 
 import Title from '../../components/Title'
 import { AutoColumn } from '../../components/Column'
-// import SwapIcon from '../../components/SwapIcon'
-// import { ButtonError, ButtonLight, ButtonPrimary } from '../../components/Button'
 import { ButtonLight, ButtonPrimary, ButtonConfirmed } from '../../components/Button'
 import { AutoRow } from '../../components/Row'
 import Loader from '../../components/Loader'
@@ -32,22 +25,13 @@ import AddressInputPanel from '../../components/AddressInputPanel'
 import { ArrowWrapper, BottomGrouping } from '../../components/swap/styleds'
 
 import { useWalletModalToggle } from '../../state/application/hooks'
-// import { useSelectedTokenList } from '../../state/lists/hooks'
-// import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { useLocalToken } from '../../hooks/Tokens'
-// import { useToken, useLocalToken } from '../../hooks/Tokens'
 
 import config from '../../config'
 
-// import {getAllowance} from '../../utils/bridge/approval'
 import {getTokenConfig} from '../../utils/bridge/getBaseInfo'
 import {formatDecimal} from '../../utils/tools/tools'
-// import { maxAmountSpend } from '../../utils/maxAmountSpend'
-
 import { isAddress } from '../../utils'
 
-// import { ChainId } from 'anyswap-sdk'
-// console.log(ChainId)
 export default function Bridge() {
   const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
@@ -60,8 +44,8 @@ export default function Bridge() {
   const [bridgeTypeName, setBridgeTypeName] = useState(t('bridgeAssets'))
   const [selectCurrency, setSelectCurrency] = useState<any>()
   const [selectChain, setSelectChain] = useState<any>()
-  // const [recipient, setRecipient] = useState<any>(account)
-  const [recipient, setRecipient] = useState<any>('')
+  const [recipient, setRecipient] = useState<any>(account ?? '')
+  // const [recipient, setRecipient] = useState<any>('')
   const [count, setCount] = useState<number>(0)
 
   const [bridgeConfig, setBridgeConfig] = useState<any>()
@@ -163,7 +147,7 @@ export default function Bridge() {
 
   useEffect(() => {
     const token = selectCurrency ? selectCurrency.address : config.bridgeInitToken
-    // console.log(token)
+    console.log(token)
     if (token) {
       getTokenConfig(token).then((res:any) => {
         console.log(res)
@@ -181,7 +165,8 @@ export default function Bridge() {
           }
         } else {
           setTimeout(() => {
-            setCount(count + 1)
+            // setCount(count + 1)
+            setCount(1)
           }, 100)
           setBridgeConfig('')
         }
