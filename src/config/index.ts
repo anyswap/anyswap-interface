@@ -9,7 +9,7 @@ interface ConFig {
 
 const ENV_NODE_CONFIG = 'ENV_NODE_CONFIG'
 // const LOCALCONFIG = localStorage.getItem(ENV_NODE_CONFIG)
-const INIT_NODE = '4'
+const INIT_NODE = '56'
 const ENV = getNetwork(ENV_NODE_CONFIG, INIT_NODE)
 const netConfig:ConFig = chainInfo[ENV] ? chainInfo[ENV] : chainInfo[INIT_NODE]
 

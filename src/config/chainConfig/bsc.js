@@ -11,12 +11,12 @@ export const BNB_TEST_EXPLORER = 'https://testnet.bscscan.com/'
 
 export const tokenList = [
   {
-    "address": "0x66a79d23e58475d2738179ca52cd0b41d73f0bea",
+    "address": "0x55d398326f99059ff775485246999027b3197955",
     "chainId": BNB_MAIN_CHAINID,
     "decimals": 18,
-    "name": "",
-    "symbol": ""
-  }
+    "name": "USDT",
+    "symbol": "USDT"
+  },
 ]
 export const testTokenList = [
 
@@ -35,7 +35,7 @@ export default {
     bridgeRouterToken: '',
     bridgeInitChain: '',
     swapRouterToken: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
-    swapInitToken: '',
+    swapInitToken: '0x55d398326f99059ff775485246999027b3197955',
     multicalToken: '0xe348b292e8eA5FAB54340656f3D374b259D658b8',
     v1FactoryToken: '',
     v2FactoryToken: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
