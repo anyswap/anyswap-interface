@@ -127,13 +127,15 @@ export default function Swap() {
         [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
         [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount
       }
-
+// console.log(parsedAmount)
+// console.log(parsedAmount?.raw.toString())
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
   const isValid = !swapInputError
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
   const handleTypeInput = useCallback(
     (value: string) => {
+      // console.log(value)
       onUserInput(Field.INPUT, value)
     },
     [onUserInput]

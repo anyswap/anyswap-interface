@@ -51,6 +51,9 @@ export function useSwapActionHandlers(): {
 
   const onUserInput = useCallback(
     (field: Field, typedValue: string) => {
+      console.log(field)
+      console.log(typedValue)
+      console.log(typeInput({ field, typedValue }))
       dispatch(typeInput({ field, typedValue }))
     },
     [dispatch]
@@ -143,7 +146,8 @@ export function useDerivedSwapInfo(): {
 
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
-
+  // console.log(typedValue)
+  // console.log(parsedAmount)
   const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
   const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
 
